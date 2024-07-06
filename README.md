@@ -1,3 +1,3 @@
-# expertTodo
+# ExpertTodo
 
 Todo with Experts and AI
