@@ -1,0 +1,10 @@
+{
+  "name": "expertTodo",
+  "version": "0.0.1",
+  "description": "todo with Experts and AI",
+  "main": "index.js",
+  "repository": "https://github.com/tkhwang/expertTodo",
+  "author": "tkhwang <tkhwang@gmail.com>",
+  "license": "MIT",
+  "private": true
+}
