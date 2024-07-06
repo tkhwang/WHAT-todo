@@ -6,5 +6,9 @@
   "repository": "https://github.com/tkhwang/expertTodo",
   "author": "tkhwang <tkhwang@gmail.com>",
   "license": "MIT",
-  "private": true
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ]
 }
