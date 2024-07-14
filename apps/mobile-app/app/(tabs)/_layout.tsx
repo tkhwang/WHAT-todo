@@ -39,6 +39,13 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
+        name="seeingTodo"
+        options={{
+          title: "보는 todo",
+          tabBarIcon: ({ color, focused }) => <TabBarIcon name={focused ? "eye" : "eye-outline"} color={color} />,
+        }}
+      />
+      <Tabs.Screen
         name="setting"
         options={{
           title: "Setting",
