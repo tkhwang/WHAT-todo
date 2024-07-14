@@ -1,5 +1,5 @@
 {
-  "name": "@expertTodo/mobile-app",
+  "name": "@whatTodo/mobile-app",
   "main": "expo-router/entry",
   "version": "1.0.0",
   "scripts": {
@@ -15,8 +15,8 @@
     "preset": "jest-expo"
   },
   "dependencies": {
-    "@expertTodo/models": "*",
-    "@expertTodo/ui": "*",
+    "@whatTodo/models": "*",
+    "@whatTodo/ui": "*",
     "@expo/vector-icons": "^14.0.2",
     "@react-navigation/native": "^6.0.2",
     "expo": "~51.0.20",
