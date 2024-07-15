@@ -1,10 +1,9 @@
-import { Auth } from "@/components/Auth"
 import { View, Text } from "react-native"
 
-export default function HomeScreen() {
+export function Auth() {
   return (
     <View className="flex-1 justify-center items-center">
-      <Auth />
+      <Text>Todo web auth!</Text>
     </View>
   )
 }
