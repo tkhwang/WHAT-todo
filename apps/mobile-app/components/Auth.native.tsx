@@ -2,10 +2,6 @@ import { Platform } from "react-native"
 import * as AppleAuthentication from "expo-apple-authentication"
 import { supabase } from "../utils/supabase"
 
-import "react-native-url-polyfill/auto"
-import { createClient } from "@supabase/supabase-js"
-import AsyncStorage from "@react-native-async-storage/async-storage"
-
 export function Auth() {
   if (Platform.OS === "ios")
     return (
@@ -22,7 +18,6 @@ export function Auth() {
                 AppleAuthentication.AppleAuthenticationScope.EMAIL,
               ],
             })
-            console.log("🚀 ~ onPress={ ~ credential:", credential)
 
             // Sign in via Supabase Auth.
             if (credential.identityToken) {
