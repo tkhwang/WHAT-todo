@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "whatTodo",
-    "slug": "whatTodo",
+    "name": "tkhwang-whattodo",
+    "slug": "tkhwang-whattodo",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -14,13 +14,15 @@
     },
     "ios": {
       "supportsTablet": true,
+      "bundleIdentifier": "me.tkhwang.whattodo",
       "usesAppleSignIn": true
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "me.tkhwang.whattodo"
     },
     "web": {
       "bundler": "metro",
@@ -30,6 +32,15 @@
     "plugins": ["expo-router", "expo-apple-authentication"],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "690f3975-9901-447c-90ac-b18b7a7a4c74"
+      }
+    },
+    "owner": "tkhwang"
   }
 }
