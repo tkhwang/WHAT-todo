@@ -1,4 +1,4 @@
-// import { greetingFromModels } from '@expertTodo/models';
+// import { greetingFromModels } from '@whatTodo/models';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
