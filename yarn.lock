@@ -1179,10 +1179,10 @@
     dotenv-expand "~11.0.6"
     getenv "^1.0.0"
 
-"@expo/fingerprint@^0.10.0":
-  version "0.10.0"
-  resolved "https://registry.yarnpkg.com/@expo/fingerprint/-/fingerprint-0.10.0.tgz#1407ee2d55c491091228b7751550c618877d3a54"
-  integrity sha512-yW2WV4YUGaak4K6MCJHR0sXRrOKA7IWtWsK3uG640eSug55t5VQBoF5KPx7n4+60QUKYKmw7u3vFZZb96OZFlA==
+"@expo/fingerprint@^0.10.1":
+  version "0.10.1"
+  resolved "https://registry.yarnpkg.com/@expo/fingerprint/-/fingerprint-0.10.1.tgz#12055d425425884258b69e4cd6bbeed35fd2a6e8"
+  integrity sha512-0d0lniPAm6tOZinoj6d8JPozdeaYL12hNW2lZy76YaRRfBoAVGD1xwx6pilRumgKJGFL2SxOGnRoC4ZarZel4g==
   dependencies:
     "@expo/spawn-async" "^1.7.2"
     chalk "^4.1.2"
@@ -4935,10 +4935,10 @@ expo-file-system@~17.0.1:
   resolved "https://registry.npmjs.org/expo-file-system/-/expo-file-system-17.0.1.tgz"
   integrity sha512-dYpnZJqTGj6HCYJyXAgpFkQWsiCH3HY1ek2cFZVHFoEc5tLz9gmdEgTF6nFHurvmvfmXqxi7a5CXyVm0aFYJBw==
 
-expo-font@~12.0.8:
-  version "12.0.8"
-  resolved "https://registry.npmjs.org/expo-font/-/expo-font-12.0.8.tgz"
-  integrity sha512-xK9kOEyD/vnREicM5yS2uVwzB83weu+UE6QwJRH2dhoQcdJiWGGKOj+blJ8GrtU+BqtyNijyWcwfBbYOJnf8eQ==
+expo-font@~12.0.9:
+  version "12.0.9"
+  resolved "https://registry.yarnpkg.com/expo-font/-/expo-font-12.0.9.tgz#096860a6b8b5dd54152262eafd318593ec2db48c"
+  integrity sha512-seTCyf0tbgkAnp3ZI9ZfK9QVtURQUgFnuj+GuJ5TSnN0XsOtVe1s2RxTvmMgkfuvfkzcjJ69gyRpsZS1cC8hjw==
   dependencies:
     fontfaceobserver "^2.1.0"
 
@@ -5001,6 +5001,11 @@ expo-router@~3.5.18:
     react-native-helmet-async "2.0.4"
     schema-utils "^4.0.1"
 
+expo-secure-store@^13.0.2:
+  version "13.0.2"
+  resolved "https://registry.yarnpkg.com/expo-secure-store/-/expo-secure-store-13.0.2.tgz#ba8f6076fc38062a28bb2ce5edab9cd28ef88598"
+  integrity sha512-3QYgoneo8p8yeeBPBiAfokNNc2xq6+n8+Ob4fAlErEcf4H7Y72LH+K/dx0nQyWau2ZKZUXBxyyfuHFyVKrEVLg==
+
 expo-splash-screen@0.27.5, expo-splash-screen@~0.27.5:
   version "0.27.5"
   resolved "https://registry.npmjs.org/expo-splash-screen/-/expo-splash-screen-0.27.5.tgz"
@@ -5031,15 +5036,15 @@ expo-updates-interface@~0.16.2:
   resolved "https://registry.yarnpkg.com/expo-updates-interface/-/expo-updates-interface-0.16.2.tgz#ad1ac2ca8ee5a8cc84052ea3c18a11da64da569b"
   integrity sha512-929XBU70q5ELxkKADj1xL0UIm3HvhYhNAOZv5DSk7rrKvLo7QDdPyl+JVnwZm9LrkNbH4wuE2rLoKu1KMgZ+9A==
 
-expo-updates@^0.25.18:
-  version "0.25.18"
-  resolved "https://registry.yarnpkg.com/expo-updates/-/expo-updates-0.25.18.tgz#d1029fa81321dafe59076b2a7e80fa0e95aedd08"
-  integrity sha512-nlmzdtzy7VWsBZzI/P9fpt7fJcJJRl7rKhp3lGXfGLIty6KqQ651hAzvTNh9NrXeWnkiV1gtc7XA860r4mHdog==
+expo-updates@^0.25.20:
+  version "0.25.20"
+  resolved "https://registry.yarnpkg.com/expo-updates/-/expo-updates-0.25.20.tgz#a3a597260e8a4c792ef5b4dd5aa8aba671228265"
+  integrity sha512-EfxRZDPNUWFXTsjn4Ii+AwIp/KLHXGKG59R8kyWzz/nHeMxXqGUDQF79qcgXcaq5lOMUpeGNlZqOBGho9cvUEg==
   dependencies:
     "@expo/code-signing-certificates" "0.0.5"
     "@expo/config" "~9.0.0-beta.0"
-    "@expo/config-plugins" "~8.0.0-beta.0"
-    "@expo/fingerprint" "^0.10.0"
+    "@expo/config-plugins" "~8.0.8"
+    "@expo/fingerprint" "^0.10.1"
     "@expo/spawn-async" "^1.7.2"
     arg "4.1.0"
     chalk "^4.1.2"
@@ -5057,10 +5062,10 @@ expo-web-browser@~13.0.3:
   resolved "https://registry.npmjs.org/expo-web-browser/-/expo-web-browser-13.0.3.tgz"
   integrity sha512-HXb7y82ApVJtqk8tManyudtTrCtx8xcUnVzmJECeHCB0SsWSQ+penVLZxJkcyATWoJOsFMnfVSVdrTcpKKGszQ==
 
-expo@~51.0.20:
-  version "51.0.20"
-  resolved "https://registry.npmjs.org/expo/-/expo-51.0.20.tgz"
-  integrity sha512-EmNZel6j7pU4YF1QcIcgpVdYsA1lASQcEw9PPSevjreNT6nlge2CNHB6mAphAKGz5PdgcWYBn/v4qQj1/FJuZQ==
+expo@~51.0.21:
+  version "51.0.21"
+  resolved "https://registry.yarnpkg.com/expo/-/expo-51.0.21.tgz#91cb8b78d25ebed4e849f3a25881f25b75bcfe18"
+  integrity sha512-tCKJUw4U4F15FecFPwJTFnAwHZMmUD1Wm7FX0Z/Oj3Jr14MOkom8Lnt2OkBK6BtM91lz33EF9OhgqReX6kchLA==
   dependencies:
     "@babel/runtime" "^7.20.0"
     "@expo/cli" "0.18.25"
@@ -5071,7 +5076,7 @@ expo@~51.0.20:
     babel-preset-expo "~11.0.12"
     expo-asset "~10.0.10"
     expo-file-system "~17.0.1"
-    expo-font "~12.0.8"
+    expo-font "~12.0.9"
     expo-keep-awake "~13.0.2"
     expo-modules-autolinking "1.11.1"
     expo-modules-core "1.12.19"
@@ -8587,10 +8592,10 @@ react-native-reanimated@~3.10.1:
     convert-source-map "^2.0.0"
     invariant "^2.2.4"
 
-react-native-safe-area-context@4.10.1:
-  version "4.10.1"
-  resolved "https://registry.npmjs.org/react-native-safe-area-context/-/react-native-safe-area-context-4.10.1.tgz"
-  integrity sha512-w8tCuowDorUkPoWPXmhqosovBr33YsukkwYCDERZFHAxIkx6qBadYxfeoaJ91nCQKjkNzGrK5qhoNOeSIcYSpA==
+react-native-safe-area-context@4.10.5:
+  version "4.10.5"
+  resolved "https://registry.yarnpkg.com/react-native-safe-area-context/-/react-native-safe-area-context-4.10.5.tgz#a9c677a48bd273afa6876772062ce08e8af1f18d"
+  integrity sha512-Wyb0Nqw2XJ6oZxW/cK8k5q7/UAhg/wbEG6UVf89rQqecDZTDA5ic//P9J6VvJRVZerzGmxWQpVuM7f+PRYUM4g==
 
 react-native-screens@3.31.1:
   version "3.31.1"
