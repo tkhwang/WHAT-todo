@@ -5,10 +5,11 @@ import { Pressable } from "react-native";
 
 import Colors from "@/constants/Colors";
 import { useColorScheme } from "@/components/useColorScheme";
+import { TabBarIcon } from "@/components/navigation/TabBarIcon";
 
-function TabBarIcon(props: { name: React.ComponentProps<typeof FontAwesome>["name"]; color: string }) {
-  return <FontAwesome size={28} style={{ marginBottom: -3 }} {...props} />;
-}
+// function TabBarIcon(props: { name: React.ComponentProps<typeof FontAwesome>["name"]; color: string }) {
+//   return <FontAwesome size={28} style={{ marginBottom: -3 }} {...props} />;
+// }
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
@@ -16,21 +17,45 @@ export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint
+        tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
+        headerShown: false
       }}
     >
       <Tabs.Screen
         name="index"
         options={{
-          title: "Tab One",
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />
+          title: "Home",
+          tabBarIcon: ({ color, focused }) => <TabBarIcon name={focused ? "home" : "home-outline"} color={color} />
         }}
       />
       <Tabs.Screen
-        name="two"
+        name="receivedTodo"
         options={{
-          title: "Tab Two",
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />
+          title: "받은 todo",
+          tabBarIcon: ({ color, focused }) => <TabBarIcon name={focused ? "disc" : "disc-outline"} color={color} />
+        }}
+      />
+      <Tabs.Screen
+        name="sentTodo"
+        options={{
+          title: "보낸 todo",
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon name={focused ? "sparkles" : "sparkles-outline"} color={color} />
+          )
+        }}
+      />
+      <Tabs.Screen
+        name="seeingTodo"
+        options={{
+          title: "보는 todo",
+          tabBarIcon: ({ color, focused }) => <TabBarIcon name={focused ? "eye" : "eye-outline"} color={color} />
+        }}
+      />
+      <Tabs.Screen
+        name="setting"
+        options={{
+          title: "Setting",
+          tabBarIcon: ({ color, focused }) => <TabBarIcon name={focused ? "cog" : "cog-outline"} color={color} />
         }}
       />
     </Tabs>

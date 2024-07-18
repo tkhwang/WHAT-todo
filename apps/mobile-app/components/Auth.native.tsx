@@ -40,11 +40,13 @@ export function Auth() {
             } else {
               throw new Error("No identityToken.");
             }
-          } catch (e) {
-            if (e.code === "ERR_REQUEST_CANCELED") {
-              // handle that the user canceled the sign-in flow
-            } else {
-              // handle other errors
+          } catch (error: unknown) {
+            if (error instanceof Error) {
+              if ((error as any).code === "ERR_REQUEST_CANCELED") {
+                // handle that the user canceled the sign-in flow
+              } else {
+                // handle other errors
+              }
             }
           }
         }}
