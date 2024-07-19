@@ -10,5 +10,8 @@
   "workspaces": [
     "apps/*",
     "packages/*"
-  ]
+  ],
+  "scripts": {
+    "postinstall": "patch-package"
+  }
 }
