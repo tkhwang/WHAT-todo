@@ -27,7 +27,9 @@ export default function TabLayout() {
         name="index"
         options={{
           title: t("app.menu.home"),
-          tabBarIcon: ({ color, focused }) => <TabBarIcon name={focused ? "home" : "home-outline"} color={color} />
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon name={focused ? "today-sharp" : "today-outline"} color={color} />
+          )
         }}
       />
       <Tabs.Screen
@@ -35,7 +37,7 @@ export default function TabLayout() {
         options={{
           title: t("app.menu.me"),
           tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? "checkmark-circle-sharp" : "checkmark-circle-outline"} color={color} />
+            <TabBarIcon name={focused ? "list-circle-sharp" : "list-circle-outline"} color={color} />
           )
         }}
       />
