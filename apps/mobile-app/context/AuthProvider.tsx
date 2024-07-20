@@ -2,17 +2,16 @@ import { ReactNode, createContext, useEffect } from "react"
 import { useContext, useState } from "react"
 import { router, useSegments } from "expo-router"
 import { Platform } from "react-native"
+import * as AppleAuthentication from "expo-apple-authentication"
 
 type AuthProvider = {
-  credential: User | null
-  login: () => Promise<User | null>
+  credential: AppleAuthentication.AppleAuthenticationCredential | null
+  setCredential: (credential: AppleAuthentication.AppleAuthenticationCredential | null) => void
+  login: () => Promise<AppleAuthentication.AppleAuthenticationCredential | null>
   logout: () => void
 }
 
-export type User = {
-  user: string
-}
-function useProtectedRoute(credential: User | null) {
+function useProtectedRoute(credential: AppleAuthentication.AppleAuthenticationCredential | null) {
   const segments = useSegments()
 
   useEffect(() => {
@@ -30,6 +29,7 @@ function useProtectedRoute(credential: User | null) {
 
 export const AuthContext = createContext<AuthProvider>({
   credential: null,
+  setCredential: () => {},
   login: () => Promise.resolve(null),
   logout: () => {},
 })
@@ -43,20 +43,18 @@ export function useAuth() {
 }
 
 export default function AuthProvider({ children }: { children: ReactNode }) {
-  const [credential, setCredential] = useState<User | null>(null)
+  const [credential, setCredential] = useState<AppleAuthentication.AppleAuthenticationCredential | null>(null)
 
   const appleLogin = async () => {
-    let credential: User | null = null
+    let credential: AppleAuthentication.AppleAuthenticationCredential | null = null
     try {
-      /*
       credential = await AppleAuthentication.signInAsync({
         requestedScopes: [
           AppleAuthentication.AppleAuthenticationScope.FULL_NAME,
           AppleAuthentication.AppleAuthenticationScope.EMAIL,
         ],
       })
-*/
-      credential = { user: "test@whattodo.ai" }
+      // credential = { user: "test@whattodo.ai" }
       setCredential(credential)
       return credential
     } catch (error) {
@@ -77,5 +75,5 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
 
   useProtectedRoute(credential)
 
-  return <AuthContext.Provider value={{ credential, login, logout }}>{children}</AuthContext.Provider>
+  return <AuthContext.Provider value={{ credential, setCredential, login, logout }}>{children}</AuthContext.Provider>
 }
