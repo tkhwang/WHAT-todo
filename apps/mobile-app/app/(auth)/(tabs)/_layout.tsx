@@ -1,9 +1,15 @@
-import { Tabs } from "expo-router"
 import React from "react"
+import FontAwesome from "@expo/vector-icons/FontAwesome"
+import { Link, Tabs } from "expo-router"
+import { Pressable } from "react-native"
 
 import { TabBarIcon } from "@/components/navigation/TabBarIcon"
 import { Colors } from "@/constants/Colors"
 import { useColorScheme } from "@/hooks/useColorScheme"
+
+// function TabBarIcon(props: { name: React.ComponentProps<typeof FontAwesome>["name"]; color: string }) {
+//   return <FontAwesome size={28} style={{ marginBottom: -3 }} {...props} />;
+// }
 
 export default function TabLayout() {
   const colorScheme = useColorScheme()
@@ -23,25 +29,27 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="receivedTodo"
+        name="me"
         options={{
-          title: "받은 todo",
-          tabBarIcon: ({ color, focused }) => <TabBarIcon name={focused ? "disc" : "disc-outline"} color={color} />,
-        }}
-      />
-      <Tabs.Screen
-        name="sentTodo"
-        options={{
-          title: "보낸 todo",
+          title: "Me",
           tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? "sparkles" : "sparkles-outline"} color={color} />
+            <TabBarIcon name={focused ? "checkmark-circle-sharp" : "checkmark-circle-outline"} color={color} />
           ),
         }}
       />
       <Tabs.Screen
-        name="seeingTodo"
+        name="expert"
         options={{
-          title: "보는 todo",
+          title: "Expert",
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon name={focused ? "chatbubbles-sharp" : "chatbubbles-outline"} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="supervisor"
+        options={{
+          title: "Supervisor",
           tabBarIcon: ({ color, focused }) => <TabBarIcon name={focused ? "eye" : "eye-outline"} color={color} />,
         }}
       />
