@@ -10,7 +10,7 @@ type AuthProvider = {
 }
 
 export type User = {
-  email: string
+  user: string
 }
 function useProtectedRoute(credential: User | null) {
   const segments = useSegments()
@@ -56,7 +56,7 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
         ],
       })
 */
-      credential = { email: "test@whattodo.ai" }
+      credential = { user: "test@whattodo.ai" }
       setCredential(credential)
       return credential
     } catch (error) {
