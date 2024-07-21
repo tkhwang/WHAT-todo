@@ -13,13 +13,13 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "buildNumber": "12",
+      "buildNumber": "13",
       "supportsTablet": true,
       "bundleIdentifier": "me.tkhwang.whattodo",
       "usesAppleSignIn": true
     },
     "android": {
-      "versionCode": 12,
+      "versionCode": 13,
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
