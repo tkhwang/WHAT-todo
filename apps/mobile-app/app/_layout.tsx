@@ -8,6 +8,7 @@ import React, { useEffect } from "react";
 import "@/utils/i18n";
 import AuthProvider from "@/context/AuthProvider";
 import { useColorScheme } from "@/hooks/useColorScheme";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -44,16 +45,19 @@ export default function RootLayout() {
 }
 
 function RootLayoutNav() {
+  const queryClient = new QueryClient();
   const colorScheme = useColorScheme();
 
   return (
-    <AuthProvider>
-      <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-        <Stack>
-          <Stack.Screen name="(auth)/(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name="(public)/login" options={{ headerShown: false }} />
-        </Stack>
-      </ThemeProvider>
-    </AuthProvider>
+    <QueryClientProvider client={queryClient}>
+      <AuthProvider>
+        <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+          <Stack>
+            <Stack.Screen name="(auth)/(tabs)" options={{ headerShown: false }} />
+            <Stack.Screen name="(public)/login" options={{ headerShown: false }} />
+          </Stack>
+        </ThemeProvider>
+      </AuthProvider>
+    </QueryClientProvider>
   );
 }
