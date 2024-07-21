@@ -9,6 +9,7 @@ import "@/utils/i18n";
 import AuthProvider from "@/context/AuthProvider";
 import { useColorScheme } from "@/hooks/useColorScheme";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryClientProvider } from "@/config/ReactQueryClientProvider";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -49,7 +50,7 @@ function RootLayoutNav() {
   const colorScheme = useColorScheme();
 
   return (
-    <QueryClientProvider client={queryClient}>
+    <ReactQueryClientProvider>
       <AuthProvider>
         <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
           <Stack>
@@ -58,6 +59,6 @@ function RootLayoutNav() {
           </Stack>
         </ThemeProvider>
       </AuthProvider>
-    </QueryClientProvider>
+    </ReactQueryClientProvider>
   );
 }
