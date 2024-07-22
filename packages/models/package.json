@@ -3,7 +3,5 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
-  "scripts": {
-    "generate-types": "npx supabase gen types --lang=typescript --project-id gbrallnzduvbxmfdnatw --schema public > ./database/types_db.ts"
-  }
+  "scripts": {}
 }

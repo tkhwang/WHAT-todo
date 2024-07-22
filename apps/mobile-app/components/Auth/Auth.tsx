@@ -1,3 +1,4 @@
+import { Colors } from "@/constants/Colors";
 import { useAuth } from "@/context/AuthProvider";
 import { useCallback } from "react";
 import { View, Text, Button } from "react-native";
