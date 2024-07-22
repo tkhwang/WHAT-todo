@@ -9,8 +9,7 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "test": "jest --watchAll",
-    "lint": "expo lint",
-    "generate-types": "npx supabase gen types --lang=typescript --project-id gbrallnzduvbxmfdnatw --schema public > ./types/types_db.ts"
+    "lint": "expo lint"
   },
   "jest": {
     "preset": "jest-expo"
