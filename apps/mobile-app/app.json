@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "WhatToDo",
+    "name": "WHAT-todo",
     "slug": "tkhwang-whattodo",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -13,13 +13,11 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "buildNumber": "13",
       "supportsTablet": true,
       "bundleIdentifier": "me.tkhwang.whattodo",
       "usesAppleSignIn": true
     },
     "android": {
-      "versionCode": 13,
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
@@ -44,9 +42,7 @@
       }
     },
     "owner": "tkhwang",
-    "runtimeVersion": {
-      "policy": "appVersion"
-    },
+    "runtimeVersion": "1.0.0",
     "updates": {
       "url": "https://u.expo.dev/690f3975-9901-447c-90ac-b18b7a7a4c74"
     }
