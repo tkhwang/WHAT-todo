@@ -1,4 +1,5 @@
 import { Button, StyleSheet, View, Text } from "react-native";
+import { getBuildNumber, getVersion } from "react-native-device-info";
 
 import { useAuth } from "@/context/AuthProvider";
 import { useEffect } from "react";
@@ -17,6 +18,8 @@ export default function TabTwoScreen() {
       <Text>Account</Text>
       <Text>{credential?.user || "No username"}</Text>
       <Button title="Log out" onPress={logout} />
+      <Text>Version : {getVersion()}</Text>
+      <Text>BuildNumber : {getBuildNumber()}</Text>
     </View>
   );
 }
