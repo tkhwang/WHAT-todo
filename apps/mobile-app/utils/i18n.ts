@@ -10,7 +10,7 @@ const initI18n = async () => {
   let savedLanguage = await AsyncStorage.getItem("language");
 
   if (!savedLanguage) {
-    savedLanguage = Localization.getLocales()[1].languageCode;
+    savedLanguage = Localization.getLocales()[0].languageCode;
   }
 
   i18n.use(initReactI18next).init({
