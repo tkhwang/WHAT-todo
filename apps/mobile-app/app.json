@@ -13,6 +13,7 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
+      "googleServicesFile": "./GoogleService-Info.plist",
       "supportsTablet": true,
       "bundleIdentifier": "me.tkhwang.whattodo",
       "usesAppleSignIn": true
@@ -33,7 +34,9 @@
       "expo-router",
       "expo-apple-authentication",
       "expo-localization",
-      "expo-font"
+      "expo-font",
+      "@react-native-firebase/app",
+      "@react-native-firebase/auth"
     ],
     "experiments": {
       "typedRoutes": true
