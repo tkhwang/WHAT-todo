@@ -1,4 +1,4 @@
-rootProject.name = 'WhatToDo'
+rootProject.name = 'WHAT-todo'
 
 dependencyResolutionManagement {
   versionCatalogs {

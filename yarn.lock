@@ -1186,10 +1186,10 @@
     dotenv-expand "~11.0.6"
     getenv "^1.0.0"
 
-"@expo/fingerprint@^0.10.1":
-  version "0.10.1"
-  resolved "https://registry.yarnpkg.com/@expo/fingerprint/-/fingerprint-0.10.1.tgz#12055d425425884258b69e4cd6bbeed35fd2a6e8"
-  integrity sha512-0d0lniPAm6tOZinoj6d8JPozdeaYL12hNW2lZy76YaRRfBoAVGD1xwx6pilRumgKJGFL2SxOGnRoC4ZarZel4g==
+"@expo/fingerprint@^0.10.2":
+  version "0.10.2"
+  resolved "https://registry.yarnpkg.com/@expo/fingerprint/-/fingerprint-0.10.2.tgz#120a0d030dfa7b8c317cf5dc55379d06548e82f8"
+  integrity sha512-q75zb4AeB08efofCnEJIddS7kCe0TX8YjHSat204mq1RLUJjv2JAN1Zgyk5HW/4i8b/sMYst0HX+BLCtszb+2A==
   dependencies:
     "@expo/spawn-async" "^1.7.2"
     chalk "^4.1.2"
@@ -1225,7 +1225,31 @@
     json5 "^2.2.2"
     write-file-atomic "^2.3.0"
 
-"@expo/metro-config@0.18.8", "@expo/metro-config@~0.18.6":
+"@expo/metro-config@0.18.9":
+  version "0.18.9"
+  resolved "https://registry.yarnpkg.com/@expo/metro-config/-/metro-config-0.18.9.tgz#5494e3e51409474fd1521389673c3f99511b50c4"
+  integrity sha512-kcqT/wuO43zxuFeR5AR/pMuq/O9qtIyuTI1wYvBY97blHAYU/wfPJKW3xFL14fDkPqQOc87hEEhjlJiXoebvcw==
+  dependencies:
+    "@babel/core" "^7.20.0"
+    "@babel/generator" "^7.20.5"
+    "@babel/parser" "^7.20.0"
+    "@babel/types" "^7.20.0"
+    "@expo/config" "~9.0.0-beta.0"
+    "@expo/env" "~0.3.0"
+    "@expo/json-file" "~8.3.0"
+    "@expo/spawn-async" "^1.7.2"
+    chalk "^4.1.0"
+    debug "^4.3.2"
+    find-yarn-workspace-root "~2.0.0"
+    fs-extra "^9.1.0"
+    getenv "^1.0.0"
+    glob "^7.2.3"
+    jsc-safe-url "^0.2.4"
+    lightningcss "~1.19.0"
+    postcss "~8.4.32"
+    resolve-from "^5.0.0"
+
+"@expo/metro-config@~0.18.6":
   version "0.18.8"
   resolved "https://registry.npmjs.org/@expo/metro-config/-/metro-config-0.18.8.tgz"
   integrity sha512-YGpTlVc1/6EPzPbt0LZt92Bwrpjngulup6uHSTRbwn/heMPfFaVv1Y4VE3GAUkx7/Qwu+dTVIV0Kys4pLOAIiw==
@@ -4905,10 +4929,10 @@ expect@^29.0.0, expect@^29.7.0:
     jest-message-util "^29.7.0"
     jest-util "^29.7.0"
 
-expo-apple-authentication@^6.4.1:
-  version "6.4.1"
-  resolved "https://registry.yarnpkg.com/expo-apple-authentication/-/expo-apple-authentication-6.4.1.tgz#3992abd1497abfe9163cc0f66245edd4161e39b3"
-  integrity sha512-tYpCx/cLHruOAPnU5K8UpAycWJWPgdPQra7qz6FGl53Agt8UJ4ev/qEkijbL959x46Ke9+6WSMOhLqt8JoypqA==
+expo-apple-authentication@~6.4.2:
+  version "6.4.2"
+  resolved "https://registry.yarnpkg.com/expo-apple-authentication/-/expo-apple-authentication-6.4.2.tgz#1c2ea4fcbd1de5736483dccd370cdd6b8e3de15d"
+  integrity sha512-X4u1n3Ql1hOpztXHbKNq4I1l4+Ff82gC6RmEeW43Eht7VE6E8PrQBpYKw+JJv8osrCJt7R5O1PZwed6WLN5oig==
 
 expo-asset@~10.0.10:
   version "10.0.10"
@@ -4937,10 +4961,10 @@ expo-file-system@~17.0.1:
   resolved "https://registry.npmjs.org/expo-file-system/-/expo-file-system-17.0.1.tgz"
   integrity sha512-dYpnZJqTGj6HCYJyXAgpFkQWsiCH3HY1ek2cFZVHFoEc5tLz9gmdEgTF6nFHurvmvfmXqxi7a5CXyVm0aFYJBw==
 
-expo-font@~12.0.8:
-  version "12.0.8"
-  resolved "https://registry.npmjs.org/expo-font/-/expo-font-12.0.8.tgz"
-  integrity sha512-xK9kOEyD/vnREicM5yS2uVwzB83weu+UE6QwJRH2dhoQcdJiWGGKOj+blJ8GrtU+BqtyNijyWcwfBbYOJnf8eQ==
+expo-font@~12.0.9:
+  version "12.0.9"
+  resolved "https://registry.yarnpkg.com/expo-font/-/expo-font-12.0.9.tgz#096860a6b8b5dd54152262eafd318593ec2db48c"
+  integrity sha512-seTCyf0tbgkAnp3ZI9ZfK9QVtURQUgFnuj+GuJ5TSnN0XsOtVe1s2RxTvmMgkfuvfkzcjJ69gyRpsZS1cC8hjw==
   dependencies:
     fontfaceobserver "^2.1.0"
 
@@ -5040,15 +5064,15 @@ expo-updates-interface@~0.16.2:
   resolved "https://registry.yarnpkg.com/expo-updates-interface/-/expo-updates-interface-0.16.2.tgz#ad1ac2ca8ee5a8cc84052ea3c18a11da64da569b"
   integrity sha512-929XBU70q5ELxkKADj1xL0UIm3HvhYhNAOZv5DSk7rrKvLo7QDdPyl+JVnwZm9LrkNbH4wuE2rLoKu1KMgZ+9A==
 
-expo-updates@~0.25.20:
-  version "0.25.20"
-  resolved "https://registry.yarnpkg.com/expo-updates/-/expo-updates-0.25.20.tgz#a3a597260e8a4c792ef5b4dd5aa8aba671228265"
-  integrity sha512-EfxRZDPNUWFXTsjn4Ii+AwIp/KLHXGKG59R8kyWzz/nHeMxXqGUDQF79qcgXcaq5lOMUpeGNlZqOBGho9cvUEg==
+expo-updates@~0.25.21:
+  version "0.25.21"
+  resolved "https://registry.yarnpkg.com/expo-updates/-/expo-updates-0.25.21.tgz#4b117ee23261e386382c24154600d782b6b0765b"
+  integrity sha512-eNElrzLFHky2au0H8MqdAJdqh40412PHCdANdXtB/P/XIS1xVte74T9rUf053iPswnLLuQfCUpZYSfRKTcsDlg==
   dependencies:
     "@expo/code-signing-certificates" "0.0.5"
     "@expo/config" "~9.0.0-beta.0"
     "@expo/config-plugins" "~8.0.8"
-    "@expo/fingerprint" "^0.10.1"
+    "@expo/fingerprint" "^0.10.2"
     "@expo/spawn-async" "^1.7.2"
     arg "4.1.0"
     chalk "^4.1.2"
@@ -5066,21 +5090,21 @@ expo-web-browser@~13.0.3:
   resolved "https://registry.npmjs.org/expo-web-browser/-/expo-web-browser-13.0.3.tgz"
   integrity sha512-HXb7y82ApVJtqk8tManyudtTrCtx8xcUnVzmJECeHCB0SsWSQ+penVLZxJkcyATWoJOsFMnfVSVdrTcpKKGszQ==
 
-expo@~51.0.20:
-  version "51.0.20"
-  resolved "https://registry.npmjs.org/expo/-/expo-51.0.20.tgz"
-  integrity sha512-EmNZel6j7pU4YF1QcIcgpVdYsA1lASQcEw9PPSevjreNT6nlge2CNHB6mAphAKGz5PdgcWYBn/v4qQj1/FJuZQ==
+expo@~51.0.22:
+  version "51.0.22"
+  resolved "https://registry.yarnpkg.com/expo/-/expo-51.0.22.tgz#93787d76998757e3d37587edc132c2c42d378ae9"
+  integrity sha512-AtdqmtKNRC+cRBTsYGfwQFMLWAWWC531V2V+bAO3S9wVSTP2eLh34V06/IsBIjCCAJQPaaeR05XcST8U3apXFw==
   dependencies:
     "@babel/runtime" "^7.20.0"
     "@expo/cli" "0.18.25"
     "@expo/config" "9.0.3"
     "@expo/config-plugins" "8.0.8"
-    "@expo/metro-config" "0.18.8"
+    "@expo/metro-config" "0.18.9"
     "@expo/vector-icons" "^14.0.0"
     babel-preset-expo "~11.0.12"
     expo-asset "~10.0.10"
     expo-file-system "~17.0.1"
-    expo-font "~12.0.8"
+    expo-font "~12.0.9"
     expo-keep-awake "~13.0.2"
     expo-modules-autolinking "1.11.1"
     expo-modules-core "1.12.19"
@@ -8623,10 +8647,10 @@ react-native-reanimated@~3.10.1:
     convert-source-map "^2.0.0"
     invariant "^2.2.4"
 
-react-native-safe-area-context@4.10.1:
-  version "4.10.1"
-  resolved "https://registry.npmjs.org/react-native-safe-area-context/-/react-native-safe-area-context-4.10.1.tgz"
-  integrity sha512-w8tCuowDorUkPoWPXmhqosovBr33YsukkwYCDERZFHAxIkx6qBadYxfeoaJ91nCQKjkNzGrK5qhoNOeSIcYSpA==
+react-native-safe-area-context@4.10.5:
+  version "4.10.5"
+  resolved "https://registry.yarnpkg.com/react-native-safe-area-context/-/react-native-safe-area-context-4.10.5.tgz#a9c677a48bd273afa6876772062ce08e8af1f18d"
+  integrity sha512-Wyb0Nqw2XJ6oZxW/cK8k5q7/UAhg/wbEG6UVf89rQqecDZTDA5ic//P9J6VvJRVZerzGmxWQpVuM7f+PRYUM4g==
 
 react-native-screens@3.31.1:
   version "3.31.1"

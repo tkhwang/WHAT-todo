@@ -8,15 +8,15 @@ PODS:
   - EXJSONUtils (0.13.1)
   - EXManifests (0.14.3):
     - ExpoModulesCore
-  - Expo (51.0.20):
+  - Expo (51.0.22):
     - ExpoModulesCore
-  - ExpoAppleAuthentication (6.4.1):
+  - ExpoAppleAuthentication (6.4.2):
     - ExpoModulesCore
   - ExpoAsset (10.0.10):
     - ExpoModulesCore
   - ExpoFileSystem (17.0.1):
     - ExpoModulesCore
-  - ExpoFont (12.0.8):
+  - ExpoFont (12.0.9):
     - ExpoModulesCore
   - ExpoHead (3.5.18):
     - ExpoModulesCore
@@ -74,7 +74,7 @@ PODS:
     - ReactCommon/turbomodule/core
     - Yoga
   - EXStructuredHeaders (3.8.0)
-  - EXUpdates (0.25.20):
+  - EXUpdates (0.25.21):
     - DoubleConversion
     - EASClient
     - EXManifests
@@ -1039,7 +1039,7 @@ PODS:
   - React-Mapbuffer (0.74.3):
     - glog
     - React-debug
-  - react-native-safe-area-context (4.10.1):
+  - react-native-safe-area-context (4.10.5):
     - React-Core
   - React-nativeconfig (0.74.3)
   - React-NativeModulesApple (0.74.3):
@@ -1601,11 +1601,11 @@ SPEC CHECKSUMS:
   EXConstants: 409690fbfd5afea964e5e9d6c4eb2c2b59222c59
   EXJSONUtils: 30c17fd9cc364d722c0946a550dfbf1be92ef6a4
   EXManifests: c1fab4c3237675e7b0299ea8df0bcb14baca4f42
-  Expo: 0cab4b4dc73f263c0d4297e993686973725adb7f
-  ExpoAppleAuthentication: 7af0b493e820dc0b22150cb9531fc1c31dc4fbfd
+  Expo: 8b7948e45627e848c2d7b6be7cf5851a505aef19
+  ExpoAppleAuthentication: 265219fa0ba1110872079f55f56686b9737b0065
   ExpoAsset: 323700f291684f110fb55f0d4022a3362ea9f875
   ExpoFileSystem: 80bfe850b1f9922c16905822ecbf97acd711dc51
-  ExpoFont: b3630aff6bfb29ae3c261412f0796813a522cca9
+  ExpoFont: e7f2275c10ca8573c991e007329ad6bf98086485
   ExpoHead: 7880300d9c1519420530cf591d333d3f96ff9f6e
   ExpoKeepAwake: 3b8815d9dd1d419ee474df004021c69fdd316d08
   ExpoLocalization: f04eeec2e35bed01ab61c72ee1768ec04d093d01
@@ -1614,7 +1614,7 @@ SPEC CHECKSUMS:
   ExpoWebBrowser: 7595ccac6938eb65b076385fd23d035db9ecdc8e
   EXSplashScreen: fbf0ec78e9cee911df188bf17b4fe51d15a84b87
   EXStructuredHeaders: cb8d1f698e144f4c5547b4c4963e1552f5d2b457
-  EXUpdates: 176798660fa269b851e10dd28adb99db9ebb6bd1
+  EXUpdates: 21d0e378e7d38d147bca9cb29c88322db2dfbdfe
   EXUpdatesInterface: 996527fd7d1a5d271eb523258d603f8f92038f24
   FBLazyVector: 7e977dd099937dc5458851233141583abba49ff2
   fmt: 4c2741a687cc09f0634a2e2c72a838b99f1ff120
@@ -1645,7 +1645,7 @@ SPEC CHECKSUMS:
   React-jsitracing: 6b3c8c98313642140530f93c46f5a6ca4530b446
   React-logger: fa92ba4d3a5d39ac450f59be2a3cec7b099f0304
   React-Mapbuffer: 9f68550e7c6839d01411ac8896aea5c868eff63a
-  react-native-safe-area-context: dcab599c527c2d7de2d76507a523d20a0b83823d
+  react-native-safe-area-context: a240ad4b683349e48b1d51fed1611138d1bdad97
   React-nativeconfig: fa5de9d8f4dbd5917358f8ad3ad1e08762f01dcb
   React-NativeModulesApple: 585d1b78e0597de364d259cb56007052d0bda5e5
   React-perflogger: 7bb9ba49435ff66b666e7966ee10082508a203e8
