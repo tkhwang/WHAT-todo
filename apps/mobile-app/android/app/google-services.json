@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "487181796878",
+    "project_id": "tkhwang-whattodo-dev-4029d",
+    "storage_bucket": "tkhwang-whattodo-dev-4029d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:487181796878:android:75cd9b50715316c069de5f",
+        "android_client_info": {
+          "package_name": "me.tkhwang.whattodo"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBv0IzTGVRL9TjfG2Uu98rRAFZ_0NOljSM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
