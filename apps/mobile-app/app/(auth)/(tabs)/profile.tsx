@@ -3,6 +3,7 @@ import { getBuildNumber, getVersion } from "react-native-device-info";
 
 import { useAuth } from "@/context/AuthProvider";
 import { useEffect } from "react";
+import { EAS_UPDATE_VERSION } from "@/constants/appConsts";
 
 export default function TabTwoScreen() {
   const { credential, logout } = useAuth();
@@ -20,6 +21,7 @@ export default function TabTwoScreen() {
       <Button title="Log out" onPress={logout} />
       <Text>Version : {getVersion()}</Text>
       <Text>BuildNumber : {getBuildNumber()}</Text>
+      <Text>Version : {EAS_UPDATE_VERSION}</Text>
     </View>
   );
 }
