@@ -8,6 +8,8 @@
     "android": "expo run:android",
     "ios": "expo run:ios",
     "web": "expo start --web",
+    "eas:prebuild:ios": "npx eas build --platform ios --profile production",
+    "eas:prebuild:android": "npx eas build --platform android --profile preview",
     "test": "jest --watchAll",
     "lint": "expo lint"
   },
