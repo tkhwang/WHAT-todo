@@ -9,7 +9,7 @@ Todo from experts with supervisors
 - [react native expo](https://expo.dev/) : v51
 - UI
   - tailwind css
-  - [gluestack-ui v2](https://www.gluestack.io/)
+  - [rnr : React Native Reusables](https://rnr-docs.vercel.app/getting-started/introduction/)
 
 ### Backend
 
@@ -22,11 +22,19 @@ Todo from experts with supervisors
 ### iOS
 
 ```bash
-eas build --platform ios --profile production
+# eas build --platform ios --profile production
+ yarn run eas:prebuild:ios
 ```
 
 ### Android
 
 ```bash
-eas build --platform android --profile preview
+# eas build --platform android --profile preview
+ yarn run eas:prebuild:android
+```
+
+## EAS Submit
+
+```bash
+eas submit
 ```
