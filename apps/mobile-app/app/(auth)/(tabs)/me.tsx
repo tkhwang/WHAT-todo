@@ -1,5 +1,6 @@
 import { Sun } from "@/lib/icons/Sun";
-import { View, Text } from "react-native";
+import { View } from "react-native";
+import { Text } from "@/components/ui/text";
 
 export default function TabTwoScreen() {
   return (

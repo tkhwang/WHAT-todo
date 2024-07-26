@@ -1,7 +1,8 @@
 import { Auth } from "@/components/Auth/Auth";
 import { MoonStar } from "@/lib/icons/MoonStar";
 import { useTranslation } from "react-i18next";
-import { View, Text } from "react-native";
+import { View } from "react-native";
+import { Text } from "@/components/ui/text";
 
 export default function HomeScreen() {
   const { t } = useTranslation();
