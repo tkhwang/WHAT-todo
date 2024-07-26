@@ -10,7 +10,8 @@
     },
     "preview": {
       "android": {
-        "image": "latest"
+        "image": "latest",
+        "gradleCommand": "bundleRelease"
       },
       "distribution": "internal",
       "channel": "preview"
