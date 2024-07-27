@@ -17,7 +17,8 @@ export default function TabTwoScreen() {
   return (
     <View className="flex-1 flex flex-col justify-center px-4 items-center">
       <Text>Account</Text>
-      <Text>{user?.user || "No username"}</Text>
+      <Text>Email : {user?.email}</Text>
+      <Text>User Id : {user.uid}</Text>
       <Button title="Log out" onPress={logout} />
       <Text>Version : {getVersion()}</Text>
       <Text>BuildNumber : {getBuildNumber()}</Text>
