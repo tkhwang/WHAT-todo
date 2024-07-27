@@ -1,8 +1,9 @@
+import { FirebaseAuthTypes } from "@react-native-firebase/auth";
 import * as AppleAuthentication from "expo-apple-authentication";
 import { router, useSegments } from "expo-router";
 import { useEffect } from "react";
 
-export function useProtectedRoute(credential: AppleAuthentication.AppleAuthenticationCredential | null) {
+export function useProtectedRoute(user: FirebaseAuthTypes.User | null) {
   const segments = useSegments();
 
   useEffect(() => {
@@ -10,10 +11,10 @@ export function useProtectedRoute(credential: AppleAuthentication.AppleAuthentic
 
     console.log(`[*] inAuthGroup: ${inAuthGroup}`);
 
-    if (!credential && inAuthGroup) {
+    if (!user && inAuthGroup) {
       router.replace("/login");
-    } else if (credential && !inAuthGroup) {
+    } else if (user && !inAuthGroup) {
       router.replace("/(auth)/(tabs)/");
     }
-  }, [credential, segments]);
+  }, [user, segments]);
 }
