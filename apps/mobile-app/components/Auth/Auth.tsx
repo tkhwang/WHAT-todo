@@ -6,10 +6,10 @@ import { Button } from "../ui/button";
 import { Text } from "../ui/text";
 
 export function Auth() {
-  const { login, setCredential } = useAuth();
+  const { login, setUser } = useAuth();
 
   const fakeLogin = useCallback(() => {
-    setCredential({ user: "test@whattodo.ai" });
+    setUser({ user: "test@whattodo.ai" });
   }, []);
 
   return (

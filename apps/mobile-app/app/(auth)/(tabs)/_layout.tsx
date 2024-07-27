@@ -1,20 +1,14 @@
 import React from "react";
-import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { Link, Tabs } from "expo-router";
-import { Pressable } from "react-native";
 
 import { TabBarIcon } from "@/components/navigation/TabBarIcon";
 import { Colors } from "@/constants/Colors";
-import { useColorScheme } from "@/hooks/useColorScheme";
 import { useTranslation } from "react-i18next";
-
-// function TabBarIcon(props: { name: React.ComponentProps<typeof FontAwesome>["name"]; color: string }) {
-//   return <FontAwesome size={28} style={{ marginBottom: -3 }} {...props} />;
-// }
+import { useColorScheme } from "@/lib/useColorScheme";
 
 export default function TabLayout() {
   const { t } = useTranslation();
-  const colorScheme = useColorScheme();
+  const { colorScheme } = useColorScheme();
 
   return (
     <Tabs

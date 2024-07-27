@@ -1871,6 +1871,11 @@
   resolved "https://registry.npmjs.org/@humanwhocodes/object-schema/-/object-schema-2.0.3.tgz"
   integrity sha512-93zYdMES/c1D69yZiKDBj0V24vqNzB/koF26KPaagAfd3P/4gUlh3Dys5ogAK+Exi9QyzlD8x/08Zt7wIKcDcA==
 
+"@invertase/react-native-apple-authentication@^2.3.0":
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/@invertase/react-native-apple-authentication/-/react-native-apple-authentication-2.3.0.tgz#b131b2033bfce06ca788f0b0886b51eb6effea0e"
+  integrity sha512-D3NNPv98EmkkCJyQEZhRn1zPC5EH+8LKBS+ddFsDyc3rVGWE7Ct0ffpxZ5T60w6wamIPjojIMSfEPUxbQ28+og==
+
 "@isaacs/cliui@^8.0.2":
   version "8.0.2"
   resolved "https://registry.npmjs.org/@isaacs/cliui/-/cliui-8.0.2.tgz"
@@ -2549,6 +2554,16 @@
   integrity sha512-pG8s1z7XgxYiwe9TS4PB0LmnyAdZIBFFI3Sh9L/LsipTJshDmxHLDU3BLuV2KyF7XxFj6jdnvmYi+4QTNzIKpg==
   dependencies:
     plist "^3.1.0"
+
+"@react-native-firebase/firestore@^20.3.0":
+  version "20.3.0"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/firestore/-/firestore-20.3.0.tgz#d9e7afa4be632a5bd2dcbd4463d3e661d9d2d4d7"
+  integrity sha512-bCFjM5FBshsyRD8UQfPlzbHoOshNZ+oVSFiWP6pz1jp9mumTfTaEi0pEqqRhGuxX2mDA/1lJQT44RXfHTAQ3yQ==
+
+"@react-native-google-signin/google-signin@^12.2.1":
+  version "12.2.1"
+  resolved "https://registry.yarnpkg.com/@react-native-google-signin/google-signin/-/google-signin-12.2.1.tgz#242247ab18ea7bb3a1dcabb50df7ad236f104294"
+  integrity sha512-qt2Cb+bN2NS8BBT06M3UbLVS1gaSYTenNh4uZtPNmyJC23xZAynLkuhvsC6gmeEnxcj0wLVUn1Es+LSHw0OhVQ==
 
 "@react-native/assets-registry@0.74.85":
   version "0.74.85"
