@@ -3,6 +3,7 @@ import { useContext, useState } from "react";
 import { router, useSegments } from "expo-router";
 import { Platform } from "react-native";
 import * as AppleAuthentication from "expo-apple-authentication";
+import { useProtectedRoute } from "@/hooks/useProtectedRoute";
 
 type AuthProvider = {
   credential: AppleAuthentication.AppleAuthenticationCredential | null;
@@ -10,22 +11,6 @@ type AuthProvider = {
   login: () => Promise<AppleAuthentication.AppleAuthenticationCredential | null>;
   logout: () => void;
 };
-
-function useProtectedRoute(credential: AppleAuthentication.AppleAuthenticationCredential | null) {
-  const segments = useSegments();
-
-  useEffect(() => {
-    const inAuthGroup = segments[0] === "(auth)";
-
-    console.log(`[*] inAuthGroup: ${inAuthGroup}`);
-
-    if (!credential && inAuthGroup) {
-      router.replace("/login");
-    } else if (credential && !inAuthGroup) {
-      router.replace("/(auth)/(tabs)/");
-    }
-  }, [credential, segments]);
-}
 
 export const AuthContext = createContext<AuthProvider>({
   credential: null,
