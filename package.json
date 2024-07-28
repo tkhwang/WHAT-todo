@@ -10,5 +10,9 @@
   "workspaces": [
     "apps/*",
     "packages/*"
-  ]
+  ],
+  "scripts": {
+    "backend": "yarn workspace @whatTodo/backend start",
+    "build:backend": "yarn workspace @whatTodo/backend build"
+  }
 }
