@@ -13,9 +13,9 @@ Todo from experts with supervisors
 
 ### Backend
 
-- [supabase](https://supabase.com/)
-  - authentication
 - [nest.js](https://nestjs.com/)
+- [firebase](https://firebase.google.com/)
+  -firebase admin
 
 ## EAS Build
 
