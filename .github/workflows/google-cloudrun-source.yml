@@ -51,7 +51,7 @@ on:
     branches: ["main"]
 
 env:
-  PROJECT_ID: tkhwang-whattodo-dev-430723
+  PROJECT_ID: tkhwang-whattodo-dev-283e8
   SERVICE: what-todo-dev
   REGION: asia-northeast1
 
