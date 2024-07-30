@@ -25,11 +25,12 @@ COPY yarn.lock .
 COPY --from=build /usr/src/app/packages/models/package.json /usr/src/app/packages/models/package.json
 COPY --from=build /usr/src/app/apps/backend/package.json /usr/src/app/apps/backend/package.json
 COPY --from=build /usr/src/app/apps/backend/dist /usr/src/app/apps/backend/dist
-COPY --from=build /usr/src/app/apps/backend/.env /usr/src/app/apps/backend/.env
 
 ENV NODE_ENV production
 
 RUN yarn install --pure-lockfile --non-interactive --production
+
+EXPOSE 8080
 
 WORKDIR /usr/src/app/apps/backend
 
