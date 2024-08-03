@@ -13,6 +13,8 @@
   ],
   "scripts": {
     "backend": "yarn workspace @whatTodo/backend start",
-    "build:backend": "yarn workspace @whatTodo/backend build"
+    "build:backend": "yarn workspace @whatTodo/backend build",
+    "docker:build:local": "docker build -t tkhwang-whattodo-dev .",
+    "docker:run:local": "docker run --env-file ./apps/backend/.env -p 80:8080 tkhwang-whattodo-dev"
   }
 }
