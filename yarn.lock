@@ -3034,24 +3034,24 @@
   dependencies:
     "@sinonjs/commons" "^3.0.0"
 
-"@tanstack/eslint-plugin-query@^5.51.12":
-  version "5.51.12"
-  resolved "https://registry.yarnpkg.com/@tanstack/eslint-plugin-query/-/eslint-plugin-query-5.51.12.tgz#1adb208617008ac33c9e4f2dad3c25bc8c1119a4"
-  integrity sha512-vzUXXIVzDP2c6wVSJ+1imPGaKQ2ILuWnta64FJc/JnQ5WunfO17bQJSk6uKDbzTQG/YKgPYBMG3C9qFA4b7Ayg==
+"@tanstack/eslint-plugin-query@^5.51.15":
+  version "5.51.15"
+  resolved "https://registry.yarnpkg.com/@tanstack/eslint-plugin-query/-/eslint-plugin-query-5.51.15.tgz#db69652bf24103d132f5013b3b7ca61cd9f5bf8b"
+  integrity sha512-btX03EOGvNxTGJDqHMmQwfSt/hp93Z8I4FNBijoyEdDnjGi4jVjpGP7nEi9LaMnHFsylucptVGb6GQngWs07bA==
   dependencies:
     "@typescript-eslint/utils" "8.0.0-alpha.30"
 
-"@tanstack/query-core@5.51.9":
-  version "5.51.9"
-  resolved "https://registry.yarnpkg.com/@tanstack/query-core/-/query-core-5.51.9.tgz#eb2e02c715068d5664680b773e39eb44db6b48d8"
-  integrity sha512-HsAwaY5J19MD18ykZDS3aVVh+bAt0i7m6uQlFC2b77DLV9djo+xEN7MWQAQQTR8IM+7r/zbozTQ7P0xr0bHuew==
+"@tanstack/query-core@5.51.21":
+  version "5.51.21"
+  resolved "https://registry.yarnpkg.com/@tanstack/query-core/-/query-core-5.51.21.tgz#a510469c6c30d3de2a8b8798e340169a4b0fd08f"
+  integrity sha512-POQxm42IUp6n89kKWF4IZi18v3fxQWFRolvBA6phNVmA8psdfB1MvDnGacCJdS+EOX12w/CyHM62z//rHmYmvw==
 
-"@tanstack/react-query@^5.51.11":
-  version "5.51.11"
-  resolved "https://registry.yarnpkg.com/@tanstack/react-query/-/react-query-5.51.11.tgz#8ab2cf6a4baa7a99b5682addf31328525f43242c"
-  integrity sha512-4Kq2x0XpDlpvSnaLG+8pHNH60zEc3mBvb3B2tOMDjcPCi/o+Du3p/9qpPLwJOTliVxxPJAP27fuIhLrsRdCr7A==
+"@tanstack/react-query@^5.51.21":
+  version "5.51.21"
+  resolved "https://registry.yarnpkg.com/@tanstack/react-query/-/react-query-5.51.21.tgz#cdd14677bcc809a83e01b6c38842c841ce7420af"
+  integrity sha512-Q/V81x3sAYgCsxjwOkfLXfrmoG+FmDhLeHH5okC/Bp8Aaw2c33lbEo/mMcMnkxUPVtB2FLpzHT0tq3c+OlZEbw==
   dependencies:
-    "@tanstack/query-core" "5.51.9"
+    "@tanstack/query-core" "5.51.21"
 
 "@tootallnate/once@2":
   version "2.0.0"
