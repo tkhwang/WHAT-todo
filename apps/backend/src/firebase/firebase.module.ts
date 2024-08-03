@@ -1,25 +1,27 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ConfigModule, ConfigService, ConfigType } from '@nestjs/config';
 import * as admin from 'firebase-admin';
+import firebaseConfig from 'src/config/firebase.config';
 
 const firebaseProvider = {
   provide: 'FIREBASE_APP',
-  inject: [ConfigService],
-  useFactory: (configService: ConfigService) => {
+  inject: [ConfigService, firebaseConfig.KEY],
+  useFactory: (
+    configService: ConfigService,
+    firebaseConfiguration: ConfigType<typeof firebaseConfig>,
+  ) => {
     const firebaseConfig = {
-      type: configService.get<string>('TYPE'),
-      project_id: configService.get<string>('PROJECT_ID'),
-      private_key_id: configService.get<string>('PRIVATE_KEY_ID'),
-      private_key: configService
-        .get<string>('PRIVATE_KEY')
-        .replace(/\\n/g, '\n'),
-      client_email: configService.get<string>('CLIENT_EMAIL'),
-      client_id: configService.get<string>('CLIENT_ID'),
-      auth_uri: configService.get<string>('AUTH_URI'),
-      token_uri: configService.get<string>('TOKEN_URI'),
-      auth_provider_x509_cert_url: configService.get<string>('AUTH_CERT_URL'),
-      client_x509_cert_url: configService.get<string>('CLIENT_CERT_URL'),
-      universe_domain: configService.get<string>('UNIVERSE_DOMAIN'),
+      type: firebaseConfiguration.type,
+      project_id: firebaseConfiguration.project_id,
+      private_key_id: firebaseConfiguration.private_key_id,
+      private_key: firebaseConfiguration.private_key?.replace(/\\n/g, '\n'),
+      client_email: firebaseConfiguration.client_email,
+      client_id: firebaseConfiguration.client_id,
+      auth_uri: firebaseConfiguration.auth_uri,
+      token_uri: firebaseConfiguration.token_uri,
+      auth_provider_x509_cert_url: firebaseConfiguration.auth_cert_url,
+      client_x509_cert_url: firebaseConfiguration.client_cert_url,
+      universe_domain: firebaseConfiguration.universe_domain,
     } as admin.ServiceAccount;
 
     return admin.initializeApp({
@@ -31,7 +33,7 @@ const firebaseProvider = {
 };
 
 @Module({
-  imports: [ConfigModule],
+  imports: [ConfigModule.forFeature(firebaseConfig)],
   providers: [firebaseProvider],
   exports: [],
 })
