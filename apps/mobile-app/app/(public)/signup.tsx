@@ -3,6 +3,7 @@ import { Text } from "@/components/ui/text";
 import { authIsSignedInAtom } from "@/states/auth";
 import { useEffect } from "react";
 import { useAtom } from "jotai";
+import MainLayout from "@/components/MainLayout";
 
 export default function PublicSignupScreen() {
   const [authIsSignedIn, setAuthIsSignedIn] = useAtom(authIsSignedInAtom);
@@ -14,8 +15,8 @@ export default function PublicSignupScreen() {
   }, []);
 
   return (
-    <View className="items-center justify-center flex-1">
-      <Text>Signup</Text>
-    </View>
+    <MainLayout>
+      <Text className="text-2xl font-bold">Signup</Text>
+    </MainLayout>
   );
 }
