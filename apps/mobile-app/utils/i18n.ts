@@ -3,8 +3,8 @@ import { initReactI18next } from "react-i18next";
 import * as Localization from "expo-localization";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-import ko from "@/constants/locale/ko.json";
-import en from "@/constants/locale/en.json";
+import ko from "@/constants/locales/ko.json";
+import en from "@/constants/locales/en.json";
 
 const initI18n = async () => {
   let savedLanguage = await AsyncStorage.getItem("language");
