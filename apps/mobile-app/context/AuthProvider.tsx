@@ -35,7 +35,7 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<FirebaseAuthTypes.User | null>(null);
 
   function onAuthStateChanged(user: FirebaseAuthTypes.User | null) {
-    setUser(user);
+    // setUser(user);
     if (initializing) setInitializing(false);
   }
 

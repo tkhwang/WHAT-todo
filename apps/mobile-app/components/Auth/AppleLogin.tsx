@@ -25,7 +25,7 @@ export function AppleLogin() {
       console.log("🚀 ~ handlePress ~ appleCredential:", appleCredential);
 
       const { user } = await auth().signInWithCredential(appleCredential);
-      setUser(user);
+      // setUser(user);
     } catch (error: unknown) {
       if (error instanceof Error) {
         console.log(`[-][AppleLogin]:handlePress failed with error: ${error.message}`);
@@ -37,7 +37,7 @@ export function AppleLogin() {
   if (Platform.OS !== "ios") return null;
 
   return (
-    <View className="flex-1 justify-center items-center">
+    <View className="items-center justify-center flex-1">
       <AppleButton
         buttonStyle={AppleButton.Style.BLACK}
         buttonType={AppleButton.Type.SIGN_IN}
