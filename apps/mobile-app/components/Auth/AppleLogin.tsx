@@ -2,16 +2,21 @@ import { useAuth } from "@/context/AuthProvider";
 import { AppleButton } from "@invertase/react-native-apple-authentication";
 import { useCallback } from "react";
 import { Platform, View } from "react-native";
+import firestore from "@react-native-firebase/firestore";
 
 import auth from "@react-native-firebase/auth";
 import { appleAuth } from "@invertase/react-native-apple-authentication";
 import { authIsSignedInAtom } from "@/states/auth";
+import { useAtom } from "jotai";
+import { COLLECTIONS } from "@/firebase/firebaseConsts";
+import { useRouter } from "expo-router";
 
 export function AppleLogin() {
+  const router = useRouter();
   const { user, setUser } = useAuth();
   const [authIsSignedIn, setAuthIsSignedIn] = useAtom(authIsSignedInAtom);
 
-  const handlePress = useCallback(async () => {
+  const handlePressSignin = useCallback(async () => {
     try {
       const appleAuthRequestResponse = await appleAuth.performRequest({
         requestedOperation: appleAuth.Operation.LOGIN,
@@ -25,8 +30,21 @@ export function AppleLogin() {
       const { identityToken, nonce } = appleAuthRequestResponse;
       const appleCredential = auth.AppleAuthProvider.credential(identityToken, nonce);
 
-      await auth().signInWithCredential(appleCredential);
+      // apple signin
+      const { user } = await auth().signInWithCredential(appleCredential);
       setAuthIsSignedIn(true);
+
+      if (user) {
+        const userDocRef = await firestore().collection(COLLECTIONS.USERS).doc(user.uid).get();
+
+        // signin
+        if (userDocRef.exists) {
+          // signup
+        } else {
+          router.replace("/(public)/signup");
+          console.log(`[+][handlePressSignin] replace to /signup`);
+        }
+      }
     } catch (error: unknown) {
       if (error instanceof Error) {
         console.log(`[-][AppleLogin]:handlePress failed with error: ${error.message}`);
@@ -46,11 +64,8 @@ export function AppleLogin() {
           width: 160,
           height: 45
         }}
-        onPress={handlePress}
+        onPress={handlePressSignin}
       />
     </View>
   );
-}
-function useAtom(authIsSignedInAtom: any): [any, any] {
-  throw new Error("Function not implemented.");
 }

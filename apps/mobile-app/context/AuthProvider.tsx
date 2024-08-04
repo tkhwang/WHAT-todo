@@ -47,14 +47,17 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
 
     if (user) {
       const userDocRef = await firestore().collection(COLLECTIONS.USERS).doc(user.uid).get();
+
       // signin
       if (userDocRef.exists) {
         // signup
       } else {
         if (authIsSignedIn) {
           router.replace("/(public)/signup");
+          console.log(`[+][onAuthStateChanged] replace to /signup`);
         } else {
           router.replace("/(public)/signin");
+          console.log(`[+][onAuthStateChanged] replace to /signin`);
         }
       }
     }
