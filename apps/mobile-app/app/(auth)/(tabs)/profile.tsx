@@ -1,5 +1,6 @@
-import { Button, View, Text } from "react-native";
+import { Button, View } from "react-native";
 import { getBuildNumber, getVersion } from "react-native-device-info";
+import { Text } from "@/components/ui/text";
 
 import { useAuth } from "@/context/AuthProvider";
 import { useEffect } from "react";
@@ -15,7 +16,7 @@ export default function TabTwoScreen() {
   if (!user) return <Text>Loading...</Text>;
 
   return (
-    <View className="flex-1 flex flex-col justify-center px-4 items-center">
+    <View className="flex flex-col items-center justify-center flex-1 px-4">
       <Text>Account</Text>
       <Text>Email : {user?.email}</Text>
       <Text>User Id : {user.uid}</Text>
