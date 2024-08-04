@@ -10,10 +10,14 @@ import { authIsSignedInAtom } from "@/states/auth";
 import { useAtom } from "jotai";
 import { COLLECTIONS } from "@/firebase/firebaseConsts";
 import { useRouter } from "expo-router";
+import { useColorScheme } from "@/lib/useColorScheme";
 
 export function AppleLogin() {
   const router = useRouter();
   const { user, setUser } = useAuth();
+
+  const { isDarkColorScheme } = useColorScheme();
+
   const [authIsSignedIn, setAuthIsSignedIn] = useAtom(authIsSignedInAtom);
 
   const handlePressSignin = useCallback(async () => {
@@ -58,7 +62,7 @@ export function AppleLogin() {
   return (
     <View>
       <AppleButton
-        buttonStyle={AppleButton.Style.BLACK}
+        buttonStyle={isDarkColorScheme ? AppleButton.Style.WHITE : AppleButton.Style.BLACK}
         buttonType={AppleButton.Type.SIGN_IN}
         style={{
           width: 160,
