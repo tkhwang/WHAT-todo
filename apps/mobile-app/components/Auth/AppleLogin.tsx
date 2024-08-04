@@ -56,13 +56,13 @@ export function AppleLogin() {
   if (Platform.OS !== "ios") return null;
 
   return (
-    <View className="items-center justify-center flex-1">
+    <View>
       <AppleButton
         buttonStyle={AppleButton.Style.BLACK}
         buttonType={AppleButton.Type.SIGN_IN}
         style={{
           width: 160,
-          height: 45
+          height: 44
         }}
         onPress={handlePressSignin}
       />

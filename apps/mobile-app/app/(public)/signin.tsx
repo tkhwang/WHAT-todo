@@ -7,7 +7,12 @@ export default function PublicSigninScreen() {
   const { t } = useTranslation();
 
   return (
-    <View className="items-center justify-center flex-1 w-screen h-screen">
+    <View
+      className="items-center justify-center flex-1 w-screen h-screen"
+      style={{
+        gap: 16
+      }}
+    >
       <AppleLogin />
       <Auth />
     </View>
