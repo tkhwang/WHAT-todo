@@ -13,7 +13,7 @@ export function Auth() {
   }, []);
 
   return (
-    <View className="flex-1 justify-center items-center">
+    <View className="w-48 h-11">
       {/* <Button title="Fake Login" onPress={fakeLogin} /> */}
       <Button variant="default" size="lg" onPress={fakeLogin}>
         <Text>Fake Login</Text>

@@ -1,8 +1,9 @@
-import { View, Text } from "react-native";
+import { View } from "react-native";
+import { Text } from "@/components/ui/text";
 
 export default function TabThreeScreen() {
   return (
-    <View className="flex-1 justify-center items-center">
+    <View className="items-center justify-center flex-1">
       <Text className="text-4xl font-bold">Expert</Text>
     </View>
   );

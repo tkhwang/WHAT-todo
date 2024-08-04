@@ -12,7 +12,7 @@ export function useProtectedRoute(user: FirebaseAuthTypes.User | null) {
     console.log(`[*] inAuthGroup: ${inAuthGroup}`);
 
     if (!user && inAuthGroup) {
-      router.replace("/login");
+      router.replace("/signin");
     } else if (user && !inAuthGroup) {
       router.replace("/(auth)/(tabs)/");
     }

@@ -3,11 +3,16 @@ import { View } from "react-native";
 import { useTranslation } from "react-i18next";
 import { AppleLogin } from "@/components/Auth/AppleLogin";
 
-export default function login() {
+export default function PublicSigninScreen() {
   const { t } = useTranslation();
 
   return (
-    <View className="flex-1 w-screen h-screen justify-center items-center">
+    <View
+      className="items-center justify-center flex-1 w-screen h-screen"
+      style={{
+        gap: 16
+      }}
+    >
       <AppleLogin />
       <Auth />
     </View>

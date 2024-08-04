@@ -4,5 +4,7 @@
   "app.menu.me": "나",
   "app.menu.expert": "전문가",
   "app.menu.supervisor": "감독",
-  "app.menu.profile": "프로필"
+  "app.menu.profile": "프로필",
+  "auth.name": "이름",
+  "auth.name.placehold": "이름을 입력하세요"
 }

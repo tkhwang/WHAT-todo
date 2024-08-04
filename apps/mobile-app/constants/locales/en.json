@@ -4,5 +4,7 @@
   "app.menu.me": "My",
   "app.menu.expert": "Expert",
   "app.menu.supervisor": "Supervisor",
-  "app.menu.profile": "Profile"
+  "app.menu.profile": "Profile",
+  "auth.name": "Name",
+  "auth.name.placehold": "Enter your name"
 }

@@ -1,12 +1,15 @@
-import { ReactNode, createContext, useEffect, useContext, useState } from "react";
+import { ReactNode, createContext, useEffect, useContext, useState, useCallback } from "react";
 import { Platform } from "react-native";
 import * as AppleAuthentication from "expo-apple-authentication";
 import { useProtectedRoute } from "@/hooks/useProtectedRoute";
 import auth, { FirebaseAuthTypes } from "@react-native-firebase/auth";
+import firestore from "@react-native-firebase/firestore";
+import { COLLECTIONS } from "@/firebase/firebaseConsts";
+import { useRouter } from "expo-router";
+import { useAtom } from "jotai";
+import { authIsSignedInAtom } from "@/states/auth";
 
 type AuthProvider = {
-  // credential: AppleAuthentication.AppleAuthenticationCredential | null;
-  // setCredential: (credential: AppleAuthentication.AppleAuthenticationCredential | null) => void;
   user: FirebaseAuthTypes.User | null;
   setUser: (user: FirebaseAuthTypes.User | null) => void;
   login: () => Promise<AppleAuthentication.AppleAuthenticationCredential | null>;
@@ -29,15 +32,31 @@ export function useAuth() {
 }
 
 export default function AuthProvider({ children }: { children: ReactNode }) {
-  // const [credential, setCredential] = useState<AppleAuthentication.AppleAuthenticationCredential | null>(null);
+  const router = useRouter();
 
-  const [initializing, setInitializing] = useState(true);
+  const [authIsSignedIn, setAuthIsSignedIn] = useAtom(authIsSignedInAtom);
   const [user, setUser] = useState<FirebaseAuthTypes.User | null>(null);
 
-  function onAuthStateChanged(user: FirebaseAuthTypes.User | null) {
-    setUser(user);
-    if (initializing) setInitializing(false);
-  }
+  const onAuthStateChanged = useCallback(async (user: FirebaseAuthTypes.User | null) => {
+    console.log(`[+][onAuthStateChanged] user: ${JSON.stringify(user, null, 2)}`);
+
+    if (user) {
+      const userDocRef = await firestore().collection(COLLECTIONS.USERS).doc(user.uid).get();
+
+      // signin
+      if (userDocRef.exists) {
+        // signup
+      } else {
+        if (authIsSignedIn) {
+          router.replace("/(public)/signup");
+          console.log(`[+][onAuthStateChanged] replace to /signup`);
+        } else {
+          router.replace("/(public)/signin");
+          console.log(`[+][onAuthStateChanged] replace to /signin`);
+        }
+      }
+    }
+  }, []);
 
   useEffect(() => {
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
