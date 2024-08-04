@@ -27,7 +27,7 @@ export default function PublicSignupScreen() {
         <Text className="text-2xl font-bold text-center">Signup</Text>
         <View className="flex-col justify-center gap-4">
           <Text className="text-xl font-bold">{t("auth.name")}</Text>
-          <Input placeholder="Enter your email" />
+          <Input placeholder={t("auth.name.placehold")} />
         </View>
         <Pressable className="items-center justify-center bg-blue-500 rounded-md h-11" onPress={() => {}}>
           <Text className="text-xl text-white">Register</Text>
