@@ -5,9 +5,11 @@ import { Platform, View } from "react-native";
 
 import auth from "@react-native-firebase/auth";
 import { appleAuth } from "@invertase/react-native-apple-authentication";
+import { authIsSignedInAtom } from "@/states/auth";
 
 export function AppleLogin() {
   const { user, setUser } = useAuth();
+  const [authIsSignedIn, setAuthIsSignedIn] = useAtom(authIsSignedInAtom);
 
   const handlePress = useCallback(async () => {
     try {
@@ -22,10 +24,9 @@ export function AppleLogin() {
 
       const { identityToken, nonce } = appleAuthRequestResponse;
       const appleCredential = auth.AppleAuthProvider.credential(identityToken, nonce);
-      console.log("🚀 ~ handlePress ~ appleCredential:", appleCredential);
 
-      const { user } = await auth().signInWithCredential(appleCredential);
-      // setUser(user);
+      await auth().signInWithCredential(appleCredential);
+      setAuthIsSignedIn(true);
     } catch (error: unknown) {
       if (error instanceof Error) {
         console.log(`[-][AppleLogin]:handlePress failed with error: ${error.message}`);
@@ -49,4 +50,7 @@ export function AppleLogin() {
       />
     </View>
   );
+}
+function useAtom(authIsSignedInAtom: any): [any, any] {
+  throw new Error("Function not implemented.");
 }
