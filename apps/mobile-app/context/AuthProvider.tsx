@@ -5,13 +5,11 @@ import { useProtectedRoute } from "@/hooks/useProtectedRoute";
 import auth, { FirebaseAuthTypes } from "@react-native-firebase/auth";
 import firestore from "@react-native-firebase/firestore";
 import { COLLECTIONS } from "@/firebase/firebaseConsts";
-import { useNavigation, useRouter } from "expo-router";
+import { useRouter } from "expo-router";
 import { useAtom } from "jotai";
 import { authIsSignedInAtom } from "@/states/auth";
 
 type AuthProvider = {
-  // credential: AppleAuthentication.AppleAuthenticationCredential | null;
-  // setCredential: (credential: AppleAuthentication.AppleAuthenticationCredential | null) => void;
   user: FirebaseAuthTypes.User | null;
   setUser: (user: FirebaseAuthTypes.User | null) => void;
   login: () => Promise<AppleAuthentication.AppleAuthenticationCredential | null>;
@@ -34,11 +32,8 @@ export function useAuth() {
 }
 
 export default function AuthProvider({ children }: { children: ReactNode }) {
-  const navigation = useNavigation();
   const router = useRouter();
-  // const [credential, setCredential] = useState<AppleAuthentication.AppleAuthenticationCredential | null>(null);
 
-  // const [initializing, setInitializing] = useState(true);
   const [authIsSignedIn, setAuthIsSignedIn] = useAtom(authIsSignedInAtom);
   const [user, setUser] = useState<FirebaseAuthTypes.User | null>(null);
 
@@ -61,9 +56,6 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
         }
       }
     }
-
-    // setUser(user);
-    // if (initializing) setInitializing(false);
   }, []);
 
   useEffect(() => {
