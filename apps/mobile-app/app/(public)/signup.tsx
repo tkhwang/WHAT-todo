@@ -1,16 +1,22 @@
 import { Dimensions, Pressable, TextInput, View } from "react-native";
 import { Text } from "@/components/ui/text";
 import { authIsSignedInAtom } from "@/states/auth";
-import { useEffect } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useAtom } from "jotai";
 import MainLayout from "@/components/MainLayout";
 import { Formik } from "formik";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useTranslation } from "react-i18next";
+import { useGlobalSearchParams, useLocalSearchParams } from "expo-router";
 
 export default function PublicSignupScreen() {
   const { t } = useTranslation();
+
+  const { email, uid } = useGlobalSearchParams() ?? "";
+
+  const [name, setName] = useState("");
+  const [nameError, setNameError] = useState("");
 
   const [authIsSignedIn, setAuthIsSignedIn] = useAtom(authIsSignedInAtom);
   const windowWidth = Dimensions.get("window").width;
@@ -21,17 +27,58 @@ export default function PublicSignupScreen() {
     };
   }, []);
 
+  const validateName = useCallback((text: string) => {
+    if (!text || text.length < 3) return { isValid: false, message: t("auth.name.error.short") };
+    if (text.length > 32) return { isValid: false, message: t("auth.name.error.long") };
+    return { isValid: true, message: "" };
+  }, []);
+
+  const handleChangeText = useCallback((text: string) => {
+    const { isValid, message } = validateName(text);
+
+    if (!isValid) {
+      setNameError(message);
+    } else {
+      setNameError("");
+    }
+    setName(text);
+  }, []);
+
+  const handleClickRegister = useCallback(() => {
+    console.log("Register clicked");
+  }, []);
+
   return (
     <MainLayout>
       <View className="w-full h-full gap-4 p-4">
-        <Text className="text-2xl font-bold text-center">Signup</Text>
+        {/* TITLE */}
+        <Text className="p-4 text-2xl font-bold text-center">{t("auth.title")}</Text>
+        {/* Email */}
+        <View className="flex-col justify-center gap-4">
+          <Text className="text-xl font-bold">{t("auth.email")}</Text>
+          <Input value={email} editable={false} />
+        </View>
+        {/* UID */}
+        <View className="flex-col justify-center gap-4">
+          <Text className="text-xl font-bold">{t("auth.uid")}</Text>
+          <Input value={uid} editable={false} />
+        </View>
+        {/* Name */}
         <View className="flex-col justify-center gap-4">
           <Text className="text-xl font-bold">{t("auth.name")}</Text>
-          <Input placeholder={t("auth.name.placehold")} />
+          <Input placeholder={t("auth.name.placehold")} value={name} onChangeText={handleChangeText} />
+          <Text className="text-red-400">{nameError}</Text>
         </View>
-        <Pressable className="items-center justify-center bg-blue-500 rounded-md h-11" onPress={() => {}}>
-          <Text className="text-xl text-white">Register</Text>
-        </Pressable>
+        {/* Register button */}
+        <View className="pt-4">
+          <Pressable
+            className={`items-center justify-center rounded-full h-11 ${nameError ? "bg-gray-400" : "bg-blue-500"}`}
+            onPress={handleClickRegister}
+            disabled={!!nameError}
+          >
+            <Text className="text-xl text-white">{t("auth.action.register")}</Text>
+          </Pressable>
+        </View>
       </View>
     </MainLayout>
   );

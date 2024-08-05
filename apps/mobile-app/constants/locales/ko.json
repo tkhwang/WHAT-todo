@@ -5,6 +5,12 @@
   "app.menu.expert": "전문가",
   "app.menu.supervisor": "감독",
   "app.menu.profile": "프로필",
+  "auth.action.register": "회원가입",
+  "auth.email": "이메일",
   "auth.name": "이름",
-  "auth.name.placehold": "이름을 입력하세요"
+  "auth.name.error.short": "이름은 3자 이상이어야 합니다",
+  "auth.name.error.long": "이름은 32자 이하여야 합니다",
+  "auth.name.placehold": "이름을 입력하세요",
+  "auth.title": "왓-투두 회원가입",
+  "auth.uid": "유저 아이디"
 }

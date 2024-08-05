@@ -47,13 +47,15 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
       if (userDocRef.exists) {
         // signup
       } else {
-        if (authIsSignedIn) {
-          router.replace("/(public)/signup");
-          console.log(`[+][onAuthStateChanged] replace to /signup`);
-        } else {
-          router.replace("/(public)/signin");
-          console.log(`[+][onAuthStateChanged] replace to /signin`);
-        }
+        const pathname = authIsSignedIn ? "/(public)/signup" : "/(public)/signin";
+        router.replace({
+          pathname,
+          params: {
+            email: user.email,
+            uid: user.uid
+          }
+        });
+        console.log(`[+][onAuthStateChanged] replace to ${pathname}`);
       }
     }
   }, []);

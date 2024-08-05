@@ -45,7 +45,13 @@ export function AppleLogin() {
         if (userDocRef.exists) {
           // signup
         } else {
-          router.replace("/(public)/signup");
+          router.replace({
+            pathname: "/(public)/signup",
+            params: {
+              email: user.email,
+              uid: user.uid
+            }
+          });
           console.log(`[+][handlePressSignin] replace to /signup`);
         }
       }
