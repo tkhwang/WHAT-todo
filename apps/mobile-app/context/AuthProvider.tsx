@@ -60,9 +60,29 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
     }
   }, []);
 
-  useEffect(() => {
-    const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
-    return subscriber;
+  const onIdTokenChanged = useCallback(async (user: FirebaseAuthTypes.User | null) => {
+    console.log(`[+][onIdTokenChanged] user: ${JSON.stringify(user, null, 2)}`);
+
+    const userAuthToken = await user?.getIdToken();
+    const idTokenResult = await user?.getIdTokenResult();
+
+    if (user && userAuthToken) {
+      console.log(`[+][onIdTokenChanged] firebase token: ${idTokenResult?.token}`);
+    }
+  }, []);
+
+  useEffect(function setupOnAuthStateChanged() {
+    const onAuthStateChangedSubscriber = auth().onAuthStateChanged(onAuthStateChanged);
+    return onAuthStateChangedSubscriber;
+  }, []);
+
+  useEffect(function setupOnIdTokenChanged() {
+    const onIdTokenChangedSubscriber = auth().onIdTokenChanged(onIdTokenChanged);
+    return onIdTokenChangedSubscriber;
+
+    return () => {
+      onIdTokenChangedSubscriber();
+    };
   }, []);
 
   const appleLogin = async () => {
