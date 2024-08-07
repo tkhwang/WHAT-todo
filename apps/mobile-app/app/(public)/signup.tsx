@@ -9,6 +9,8 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useTranslation } from "react-i18next";
 import { useGlobalSearchParams, useLocalSearchParams } from "expo-router";
+import { useAuthSignup } from "@/hooks/mutations/useAuthSignup";
+import { AuthSignupRequest } from "@whatTodo/models";
 
 export default function PublicSignupScreen() {
   const { t } = useTranslation();
@@ -20,6 +22,8 @@ export default function PublicSignupScreen() {
 
   const [authIsSignedIn, setAuthIsSignedIn] = useAtom(authIsSignedInAtom);
   const windowWidth = Dimensions.get("window").width;
+
+  const { mutateAsync: authSignupMutationAsync } = useAuthSignup();
 
   useEffect(function clearAuthIsSignedIn() {
     return () => {
@@ -44,8 +48,15 @@ export default function PublicSignupScreen() {
     setName(text);
   }, []);
 
-  const handleClickRegister = useCallback(() => {
-    console.log("Register clicked");
+  const handleClickRegister = useCallback(async () => {
+    const authSignupRequest: AuthSignupRequest = {
+      uid,
+      email,
+      name
+    };
+    console.log("🚀 ~ handleClickRegister ~ authSignupRequest:", authSignupRequest);
+
+    await authSignupMutationAsync(authSignupRequest);
   }, []);
 
   return (
