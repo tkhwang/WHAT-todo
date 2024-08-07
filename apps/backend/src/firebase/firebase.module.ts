@@ -20,8 +20,9 @@ const firebaseProvider = {
       client_id: firebaseConfiguration.client_id,
       auth_uri: firebaseConfiguration.auth_uri,
       token_uri: firebaseConfiguration.token_uri,
-      auth_provider_x509_cert_url: firebaseConfiguration.auth_cert_url,
-      client_x509_cert_url: firebaseConfiguration.client_cert_url,
+      auth_provider_x509_cert_url:
+        firebaseConfiguration.auth_provider_x509_cert_url,
+      client_x509_cert_url: firebaseConfiguration.client_x509_cert_url,
       universe_domain: firebaseConfiguration.universe_domain,
     } as admin.ServiceAccount;
 
