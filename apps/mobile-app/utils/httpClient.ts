@@ -30,3 +30,7 @@ function interceptErrorResponse(error: any) {
 
 httpClient.interceptors.request.use(interceptRequest, interceptErrorRequest);
 httpClient.interceptors.response.use(interceptResponse, interceptErrorResponse);
+
+export const updateHttpClientBearerToken = (token: string) => {
+  httpClient.defaults.headers.common["authorization"] = `Bearer ${token}`;
+};

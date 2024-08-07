@@ -4,10 +4,12 @@ import * as AppleAuthentication from "expo-apple-authentication";
 import { useProtectedRoute } from "@/hooks/useProtectedRoute";
 import auth, { FirebaseAuthTypes } from "@react-native-firebase/auth";
 import firestore from "@react-native-firebase/firestore";
-import { COLLECTIONS } from "@/firebase/firebaseConsts";
+
 import { useRouter } from "expo-router";
 import { useAtom } from "jotai";
 import { authIsSignedInAtom } from "@/states/auth";
+import { COLLECTIONS } from "@/firebase/firebaseConsts";
+import { updateHttpClientBearerToken } from "@/utils/httpClient";
 
 type AuthProvider = {
   user: FirebaseAuthTypes.User | null;
@@ -67,7 +69,10 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
     const idTokenResult = await user?.getIdTokenResult();
 
     if (user && userAuthToken) {
-      console.log(`[+][onIdTokenChanged] firebase token: ${idTokenResult?.token}`);
+      if (idTokenResult?.token) {
+        updateHttpClientBearerToken(idTokenResult?.token);
+        console.log(`[+][onIdTokenChanged] httpClient token updated: ${idTokenResult?.token}`);
+      }
     }
   }, []);
 
