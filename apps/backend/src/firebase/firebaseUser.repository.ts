@@ -10,4 +10,16 @@ export class FirebaseUserRepository {
     this.#db = firebaseApp.firestore();
     this.#collection = this.#db.collection('users');
   }
+
+  async createUser(uid: string, email: string, name: string) {
+    try {
+      const userDoc = await this.#collection.doc(uid).get();
+      console.log(
+        '🚀 ~ FirebaseUserRepository ~ createUser ~ userDoc:',
+        userDoc,
+      );
+    } catch (error) {
+      console.log('🚀 ~ FirebaseUserRepository ~ createUser ~ error:', error);
+    }
+  }
 }

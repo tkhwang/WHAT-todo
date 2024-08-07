@@ -4,10 +4,12 @@ import * as AppleAuthentication from "expo-apple-authentication";
 import { useProtectedRoute } from "@/hooks/useProtectedRoute";
 import auth, { FirebaseAuthTypes } from "@react-native-firebase/auth";
 import firestore from "@react-native-firebase/firestore";
-import { COLLECTIONS } from "@/firebase/firebaseConsts";
+
 import { useRouter } from "expo-router";
 import { useAtom } from "jotai";
 import { authIsSignedInAtom } from "@/states/auth";
+import { COLLECTIONS } from "@/firebase/firebaseConsts";
+import { updateHttpClientBearerToken } from "@/utils/httpClient";
 
 type AuthProvider = {
   user: FirebaseAuthTypes.User | null;
@@ -60,9 +62,32 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
     }
   }, []);
 
-  useEffect(() => {
-    const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
-    return subscriber;
+  const onIdTokenChanged = useCallback(async (user: FirebaseAuthTypes.User | null) => {
+    console.log(`[+][onIdTokenChanged] user: ${JSON.stringify(user, null, 2)}`);
+
+    const userAuthToken = await user?.getIdToken();
+    const idTokenResult = await user?.getIdTokenResult();
+
+    if (user && userAuthToken) {
+      if (idTokenResult?.token) {
+        updateHttpClientBearerToken(idTokenResult?.token);
+        console.log(`[+][onIdTokenChanged] httpClient token updated: ${idTokenResult?.token}`);
+      }
+    }
+  }, []);
+
+  useEffect(function setupOnAuthStateChanged() {
+    const onAuthStateChangedSubscriber = auth().onAuthStateChanged(onAuthStateChanged);
+    return onAuthStateChangedSubscriber;
+  }, []);
+
+  useEffect(function setupOnIdTokenChanged() {
+    const onIdTokenChangedSubscriber = auth().onIdTokenChanged(onIdTokenChanged);
+    return onIdTokenChangedSubscriber;
+
+    return () => {
+      onIdTokenChangedSubscriber();
+    };
   }, []);
 
   const appleLogin = async () => {
