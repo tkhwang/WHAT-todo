@@ -65,14 +65,14 @@ export default function PublicSignupScreen() {
         {/* TITLE */}
         <Text className="p-4 text-2xl font-bold text-center">{t("auth.title")}</Text>
         {/* Email */}
-        <View className="flex-col justify-center gap-4">
+        <View className="flex-row gap-4">
           <Text className="text-xl font-bold">{t("auth.email")}</Text>
-          <Input value={email} editable={false} />
+          <Text className="text-xl text-center">{email}</Text>
         </View>
         {/* UID */}
-        <View className="flex-col justify-center gap-4">
+        <View className="flex-row gap-4">
           <Text className="text-xl font-bold">{t("auth.uid")}</Text>
-          <Input value={uid} editable={false} />
+          <Text className="text-base">{uid}</Text>
         </View>
         {/* Name */}
         <View className="flex-col justify-center gap-4">
@@ -83,7 +83,7 @@ export default function PublicSignupScreen() {
         {/* Register button */}
         <View className="pt-4">
           <Pressable
-            className={`items-center justify-center rounded-full h-11 ${nameError ? "bg-gray-400" : "bg-blue-500"}`}
+            className={`items-center justify-center rounded-2xl h-16 ${nameError ? "bg-gray-400" : "bg-blue-500"}`}
             onPress={handleClickRegister}
             disabled={!!nameError}
           >
