@@ -1,8 +1,8 @@
 import { AxiosRequestConfigWithMetadata } from "@whatTodo/models";
 import axios, { AxiosResponse, InternalAxiosRequestConfig } from "axios";
 
-if (process.env.EXPO_PUBLIC_IS_PRODUCTION) throw new Error("EXPO_PUBLIC_IS_PRODUCTION is not set");
-if (process.env.EXPO_PUBLIC_API_URL) throw new Error("EXPO_PUBLIC_API_URL is not set");
+if (process.env.EXPO_PUBLIC_IS_PRODUCTION == undefined) throw new Error("EXPO_PUBLIC_IS_PRODUCTION is not set");
+if (process.env.EXPO_PUBLIC_API_URL == undefined) throw new Error("EXPO_PUBLIC_API_URL is not set");
 
 export const httpClient = axios.create({
   baseURL: process.env.EXPO_PUBLIC_API_URL
