@@ -1,1 +1,1 @@
-export * from "./database/types_db"
+export * from "./axios"
