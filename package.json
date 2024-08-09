@@ -7,16 +7,19 @@
   "author": "tkhwang <tkhwang@gmail.com>",
   "license": "MIT",
   "private": true,
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ],
+  "workspaces": {
+    "packages": [
+      "apps/*",
+      "packages/*"
+    ]
+  },
   "scripts": {
     "backend": "yarn workspace @whatTodo/backend",
     "mobile-app": "yarn workspace @whatTodo/mobile-app",
     "models": "yarn workspace @whatTodo/models",
     "build:backend": "yarn workspace @whatTodo/backend build",
     "docker:build:local": "docker build -t tkhwang-whattodo-dev .",
-    "docker:run:local": "docker run --env-file ./apps/backend/.env -p 80:8080 tkhwang-whattodo-dev"
+    "docker:run:local": "docker run --env-file ./apps/backend/.env -p 80:8080 tkhwang-whattodo-dev",
+    "clean": "rm -rf node_modules && rm -rf dist"
   }
 }

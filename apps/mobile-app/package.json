@@ -8,6 +8,7 @@
     "android": "expo run:android",
     "ios": "expo run:ios",
     "web": "expo start --web",
+    "clean": "rm -rf node_modules && rm -rf dist",
     "eas:build:ios": "npx eas build --platform ios --profile production",
     "eas:build:android": "npx eas build --platform android --profile preview",
     "eas-build-post-install": "rm ./ios/.xcode.env.local",
