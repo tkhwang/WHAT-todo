@@ -5,26 +5,28 @@ import { app } from 'firebase-admin';
 @Injectable()
 export class FirebaseUserRepository {
   #db: FirebaseFirestore.Firestore;
-  #collection: FirebaseFirestore.CollectionReference;
+  #userCollection: FirebaseFirestore.CollectionReference;
 
   constructor(@Inject('FIREBASE_APP') private firebaseApp: app.App) {
     this.#db = firebaseApp.firestore();
-    this.#collection = this.#db.collection('users');
+    this.#userCollection = this.#db.collection('users');
   }
 
-  async createUser(uid: string, email: string, name: string) {
+  async createUser(uid: string, email: string, id: string, name: string) {
     try {
-      const userDocRef = await this.#collection.doc(uid).get();
+      const userDocRef = await this.#userCollection.doc(uid).get();
       if (userDocRef.exists) {
         throw new Error(APP_ERRORS.AUTH.USER_ALREADY_EXITS);
+      } else {
+        await this.#userCollection.doc(uid).set({ email, id, name });
       }
     } catch (error) {
-      console.log('🚀 ~ FirebaseUserRepository ~ createUser ~ error:', error);
+      throw new Error(APP_ERRORS.AUTH.REGISTRATION_FAILURE);
     }
   }
 
   async findUserById(id: string) {
-    const userDocRef = await this.#collection.where('id', '==', id).get();
+    const userDocRef = await this.#userCollection.where('id', '==', id).get();
 
     if (userDocRef.size > 0) {
       throw new BadRequestException(APP_ERRORS.AUTH.USER_ALREADY_EXITS);

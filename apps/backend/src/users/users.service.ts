@@ -7,8 +7,8 @@ export class UsersService {
     private readonly firebaseUserRepository: FirebaseUserRepository,
   ) {}
 
-  async createUser(uid: string, email: string, name: string) {
-    return this.firebaseUserRepository.createUser(uid, email, name);
+  async createUser(uid: string, email: string, id: string, name: string) {
+    return this.firebaseUserRepository.createUser(uid, email, id, name);
   }
 
   async findById(id: string) {
