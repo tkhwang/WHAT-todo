@@ -1,6 +1,6 @@
-import { Auth } from "@/components/Auth/Auth";
 import { View } from "react-native";
 import { useTranslation } from "react-i18next";
+import { Auth } from "@/components/Auth/Auth";
 import { AppleLogin } from "@/components/Auth/AppleLogin";
 
 export default function PublicSigninScreen() {
@@ -8,9 +8,9 @@ export default function PublicSigninScreen() {
 
   return (
     <View
-      className="items-center justify-center flex-1 w-screen h-screen"
+      className={"items-center justify-center flex-1 w-screen h-screen"}
       style={{
-        gap: 16
+        gap: 16,
       }}
     >
       <AppleLogin />

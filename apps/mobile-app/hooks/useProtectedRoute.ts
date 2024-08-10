@@ -1,5 +1,4 @@
 import { FirebaseAuthTypes } from "@react-native-firebase/auth";
-import * as AppleAuthentication from "expo-apple-authentication";
 import { router, useSegments } from "expo-router";
 import { useEffect } from "react";
 
