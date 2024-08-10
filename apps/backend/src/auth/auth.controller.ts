@@ -1,5 +1,5 @@
 import { Body, Controller, Post } from '@nestjs/common';
-import { AuthSignupRequest } from '@whatTodo/models';
+import { AuthSignupRequest, AuthVerifyIdRequest } from '@whatTodo/models';
 import { UsersService } from 'src/users/users.service';
 
 @Controller('auth')
@@ -13,7 +13,8 @@ export class AuthController {
   }
 
   @Post('verifyId')
-  async verifyId(@Body() { id }: { id: string }) {
+  async verifyId(@Body() verifyIdRequest: AuthVerifyIdRequest) {
+    const { id } = verifyIdRequest;
     return this.usersService.findById(id);
   }
 }

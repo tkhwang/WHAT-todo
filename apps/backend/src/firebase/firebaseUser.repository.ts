@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { APP_ERRORS } from '@whatTodo/models';
 import { app } from 'firebase-admin';
 
@@ -25,8 +25,9 @@ export class FirebaseUserRepository {
 
   async findUserById(id: string) {
     const userDocRef = await this.#collection.where('id', '==', id).get();
+
     if (userDocRef.size > 0) {
-      throw new Error(APP_ERRORS.AUTH.USER_ALREADY_EXITS);
+      throw new BadRequestException(APP_ERRORS.AUTH.USER_ALREADY_EXITS);
     }
   }
 }
