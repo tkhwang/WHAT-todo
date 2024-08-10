@@ -1,4 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
+import { APP_ERRORS } from '@whatTodo/models';
 import { app } from 'firebase-admin';
 
 @Injectable()
@@ -13,11 +14,10 @@ export class FirebaseUserRepository {
 
   async createUser(uid: string, email: string, name: string) {
     try {
-      const userDoc = await this.#collection.doc(uid).get();
-      console.log(
-        '🚀 ~ FirebaseUserRepository ~ createUser ~ userDoc:',
-        userDoc,
-      );
+      const userDocRef = await this.#collection.doc(uid).get();
+      if (userDocRef.exists) {
+        throw new Error(APP_ERRORS.AUTH.USER_ALREADY_EXITS);
+      }
     } catch (error) {
       console.log('🚀 ~ FirebaseUserRepository ~ createUser ~ error:', error);
     }

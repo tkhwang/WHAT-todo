@@ -2,12 +2,14 @@
   "name": "@whatTodo/mobile-app",
   "main": "expo-router/entry",
   "version": "1.0.0",
+  "private": true,
   "scripts": {
     "start": "expo start",
     "reset-project": "node ./scripts/reset-project.js",
     "android": "expo run:android",
     "ios": "expo run:ios",
     "web": "expo start --web",
+    "clean": "rm -rf node_modules && rm -rf dist",
     "eas:build:ios": "npx eas build --platform ios --profile production",
     "eas:build:android": "npx eas build --platform android --profile preview",
     "eas-build-post-install": "rm ./ios/.xcode.env.local",
@@ -76,7 +78,11 @@
     "jest-expo": "~51.0.3",
     "react-test-renderer": "18.2.0",
     "tailwindcss": "3.3.2",
-    "typescript": "~5.3.3"
+    "typescript": "5.5.4"
   },
-  "private": true
+  "workspaces": {
+    "nohoist": [
+      "**/*"
+    ]
+  }
 }
