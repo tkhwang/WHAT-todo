@@ -1,8 +1,8 @@
 module.exports = {
-  semi: false,
+  semi: true,
   useTabs: false,
   tabWidth: 2,
-  trailingComma: 'all',
+  trailingComma: "all",
   printWidth: 120,
-  arrowParens: 'always',
+  arrowParens: "always",
 }
