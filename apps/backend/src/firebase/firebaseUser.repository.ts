@@ -22,4 +22,11 @@ export class FirebaseUserRepository {
       console.log('🚀 ~ FirebaseUserRepository ~ createUser ~ error:', error);
     }
   }
+
+  async findUserById(id: string) {
+    const userDocRef = await this.#collection.where('id', '==', id).get();
+    if (userDocRef.size > 0) {
+      throw new Error(APP_ERRORS.AUTH.USER_ALREADY_EXITS);
+    }
+  }
 }

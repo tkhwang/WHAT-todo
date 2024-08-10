@@ -11,4 +11,9 @@ export class AuthController {
     const { uid, email, name } = signupRequest;
     return this.usersService.createUser(uid, email, name);
   }
+
+  @Post('verifyId')
+  async verifyId(@Body() { id }: { id: string }) {
+    return this.usersService.findById(id);
+  }
 }

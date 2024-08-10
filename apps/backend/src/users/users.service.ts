@@ -10,4 +10,8 @@ export class UsersService {
   async createUser(uid: string, email: string, name: string) {
     return this.firebaseUserRepository.createUser(uid, email, name);
   }
+
+  async findById(id: string) {
+    return this.firebaseUserRepository.findUserById(id);
+  }
 }
