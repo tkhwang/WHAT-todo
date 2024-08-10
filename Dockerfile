@@ -23,13 +23,14 @@ COPY package.json .
 COPY yarn.lock .
 
 COPY --from=build /usr/src/app/packages/models/package.json /usr/src/app/packages/models/package.json
+COPY --from=build /usr/src/app/packages/models/dist /usr/src/app/packages/models/dist
 COPY --from=build /usr/src/app/apps/backend/package.json /usr/src/app/apps/backend/package.json
 COPY --from=build /usr/src/app/apps/backend/dist /usr/src/app/apps/backend/dist
 
 ENV NODE_ENV production
 
 RUN npm install -g typescript
-RUN yarn install --pure-lockfile --non-interactive --production
+RUN yarn install --ignore-scripts --pure-lockfile --non-interactive --production
 
 EXPOSE 8080
 
