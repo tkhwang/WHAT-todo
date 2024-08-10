@@ -14,7 +14,7 @@
     "eas:build:android": "npx eas build --platform android --profile preview",
     "eas-build-post-install": "rm ./ios/.xcode.env.local",
     "test": "jest --watchAll",
-    "lint": "expo lint"
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx,.json"
   },
   "jest": {
     "preset": "jest-expo"
@@ -76,7 +76,7 @@
     "@types/react-test-renderer": "^18.0.7",
     "@typescript-eslint/eslint-plugin": "^8.0.1",
     "@typescript-eslint/parser": "^8.0.1",
-    "eslint": "^9.9.0",
+    "eslint": "8.57.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-import": "^2.29.1",
