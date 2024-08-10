@@ -12,5 +12,11 @@
   "auth.name.error.short": "Name must be at least 3 characters",
   "auth.name.error.long": "Name must be less than 32 characters",
   "auth.title": "Sign up to WHAT-todo",
-  "auth.uid": "User ID"
+  "auth.uid": "User ID",
+  "auth.id": "ID",
+  "auth.id.check": "Check",
+  "auth.id.check.verified": "Verified",
+  "auth.id.placehold": "Enter your ID",
+  "auth.id.error.short": "ID must be at least 3 characters",
+  "auth.id.error.long": "ID must be less than 32 characters"
 }
