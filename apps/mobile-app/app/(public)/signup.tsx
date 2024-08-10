@@ -1,12 +1,10 @@
-import { Dimensions, Pressable, TextInput, View } from "react-native";
+import { Dimensions, Pressable, View } from "react-native";
 import { Text } from "@/components/ui/text";
 import { authIsSignedInAtom } from "@/states/auth";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useAtom } from "jotai";
 import MainLayout from "@/components/MainLayout";
-import { Formik } from "formik";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import { useTranslation } from "react-i18next";
 import { useGlobalSearchParams, useLocalSearchParams } from "expo-router";
 import { useAuthSignup } from "@/hooks/mutations/useAuthSignup";
@@ -14,6 +12,7 @@ import { AuthSignupRequest, AuthVerifyIdRequest } from "@whatTodo/models";
 import { useAuthVerifyId } from "@/hooks/mutations/useAuthVerifyId";
 import { cn } from "@/lib/utils";
 import { useAuthVerifyIdReducer } from "@/hooks/reducers/useAuthVerifyIdReducer";
+import { useAuthNameReducer } from "@/hooks/reducers/useAuthNameReducer";
 
 export default function PublicSignupScreen() {
   const { t } = useTranslation();
@@ -21,12 +20,10 @@ export default function PublicSignupScreen() {
   const { email, uid } = useGlobalSearchParams() ?? "";
   const windowWidth = Dimensions.get("window").width;
 
-  const [name, setName] = useState("");
-  const [nameError, setNameError] = useState("");
-
-  const [{ state: authVerifyIdReducerState, id, idError }, dispatch] = useAuthVerifyIdReducer();
-
   const [authIsSignedIn, setAuthIsSignedIn] = useAtom(authIsSignedInAtom);
+
+  const [{ state: authVerifyIdReducerState, id, idError }, dispatchAuthVerifyId] = useAuthVerifyIdReducer();
+  const [{ state: authNameReducerState, name, nameError }, dispatchAuthName] = useAuthNameReducer();
 
   const { mutateAsync: authSignupMutationAsync } = useAuthSignup();
   const { mutateAsync: authVerifyIdMutationAsync } = useAuthVerifyId();
@@ -47,7 +44,7 @@ export default function PublicSignupScreen() {
   }, []);
 
   const handleChangeId = useCallback((idText: string) => {
-    dispatch({ type: "update", id: idText });
+    dispatchAuthVerifyId({ type: "update", id: idText });
   }, []);
 
   const IdCheckstring = useMemo(() => {
@@ -61,11 +58,9 @@ export default function PublicSignupScreen() {
     try {
       const requestDto: AuthVerifyIdRequest = { id };
       await authVerifyIdMutationAsync(requestDto);
-      dispatch({ type: "verify", id });
-      // setIsIdVerified(true);
+      dispatchAuthVerifyId({ type: "verify", id });
     } catch (error: unknown) {
-      dispatch({ type: "update", id });
-      // setIsIdVerified(false);
+      dispatchAuthVerifyId({ type: "update", id });
     }
   }, []);
 
@@ -79,17 +74,12 @@ export default function PublicSignupScreen() {
   }, []);
 
   const handleChangeName = useCallback((nameText: string) => {
-    const { isValid, nameErrorMessage } = validateName(nameText);
-
-    if (!isValid) {
-      setNameError(nameErrorMessage);
-    } else {
-      setNameError("");
-    }
-    setName(nameText);
+    dispatchAuthName({ type: "update", name: nameText });
   }, []);
 
-  // Register
+  /*
+   * Register
+   */
   const handleClickRegister = useCallback(async () => {
     const authSignupRequest: AuthSignupRequest = {
       uid,
@@ -157,10 +147,12 @@ export default function PublicSignupScreen() {
           <Pressable
             className={cn(
               "items-center justify-center rounded-2xl h-16",
-              nameError || authVerifyIdReducerState !== "VERIFIED" ? "bg-gray-400" : "bg-blue-500"
+              authVerifyIdReducerState === "VERIFIED" && authNameReducerState === "READY"
+                ? "bg-blue-500"
+                : "bg-gray-400"
             )}
             onPress={handleClickRegister}
-            disabled={authVerifyIdReducerState === "VERIFIED" && !nameError}
+            disabled={!(authVerifyIdReducerState === "VERIFIED" && authNameReducerState === "READY")}
           >
             <Text className="text-xl text-white">{t("auth.action.register")}</Text>
           </Pressable>
