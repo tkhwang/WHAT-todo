@@ -56,7 +56,7 @@ export default function PublicSignupScreen() {
     } catch (error: unknown) {
       dispatchAuthVerifyId({ type: "update", id });
     }
-  }, []);
+  }, [id]);
 
   /*
    *   Name
@@ -70,15 +70,15 @@ export default function PublicSignupScreen() {
    */
   const handleClickRegister = useCallback(async () => {
     const authSignupRequest: AuthSignupRequest = {
-      uid,
+      id: uid,
       email,
-      id,
-      name
+      whatTodoId: id,
+      name,
+      provider: "apple"
     };
-    console.log("🚀 ~ handleClickRegister ~ authSignupRequest:", authSignupRequest);
 
     await authSignupMutationAsync(authSignupRequest);
-  }, []);
+  }, [uid, email, id, name]);
 
   return (
     <MainLayout>
