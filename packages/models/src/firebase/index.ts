@@ -1,3 +1,3 @@
 export const enum COLLECTIONS {
-  USERS = "users"
+  USERS = "users",
 }
