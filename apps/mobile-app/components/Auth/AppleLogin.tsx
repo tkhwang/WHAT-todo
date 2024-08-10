@@ -8,9 +8,9 @@ import auth from "@react-native-firebase/auth";
 import { appleAuth } from "@invertase/react-native-apple-authentication";
 import { authIsSignedInAtom } from "@/states/auth";
 import { useAtom } from "jotai";
-import { COLLECTIONS } from "@/firebase/firebaseConsts";
 import { useRouter } from "expo-router";
 import { useColorScheme } from "@/lib/useColorScheme";
+import { COLLECTIONS } from "@whatTodo/models";
 
 export function AppleLogin() {
   const router = useRouter();

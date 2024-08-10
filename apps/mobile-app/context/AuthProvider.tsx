@@ -8,8 +8,8 @@ import firestore from "@react-native-firebase/firestore";
 import { useRouter } from "expo-router";
 import { useAtom } from "jotai";
 import { authIsSignedInAtom } from "@/states/auth";
-import { COLLECTIONS } from "@/firebase/firebaseConsts";
 import { updateHttpClientBearerToken } from "@/utils/httpClient";
+import { COLLECTIONS } from "@whatTodo/models";
 
 type AuthProvider = {
   user: FirebaseAuthTypes.User | null;
