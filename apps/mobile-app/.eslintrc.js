@@ -15,6 +15,7 @@ module.exports = {
     "prettier",
   ],
   rules: {
+    semi: [1, "always"],
     "no-var": "warn",
     eqeqeq: "warn",
     "react/prop-types": 0,
@@ -52,4 +53,4 @@ module.exports = {
       },
     },
   },
-}
+};
