@@ -14,7 +14,13 @@ export class AuthController {
 
   @Post('signup')
   async signup(@Body() signupRequest: AuthSignupRequest) {
-    const { uid, email, id, name, provider } = signupRequest;
-    return this.usersService.createUser({ uid, email, id, name, provider });
+    const { id, email, whatTodoId, name, provider } = signupRequest;
+    return this.usersService.createUser({
+      id,
+      email,
+      whatTodoId,
+      name,
+      provider,
+    });
   }
 }

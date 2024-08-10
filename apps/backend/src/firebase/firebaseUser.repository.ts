@@ -1,6 +1,6 @@
 import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { APP_ERRORS, AuthProviders } from '@whatTodo/models';
-import { app } from 'firebase-admin';
+import { app, firestore } from 'firebase-admin';
 
 @Injectable()
 export class FirebaseUserRepository {
@@ -13,24 +13,31 @@ export class FirebaseUserRepository {
   }
 
   async createUser({
-    uid,
-    email,
     id,
+    email,
+    whatTodoId,
     name,
     provider,
   }: {
-    uid: string;
-    email: string;
     id: string;
+    email: string;
+    whatTodoId: string;
     name: string;
     provider: AuthProviders;
   }) {
     try {
-      const userDocRef = await this.#userCollection.doc(uid).get();
+      const userDocRef = await this.#userCollection.doc(id).get();
       if (userDocRef.exists) {
         throw new Error(APP_ERRORS.AUTH.USER_ALREADY_EXITS);
       } else {
-        await this.#userCollection.doc(uid).set({ email, id, name, provider });
+        await this.#userCollection.doc(id).set({
+          email,
+          whatTodoId,
+          name,
+          provider,
+          createdAt: firestore.FieldValue.serverTimestamp(),
+          updatedAt: firestore.FieldValue.serverTimestamp(),
+        });
       }
     } catch (error) {
       throw new Error(APP_ERRORS.AUTH.REGISTRATION_FAILURE);

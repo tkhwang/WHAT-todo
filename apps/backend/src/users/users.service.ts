@@ -9,22 +9,22 @@ export class UsersService {
   ) {}
 
   async createUser({
-    uid,
-    email,
     id,
+    email,
+    whatTodoId,
     name,
     provider,
   }: {
-    uid: string;
-    email: string;
     id: string;
+    email: string;
+    whatTodoId: string;
     name: string;
     provider: AuthProviders;
   }) {
     return this.firebaseUserRepository.createUser({
-      uid,
-      email,
       id,
+      email,
+      whatTodoId,
       name,
       provider,
     });

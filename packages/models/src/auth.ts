@@ -1,8 +1,8 @@
 export type AuthProviders = "apple"
 export interface AuthSignupRequest {
-  uid: string
-  email: string
   id: string
+  email: string
+  whatTodoId: string
   name: string
   provider: AuthProviders
 }
