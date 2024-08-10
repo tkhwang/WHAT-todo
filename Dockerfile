@@ -1,4 +1,4 @@
-FROM node:18-alpine as build
+FROM node:20.10.0-alpine as build
 
 WORKDIR /usr/src/app
 
@@ -15,7 +15,7 @@ RUN yarn
 WORKDIR /usr/src/app/apps/backend
 RUN yarn build
 
-FROM node:18-alpine
+FROM node:20.10.0-alpine
 
 WORKDIR /usr/src/app
 
@@ -28,6 +28,7 @@ COPY --from=build /usr/src/app/apps/backend/dist /usr/src/app/apps/backend/dist
 
 ENV NODE_ENV production
 
+RUN npm install -g typescript
 RUN yarn install --pure-lockfile --non-interactive --production
 
 EXPOSE 8080
