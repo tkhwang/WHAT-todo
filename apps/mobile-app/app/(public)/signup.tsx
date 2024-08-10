@@ -6,7 +6,7 @@ import { useAtom } from "jotai";
 import MainLayout from "@/components/MainLayout";
 import { Input } from "@/components/ui/input";
 import { useTranslation } from "react-i18next";
-import { useGlobalSearchParams, useLocalSearchParams } from "expo-router";
+import { useGlobalSearchParams } from "expo-router";
 import { useAuthSignup } from "@/hooks/mutations/useAuthSignup";
 import { AuthSignupRequest, AuthVerifyIdRequest } from "@whatTodo/models";
 import { useAuthVerifyId } from "@/hooks/mutations/useAuthVerifyId";
@@ -37,12 +37,6 @@ export default function PublicSignupScreen() {
   /*
    *  ID
    */
-  const validateId = useCallback((idText: string) => {
-    if (!idText || idText.length < 3) return { isValid: false, idErrorMessage: t("auth.id.error.short") };
-    if (idText.length > 32) return { isValid: false, idErrorMessage: t("auth.id.error.long") };
-    return { isValid: true, idErrorMessage: "" };
-  }, []);
-
   const handleChangeId = useCallback((idText: string) => {
     dispatchAuthVerifyId({ type: "update", id: idText });
   }, []);
@@ -67,12 +61,6 @@ export default function PublicSignupScreen() {
   /*
    *   Name
    */
-  const validateName = useCallback((nameText: string) => {
-    if (!nameText || nameText.length < 3) return { isValid: false, nameErrorMessage: t("auth.name.error.short") };
-    if (nameText.length > 32) return { isValid: false, nameErrorMessage: t("auth.name.error.long") };
-    return { isValid: true, nameErrorMessage: "" };
-  }, []);
-
   const handleChangeName = useCallback((nameText: string) => {
     dispatchAuthName({ type: "update", name: nameText });
   }, []);
@@ -84,6 +72,7 @@ export default function PublicSignupScreen() {
     const authSignupRequest: AuthSignupRequest = {
       uid,
       email,
+      id,
       name
     };
     console.log("🚀 ~ handleClickRegister ~ authSignupRequest:", authSignupRequest);
@@ -115,14 +104,13 @@ export default function PublicSignupScreen() {
               className="flex-[3]"
               placeholder={t("auth.id.placehold")}
               value={id}
+              autoCapitalize="none"
               onChangeText={handleChangeId}
             />
             <Pressable
               className={cn(
                 "flex-[1] items-center justify-center rounded-xl h-14",
-                authVerifyIdReducerState === "SHORT" || authVerifyIdReducerState === "LONG"
-                  ? "bg-gray-400"
-                  : "bg-blue-500"
+                authVerifyIdReducerState === "READY" ? "bg-blue-500" : "bg-gray-400"
               )}
               onPress={handleClickIdCheck}
               disabled={
@@ -139,7 +127,12 @@ export default function PublicSignupScreen() {
         {/* Name */}
         <View className="flex-col justify-center gap-4">
           <Text className="text-xl font-bold">{t("auth.name")}</Text>
-          <Input placeholder={t("auth.name.placehold")} value={name} onChangeText={handleChangeName} />
+          <Input
+            placeholder={t("auth.name.placehold")}
+            value={name}
+            onChangeText={handleChangeName}
+            autoCapitalize="none"
+          />
           {nameError && <Text className="text-red-400">{nameError}</Text>}
         </View>
         {/* Register button */}
