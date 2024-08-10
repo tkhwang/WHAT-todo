@@ -13,6 +13,7 @@ import { useAuthSignup } from "@/hooks/mutations/useAuthSignup";
 import { AuthSignupRequest, AuthVerifyIdRequest } from "@whatTodo/models";
 import { useAuthVerifyId } from "@/hooks/mutations/useAuthVerifyId";
 import { cn } from "@/lib/utils";
+import { useAuthVerifyIdReducer } from "@/hooks/reducers/useAuthVerifyIdReducer";
 
 export default function PublicSignupScreen() {
   const { t } = useTranslation();
@@ -22,12 +23,10 @@ export default function PublicSignupScreen() {
 
   const [name, setName] = useState("");
   const [nameError, setNameError] = useState("");
-  const [id, setId] = useState("");
-  const [idError, setIdError] = useState("");
+
+  const [{ state: authVerifyIdReducerState, id, idError }, dispatch] = useAuthVerifyIdReducer();
 
   const [authIsSignedIn, setAuthIsSignedIn] = useAtom(authIsSignedInAtom);
-  // const [isIdChecked, setIsIdChecked] = useState(false);
-  const [isIdVerified, setIsIdVerified] = useState(false);
 
   const { mutateAsync: authSignupMutationAsync } = useAuthSignup();
   const { mutateAsync: authVerifyIdMutationAsync } = useAuthVerifyId();
@@ -48,20 +47,13 @@ export default function PublicSignupScreen() {
   }, []);
 
   const handleChangeId = useCallback((idText: string) => {
-    const { isValid, idErrorMessage } = validateId(idText);
-
-    if (!isValid) {
-      setIdError(idErrorMessage);
-    } else {
-      setIdError("");
-    }
-    setId(idText);
+    dispatch({ type: "update", id: idText });
   }, []);
 
   const IdCheckstring = useMemo(() => {
-    if (isIdVerified) return t("auth.id.check.verified");
+    if (authVerifyIdReducerState === "VERIFIED") return t("auth.id.check.verified");
     return t("auth.id.check");
-  }, []);
+  }, [authVerifyIdReducerState]);
 
   const handleClickIdCheck = useCallback(async () => {
     if (!id) return;
@@ -69,9 +61,11 @@ export default function PublicSignupScreen() {
     try {
       const requestDto: AuthVerifyIdRequest = { id };
       await authVerifyIdMutationAsync(requestDto);
-      setIsIdVerified(true);
+      dispatch({ type: "verify", id });
+      // setIsIdVerified(true);
     } catch (error: unknown) {
-      setIsIdVerified(false);
+      dispatch({ type: "update", id });
+      // setIsIdVerified(false);
     }
   }, []);
 
@@ -136,10 +130,16 @@ export default function PublicSignupScreen() {
             <Pressable
               className={cn(
                 "flex-[1] items-center justify-center rounded-xl h-14",
-                !id || idError ? "bg-gray-400" : "bg-blue-500"
+                authVerifyIdReducerState === "SHORT" || authVerifyIdReducerState === "LONG"
+                  ? "bg-gray-400"
+                  : "bg-blue-500"
               )}
               onPress={handleClickIdCheck}
-              disabled={!(id && !idError)}
+              disabled={
+                authVerifyIdReducerState === "SHORT" ||
+                authVerifyIdReducerState === "LONG" ||
+                authVerifyIdReducerState === "VERIFIED"
+              }
             >
               <Text className="text-xl text-white">{IdCheckstring}</Text>
             </Pressable>
@@ -157,10 +157,10 @@ export default function PublicSignupScreen() {
           <Pressable
             className={cn(
               "items-center justify-center rounded-2xl h-16",
-              nameError || !isIdVerified ? "bg-gray-400" : "bg-blue-500"
+              nameError || authVerifyIdReducerState !== "VERIFIED" ? "bg-gray-400" : "bg-blue-500"
             )}
             onPress={handleClickRegister}
-            disabled={!!isIdVerified && !nameError}
+            disabled={authVerifyIdReducerState === "VERIFIED" && !nameError}
           >
             <Text className="text-xl text-white">{t("auth.action.register")}</Text>
           </Pressable>
