@@ -1,6 +1,7 @@
 export interface AuthSignupRequest {
   uid: string
   email: string
+  id: string
   name: string
 }
 
