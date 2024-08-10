@@ -47,6 +47,11 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
 
       // signin
       if (userDocRef.exists) {
+        const userDoc = {
+          id: userDocRef.id,
+          ...userDocRef.data()
+        };
+        setUser(user);
         // signup
       } else {
         const pathname = authIsSignedIn ? "/(public)/signup" : "/(public)/signin";

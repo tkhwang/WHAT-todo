@@ -43,6 +43,11 @@ export function AppleLogin() {
 
         // signin
         if (userDocRef.exists) {
+          const user = {
+            id: userDocRef.id,
+            ...userDocRef.data()
+          };
+          setUser(user);
           // signup
         } else {
           router.replace({
