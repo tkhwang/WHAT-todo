@@ -32,7 +32,7 @@ export function useAuthNameReducer() {
         return {
           state: nextState,
           name: action.name,
-          nameError
+          nameError,
         };
       default:
         throw new Error(APP_ERRORS.AUTH.VERITY_NAME_UNKNOWN_ACTION);

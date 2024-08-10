@@ -1,7 +1,7 @@
-import { useAuthVerifyId } from "@/hooks/mutations/useAuthVerifyId";
 import { APP_ERRORS } from "@whatTodo/models";
 import { useReducer } from "react";
 import { useTranslation } from "react-i18next";
+import { useAuthVerifyId } from "@/hooks/mutations/useAuthVerifyId";
 
 // action
 type ActionAuthVerifyIdUpdate = { type: "update"; id: string };
@@ -35,9 +35,9 @@ export function useAuthVerifyIdReducer() {
       case "verify":
         if (currentState === "READY") {
           return { state: "VERIFIED", id: action.id, idError };
-        } else {
-          return { state: nextState, id: action.id, idError };
         }
+        return { state: nextState, id: action.id, idError };
+
       default:
         throw new Error(APP_ERRORS.AUTH.VERITY_ID_UNKNOWN_ACTION);
     }

@@ -1,9 +1,9 @@
-import { httpClient } from "@/utils/httpClient";
 import { FirebaseAuthTypes } from "@react-native-firebase/auth";
 import { useMutation } from "@tanstack/react-query";
 import { AuthSignupRequest, AuthSignupResponse, COLLECTIONS } from "@whatTodo/models";
 import { AxiosResponse } from "axios";
 import firestore from "@react-native-firebase/firestore";
+import { httpClient } from "@/utils/httpClient";
 import { useAuth } from "@/context/AuthProvider";
 
 export function useAuthSignup() {
@@ -13,7 +13,7 @@ export function useAuthSignup() {
     mutationFn: async (requestDto: AuthSignupRequest) => {
       const response = await httpClient.post<AuthSignupRequest, AxiosResponse<AuthSignupResponse>>(
         "/auth/signup",
-        requestDto
+        requestDto,
       );
       return response.data;
     },
@@ -25,10 +25,10 @@ export function useAuthSignup() {
 
       const userDoc = {
         id: userDocRef.id,
-        ...userDocRef.data()
+        ...userDocRef.data(),
       };
 
       setUser(userDoc);
-    }
+    },
   });
 }

@@ -5,7 +5,7 @@ if (process.env.EXPO_PUBLIC_IS_PRODUCTION == undefined) throw new Error("EXPO_PU
 if (process.env.EXPO_PUBLIC_API_URL == undefined) throw new Error("EXPO_PUBLIC_API_URL is not set");
 
 export const httpClient = axios.create({
-  baseURL: process.env.EXPO_PUBLIC_API_URL
+  baseURL: process.env.EXPO_PUBLIC_API_URL,
 });
 
 function interceptRequest(config: AxiosRequestConfigWithMetadata) {
@@ -32,5 +32,5 @@ httpClient.interceptors.request.use(interceptRequest, interceptErrorRequest);
 httpClient.interceptors.response.use(interceptResponse, interceptErrorResponse);
 
 export const updateHttpClientBearerToken = (token: string) => {
-  httpClient.defaults.headers.common["authorization"] = `Bearer ${token}`;
+  httpClient.defaults.headers.common.authorization = `Bearer ${token}`;
 };

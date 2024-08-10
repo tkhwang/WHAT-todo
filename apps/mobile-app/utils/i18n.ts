@@ -19,12 +19,12 @@ const initI18n = async () => {
     lng: savedLanguage ?? "ko",
     fallbackLng: "ko",
     interpolation: {
-      escapeValue: false
+      escapeValue: false,
     },
     resources: {
       ko: { translation: ko },
-      en: { translation: en }
-    }
+      en: { translation: en },
+    },
   });
 };
 
