@@ -10,7 +10,9 @@ import { Button } from "@/components/ui/button";
 import { useTranslation } from "react-i18next";
 import { useGlobalSearchParams, useLocalSearchParams } from "expo-router";
 import { useAuthSignup } from "@/hooks/mutations/useAuthSignup";
-import { AuthSignupRequest } from "@whatTodo/models";
+import { AuthSignupRequest, AuthVerifyIdRequest } from "@whatTodo/models";
+import { useAuthVerifyId } from "@/hooks/mutations/useAuthVerifyId";
+import { cn } from "@/lib/utils";
 
 export default function PublicSignupScreen() {
   const { t } = useTranslation();
@@ -24,10 +26,11 @@ export default function PublicSignupScreen() {
   const [idError, setIdError] = useState("");
 
   const [authIsSignedIn, setAuthIsSignedIn] = useAtom(authIsSignedInAtom);
-  const [isIdChecked, setIsIdChecked] = useState(false);
+  // const [isIdChecked, setIsIdChecked] = useState(false);
   const [isIdVerified, setIsIdVerified] = useState(false);
 
   const { mutateAsync: authSignupMutationAsync } = useAuthSignup();
+  const { mutateAsync: authVerifyIdMutationAsync } = useAuthVerifyId();
 
   useEffect(function clearAuthIsSignedIn() {
     return () => {
@@ -56,10 +59,21 @@ export default function PublicSignupScreen() {
   }, []);
 
   const IdCheckstring = useMemo(() => {
-    if (!isIdChecked) return t("auth.id.check");
+    if (isIdVerified) return t("auth.id.check.verified");
+    return t("auth.id.check");
   }, []);
 
-  const handleClickIdCheck = useCallback(() => {}, []);
+  const handleClickIdCheck = useCallback(async () => {
+    if (!id) return;
+
+    try {
+      const requestDto: AuthVerifyIdRequest = { id };
+      await authVerifyIdMutationAsync(requestDto);
+      setIsIdVerified(true);
+    } catch (error: unknown) {
+      setIsIdVerified(false);
+    }
+  }, []);
 
   /*
    *   Name
@@ -111,17 +125,21 @@ export default function PublicSignupScreen() {
         {/* ID */}
         <View className="flex-col justify-center gap-4">
           <Text className="text-xl font-bold">{t("auth.id")}</Text>
-          <View className="flex-row items-start justify-center gap-4">
+          <View className="flex-row items-start justify-center w-full gap-4">
             <Input
-              className="flex-grow"
+              style={{ flex: 3 }}
+              className="flex-[3]"
               placeholder={t("auth.id.placehold")}
               value={id}
               onChangeText={handleChangeId}
             />
             <Pressable
-              className={`items-center justify-center rounded-xl w-28 h-12 ${idError ? "bg-gray-400" : "bg-blue-500"}`}
+              className={cn(
+                "flex-[1] items-center justify-center rounded-xl h-14",
+                !id || idError ? "bg-gray-400" : "bg-blue-500"
+              )}
               onPress={handleClickIdCheck}
-              disabled={!!id}
+              disabled={!(id && !idError)}
             >
               <Text className="text-xl text-white">{IdCheckstring}</Text>
             </Pressable>
@@ -137,9 +155,10 @@ export default function PublicSignupScreen() {
         {/* Register button */}
         <View className="pt-4">
           <Pressable
-            className={`items-center justify-center rounded-2xl h-16 ${
+            className={cn(
+              "items-center justify-center rounded-2xl h-16",
               nameError || !isIdVerified ? "bg-gray-400" : "bg-blue-500"
-            }`}
+            )}
             onPress={handleClickRegister}
             disabled={!!isIdVerified && !nameError}
           >
