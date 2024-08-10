@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { AuthProviders } from '@whatTodo/models';
 import { FirebaseUserRepository } from 'src/firebase/firebaseUser.repository';
 
 @Injectable()
@@ -7,7 +8,29 @@ export class UsersService {
     private readonly firebaseUserRepository: FirebaseUserRepository,
   ) {}
 
-  async createUser(uid: string, email: string, name: string) {
-    return this.firebaseUserRepository.createUser(uid, email, name);
+  async createUser({
+    id,
+    email,
+    whatTodoId,
+    name,
+    provider,
+  }: {
+    id: string;
+    email: string;
+    whatTodoId: string;
+    name: string;
+    provider: AuthProviders;
+  }) {
+    return this.firebaseUserRepository.createUser({
+      id,
+      email,
+      whatTodoId,
+      name,
+      provider,
+    });
+  }
+
+  async findById(id: string) {
+    return this.firebaseUserRepository.findUserById(id);
   }
 }

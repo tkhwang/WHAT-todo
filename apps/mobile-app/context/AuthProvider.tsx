@@ -8,8 +8,8 @@ import firestore from "@react-native-firebase/firestore";
 import { useRouter } from "expo-router";
 import { useAtom } from "jotai";
 import { authIsSignedInAtom } from "@/states/auth";
-import { COLLECTIONS } from "@/firebase/firebaseConsts";
 import { updateHttpClientBearerToken } from "@/utils/httpClient";
+import { COLLECTIONS } from "@whatTodo/models";
 
 type AuthProvider = {
   user: FirebaseAuthTypes.User | null;
@@ -47,6 +47,11 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
 
       // signin
       if (userDocRef.exists) {
+        const userDoc = {
+          id: userDocRef.id,
+          ...userDocRef.data()
+        };
+        setUser(user);
         // signup
       } else {
         const pathname = authIsSignedIn ? "/(public)/signup" : "/(public)/signin";

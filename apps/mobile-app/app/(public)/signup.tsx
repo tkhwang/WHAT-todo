@@ -1,29 +1,32 @@
-import { Dimensions, Pressable, TextInput, View } from "react-native";
+import { Dimensions, Pressable, View } from "react-native";
 import { Text } from "@/components/ui/text";
 import { authIsSignedInAtom } from "@/states/auth";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useAtom } from "jotai";
 import MainLayout from "@/components/MainLayout";
-import { Formik } from "formik";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import { useTranslation } from "react-i18next";
-import { useGlobalSearchParams, useLocalSearchParams } from "expo-router";
+import { useGlobalSearchParams } from "expo-router";
 import { useAuthSignup } from "@/hooks/mutations/useAuthSignup";
-import { AuthSignupRequest } from "@whatTodo/models";
+import { AuthSignupRequest, AuthVerifyIdRequest } from "@whatTodo/models";
+import { useAuthVerifyId } from "@/hooks/mutations/useAuthVerifyId";
+import { cn } from "@/lib/utils";
+import { useAuthVerifyIdReducer } from "@/hooks/reducers/useAuthVerifyIdReducer";
+import { useAuthNameReducer } from "@/hooks/reducers/useAuthNameReducer";
 
 export default function PublicSignupScreen() {
   const { t } = useTranslation();
 
   const { email, uid } = useGlobalSearchParams() ?? "";
-
-  const [name, setName] = useState("");
-  const [nameError, setNameError] = useState("");
-
-  const [authIsSignedIn, setAuthIsSignedIn] = useAtom(authIsSignedInAtom);
   const windowWidth = Dimensions.get("window").width;
 
+  const [authIsSignedIn, setAuthIsSignedIn] = useAtom(authIsSignedInAtom);
+
+  const [{ state: authVerifyIdReducerState, id, idError }, dispatchAuthVerifyId] = useAuthVerifyIdReducer();
+  const [{ state: authNameReducerState, name, nameError }, dispatchAuthName] = useAuthNameReducer();
+
   const { mutateAsync: authSignupMutationAsync } = useAuthSignup();
+  const { mutateAsync: authVerifyIdMutationAsync } = useAuthVerifyId();
 
   useEffect(function clearAuthIsSignedIn() {
     return () => {
@@ -31,33 +34,51 @@ export default function PublicSignupScreen() {
     };
   }, []);
 
-  const validateName = useCallback((text: string) => {
-    if (!text || text.length < 3) return { isValid: false, message: t("auth.name.error.short") };
-    if (text.length > 32) return { isValid: false, message: t("auth.name.error.long") };
-    return { isValid: true, message: "" };
+  /*
+   *  ID
+   */
+  const handleChangeId = useCallback((idText: string) => {
+    dispatchAuthVerifyId({ type: "update", id: idText });
   }, []);
 
-  const handleChangeText = useCallback((text: string) => {
-    const { isValid, message } = validateName(text);
+  const IdCheckstring = useMemo(() => {
+    if (authVerifyIdReducerState === "VERIFIED") return t("auth.id.check.verified");
+    return t("auth.id.check");
+  }, [authVerifyIdReducerState]);
 
-    if (!isValid) {
-      setNameError(message);
-    } else {
-      setNameError("");
+  const handleClickIdCheck = useCallback(async () => {
+    if (!id) return;
+
+    try {
+      const requestDto: AuthVerifyIdRequest = { id };
+      await authVerifyIdMutationAsync(requestDto);
+      dispatchAuthVerifyId({ type: "verify", id });
+    } catch (error: unknown) {
+      dispatchAuthVerifyId({ type: "update", id });
     }
-    setName(text);
+  }, [id]);
+
+  /*
+   *   Name
+   */
+  const handleChangeName = useCallback((nameText: string) => {
+    dispatchAuthName({ type: "update", name: nameText });
   }, []);
 
+  /*
+   * Register
+   */
   const handleClickRegister = useCallback(async () => {
     const authSignupRequest: AuthSignupRequest = {
-      uid,
+      id: uid,
       email,
-      name
+      whatTodoId: id,
+      name,
+      provider: "apple"
     };
-    console.log("🚀 ~ handleClickRegister ~ authSignupRequest:", authSignupRequest);
 
     await authSignupMutationAsync(authSignupRequest);
-  }, []);
+  }, [uid, email, id, name]);
 
   return (
     <MainLayout>
@@ -74,18 +95,57 @@ export default function PublicSignupScreen() {
           <Text className="text-xl font-bold">{t("auth.uid")}</Text>
           <Text className="text-base">{uid}</Text>
         </View>
+        {/* ID */}
+        <View className="flex-col justify-center gap-4">
+          <Text className="text-xl font-bold">{t("auth.id")}</Text>
+          <View className="flex-row items-start justify-center w-full gap-4">
+            <Input
+              style={{ flex: 3 }}
+              className="flex-[3]"
+              placeholder={t("auth.id.placehold")}
+              value={id}
+              autoCapitalize="none"
+              onChangeText={handleChangeId}
+            />
+            <Pressable
+              className={cn(
+                "flex-[1] items-center justify-center rounded-xl h-14",
+                authVerifyIdReducerState === "READY" ? "bg-blue-500" : "bg-gray-400"
+              )}
+              onPress={handleClickIdCheck}
+              disabled={
+                authVerifyIdReducerState === "SHORT" ||
+                authVerifyIdReducerState === "LONG" ||
+                authVerifyIdReducerState === "VERIFIED"
+              }
+            >
+              <Text className="text-xl text-white">{IdCheckstring}</Text>
+            </Pressable>
+          </View>
+          {idError && <Text className="text-red-400">{idError}</Text>}
+        </View>
         {/* Name */}
         <View className="flex-col justify-center gap-4">
           <Text className="text-xl font-bold">{t("auth.name")}</Text>
-          <Input placeholder={t("auth.name.placehold")} value={name} onChangeText={handleChangeText} />
-          <Text className="text-red-400">{nameError}</Text>
+          <Input
+            placeholder={t("auth.name.placehold")}
+            value={name}
+            onChangeText={handleChangeName}
+            autoCapitalize="none"
+          />
+          {nameError && <Text className="text-red-400">{nameError}</Text>}
         </View>
         {/* Register button */}
         <View className="pt-4">
           <Pressable
-            className={`items-center justify-center rounded-2xl h-16 ${nameError ? "bg-gray-400" : "bg-blue-500"}`}
+            className={cn(
+              "items-center justify-center rounded-2xl h-16",
+              authVerifyIdReducerState === "VERIFIED" && authNameReducerState === "READY"
+                ? "bg-blue-500"
+                : "bg-gray-400"
+            )}
             onPress={handleClickRegister}
-            disabled={!!nameError}
+            disabled={!(authVerifyIdReducerState === "VERIFIED" && authNameReducerState === "READY")}
           >
             <Text className="text-xl text-white">{t("auth.action.register")}</Text>
           </Pressable>

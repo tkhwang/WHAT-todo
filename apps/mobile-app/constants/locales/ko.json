@@ -12,5 +12,11 @@
   "auth.name.error.long": "이름은 32자 이하여야 합니다",
   "auth.name.placehold": "이름을 입력하세요",
   "auth.title": "왓-투두 회원가입",
-  "auth.uid": "유저 아이디"
+  "auth.uid": "유저 아이디",
+  "auth.id": "아이디",
+  "auth.id.check": "중복확인",
+  "auth.id.check.verified": "중복확인 완료",
+  "auth.id.placehold": "아이디를 입력하세요",
+  "auth.id.error.short": "아이디는 3자 이상이어야 합니다",
+  "auth.id.error.long": "아이디는 32자 이하여야 합니다"
 }
