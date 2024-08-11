@@ -4,6 +4,7 @@ import { useAtom } from "jotai";
 import { useTranslation } from "react-i18next";
 import { useGlobalSearchParams } from "expo-router";
 import { AuthSignupRequest, AuthVerifyIdRequest } from "@whatTodo/models";
+
 import { Text } from "@/components/ui/text";
 import { authIsSignedInAtom } from "@/states/auth";
 import MainLayout from "@/components/MainLayout";

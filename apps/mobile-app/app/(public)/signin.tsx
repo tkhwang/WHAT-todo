@@ -1,5 +1,6 @@
 import { View } from "react-native";
 import { useTranslation } from "react-i18next";
+
 import { Auth } from "@/components/Auth/Auth";
 import { AppleLogin } from "@/components/Auth/AppleLogin";
 
