@@ -6,8 +6,8 @@ interface Props {
 
 export default function MainLayout({ children }: Props) {
   return (
-    <View className="flex-1 w-screen h-screen">
-      <SafeAreaView className="">{children}</SafeAreaView>
+    <View className={"flex-1 w-screen h-screen"}>
+      <SafeAreaView className={""}>{children}</SafeAreaView>
     </View>
   );
 }

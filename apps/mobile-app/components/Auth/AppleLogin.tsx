@@ -1,16 +1,15 @@
-import { useAuth } from "@/context/AuthProvider";
-import { AppleButton } from "@invertase/react-native-apple-authentication";
+import { AppleButton, appleAuth } from "@invertase/react-native-apple-authentication";
 import { useCallback } from "react";
 import { Platform, View } from "react-native";
 import firestore from "@react-native-firebase/firestore";
-
 import auth from "@react-native-firebase/auth";
-import { appleAuth } from "@invertase/react-native-apple-authentication";
-import { authIsSignedInAtom } from "@/states/auth";
 import { useAtom } from "jotai";
 import { useRouter } from "expo-router";
-import { useColorScheme } from "@/lib/useColorScheme";
 import { COLLECTIONS } from "@whatTodo/models";
+
+import { authIsSignedInAtom } from "@/states/auth";
+import { useColorScheme } from "@/lib/useColorScheme";
+import { useAuth } from "@/context/AuthProvider";
 
 export function AppleLogin() {
   const router = useRouter();
@@ -24,7 +23,7 @@ export function AppleLogin() {
     try {
       const appleAuthRequestResponse = await appleAuth.performRequest({
         requestedOperation: appleAuth.Operation.LOGIN,
-        requestedScopes: [appleAuth.Scope.FULL_NAME, appleAuth.Scope.EMAIL]
+        requestedScopes: [appleAuth.Scope.FULL_NAME, appleAuth.Scope.EMAIL],
       });
 
       if (!appleAuthRequestResponse.identityToken) {
@@ -45,7 +44,7 @@ export function AppleLogin() {
         if (userDocRef.exists) {
           const user = {
             id: userDocRef.id,
-            ...userDocRef.data()
+            ...userDocRef.data(),
           };
           setUser(user);
           // signup
@@ -54,8 +53,8 @@ export function AppleLogin() {
             pathname: "/(public)/signup",
             params: {
               email: user.email,
-              uid: user.uid
-            }
+              uid: user.uid,
+            },
           });
           console.log(`[+][handlePressSignin] replace to /signup`);
         }
@@ -77,7 +76,7 @@ export function AppleLogin() {
         buttonType={AppleButton.Type.SIGN_IN}
         style={{
           width: 160,
-          height: 44
+          height: 44,
         }}
         onPress={handlePressSignin}
       />

@@ -1,8 +1,8 @@
-import { FirebaseAuthTypes } from "@react-native-firebase/auth";
 import { useMutation } from "@tanstack/react-query";
 import { AuthSignupRequest, AuthSignupResponse, COLLECTIONS } from "@whatTodo/models";
 import { AxiosResponse } from "axios";
 import firestore from "@react-native-firebase/firestore";
+
 import { httpClient } from "@/utils/httpClient";
 import { useAuth } from "@/context/AuthProvider";
 

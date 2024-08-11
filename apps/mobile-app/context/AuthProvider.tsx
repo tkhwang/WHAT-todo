@@ -1,15 +1,15 @@
 import { ReactNode, createContext, useEffect, useContext, useState, useCallback } from "react";
 import { Platform } from "react-native";
 import * as AppleAuthentication from "expo-apple-authentication";
-import { useProtectedRoute } from "@/hooks/useProtectedRoute";
 import auth, { FirebaseAuthTypes } from "@react-native-firebase/auth";
 import firestore from "@react-native-firebase/firestore";
-
 import { useRouter } from "expo-router";
 import { useAtom } from "jotai";
+import { COLLECTIONS } from "@whatTodo/models";
+
 import { authIsSignedInAtom } from "@/states/auth";
 import { updateHttpClientBearerToken } from "@/utils/httpClient";
-import { COLLECTIONS } from "@whatTodo/models";
+import { useProtectedRoute } from "@/hooks/useProtectedRoute";
 
 type AuthProvider = {
   user: FirebaseAuthTypes.User | null;
@@ -22,7 +22,7 @@ export const AuthContext = createContext<AuthProvider>({
   user: null,
   setUser: () => {},
   login: () => Promise.resolve(null),
-  logout: () => {}
+  logout: () => {},
 });
 
 export function useAuth() {
@@ -49,7 +49,7 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
       if (userDocRef.exists) {
         const userDoc = {
           id: userDocRef.id,
-          ...userDocRef.data()
+          ...userDocRef.data(),
         };
         setUser(user);
         // signup
@@ -59,8 +59,8 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
           pathname,
           params: {
             email: user.email,
-            uid: user.uid
-          }
+            uid: user.uid,
+          },
         });
         console.log(`[+][onAuthStateChanged] replace to ${pathname}`);
       }

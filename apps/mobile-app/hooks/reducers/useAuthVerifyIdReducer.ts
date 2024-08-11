@@ -1,7 +1,6 @@
 import { APP_ERRORS } from "@whatTodo/models";
 import { useReducer } from "react";
 import { useTranslation } from "react-i18next";
-import { useAuthVerifyId } from "@/hooks/mutations/useAuthVerifyId";
 
 // action
 type ActionAuthVerifyIdUpdate = { type: "update"; id: string };
