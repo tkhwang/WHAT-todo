@@ -1,20 +1,24 @@
-import { useAuth } from "@/context/AuthProvider";
-import { AppleButton } from "@invertase/react-native-apple-authentication";
-import { useCallback } from "react";
-import { Platform, View } from "react-native";
+import { AppleButton, appleAuth } from "@invertase/react-native-apple-authentication";
+import { useCallback, useState } from "react";
+import { StyleSheet, Platform, View } from "react-native";
 import firestore from "@react-native-firebase/firestore";
-
 import auth from "@react-native-firebase/auth";
-import { appleAuth } from "@invertase/react-native-apple-authentication";
-import { authIsSignedInAtom } from "@/states/auth";
 import { useAtom } from "jotai";
 import { useRouter } from "expo-router";
-import { useColorScheme } from "@/lib/useColorScheme";
 import { COLLECTIONS } from "@whatTodo/models";
+
+import Loading from "../Loading";
+
+import { authIsSignedInAtom } from "@/states/auth";
+import { useColorScheme } from "@/lib/useColorScheme";
+import { useAuth } from "@/context/AuthProvider";
+import { appTheme } from "@/constants/uiConsts";
+import { hp } from "@/helpers/common";
 
 export function AppleLogin() {
   const router = useRouter();
   const { user, setUser } = useAuth();
+  const [isLoading, setIsLoading] = useState(false);
 
   const { isDarkColorScheme } = useColorScheme();
 
@@ -22,9 +26,11 @@ export function AppleLogin() {
 
   const handlePressSignin = useCallback(async () => {
     try {
+      setIsLoading(true);
+
       const appleAuthRequestResponse = await appleAuth.performRequest({
         requestedOperation: appleAuth.Operation.LOGIN,
-        requestedScopes: [appleAuth.Scope.FULL_NAME, appleAuth.Scope.EMAIL]
+        requestedScopes: [appleAuth.Scope.FULL_NAME, appleAuth.Scope.EMAIL],
       });
 
       if (!appleAuthRequestResponse.identityToken) {
@@ -45,7 +51,7 @@ export function AppleLogin() {
         if (userDocRef.exists) {
           const user = {
             id: userDocRef.id,
-            ...userDocRef.data()
+            ...userDocRef.data(),
           };
           setUser(user);
           // signup
@@ -54,8 +60,8 @@ export function AppleLogin() {
             pathname: "/(public)/signup",
             params: {
               email: user.email,
-              uid: user.uid
-            }
+              uid: user.uid,
+            },
           });
           console.log(`[+][handlePressSignin] replace to /signup`);
         }
@@ -63,24 +69,42 @@ export function AppleLogin() {
     } catch (error: unknown) {
       if (error instanceof Error) {
         console.log(`[-][AppleLogin]:handlePress failed with error: ${error.message}`);
+        setIsLoading(false);
         setUser(null);
       }
     }
-  }, []);
+  }, [router, setAuthIsSignedIn, setUser]);
 
   if (Platform.OS !== "ios") return null;
+
+  if (isLoading) {
+    return (
+      <View style={[styles.appleButton, { backgroundColor: "white" }]}>
+        <Loading size={"large"} color={appTheme.colors.primary} />
+      </View>
+    );
+  }
 
   return (
     <View>
       <AppleButton
-        buttonStyle={isDarkColorScheme ? AppleButton.Style.WHITE : AppleButton.Style.BLACK}
+        // buttonStyle={isDarkColorScheme ? AppleButton.Style.WHITE : AppleButton.Style.BLACK}
+        buttonStyle={AppleButton.Style.BLACK}
         buttonType={AppleButton.Type.SIGN_IN}
-        style={{
-          width: 160,
-          height: 44
-        }}
+        style={styles.appleButton}
         onPress={handlePressSignin}
       />
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  appleButton: {
+    backgroundColor: appTheme.colors.primary,
+    height: hp(6.6),
+    justifyContent: "center",
+    alignItems: "center",
+    borderCurve: "continuous",
+    borderRadius: appTheme.reduis.xl,
+  },
+});

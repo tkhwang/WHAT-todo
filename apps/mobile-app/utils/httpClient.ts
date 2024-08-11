@@ -1,5 +1,5 @@
 import { AxiosRequestConfigWithMetadata } from "@whatTodo/models";
-import axios, { AxiosResponse, InternalAxiosRequestConfig } from "axios";
+import axios, { AxiosResponse } from "axios";
 
 if (process.env.EXPO_PUBLIC_IS_PRODUCTION == undefined) throw new Error("EXPO_PUBLIC_IS_PRODUCTION is not set");
 if (process.env.EXPO_PUBLIC_API_URL == undefined) throw new Error("EXPO_PUBLIC_API_URL is not set");

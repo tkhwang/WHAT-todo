@@ -1,5 +1,6 @@
 {
   "app.name": "WHAT-todo",
+  "app.punchline": "Todo from expert with supervisor",
   "app.menu.home": "Home",
   "app.menu.me": "My",
   "app.menu.expert": "Expert",
