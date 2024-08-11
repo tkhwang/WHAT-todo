@@ -10,6 +10,7 @@ module.exports = {
     "airbnb/hooks",
     "plugin:import/errors",
     "plugin:import/warnings",
+    "plugin:import/recommended",
     "plugin:prettier/recommended",
     "plugin:@typescript-eslint/recommended",
     "prettier",
@@ -42,6 +43,13 @@ module.exports = {
     "import/extensions": 0,
     "no-use-before-define": 0,
     "import/no-extraneous-dependencies": 0,
+    "import/order": [
+      "error",
+      {
+        groups: ["builtin", "external", "internal", ["parent", "sibling"], "index"],
+        "newlines-between": "always",
+      },
+    ],
     "no-shadow": 0,
     "jsx-a11y/no-noninteractive-element-interactions": 0,
     "react-hooks/rules-of-hooks": "error",
