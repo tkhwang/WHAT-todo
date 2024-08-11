@@ -6,10 +6,16 @@ Todo from experts with supervisors
 
 ### Mobile
 
-- [react native expo](https://expo.dev/) : v51
+- [expo SDK50](https://expo.dev/) bare workflow
 - UI
   - tailwind css
   - [rnr : React Native Reusables](https://rnr-docs.vercel.app/getting-started/introduction/)
+- iOS
+- Android
+
+### Web
+
+- [next.js](https://nextjs.org/)
 
 ### Backend
 
