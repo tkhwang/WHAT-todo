@@ -1,4 +1,4 @@
-import { ReactNode, createContext, useEffect, useContext, useState, useCallback } from "react";
+import { ReactNode, createContext, useEffect, useContext, useState, useCallback, useMemo } from "react";
 import { Platform } from "react-native";
 import * as AppleAuthentication from "expo-apple-authentication";
 import auth, { FirebaseAuthTypes } from "@react-native-firebase/auth";
@@ -39,33 +39,36 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
   const [authIsSignedIn, setAuthIsSignedIn] = useAtom(authIsSignedInAtom);
   const [user, setUser] = useState<FirebaseAuthTypes.User | null>(null);
 
-  const onAuthStateChanged = useCallback(async (user: FirebaseAuthTypes.User | null) => {
-    console.log(`[+][onAuthStateChanged] user: ${JSON.stringify(user, null, 2)}`);
+  const onAuthStateChanged = useCallback(
+    async (user: FirebaseAuthTypes.User | null) => {
+      console.log(`[+][onAuthStateChanged] user: ${JSON.stringify(user, null, 2)}`);
 
-    if (user) {
-      const userDocRef = await firestore().collection(COLLECTIONS.USERS).doc(user.uid).get();
+      if (user) {
+        const userDocRef = await firestore().collection(COLLECTIONS.USERS).doc(user.uid).get();
 
-      // signin
-      if (userDocRef.exists) {
-        const userDoc = {
-          id: userDocRef.id,
-          ...userDocRef.data(),
-        };
-        setUser(user);
-        // signup
-      } else {
-        const pathname = authIsSignedIn ? "/(public)/signup" : "/(public)/signin";
-        router.replace({
-          pathname,
-          params: {
-            email: user.email,
-            uid: user.uid,
-          },
-        });
-        console.log(`[+][onAuthStateChanged] replace to ${pathname}`);
+        // signin
+        if (userDocRef.exists) {
+          const userDoc = {
+            id: userDocRef.id,
+            ...userDocRef.data(),
+          };
+          setUser(user);
+          // signup
+        } else {
+          const pathname = authIsSignedIn ? "/(public)/signup" : "/(public)/signin";
+          router.replace({
+            pathname,
+            params: {
+              email: user.email,
+              uid: user.uid,
+            },
+          });
+          console.log(`[+][onAuthStateChanged] replace to ${pathname}`);
+        }
       }
-    }
-  }, []);
+    },
+    [authIsSignedIn, router],
+  );
 
   const onIdTokenChanged = useCallback(async (user: FirebaseAuthTypes.User | null) => {
     console.log(`[+][onIdTokenChanged] user: ${JSON.stringify(user, null, 2)}`);
@@ -81,19 +84,25 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
     }
   }, []);
 
-  useEffect(function setupOnAuthStateChanged() {
-    const onAuthStateChangedSubscriber = auth().onAuthStateChanged(onAuthStateChanged);
-    return onAuthStateChangedSubscriber;
-  }, []);
+  useEffect(
+    function setupOnAuthStateChanged() {
+      const onAuthStateChangedSubscriber = auth().onAuthStateChanged(onAuthStateChanged);
+      return onAuthStateChangedSubscriber;
+    },
+    [onAuthStateChanged],
+  );
 
-  useEffect(function setupOnIdTokenChanged() {
-    const onIdTokenChangedSubscriber = auth().onIdTokenChanged(onIdTokenChanged);
-    return onIdTokenChangedSubscriber;
+  useEffect(
+    function setupOnIdTokenChanged() {
+      const onIdTokenChangedSubscriber = auth().onIdTokenChanged(onIdTokenChanged);
+      return onIdTokenChangedSubscriber;
 
-    return () => {
-      onIdTokenChangedSubscriber();
-    };
-  }, []);
+      return () => {
+        onIdTokenChangedSubscriber();
+      };
+    },
+    [onIdTokenChanged],
+  );
 
   const appleLogin = async () => {
     return Promise.resolve(null);
@@ -105,11 +114,13 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
 
   const login = Platform.OS === "ios" ? appleLogin : googleLogin;
 
-  const logout = () => {
+  const logout = useCallback(() => {
     setUser(null);
-  };
+  }, []);
 
   useProtectedRoute(user);
 
-  return <AuthContext.Provider value={{ user, setUser, login, logout }}>{children}</AuthContext.Provider>;
+  const contextValue = useMemo(() => ({ user, setUser, login, logout }), [user, setUser, login, logout]);
+
+  return <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>;
 }
