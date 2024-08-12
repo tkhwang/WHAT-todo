@@ -56,6 +56,7 @@ export function AppleLogin() {
           setUser(user);
           // signup
         } else {
+          // TODO: check duplicate navigation
           router.replace({
             pathname: "/(public)/signup",
             params: {
@@ -88,8 +89,7 @@ export function AppleLogin() {
   return (
     <View>
       <AppleButton
-        // buttonStyle={isDarkColorScheme ? AppleButton.Style.WHITE : AppleButton.Style.BLACK}
-        buttonStyle={AppleButton.Style.BLACK}
+        buttonStyle={isDarkColorScheme ? AppleButton.Style.WHITE : AppleButton.Style.BLACK}
         buttonType={AppleButton.Type.SIGN_IN}
         style={styles.appleButton}
         onPress={handlePressSignin}
@@ -105,6 +105,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderCurve: "continuous",
-    borderRadius: appTheme.reduis.xl,
+    borderRadius: appTheme.radius.xl,
   },
 });

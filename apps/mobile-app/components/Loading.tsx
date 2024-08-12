@@ -3,8 +3,8 @@ import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
 import { appTheme } from "@/constants/uiConsts";
 
 interface Props {
-  size: any;
-  color: any;
+  size: "small" | "large";
+  color: string;
 }
 
 export default function Loading({ size = "large", color = appTheme.colors.primary }: Props) {

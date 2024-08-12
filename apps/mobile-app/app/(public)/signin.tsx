@@ -1,7 +1,8 @@
-import { Image, StyleSheet, Text as RNText, View } from "react-native";
+import { Image, StyleSheet, View } from "react-native";
 import { useTranslation } from "react-i18next";
 import { StatusBar } from "expo-status-bar";
 
+import { Text } from "@/components/ui/text";
 import { AppleLogin } from "@/components/Auth/AppleLogin";
 import ScreenWrapper from "@/components/MainLayout/ScreenWrapper";
 import { hp, wp } from "@/helpers/common";
@@ -22,12 +23,11 @@ export default function PublicSigninScreen() {
         />
         {/* Title */}
         <View style={{ gap: 20 }}>
-          <RNText style={styles.title}>{t("app.name")}</RNText>
-          <RNText style={styles.punchline}>{t("app.punchline")}</RNText>
+          <Text className={"text-4xl font-bold text-center"}>{t("app.name")}</Text>
+          <Text className={"text-xl font-semibold text-center"}>{t("app.punchline")}</Text>
         </View>
         {/* footer */}
         <View style={styles.footer}>
-          {/* <Button title={"Getting Started"} buttonStyle={{ marginHorizontal: wp(3) }} onPress={() => {}} /> */}
           <AppleLogin />
         </View>
         {/* <Auth /> */}

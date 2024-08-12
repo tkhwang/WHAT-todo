@@ -1,11 +1,13 @@
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, TextProps, View, ViewProps } from "react-native";
+
+import Loading from "./Loading";
 
 import { appTheme } from "@/constants/uiConsts";
 import { hp } from "@/helpers/common";
 
 interface Props {
-  buttonStyle: any;
-  textStyle: any;
+  buttonStyle: ViewProps;
+  textStyle: TextProps;
   title: string;
   onPress: () => void;
   loading: boolean;
@@ -22,17 +24,18 @@ export default function Button({
 }: Props) {
   const shadowStyle = {
     shadowColor: appTheme.colors.dark,
-    shadowOffset: {
-      width: 0,
-      height: 10,
-    },
+    shadowOffset: { width: 0, height: 10 },
     shadowOpacity: 0.2,
     shadowRadius: 8,
     elevation: 4,
   };
 
   if (loading) {
-    return <View style={[styles.button, { backgroundColor: "white" }]} />;
+    return (
+      <View style={[styles.button, buttonStyle, { backgroundColor: "white" }]}>
+        <Loading />
+      </View>
+    );
   }
 
   return (
@@ -49,7 +52,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderCurve: "continuous",
-    borderRadius: appTheme.reduis.xl,
+    borderRadius: appTheme.radius.xl,
   },
   text: {
     fontSize: hp(2.5),
