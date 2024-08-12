@@ -11,7 +11,7 @@ export default function PublicSigninScreen() {
   const { t } = useTranslation();
 
   return (
-    <ScreenWrapper backgroundColor={"white"}>
+    <ScreenWrapper>
       <StatusBar style={"dark"} />
       <View style={styles.container}>
         {/* Welcom image */}
@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "space-around",
-    backgroundColor: "white",
+    // backgroundColor: "white",
     marginHorizontal: wp(10),
   },
   welcomeImage: {
