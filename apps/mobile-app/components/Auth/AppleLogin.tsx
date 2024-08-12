@@ -57,14 +57,14 @@ export function AppleLogin() {
           // signup
         } else {
           // TODO: check duplicate navigation
-          // router.replace({
-          //   pathname: "/(public)/signup",
-          //   params: {
-          //     email: user.email,
-          //     uid: user.uid,
-          //   },
-          // });
-          // console.log(`[+][handlePressSignin] replace to /signup`);
+          router.replace({
+            pathname: "/(public)/signup",
+            params: {
+              email: user.email,
+              uid: user.uid,
+            },
+          });
+          console.log(`[+][handlePressSignin] replace to /signup`);
         }
       }
     } catch (error: unknown) {
