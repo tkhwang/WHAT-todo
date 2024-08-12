@@ -88,8 +88,7 @@ export function AppleLogin() {
   return (
     <View>
       <AppleButton
-        // buttonStyle={isDarkColorScheme ? AppleButton.Style.WHITE : AppleButton.Style.BLACK}
-        buttonStyle={AppleButton.Style.BLACK}
+        buttonStyle={isDarkColorScheme ? AppleButton.Style.WHITE : AppleButton.Style.BLACK}
         buttonType={AppleButton.Type.SIGN_IN}
         style={styles.appleButton}
         onPress={handlePressSignin}
