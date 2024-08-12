@@ -1,4 +1,4 @@
-import { View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 interface Props {
@@ -12,13 +12,21 @@ export default function ScreenWrapper({ children, backgroundColor }: Props) {
 
   return (
     <View
-      style={{
-        flex: 1,
-        paddingTop,
-        backgroundColor,
-      }}
+      style={[
+        styles.screenWrapper,
+        {
+          paddingTop,
+          backgroundColor,
+        },
+      ]}
     >
       {children}
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  screenWrapper: {
+    flex: 1,
+  },
+});
