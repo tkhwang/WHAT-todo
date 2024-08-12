@@ -8,13 +8,12 @@ import * as SplashScreen from "expo-splash-screen";
 import React, { useEffect } from "react";
 
 import "@/utils/i18n";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Platform } from "react-native";
 
 import AuthProvider from "@/context/AuthProvider";
 import { ReactQueryClientProvider } from "@/config/ReactQueryClientProvider";
-import { NAV_THEME } from "@/constants/uiConsts";
 import { useColorScheme } from "@/lib/useColorScheme";
+import { NAV_THEME } from "@/lib/constants";
 
 const LIGHT_THEME: Theme = {
   dark: false,
@@ -65,17 +64,17 @@ function RootLayoutNav() {
 
   React.useEffect(() => {
     (async () => {
-      const theme = await AsyncStorage.getItem("theme");
+      // const theme = await AsyncStorage.getItem("theme");
       if (Platform.OS === "web") {
         // Adds the background color to the html element to prevent white background on overscroll.
         document.documentElement.classList.add("bg-background");
       }
-      if (!theme) {
-        AsyncStorage.setItem("theme", colorScheme);
-        setIsColorSchemeLoaded(true);
-        return;
-      }
-      const colorTheme = theme === "dark" ? "dark" : "light";
+      // if (!theme) {
+      //   AsyncStorage.setItem("theme", colorScheme);
+      //   setIsColorSchemeLoaded(true);
+      //   return;
+      // }
+      const colorTheme = colorScheme === "dark" ? "dark" : "light";
       if (colorTheme !== colorScheme) {
         setColorScheme(colorTheme);
 
