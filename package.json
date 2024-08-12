@@ -21,7 +21,7 @@
     "build:backend": "yarn workspace @whatTodo/backend build",
     "docker:build:local": "docker build -t tkhwang-whattodo-dev .",
     "docker:run:local": "docker run --env-file ./apps/backend/.env -p 80:8080 tkhwang-whattodo-dev",
-    "postinstall": "yarn models build",
+    "postinstall": "yarn workspace @whatTodo/models build",
     "clean": "rm -rf node_modules && rm -rf dist"
   }
 }
