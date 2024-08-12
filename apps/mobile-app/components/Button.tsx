@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderCurve: "continuous",
-    borderRadius: appTheme.reduis.xl,
+    borderRadius: appTheme.radius.xl,
   },
   text: {
     fontSize: hp(2.5),

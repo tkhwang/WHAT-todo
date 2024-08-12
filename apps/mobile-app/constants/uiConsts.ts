@@ -17,7 +17,7 @@ export const appTheme = {
     bold: "700",
     extraBold: "800",
   },
-  reduis: {
+  radius: {
     xs: 10,
     sm: 12,
     md: 14,
