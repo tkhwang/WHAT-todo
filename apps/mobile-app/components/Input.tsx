@@ -30,10 +30,6 @@ export default function Input({ containerStyles, icon, inputRef, ...props }: Pro
   );
 }
 
-Input.defaultProps = {
-  containerStyles: {},
-};
-
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
