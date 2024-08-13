@@ -18,7 +18,7 @@ export function useAuthNameReducer() {
   const { t } = useTranslation();
 
   function getNextStateAndError(nameText: string): { state: StateAuthNameNames; nameError: string } {
-    if (!nameText || nameText.length < 3) return { state: "SHORT", nameError: t("auth.name.error.short") };
+    if (!nameText) return { state: "SHORT", nameError: t("auth.name.error.short") };
     if (nameText.length > 32) return { state: "LONG", nameError: t("auth.name.error.long") };
     return { state: "READY", nameError: "" };
   }

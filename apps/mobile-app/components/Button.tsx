@@ -1,4 +1,4 @@
-import { Pressable, StyleSheet, Text, TextProps, View, ViewProps } from "react-native";
+import { Pressable, PressableProps, StyleSheet, Text, TextProps, View, ViewProps } from "react-native";
 
 import Loading from "./Loading";
 
@@ -6,10 +6,12 @@ import { appTheme } from "@/constants/uiConsts";
 import { hp } from "@/helpers/common";
 
 interface Props {
-  buttonStyle: ViewProps;
+  buttonStyle: PressableProps;
   textStyle: TextProps;
   title: string;
   onPress: () => void;
+  color: string;
+  disabled: boolean;
   loading: boolean;
   hasShadow: boolean;
 }
@@ -19,6 +21,8 @@ export default function Button({
   textStyle,
   title = "",
   onPress,
+  color = appTheme.colors.primary,
+  disabled = false,
   loading = false,
   hasShadow = true,
 }: Props) {
@@ -33,13 +37,13 @@ export default function Button({
   if (loading) {
     return (
       <View style={[styles.button, buttonStyle, { backgroundColor: "white" }]}>
-        <Loading />
+        <Loading color={color} />
       </View>
     );
   }
 
   return (
-    <Pressable onPress={onPress} style={[styles.button, buttonStyle, hasShadow && shadowStyle]}>
+    <Pressable onPress={onPress} disabled={disabled} style={[styles.button, buttonStyle, hasShadow && shadowStyle]}>
       <Text style={[styles.text, textStyle]}>{title}</Text>
     </Pressable>
   );

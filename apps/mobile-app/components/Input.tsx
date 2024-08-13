@@ -6,9 +6,9 @@ import { useColorScheme } from "@/lib/useColorScheme";
 
 interface Props extends TextInputProps {
   containerStyles?: ViewProps;
-  icon?: any;
+  icon?: React.ReactElement;
   inputRef?: any;
-  // placeholder?: string;
+  fontSize?: number;
 }
 
 export default function Input({ containerStyles, icon, inputRef, ...props }: Props) {
