@@ -10,6 +10,8 @@ export const appTheme = {
     text: "#494949",
     textLight: "#7C7C7C",
     textDark: "#1D1D1D",
+    black: "#000000",
+    white: "#FFFFFF",
   },
   fonts: {
     medium: "500",

@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, View } from "react-native";
+import { KeyboardAvoidingView, Platform, StyleSheet, View } from "react-native";
 import { useGlobalSearchParams, useRouter } from "expo-router";
 import { useTranslation } from "react-i18next";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
@@ -104,7 +104,14 @@ export default function PublicSignupScreen({}: Props) {
   return (
     <ScreenWrapper>
       <StatusBar style={"dark"} />
-      <View style={styles.container}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={{
+          flex: 1,
+          gap: 20,
+          paddingHorizontal: wp(5),
+        }}
+      >
         <BackButton router={router} />
 
         {/* Welcom Text */}
@@ -123,7 +130,7 @@ export default function PublicSignupScreen({}: Props) {
           <View style={styles.inputAndErrorContainer}>
             <Input
               inputRef={nameRef}
-              icon={<Icon name={"accountSetting"} size={26} strokeWidth={1.6} />}
+              icon={<Icon name={"user"} size={26} strokeWidth={1.6} />}
               placeholder={t("auth.name.placehold")}
               onChangeText={(value) => handleNameChange(value)}
               value={name}
@@ -169,7 +176,7 @@ export default function PublicSignupScreen({}: Props) {
             )}
           </View>
         </View>
-      </View>
+      </KeyboardAvoidingView>
     </ScreenWrapper>
   );
 }

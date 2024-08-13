@@ -5,15 +5,21 @@ import Home from "./Home";
 import ArrowLeft from "./ArrowLeft";
 import AccountSetting from "./AccountSetting";
 import Tag from "./Tag";
+import User from "./User";
+import CheckmarkSquare from "./CheckmarkSquare";
+import PoliceCap from "./PoliceCap";
 
 import { appTheme } from "@/constants/uiConsts";
 
 const icons = {
+  accountSetting: AccountSetting,
+  arrowLeft: ArrowLeft,
+  checkmarkSquare: CheckmarkSquare,
   home: Home,
   inboxCheck: InboxCheck,
-  arrowLeft: ArrowLeft,
-  accountSetting: AccountSetting,
+  policeCap: PoliceCap,
   tag: Tag,
+  user: User,
 };
 
 type IconNames = keyof typeof icons;
