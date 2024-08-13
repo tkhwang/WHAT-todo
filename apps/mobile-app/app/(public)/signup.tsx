@@ -123,7 +123,7 @@ export default function PublicSignupScreen({}: Props) {
           <View style={styles.inputAndErrorContainer}>
             <Input
               inputRef={nameRef}
-              icon={<Icon name={"accountSetting"} size={26} strokeWidth={1.6} />}
+              icon={<Icon name={"user"} size={26} strokeWidth={1.6} />}
               placeholder={t("auth.name.placehold")}
               onChangeText={(value) => handleNameChange(value)}
               value={name}
