@@ -26,6 +26,7 @@ module.exports = {
     "no-unused-vars": ["off"],
     "no-console": ["off"],
     "import/prefer-default-export": ["off"],
+    "react/require-default-props": "off",
     "react-hooks/exhaustive-deps": "error",
     "react/jsx-pascal-case": "warn",
     "react/jsx-key": "warn",
