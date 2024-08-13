@@ -7,6 +7,7 @@ import AccountSetting from "./AccountSetting";
 import Tag from "./Tag";
 import User from "./User";
 import CheckmarkSquare from "./CheckmarkSquare";
+import PoliceCap from "./PoliceCap";
 
 import { appTheme } from "@/constants/uiConsts";
 
@@ -16,6 +17,7 @@ const icons = {
   checkmarkSquare: CheckmarkSquare,
   home: Home,
   inboxCheck: InboxCheck,
+  policeCap: PoliceCap,
   tag: Tag,
   user: User,
 };

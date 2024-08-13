@@ -24,15 +24,18 @@ export default function MainHeader() {
 
         {/* icon */}
         <View style={styles.icons}>
-          <Pressable onPress={() => router.push("/(auth)/(tabs)/me")}>
+          <Pressable onPress={() => router.push("/(auth)/(tabs)/")}>
             <Icon name={"checkmarkSquare"} size={hp(3.2)} strokeWidth={2} color={textColor} />
           </Pressable>
           <Pressable onPress={() => router.push("/(auth)/(tabs)/expert")}>
             <Icon name={"inboxCheck"} size={hp(3.2)} strokeWidth={2} color={textColor} />
           </Pressable>
-          <Pressable onPress={() => router.push("/(auth)/(tabs)/supervisor")}>
-            <Icon name={"user"} size={hp(3.2)} strokeWidth={2} color={textColor} />
+          {/* <Pressable onPress={() => router.push("/(auth)/(tabs)/supervisor")}>
+            <Icon name={"policeCap"} size={hp(3.2)} strokeWidth={2} color={textColor} />
           </Pressable>
+          <Pressable onPress={() => router.push("/(auth)/(tabs)/profile")}>
+            <Icon name={"user"} size={hp(3.2)} strokeWidth={2} color={textColor} />
+          </Pressable> */}
         </View>
       </View>
     </View>
