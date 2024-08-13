@@ -57,8 +57,8 @@ module.exports = {
   },
   settings: {
     "import/resolver": {
-      node: {
-        extensions: [".js", ".jsx", ".ts", ".tsx"],
+      typescript: {
+        // project: "./apps/mobile-app/tsconfig.json",
       },
     },
   },
