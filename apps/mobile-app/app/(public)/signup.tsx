@@ -56,14 +56,6 @@ export default function PublicSignupScreen({}: Props) {
                 nameRef.current = value;
               }}
             />
-            <Button
-              title={"Check"}
-              buttonStyle={{
-                backgroundColor: appTheme.colors.secondary,
-                paddingHorizontal: 4,
-              }}
-              onPress={() => {}}
-            />
           </View>
           {/* register button */}
           <Button title={t("auth.action.register")} />
