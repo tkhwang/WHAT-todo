@@ -21,5 +21,6 @@
   "auth.id.check.verified": "Verified",
   "auth.id.placehold": "Enter your ID",
   "auth.id.error.short": "ID must be at least 3 characters",
-  "auth.id.error.long": "ID must be less than 32 characters"
+  "auth.id.error.long": "ID must be less than 32 characters",
+  "screen.profile.title": "Profile"
 }
