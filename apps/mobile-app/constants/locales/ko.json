@@ -22,5 +22,7 @@
   "auth.id.placehold": "아이디를 입력하세요",
   "auth.id.error.short": "아이디는 3자 이상이어야 합니다",
   "auth.id.error.long": "아이디는 32자 이하여야 합니다",
-  "screen.profile.title": "프로필"
+  "screen.profile.title": "프로필",
+  "screen.profile.logout.title": "확인",
+  "screen.profile.logout.description": "정말로 로그아웃 하시겠습니까 ?"
 }

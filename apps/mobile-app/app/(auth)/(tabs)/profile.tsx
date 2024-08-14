@@ -35,19 +35,17 @@ function UserHeader({ user, router, handleLogout }: UserHeaderProps) {
 }
 
 export default function ProfileScreen() {
-  const { user, setUser, logout } = useAuth();
   const router = useRouter();
+  const { t } = useTranslation();
+
+  const { user, setUser, logout } = useAuth();
 
   const handleLogout = useCallback(() => {
-    Alert.alert("Confirm", "Are you sure you want to logout?", [
+    Alert.alert(t("screen.profile.logout.title"), t("screen.profile.logout.description"), [
       { text: "Cancel", style: "cancel" },
       { text: "OK", onPress: () => logout(), style: "destructive" },
     ]);
-  }, [logout]);
-
-  useEffect(() => {
-    console.log("two", user);
-  }, []);
+  }, [logout, t]);
 
   if (!user) return <Text>{"Loading..."}</Text>;
 
