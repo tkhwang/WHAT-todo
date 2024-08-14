@@ -5,6 +5,7 @@ export const appTheme = {
     secondary: "#6FCBD0",
     secondaryDark: "#6FCBD0",
     dark: "#3E3E3E3E",
+    darkSecondary: "#3E3E3E3E",
     darkLight: "#E1E1E1",
     gray: "#e3e3e3",
     text: "#494949",
@@ -12,6 +13,9 @@ export const appTheme = {
     textDark: "#1D1D1D",
     black: "#000000",
     white: "#FFFFFF",
+    whiteSecondary: "rgba(0,0,0,0.07)",
+    rose: "#ef4444",
+    roseLight: "#f87171",
   },
   fonts: {
     medium: "500",
