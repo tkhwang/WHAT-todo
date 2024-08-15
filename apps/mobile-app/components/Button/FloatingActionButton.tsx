@@ -16,7 +16,7 @@ export default function FloatingActionButton() {
   const actions = [
     {
       text: "new Task",
-      icon: <Icon name={"checkmarkSquare"} size={hp(3.2)} strokeWidth={2} color={textColor} />,
+      icon: <Icon name={"add"} size={hp(3.2)} strokeWidth={2} color={appTheme.colors.white} />,
       color: appTheme.colors.secondary,
       name: "new-task",
       position: 0,
@@ -36,5 +36,7 @@ export default function FloatingActionButton() {
     [router],
   );
 
-  return <FloatingAction actions={actions} color={appTheme.colors.primary} onPressItem={handlePress} />;
+  return (
+    <FloatingAction overrideWithAction actions={actions} color={appTheme.colors.primary} onPressItem={handlePress} />
+  );
 }
