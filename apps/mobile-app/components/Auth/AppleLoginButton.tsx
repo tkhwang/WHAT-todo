@@ -15,13 +15,12 @@ import { hp } from "@/helpers/common";
 
 import Loading from "../Loading";
 
-export function AppleLogin() {
+export function AppleLoginButton() {
   const router = useRouter();
-  const { user, setUser } = useAuth();
-  const [isLoading, setIsLoading] = useState(false);
-
+  const { user, login, setUser } = useAuth();
   const { isDarkColorScheme } = useColorScheme();
 
+  const [isLoading, setIsLoading] = useState(false);
   const [authIsSignedIn, setAuthIsSignedIn] = useAtom(authIsSignedInAtom);
 
   const handlePressSignin = useCallback(async () => {
