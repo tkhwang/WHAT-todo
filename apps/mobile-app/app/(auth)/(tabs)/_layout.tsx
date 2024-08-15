@@ -25,29 +25,35 @@ export default function TabLayout() {
       <Tabs.Screen
         name={"index"}
         options={{
-          title: t("app.menu.today"),
+          title: t("app.screen.today"),
           tabBarIcon: ({ color, focused }) => <TabBarIcon name={"checkmarkSquare"} color={color} />,
         }}
       />
       <Tabs.Screen
         name={"upcoming"}
         options={{
-          title: t("app.menu.upcoming"),
+          title: t("app.screen.upcoming"),
           tabBarIcon: ({ color, focused }) => <TabBarIcon name={"calendar"} color={color} />,
         }}
       />
       <Tabs.Screen
         name={"expert"}
         options={{
-          title: t("app.menu.expert"),
+          title: t("app.screen.expert"),
           tabBarIcon: ({ color, focused }) => <TabBarIcon name={"inboxCheck"} color={color} />,
         }}
       />
       <Tabs.Screen
         name={"profile"}
         options={{
-          title: t("app.menu.profile"),
+          title: t("app.screen.profile"),
           tabBarIcon: ({ color, focused }) => <TabBarIcon name={"user"} color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name={"newTask"}
+        options={{
+          tabBarButton: () => null, // This hides the screen from the tab bar
         }}
       />
     </Tabs>

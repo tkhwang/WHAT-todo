@@ -12,7 +12,7 @@ export default function TabThreeScreen() {
     <ScreenWrapper>
       <MainHeader />
       <View className={"flex-1 justify-center items-center"}>
-        <Text className={"text-xl font-semibold"}>{t("app.menu.upcoming")}</Text>
+        <Text className={"text-xl font-semibold"}>{t("app.screen.upcoming")}</Text>
       </View>
       <FloatingActionButton />
     </ScreenWrapper>
