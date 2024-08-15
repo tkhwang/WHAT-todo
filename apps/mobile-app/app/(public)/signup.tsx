@@ -7,16 +7,16 @@ import { AuthSignupRequest, AuthVerifyIdRequest } from "@whatTodo/models";
 
 import { Text } from "@/components/ui/text";
 import ScreenWrapper from "@/components/MainLayout/ScreenWrapper";
-import BackButton from "@/components/BackButton";
 import { hp, wp } from "@/helpers/common";
 import { appTheme } from "@/constants/uiConsts";
 import Input from "@/components/Input";
 import Icon from "@/assets/icons";
-import Button from "@/components/Button";
 import { useAuthVerifyIdReducer } from "@/hooks/reducers/useAuthVerifyIdReducer";
 import { useAuthNameReducer } from "@/hooks/reducers/useAuthNameReducer";
 import { useAuthSignup } from "@/hooks/mutations/useAuthSignup";
 import { useAuthVerifyId } from "@/hooks/mutations/useAuthVerifyId";
+import BackButton from "@/components/Button/BackButton";
+import Button from "@/components/Button/Button";
 
 interface Props {}
 
