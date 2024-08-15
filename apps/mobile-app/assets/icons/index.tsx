@@ -13,9 +13,11 @@ import PoliceCap from "./PoliceCap";
 import Logout from "./Logout";
 import Calendar from "./Calendar";
 import CheckList from "./CheckList";
+import Add from "./Add";
 
 const icons = {
   accountSetting: AccountSetting,
+  add: Add,
   arrowLeft: ArrowLeft,
   calendar: Calendar,
   checkList: CheckList,
