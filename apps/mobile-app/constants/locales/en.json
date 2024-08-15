@@ -25,5 +25,6 @@
   "auth.id.error.duplicate": "ID already exists",
   "screen.profile.title": "Profile",
   "screen.profile.logout.title": "Confirm",
-  "screen.profile.logout.description": "Are you sure you want to logout?"
+  "screen.profile.logout.description": "Are you sure you want to logout?",
+  "task.create.title": "Create new task"
 }

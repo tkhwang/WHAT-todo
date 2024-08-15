@@ -11,7 +11,6 @@ export default function NewTaskScreen() {
 
   const bottomSheetRef = useRef<BottomSheet>(null);
 
-  // callbacks
   const handleSheetChanges = useCallback((index: number) => {
     console.log("handleSheetChanges", index);
   }, []);
@@ -20,9 +19,9 @@ export default function NewTaskScreen() {
     <ScreenWrapper>
       <MainHeader />
       <View style={styles.container}>
-        <BottomSheet snapPoints={["50%"]} ref={bottomSheetRef} onChange={handleSheetChanges}>
+        <BottomSheet ref={bottomSheetRef} snapPoints={["50%"]} onChange={handleSheetChanges}>
           <BottomSheetView style={styles.contentContainer}>
-            <Text>{"Awesome 🎉"}</Text>
+            <Text className={"text-base font-medium"}>{t("task.create.title")}</Text>
           </BottomSheetView>
         </BottomSheet>
       </View>
