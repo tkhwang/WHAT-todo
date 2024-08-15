@@ -29,6 +29,29 @@ function UserHeader({ user, router, handleLogout }: UserHeaderProps) {
         <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
           <Icon name={"logout"} color={appTheme.colors.rose} onPress={handleLogout} />
         </TouchableOpacity>
+        <View className={"flex-col justify-center px-4 items-center"}>
+          <Text className={"text-base font-normal"}>{"Account"}</Text>
+          <Text>
+            {"Email : "}
+            {user?.email}
+          </Text>
+          <Text>
+            {"User Id : "}
+            {user.uid}
+          </Text>
+          <Text>
+            {"Version : "}
+            {getVersion()}
+          </Text>
+          <Text>
+            {"BuildNumber : "}
+            {getBuildNumber()}
+          </Text>
+          <Text>
+            {"Version : "}
+            {EAS_UPDATE_VERSION}
+          </Text>
+        </View>
       </View>
     </View>
   );

@@ -1,89 +1,82 @@
-import { Animated, Pressable, StyleSheet, Text, View } from "react-native";
-import React, { useCallback, useRef } from "react";
+import { StyleSheet, TextInput, View } from "react-native";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import BottomSheet, { BottomSheetBackdrop, BottomSheetView } from "@gorhom/bottom-sheet";
+import { Href, useLocalSearchParams, useRouter } from "expo-router";
 import { useTranslation } from "react-i18next";
-import { useSharedValue } from "react-native-reanimated";
 
+import { Text } from "@/components/ui/text";
 import ScreenWrapper from "@/components/MainLayout/ScreenWrapper";
 import MainHeader from "@/components/MainLayout/MainHeader";
-import { useColorScheme } from "@/lib/useColorScheme";
-import { BottomSheet } from "@/components/BottomSheet";
 
 export default function NewTaskScreen() {
-  const { colorScheme } = useColorScheme();
-  const isOpen = useSharedValue(false);
+  const router = useRouter();
+  const { previousSegments } = useLocalSearchParams();
 
-  const toggleSheet = () => {
-    isOpen.value = !isOpen.value;
-  };
+  const { t } = useTranslation();
 
-  const contentStyle = {
-    color: colorScheme === "light" ? "#001a72" : "#f8f9ff",
-    textDecorationColor: colorScheme === "light" ? "#001a72" : "#f8f9ff",
-  };
+  const bottomSheetRef = useRef<BottomSheet>(null);
+  const textInputRef = useRef<TextInput>(null);
+
+  const [key, setKey] = useState(new Date().getTime());
+
+  useEffect(() => {
+    textInputRef.current?.focus();
+  }, []);
+
+  const handleSheetChanges = useCallback(
+    (index: number) => {
+      if (index === -1) {
+        setKey(new Date().getTime());
+        if (Array.isArray(previousSegments)) {
+          const targetSegments = `/${previousSegments.join("/")}/`;
+          router.replace(targetSegments as Href<string | object>);
+        }
+      }
+    },
+    [previousSegments, router],
+  );
+
+  const renderBackdrop = useCallback(
+    (props) => <BottomSheetBackdrop {...props} disappearsOnIndex={-1} appearsOnIndex={0} pressBehavior={"close"} />,
+    [],
+  );
 
   return (
     <ScreenWrapper>
       <MainHeader />
-      <View style={styles.safeArea}>
-        <View style={styles.flex} />
-        <Pressable style={styles.toggleButton} onPress={toggleSheet}>
-          <Text style={styles.toggleButtonText}>{"Toggle bottom sheet"}</Text>
-        </Pressable>
-        <View style={styles.flex} />
+      <View style={styles.container}>
+        <BottomSheet
+          key={key}
+          ref={bottomSheetRef}
+          onChange={handleSheetChanges}
+          snapPoints={["50%"]}
+          backdropComponent={renderBackdrop}
+        >
+          <BottomSheetView style={styles.contentContainer}>
+            <Text>{t("bottomSheet.newTask.title")}</Text>
+            <View className={"flex-1 w-screen px-4"}>
+              <TextInput ref={textInputRef} style={styles.textInput} placeholder={"Add new task..."} />
+            </View>
+          </BottomSheetView>
+        </BottomSheet>
       </View>
-      <BottomSheet isOpen={isOpen} toggleSheet={toggleSheet}>
-        <Animated.Text style={contentStyle}>
-          {"Discover the indispensable convenience of a bottom sheet in mobile app. Seamlessly integrated, it provides"}
-          {"quick access to supplementary features and refined details."}
-        </Animated.Text>
-        <View style={styles.buttonContainer}>
-          <Pressable style={[styles.bottomSheetButton]}>
-            <Text style={[styles.bottomSheetButtonText, contentStyle]}>{"Read more"}</Text>
-          </Pressable>
-        </View>
-      </BottomSheet>
     </ScreenWrapper>
   );
 }
 
 const styles = StyleSheet.create({
-  flex: {
-    flex: 1,
-  },
   container: {
     flex: 1,
-    height: 250,
   },
-  buttonContainer: {
-    marginTop: 16,
-    display: "flex",
-    flexDirection: "row",
-    width: "100%",
-    justifyContent: "space-around",
-  },
-  toggleButton: {
-    backgroundColor: "#b58df1",
-    padding: 12,
-    borderRadius: 48,
-  },
-  toggleButtonText: {
-    color: "white",
-    padding: "0.5rem",
-  },
-  safeArea: {
-    alignItems: "center",
-    justifyContent: "center",
+  contentContainer: {
     flex: 1,
-  },
-  bottomSheetButton: {
-    display: "flex",
-    flexDirection: "row",
     alignItems: "center",
-    gap: 8,
-    paddingBottom: 2,
   },
-  bottomSheetButtonText: {
-    fontWeight: 600,
-    textDecorationLine: "underline",
+  textInput: {
+    width: "100%",
+    padding: 10,
+    borderColor: "gray",
+    borderWidth: 1,
+    marginTop: 20,
   },
 });
