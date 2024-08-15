@@ -14,7 +14,7 @@ export default function HomeScreen() {
     <ScreenWrapper>
       <MainHeader />
       <View className={"flex-1 justify-center items-center"}>
-        <Text className={"text-xl font-semibold"}>{"Home"}</Text>
+        <Text className={"text-xl font-semibold"}>{t("app.menu.today")}</Text>
       </View>
     </ScreenWrapper>
   );

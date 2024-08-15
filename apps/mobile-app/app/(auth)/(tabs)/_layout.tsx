@@ -25,15 +25,15 @@ export default function TabLayout() {
       <Tabs.Screen
         name={"index"}
         options={{
-          title: t("app.menu.home"),
+          title: t("app.menu.today"),
           tabBarIcon: ({ color, focused }) => <TabBarIcon name={"checkmarkSquare"} color={color} />,
         }}
       />
       <Tabs.Screen
-        name={"expert"}
+        name={"upcoming"}
         options={{
-          title: t("app.menu.expert"),
-          tabBarIcon: ({ color, focused }) => <TabBarIcon name={"inboxCheck"} color={color} />,
+          title: t("app.menu.upcoming"),
+          tabBarIcon: ({ color, focused }) => <TabBarIcon name={"calendar"} color={color} />,
         }}
       />
       <Tabs.Screen
