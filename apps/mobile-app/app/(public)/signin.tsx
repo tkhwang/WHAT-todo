@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { StatusBar } from "expo-status-bar";
 
 import { Text } from "@/components/ui/text";
-import { AppleLogin } from "@/components/Auth/AppleLogin";
+import { AppleLoginButton } from "@/components/Auth/AppleLoginButton";
 import ScreenWrapper from "@/components/MainLayout/ScreenWrapper";
 import { hp, wp } from "@/helpers/common";
 import { appTheme } from "@/constants/uiConsts";
@@ -28,7 +28,7 @@ export default function PublicSigninScreen() {
         </View>
         {/* footer */}
         <View style={styles.footer}>
-          <AppleLogin />
+          <AppleLoginButton />
         </View>
         {/* <Auth /> */}
       </View>

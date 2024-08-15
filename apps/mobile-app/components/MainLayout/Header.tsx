@@ -6,7 +6,7 @@ import { Text } from "@/components/ui/text";
 import { hp } from "@/helpers/common";
 import { appTheme } from "@/constants/uiConsts";
 
-import BackButton from "../BackButton";
+import BackButton from "../Button/BackButton";
 
 interface Props {
   title: string;

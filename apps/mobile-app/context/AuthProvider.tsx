@@ -14,17 +14,25 @@ import { useProtectedRoute } from "@/hooks/useProtectedRoute";
 type AuthProvider = {
   user: FirebaseAuthTypes.User | null;
   setUser: (user: FirebaseAuthTypes.User | null) => void;
-  login: () => Promise<AppleAuthentication.AppleAuthenticationCredential | null>;
+  login: (
+    appleCredential: FirebaseAuthTypes.AuthCredential,
+  ) => Promise<AppleAuthentication.AppleAuthenticationCredential | null>;
   logout: () => void;
 };
 
 export const AuthContext = createContext<AuthProvider>({
   user: null,
   setUser: () => {},
-  login: () => Promise.resolve(null),
+  login: (appleCredential: FirebaseAuthTypes.AuthCredential) => Promise.resolve(null),
   logout: () => {},
 });
 
+/**
+ * handle firebase auth
+ *
+ * @export
+ * @return {*}
+ */
 export function useAuth() {
   if (!useContext(AuthContext)) {
     throw new Error("useAuth must be used within a <AuthProvider />");
@@ -104,8 +112,17 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
     [onIdTokenChanged],
   );
 
-  const appleLogin = async () => {
-    return Promise.resolve(null);
+  const appleLogin = async (appleCredential: FirebaseAuthTypes.AuthCredential) => {
+    try {
+      const { user } = await auth().signInWithCredential(appleCredential);
+      setAuthIsSignedIn(true);
+      return user;
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        console.log(`[-][AppleLogin]:handlePress failed with error: ${error.message}`);
+        setAuthIsSignedIn(false);
+      }
+    }
   };
 
   const googleLogin = async () => {
@@ -114,9 +131,18 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
 
   const login = Platform.OS === "ios" ? appleLogin : googleLogin;
 
-  const logout = useCallback(() => {
-    setUser(null);
-  }, []);
+  const logout = useCallback(async () => {
+    try {
+      await auth().signOut();
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        console.log(`[-][logout]:logout failed with error: ${error.message}`);
+      }
+    } finally {
+      setUser(null);
+      setAuthIsSignedIn(false);
+    }
+  }, [setAuthIsSignedIn]);
 
   useProtectedRoute(user);
 

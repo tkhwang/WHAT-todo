@@ -1,11 +1,11 @@
 {
   "app.name": "WHAT-todo",
   "app.punchline": "Todo from expert with supervisor",
-  "app.menu.home": "Home",
-  "app.menu.me": "My",
-  "app.menu.expert": "Expert",
-  "app.menu.supervisor": "Supervisor",
-  "app.menu.profile": "Profile",
+  "app.screen.today": "Today",
+  "app.screen.upcoming": "Upcoming",
+  "app.screen.expert": "Expert",
+  "app.screen.profile": "Profile",
+  "app.screen.newTask": "Add new task",
   "auth.action.checkId": "Check",
   "auth.action.register": "Register",
   "auth.register.description": "Register your name and id.",
@@ -22,7 +22,9 @@
   "auth.id.placehold": "Enter your ID",
   "auth.id.error.short": "ID must be at least 3 characters",
   "auth.id.error.long": "ID must be less than 32 characters",
+  "auth.id.error.duplicate": "ID already exists",
   "screen.profile.title": "Profile",
   "screen.profile.logout.title": "Confirm",
-  "screen.profile.logout.description": "Are you sure you want to logout?"
+  "screen.profile.logout.description": "Are you sure you want to logout?",
+  "task.create.title": "Create new task"
 }

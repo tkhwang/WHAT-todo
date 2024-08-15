@@ -1,9 +1,9 @@
 import { Pressable, PressableProps, StyleSheet, Text, TextProps, View, ViewProps } from "react-native";
 
-import Loading from "./Loading";
-
 import { appTheme } from "@/constants/uiConsts";
 import { hp } from "@/helpers/common";
+
+import Loading from "../Loading";
 
 interface Props {
   buttonStyle: PressableProps;

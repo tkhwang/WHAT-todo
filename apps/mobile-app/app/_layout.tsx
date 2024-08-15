@@ -9,6 +9,7 @@ import React, { useEffect } from "react";
 
 import "@/utils/i18n";
 import { Platform } from "react-native";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 import AuthProvider from "@/context/AuthProvider";
 import { ReactQueryClientProvider } from "@/config/ReactQueryClientProvider";
@@ -95,11 +96,13 @@ function RootLayoutNav() {
     <ReactQueryClientProvider>
       <AuthProvider>
         <ThemeProvider value={isDarkColorScheme ? DARK_THEME : LIGHT_THEME}>
-          <Stack>
-            <Stack.Screen name={"(auth)/(tabs)"} options={{ headerShown: false }} />
-            <Stack.Screen name={"(public)/signin"} options={{ headerShown: false }} />
-            <Stack.Screen name={"(public)/signup"} options={{ headerShown: false }} />
-          </Stack>
+          <GestureHandlerRootView style={{ flex: 1 }}>
+            <Stack>
+              <Stack.Screen name={"(auth)/(tabs)"} options={{ headerShown: false }} />
+              <Stack.Screen name={"(public)/signin"} options={{ headerShown: false }} />
+              <Stack.Screen name={"(public)/signup"} options={{ headerShown: false }} />
+            </Stack>
+          </GestureHandlerRootView>
         </ThemeProvider>
       </AuthProvider>
     </ReactQueryClientProvider>

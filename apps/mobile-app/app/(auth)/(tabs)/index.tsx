@@ -6,6 +6,7 @@ import ScreenWrapper from "@/components/MainLayout/ScreenWrapper";
 import { hp, wp } from "@/helpers/common";
 import { appTheme } from "@/constants/uiConsts";
 import MainHeader from "@/components/MainLayout/MainHeader";
+import FloatingActionButton from "@/components/Button/FloatingActionButton";
 
 export default function HomeScreen() {
   const { t } = useTranslation();
@@ -14,8 +15,9 @@ export default function HomeScreen() {
     <ScreenWrapper>
       <MainHeader />
       <View className={"flex-1 justify-center items-center"}>
-        <Text className={"text-xl font-semibold"}>{"Home"}</Text>
+        <Text className={"text-xl font-semibold"}>{t("app.screen.today")}</Text>
       </View>
+      <FloatingActionButton />
     </ScreenWrapper>
   );
 }
