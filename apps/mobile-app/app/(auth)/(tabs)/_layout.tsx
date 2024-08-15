@@ -37,10 +37,10 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name={"supervisor"}
+        name={"expert"}
         options={{
-          title: t("app.menu.supervisor"),
-          tabBarIcon: ({ color, focused }) => <TabBarIcon name={"policeCap"} color={color} />,
+          title: t("app.menu.expert"),
+          tabBarIcon: ({ color, focused }) => <TabBarIcon name={"inboxCheck"} color={color} />,
         }}
       />
       <Tabs.Screen

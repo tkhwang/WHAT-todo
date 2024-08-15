@@ -12,7 +12,7 @@ export default function TabFourScreen() {
     <ScreenWrapper>
       <MainHeader />
       <View className={"flex-1 justify-center items-center"}>
-        <Text className={"text-xl font-semibold"}>{t("app.menu.supervisor")}</Text>
+        <Text className={"text-xl font-semibold"}>{t("app.menu.expert")}</Text>
       </View>
     </ScreenWrapper>
   );

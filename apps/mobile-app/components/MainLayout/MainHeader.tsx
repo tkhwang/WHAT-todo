@@ -29,8 +29,8 @@ export default function MainHeader() {
           <Pressable onPress={() => router.push("/(auth)/(tabs)/")}>
             <Icon name={"checkmarkSquare"} size={hp(3.2)} strokeWidth={2} color={textColor} />
           </Pressable>
-          <Pressable onPress={() => router.push("/(auth)/(tabs)/upcoming")}>
-            <Icon name={"calendar"} size={hp(3.2)} strokeWidth={2} color={textColor} />
+          <Pressable onPress={() => router.push("/(auth)/(tabs)/expert")}>
+            <Icon name={"inboxCheck"} size={hp(3.2)} strokeWidth={2} color={textColor} />
           </Pressable>
           <Pressable onPress={() => router.push("/(auth)/(tabs)/profile")}>
             <Avatar uri={""} size={hp(4.3)} rounded={appTheme.radius.sm} style={{ borderWidth: 2 }} />

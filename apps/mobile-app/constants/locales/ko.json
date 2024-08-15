@@ -3,7 +3,7 @@
   "app.punchline": "전문가가 짜주고 조력자와 함께하는 투두앱",
   "app.menu.today": "오늘",
   "app.menu.upcoming": "다음",
-  "app.menu.supervisor": "감독",
+  "app.menu.expert": "전문가",
   "app.menu.profile": "프로필",
   "auth.action.checkId": "중복체크",
   "auth.action.register": "회원가입",

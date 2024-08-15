@@ -3,7 +3,7 @@
   "app.punchline": "Todo from expert with supervisor",
   "app.menu.today": "Today",
   "app.menu.upcoming": "Upcoming",
-  "app.menu.supervisor": "Supervisor",
+  "app.menu.expert": "Expert",
   "app.menu.profile": "Profile",
   "auth.action.checkId": "Check",
   "auth.action.register": "Register",
