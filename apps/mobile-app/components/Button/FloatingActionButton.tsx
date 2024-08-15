@@ -30,7 +30,7 @@ export default function FloatingActionButton() {
 
       if (name === "new-task") {
         router.push("/(auth)/(tabs)/newTask");
-        router.setParams({ segments });
+        router.setParams({ previousSegments: segments });
       }
     },
     [router],

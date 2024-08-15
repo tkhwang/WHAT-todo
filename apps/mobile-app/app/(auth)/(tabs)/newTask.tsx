@@ -1,35 +1,35 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, TextInput, View } from "react-native";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import BottomSheet, { BottomSheetBackdrop, BottomSheetView } from "@gorhom/bottom-sheet";
-import { useRouter } from "expo-router";
+import { Href, useLocalSearchParams, useRouter } from "expo-router";
 
 import ScreenWrapper from "@/components/MainLayout/ScreenWrapper";
 import MainHeader from "@/components/MainLayout/MainHeader";
 
 export default function NewTaskScreen() {
   const router = useRouter();
+  const { previousSegments } = useLocalSearchParams();
 
-  // ref
   const bottomSheetRef = useRef<BottomSheet>(null);
+  const textInputRef = useRef<TextInput>(null);
 
   const [key, setKey] = useState(new Date().getTime());
 
   useEffect(() => {
-    // Open the bottom sheet when the component mounts
-    bottomSheetRef.current?.snapToIndex(0);
+    textInputRef.current?.focus();
   }, []);
 
-  // callbacks
   const handleSheetChanges = useCallback(
     (index: number) => {
-      console.log("handleSheetChanges", index);
       if (index === -1) {
-        // bottomSheetRef.current?.close();
         setKey(new Date().getTime());
-        router.back();
+        if (Array.isArray(previousSegments)) {
+          const targetSegments = `/${previousSegments.join("/")}/`;
+          router.replace(targetSegments as Href<string | object>);
+        }
       }
     },
-    [router],
+    [previousSegments, router],
   );
 
   const renderBackdrop = useCallback(
@@ -50,6 +50,7 @@ export default function NewTaskScreen() {
         >
           <BottomSheetView style={styles.contentContainer}>
             <Text>{"Awesome 🎉"}</Text>
+            <TextInput ref={textInputRef} style={styles.textInput} placeholder={"Type here..."} />
           </BottomSheetView>
         </BottomSheet>
       </View>
@@ -60,10 +61,16 @@ export default function NewTaskScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "cyan",
   },
   contentContainer: {
     flex: 1,
     alignItems: "center",
+  },
+  textInput: {
+    width: "100%",
+    padding: 10,
+    borderColor: "gray",
+    borderWidth: 1,
+    marginTop: 20,
   },
 });
