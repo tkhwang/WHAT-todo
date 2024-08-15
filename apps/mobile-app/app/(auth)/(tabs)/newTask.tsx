@@ -1,89 +1,69 @@
-import { Animated, Pressable, StyleSheet, Text, View } from "react-native";
-import React, { useCallback, useRef } from "react";
-import { useTranslation } from "react-i18next";
-import { useSharedValue } from "react-native-reanimated";
+import { StyleSheet, Text, View } from "react-native";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import BottomSheet, { BottomSheetBackdrop, BottomSheetView } from "@gorhom/bottom-sheet";
+import { useRouter } from "expo-router";
 
 import ScreenWrapper from "@/components/MainLayout/ScreenWrapper";
 import MainHeader from "@/components/MainLayout/MainHeader";
-import { useColorScheme } from "@/lib/useColorScheme";
-import { BottomSheet } from "@/components/BottomSheet";
 
 export default function NewTaskScreen() {
-  const { colorScheme } = useColorScheme();
-  const isOpen = useSharedValue(false);
+  const router = useRouter();
 
-  const toggleSheet = () => {
-    isOpen.value = !isOpen.value;
-  };
+  // ref
+  const bottomSheetRef = useRef<BottomSheet>(null);
 
-  const contentStyle = {
-    color: colorScheme === "light" ? "#001a72" : "#f8f9ff",
-    textDecorationColor: colorScheme === "light" ? "#001a72" : "#f8f9ff",
-  };
+  const [key, setKey] = useState(new Date().getTime());
+
+  useEffect(() => {
+    // Open the bottom sheet when the component mounts
+    bottomSheetRef.current?.snapToIndex(0);
+  }, []);
+
+  // callbacks
+  const handleSheetChanges = useCallback(
+    (index: number) => {
+      console.log("handleSheetChanges", index);
+      if (index === -1) {
+        // bottomSheetRef.current?.close();
+        setKey(new Date().getTime());
+        router.back();
+      }
+    },
+    [router],
+  );
+
+  const renderBackdrop = useCallback(
+    (props) => <BottomSheetBackdrop {...props} disappearsOnIndex={-1} appearsOnIndex={0} pressBehavior={"close"} />,
+    [],
+  );
 
   return (
     <ScreenWrapper>
       <MainHeader />
-      <View style={styles.safeArea}>
-        <View style={styles.flex} />
-        <Pressable style={styles.toggleButton} onPress={toggleSheet}>
-          <Text style={styles.toggleButtonText}>{"Toggle bottom sheet"}</Text>
-        </Pressable>
-        <View style={styles.flex} />
+      <View style={styles.container}>
+        <BottomSheet
+          key={key}
+          ref={bottomSheetRef}
+          onChange={handleSheetChanges}
+          snapPoints={["50%"]}
+          backdropComponent={renderBackdrop}
+        >
+          <BottomSheetView style={styles.contentContainer}>
+            <Text>{"Awesome 🎉"}</Text>
+          </BottomSheetView>
+        </BottomSheet>
       </View>
-      <BottomSheet isOpen={isOpen} toggleSheet={toggleSheet}>
-        <Animated.Text style={contentStyle}>
-          {"Discover the indispensable convenience of a bottom sheet in mobile app. Seamlessly integrated, it provides"}
-          {"quick access to supplementary features and refined details."}
-        </Animated.Text>
-        <View style={styles.buttonContainer}>
-          <Pressable style={[styles.bottomSheetButton]}>
-            <Text style={[styles.bottomSheetButtonText, contentStyle]}>{"Read more"}</Text>
-          </Pressable>
-        </View>
-      </BottomSheet>
     </ScreenWrapper>
   );
 }
 
 const styles = StyleSheet.create({
-  flex: {
-    flex: 1,
-  },
   container: {
     flex: 1,
-    height: 250,
+    backgroundColor: "cyan",
   },
-  buttonContainer: {
-    marginTop: 16,
-    display: "flex",
-    flexDirection: "row",
-    width: "100%",
-    justifyContent: "space-around",
-  },
-  toggleButton: {
-    backgroundColor: "#b58df1",
-    padding: 12,
-    borderRadius: 48,
-  },
-  toggleButtonText: {
-    color: "white",
-    padding: "0.5rem",
-  },
-  safeArea: {
-    alignItems: "center",
-    justifyContent: "center",
+  contentContainer: {
     flex: 1,
-  },
-  bottomSheetButton: {
-    display: "flex",
-    flexDirection: "row",
     alignItems: "center",
-    gap: 8,
-    paddingBottom: 2,
-  },
-  bottomSheetButtonText: {
-    fontWeight: 600,
-    textDecorationLine: "underline",
   },
 });

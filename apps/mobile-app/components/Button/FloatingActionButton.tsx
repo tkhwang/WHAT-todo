@@ -1,6 +1,6 @@
 import React, { useCallback } from "react";
 import { FloatingAction } from "react-native-floating-action";
-import { useRouter } from "expo-router";
+import { useRouter, useSegments } from "expo-router";
 
 import Icon from "@/assets/icons";
 import { hp } from "@/helpers/common";
@@ -10,6 +10,8 @@ import { appTheme } from "@/constants/uiConsts";
 export default function FloatingActionButton() {
   const router = useRouter();
   const textColor = useTextColor();
+
+  const segments = useSegments();
 
   const actions = [
     {
@@ -28,6 +30,7 @@ export default function FloatingActionButton() {
 
       if (name === "new-task") {
         router.push("/(auth)/(tabs)/newTask");
+        router.setParams({ segments });
       }
     },
     [router],
