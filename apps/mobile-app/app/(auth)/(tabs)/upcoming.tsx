@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { Text } from "@/components/ui/text";
 import ScreenWrapper from "@/components/MainLayout/ScreenWrapper";
 import MainHeader from "@/components/MainLayout/MainHeader";
+import FloatingActionButton from "@/components/Button/FloatingActionButton";
 
 export default function TabThreeScreen() {
   const { t } = useTranslation();
@@ -13,6 +14,7 @@ export default function TabThreeScreen() {
       <View className={"flex-1 justify-center items-center"}>
         <Text className={"text-xl font-semibold"}>{t("app.menu.upcoming")}</Text>
       </View>
+      <FloatingActionButton />
     </ScreenWrapper>
   );
 }
