@@ -12,11 +12,13 @@ import CheckmarkSquare from "./CheckmarkSquare";
 import PoliceCap from "./PoliceCap";
 import Logout from "./Logout";
 import Calendar from "./Calendar";
+import CheckList from "./CheckList";
 
 const icons = {
   accountSetting: AccountSetting,
   arrowLeft: ArrowLeft,
   calendar: Calendar,
+  checkList: CheckList,
   checkmarkSquare: CheckmarkSquare,
   home: Home,
   logout: Logout,
