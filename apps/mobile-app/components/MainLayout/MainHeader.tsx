@@ -8,6 +8,8 @@ import { hp, wp } from "@/helpers/common";
 import Icon from "@/assets/icons";
 import useTextColor from "@/hooks/useTextColor";
 
+import Avatar from "../Avatar";
+
 export default function MainHeader() {
   const { t } = useTranslation();
   const router = useRouter();
@@ -30,12 +32,9 @@ export default function MainHeader() {
           <Pressable onPress={() => router.push("/(auth)/(tabs)/expert")}>
             <Icon name={"inboxCheck"} size={hp(3.2)} strokeWidth={2} color={textColor} />
           </Pressable>
-          {/* <Pressable onPress={() => router.push("/(auth)/(tabs)/supervisor")}>
-            <Icon name={"policeCap"} size={hp(3.2)} strokeWidth={2} color={textColor} />
-          </Pressable>
           <Pressable onPress={() => router.push("/(auth)/(tabs)/profile")}>
-            <Icon name={"user"} size={hp(3.2)} strokeWidth={2} color={textColor} />
-          </Pressable> */}
+            <Avatar uri={""} size={hp(4.3)} rounded={appTheme.radius.sm} style={{ borderWidth: 2 }} />
+          </Pressable>
         </View>
       </View>
     </View>

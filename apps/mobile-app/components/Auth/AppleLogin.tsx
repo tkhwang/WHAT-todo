@@ -7,13 +7,13 @@ import { useAtom } from "jotai";
 import { useRouter } from "expo-router";
 import { COLLECTIONS } from "@whatTodo/models";
 
-import Loading from "../Loading";
-
 import { authIsSignedInAtom } from "@/states/auth";
 import { useColorScheme } from "@/lib/useColorScheme";
 import { useAuth } from "@/context/AuthProvider";
 import { appTheme } from "@/constants/uiConsts";
 import { hp } from "@/helpers/common";
+
+import Loading from "../Loading";
 
 export function AppleLogin() {
   const router = useRouter();

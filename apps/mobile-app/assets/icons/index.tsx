@@ -1,5 +1,7 @@
 import { NumberProp, SvgProps } from "react-native-svg";
 
+import { appTheme } from "@/constants/uiConsts";
+
 import InboxCheck from "./InboxCheck";
 import Home from "./Home";
 import ArrowLeft from "./ArrowLeft";
@@ -8,14 +10,14 @@ import Tag from "./Tag";
 import User from "./User";
 import CheckmarkSquare from "./CheckmarkSquare";
 import PoliceCap from "./PoliceCap";
-
-import { appTheme } from "@/constants/uiConsts";
+import Logout from "./Logout";
 
 const icons = {
   accountSetting: AccountSetting,
   arrowLeft: ArrowLeft,
   checkmarkSquare: CheckmarkSquare,
   home: Home,
+  logout: Logout,
   inboxCheck: InboxCheck,
   policeCap: PoliceCap,
   tag: Tag,
@@ -26,8 +28,8 @@ type IconNames = keyof typeof icons;
 
 interface Props extends SvgProps {
   name: IconNames;
-  size: NumberProp;
-  strokeWidth: number;
+  size?: NumberProp;
+  strokeWidth?: number;
 }
 
 export default function Icon({ size, name, strokeWidth, ...props }: Props) {

@@ -54,6 +54,18 @@ module.exports = {
     "no-shadow": 0,
     "jsx-a11y/no-noninteractive-element-interactions": 0,
     "react-hooks/rules-of-hooks": "error",
+    "@typescript-eslint/no-unused-vars": [
+      "warn",
+      {
+        args: "all",
+        argsIgnorePattern: "^_",
+        caughtErrors: "all",
+        caughtErrorsIgnorePattern: "^_",
+        destructuredArrayIgnorePattern: "^_",
+        varsIgnorePattern: "^_",
+        ignoreRestSiblings: true,
+      },
+    ],
   },
   settings: {
     "import/resolver": {
