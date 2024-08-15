@@ -45,7 +45,9 @@ export class FirebaseUserRepository {
   }
 
   async findUserById(id: string) {
-    const userDocRef = await this.#userCollection.where('id', '==', id).get();
+    const userDocRef = await this.#userCollection
+      .where('whatTodoId', '==', id)
+      .get();
 
     if (userDocRef.size > 0) {
       throw new BadRequestException(APP_ERRORS.AUTH.USER_ALREADY_EXITS);

@@ -18,9 +18,7 @@ import { useAuthVerifyId } from "@/hooks/mutations/useAuthVerifyId";
 import BackButton from "@/components/Button/BackButton";
 import Button from "@/components/Button/Button";
 
-interface Props {}
-
-export default function PublicSignupScreen({}: Props) {
+export default function PublicSignupScreen() {
   const router = useRouter();
 
   const { email, uid } = useGlobalSearchParams() ?? "";
@@ -53,7 +51,8 @@ export default function PublicSignupScreen({}: Props) {
     [dispatchAuthVerifyId],
   );
 
-  /*   *  ActionButton
+  /*
+   *  ActionButton
    */
   const actionButtonState = useMemo(() => {
     if (authNameReducerState === "READY" && authVerifyIdReducerState === "VERIFIED") return "read-to-register";
@@ -79,7 +78,13 @@ export default function PublicSignupScreen({}: Props) {
       await authVerifyIdMutationAsync(requestDto);
       dispatchAuthVerifyId({ type: "verify", id });
     } catch (error: unknown) {
-      dispatchAuthVerifyId({ type: "update", id });
+      if (error instanceof Error) {
+        // check status code 400
+        if (error?.response?.status === 400) {
+          dispatchAuthVerifyId({ type: "duplicate", id });
+        }
+      }
+    } finally {
       setIsIdLoading(false);
     }
   }, [authVerifyIdMutationAsync, dispatchAuthVerifyId, id]);
@@ -133,6 +138,7 @@ export default function PublicSignupScreen({}: Props) {
               icon={<Icon name={"user"} size={26} strokeWidth={1.6} />}
               placeholder={t("auth.name.placehold")}
               onChangeText={(value) => handleNameChange(value)}
+              autoCapitalize={"none"}
               value={name}
               fontSize={18}
             />
@@ -146,6 +152,7 @@ export default function PublicSignupScreen({}: Props) {
               icon={<Icon name={"tag"} size={26} strokeWidth={1.6} />}
               placeholder={t("auth.id.placehold")}
               onChangeText={(value) => handleIdChange(value)}
+              autoCapitalize={"none"}
               value={id}
               fontSize={18}
             />

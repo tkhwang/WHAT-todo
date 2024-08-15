@@ -15,10 +15,17 @@ import { hp } from "@/helpers/common";
 
 import Loading from "../Loading";
 
+/**
+ * handle platform sepcific auth : apple login
+ *
+ * @export
+ * @return {*}
+ */
 export function AppleLoginButton() {
   const router = useRouter();
-  const { user, login, setUser } = useAuth();
   const { isDarkColorScheme } = useColorScheme();
+
+  const { user, login, setUser } = useAuth();
 
   const [isLoading, setIsLoading] = useState(false);
   const [authIsSignedIn, setAuthIsSignedIn] = useAtom(authIsSignedInAtom);
@@ -40,11 +47,14 @@ export function AppleLoginButton() {
       const appleCredential = auth.AppleAuthProvider.credential(identityToken, nonce);
 
       // apple signin
-      const { user } = await auth().signInWithCredential(appleCredential);
-      setAuthIsSignedIn(true);
+      // const { user } = await auth().signInWithCredential(appleCredential);
+      const user = await login(appleCredential);
+      // setAuthIsSignedIn(true);
 
       if (user) {
         const userDocRef = await firestore().collection(COLLECTIONS.USERS).doc(user.uid).get();
+
+        console.log("🚀 ~ handlePressSignin ~ userDocRef.exists:", userDocRef.exists);
 
         // signin
         if (userDocRef.exists) {
@@ -73,7 +83,7 @@ export function AppleLoginButton() {
         setUser(null);
       }
     }
-  }, [router, setAuthIsSignedIn, setUser]);
+  }, [login, router, setUser]);
 
   if (Platform.OS !== "ios") return null;
 
