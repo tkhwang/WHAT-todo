@@ -1,8 +1,9 @@
-import { KeyboardAvoidingView, Platform, StyleSheet, TextInput, View } from "react-native";
+import { TextInput, View } from "react-native";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import BottomSheet, { BottomSheetBackdrop, BottomSheetView } from "@gorhom/bottom-sheet";
 import { Href, useLocalSearchParams, useRouter } from "expo-router";
 import { useTranslation } from "react-i18next";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 import { Text } from "@/components/ui/text";
 import ScreenWrapper from "@/components/MainLayout/ScreenWrapper";
@@ -13,14 +14,12 @@ import { Button } from "@/components/ui/button";
 export default function NewTaskScreen() {
   const router = useRouter();
   const { previousSegments } = useLocalSearchParams();
-
   const { t } = useTranslation();
 
   const bottomSheetRef = useRef<BottomSheet>(null);
   const textInputRef = useRef<TextInput>(null);
 
   const [key, setKey] = useState(new Date().getTime());
-
   const [newTask, setNewTask] = useState("");
 
   useEffect(() => {
@@ -61,12 +60,12 @@ export default function NewTaskScreen() {
         ref={bottomSheetRef}
         index={0}
         onChange={handleSheetChanges}
-        snapPoints={["3%", "50%"]}
+        snapPoints={["3%", "60%"]}
         backdropComponent={renderBackdrop}
       >
-        <BottomSheetView style={styles.contentContainer}>
-          <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === "ios" ? "padding" : "height"}>
-            <View className={"flex-1 w-screen px-4"}>
+        <BottomSheetView className={"flex-1 items-center"}>
+          <KeyboardAwareScrollView className={"flex-1 w-screen"}>
+            <View className={"flex-1 px-4 gap-4"}>
               <Text className={"text-xl font-bold text-center"}>{t("bottomSheet.newTask.title")}</Text>
               <Input
                 ref={textInputRef}
@@ -83,26 +82,9 @@ export default function NewTaskScreen() {
                 </Button>
               </View>
             </View>
-          </KeyboardAvoidingView>
+          </KeyboardAwareScrollView>
         </BottomSheetView>
       </BottomSheet>
     </ScreenWrapper>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  contentContainer: {
-    flex: 1,
-    alignItems: "center",
-  },
-  textInput: {
-    width: "100%",
-    padding: 10,
-    borderColor: "gray",
-    borderWidth: 1,
-    marginTop: 20,
-  },
-});
