@@ -4,12 +4,14 @@ import BottomSheet, { BottomSheetBackdrop, BottomSheetView } from "@gorhom/botto
 import { Href, useLocalSearchParams, useRouter } from "expo-router";
 import { useTranslation } from "react-i18next";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { AddTodoRequest } from "@whatTodo/models";
 
 import { Text } from "@/components/ui/text";
 import ScreenWrapper from "@/components/MainLayout/ScreenWrapper";
 import MainHeader from "@/components/MainLayout/MainHeader";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { useAddTodo } from "@/hooks/mutations/useAddTodo";
 
 export default function NewTaskScreen() {
   const router = useRouter();
@@ -20,7 +22,9 @@ export default function NewTaskScreen() {
   const textInputRef = useRef<TextInput>(null);
 
   const [key, setKey] = useState(new Date().getTime());
-  const [newTask, setNewTask] = useState("");
+  const [newTodo, setNewTodo] = useState("");
+
+  const { mutateAsync: addTodoMutationAsync } = useAddTodo();
 
   useEffect(() => {
     setTimeout(() => {
@@ -48,8 +52,19 @@ export default function NewTaskScreen() {
   );
 
   const onChangeText = (text: string) => {
-    setNewTask(text);
+    setNewTodo(text);
   };
+
+  const handleNewTodo = useCallback(async () => {
+    console.log("🚀 ~ handleNewTodo ~ handleNewTodo:");
+    if (!newTodo) return;
+
+    const newTodoDto: AddTodoRequest = {
+      todo: newTodo,
+    };
+
+    await addTodoMutationAsync(newTodoDto);
+  }, [addTodoMutationAsync, newTodo]);
 
   return (
     <ScreenWrapper>
@@ -71,13 +86,13 @@ export default function NewTaskScreen() {
                 ref={textInputRef}
                 className={"my-4"}
                 placeholder={t("task.create.placehold")}
-                value={newTask}
+                value={newTodo}
                 onChangeText={onChangeText}
                 aria-labelledby={"inputLabel"}
                 aria-errormessage={"inputError"}
               />
               <View>
-                <Button className={""} variant={"default"}>
+                <Button className={""} variant={"default"} onPress={handleNewTodo} disabled={newTodo.length === 0}>
                   <Text>{"Submit"}</Text>
                 </Button>
               </View>
