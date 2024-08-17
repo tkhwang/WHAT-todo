@@ -160,7 +160,7 @@ export default function PublicSignupScreen() {
             </View>
 
             {/* register button */}
-            <View>
+            <View className={"pb-8"}>
               {actionButtonState === "read-to-register" ? (
                 <Button
                   onPress={handleClickRegister}
