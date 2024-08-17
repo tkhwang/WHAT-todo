@@ -1,4 +1,4 @@
-import { TextInput } from "react-native";
+import { KeyboardAvoidingView, Platform, TextInput, View } from "react-native";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import BottomSheet, { BottomSheetBackdrop, BottomSheetView } from "@gorhom/bottom-sheet";
 import { Href, useLocalSearchParams, useRouter } from "expo-router";
@@ -44,18 +44,22 @@ export default function NewTaskScreen() {
   return (
     <ScreenWrapper>
       <MainHeader />
-      <BottomSheet
-        key={key}
-        ref={bottomSheetRef}
-        index={0}
-        onChange={handleSheetChanges}
-        snapPoints={["3%", "50%", "80%"]}
-        backdropComponent={renderBackdrop}
-      >
-        <BottomSheetView className={"flex-1 items-center w-screen"}>
-          <AddTodo bottomSheetRef={bottomSheetRef} />
-        </BottomSheetView>
-      </BottomSheet>
+      <KeyboardAvoidingView className={"flex-1 w-screen"} behavior={Platform.OS === "ios" ? "padding" : "height"}>
+        <View className={"flex-1 w-screen justify-end w-full"}>
+          <BottomSheet
+            key={key}
+            ref={bottomSheetRef}
+            index={0}
+            onChange={handleSheetChanges}
+            snapPoints={["3%", "60%", "90%"]}
+            backdropComponent={renderBackdrop}
+          >
+            <BottomSheetView className={"flex-1 items-center w-screen"}>
+              <AddTodo bottomSheetRef={bottomSheetRef} />
+            </BottomSheetView>
+          </BottomSheet>
+        </View>
+      </KeyboardAvoidingView>
     </ScreenWrapper>
   );
 }
