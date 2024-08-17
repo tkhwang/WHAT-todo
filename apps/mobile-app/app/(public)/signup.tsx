@@ -118,70 +118,73 @@ export default function PublicSignupScreen() {
         }}
       >
         <BackButton router={router} />
-
-        {/* Welcom Text */}
-        <View>
-          <Text className={"text-4xl font-bold"}>{t("auth.title.first")}</Text>
-          <Text className={"text-4xl font-bold"}>{t("auth.title.second")}</Text>
-        </View>
-
-        {/* form */}
-        <View style={styles.form}>
-          <View className={"py-4"}>
-            <Text className={"text-xl font-normal"}>{t("auth.register.description")}</Text>
-          </View>
-
-          {/* name */}
-          <View style={styles.inputAndErrorContainer}>
-            <Input
-              inputRef={nameRef}
-              icon={<Icon name={"user"} size={26} strokeWidth={1.6} />}
-              placeholder={t("auth.name.placehold")}
-              onChangeText={(value) => handleNameChange(value)}
-              autoCapitalize={"none"}
-              value={name}
-              fontSize={18}
-            />
-            <Text className={"text-xl  text-red-600"}>{nameError}</Text>
-          </View>
-
-          {/* user id */}
-          <View style={styles.inputAndErrorContainer}>
-            <Input
-              inputRef={idRef}
-              icon={<Icon name={"tag"} size={26} strokeWidth={1.6} />}
-              placeholder={t("auth.id.placehold")}
-              onChangeText={(value) => handleIdChange(value)}
-              autoCapitalize={"none"}
-              value={id}
-              fontSize={18}
-            />
-            <Text className={"text-xl  text-red-600"}>{idError}</Text>
-          </View>
-
-          {/* register button */}
+        <View className={"flex-1 justify-end"}>
+          {/* Welcom Text */}
           <View>
-            {actionButtonState === "read-to-register" ? (
-              <Button
-                onPress={handleClickRegister}
-                title={t("auth.action.register")}
-                color={appTheme.colors.primary}
-                loading={isNameLoading}
-                buttonStyle={{ backgroundColor: appTheme.colors.primary }}
-              />
-            ) : (
-              <Button
-                onPress={handleClickCheckId}
-                title={t("auth.action.checkId")}
-                disabled={actionButtonState === "not-ready"}
-                color={appTheme.colors.secondary}
-                loading={isIdLoading}
-                buttonStyle={{
-                  backgroundColor: actionButtonState === "not-ready" ? appTheme.colors.gray : appTheme.colors.secondary,
-                }}
-              />
-            )}
+            <Text className={"text-4xl font-bold"}>{t("auth.title.first")}</Text>
+            <Text className={"text-4xl font-bold"}>{t("auth.title.second")}</Text>
           </View>
+
+          {/* form */}
+          <View style={styles.form}>
+            <View className={"py-4"}>
+              <Text className={"text-xl font-normal"}>{t("auth.register.description")}</Text>
+            </View>
+
+            {/* name */}
+            <View style={styles.inputAndErrorContainer}>
+              <Input
+                inputRef={nameRef}
+                icon={<Icon name={"user"} size={26} strokeWidth={1.6} />}
+                placeholder={t("auth.name.placehold")}
+                onChangeText={(value) => handleNameChange(value)}
+                autoCapitalize={"none"}
+                value={name}
+                fontSize={18}
+              />
+              <Text className={"text-xl  text-red-600"}>{nameError}</Text>
+            </View>
+
+            {/* user id */}
+            <View style={styles.inputAndErrorContainer}>
+              <Input
+                inputRef={idRef}
+                icon={<Icon name={"tag"} size={26} strokeWidth={1.6} />}
+                placeholder={t("auth.id.placehold")}
+                onChangeText={(value) => handleIdChange(value)}
+                autoCapitalize={"none"}
+                value={id}
+                fontSize={18}
+              />
+              <Text className={"text-xl  text-red-600"}>{idError}</Text>
+            </View>
+
+            {/* register button */}
+            <View>
+              {actionButtonState === "read-to-register" ? (
+                <Button
+                  onPress={handleClickRegister}
+                  title={t("auth.action.register")}
+                  color={appTheme.colors.primary}
+                  loading={isNameLoading}
+                  buttonStyle={{ backgroundColor: appTheme.colors.primary }}
+                />
+              ) : (
+                <Button
+                  onPress={handleClickCheckId}
+                  title={t("auth.action.checkId")}
+                  disabled={actionButtonState === "not-ready"}
+                  color={appTheme.colors.secondary}
+                  loading={isIdLoading}
+                  buttonStyle={{
+                    backgroundColor:
+                      actionButtonState === "not-ready" ? appTheme.colors.gray : appTheme.colors.secondary,
+                  }}
+                />
+              )}
+            </View>
+          </View>
+          <View style={{ flex: 1 }} />
         </View>
       </KeyboardAvoidingView>
     </ScreenWrapper>
