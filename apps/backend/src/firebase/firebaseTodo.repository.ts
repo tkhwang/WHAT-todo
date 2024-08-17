@@ -12,18 +12,13 @@ export class FirebaseTodoRepository {
     this.#todoCollection = this.#db.collection(COLLECTIONS.TODOS);
   }
 
-  async addNewTodo(userId: string, addTodoDto: AddTodoRequest) {
+  async addTodo(userId: string, addTodoDto: AddTodoRequest) {
     const newTodo = {
       ...addTodoDto,
       createdAt: firestore.FieldValue.serverTimestamp(),
       updatedAt: firestore.FieldValue.serverTimestamp(),
     };
-    try {
-      const todoDoc = await this.#todoCollection.add(newTodo);
-      console.log('🚀 ~ FirebaseTodoRepository ~ todoDoc:', todoDoc);
-    } catch (error: unknown) {
-      if (error instanceof Error) {
-      }
-    }
+
+    return await this.#todoCollection.add(newTodo);
   }
 }
