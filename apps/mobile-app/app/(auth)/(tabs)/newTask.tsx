@@ -20,8 +20,11 @@ export default function NewTaskScreen() {
   const [key, setKey] = useState(new Date().getTime());
 
   useEffect(() => {
+    setTimeout(() => {
+      bottomSheetRef.current?.snapToIndex(1);
+    }, 1000);
     textInputRef.current?.focus();
-  }, []);
+  });
 
   const handleSheetChanges = useCallback(
     (index: number) => {
@@ -48,8 +51,9 @@ export default function NewTaskScreen() {
         <BottomSheet
           key={key}
           ref={bottomSheetRef}
+          index={0}
           onChange={handleSheetChanges}
-          snapPoints={["50%"]}
+          snapPoints={["3%", "50%"]}
           backdropComponent={renderBackdrop}
         >
           <BottomSheetView style={styles.contentContainer}>
