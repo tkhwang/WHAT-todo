@@ -62,6 +62,7 @@
     "react-dom": "18.2.0",
     "react-i18next": "^15.0.0",
     "react-native": "0.74.5",
+    "react-native-calendars": "^1.1306.0",
     "react-native-device-info": "^11.1.0",
     "react-native-floating-action": "^1.22.0",
     "react-native-gesture-handler": "^2.18.1",
