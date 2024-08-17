@@ -12,12 +12,13 @@ export class appLoggerMiddleware implements NestMiddleware {
     response.on('close', () => {
       const { statusCode } = response;
       const contentLength = response.get('content-length');
+      const routePath = request.route?.path || 'unknown route';
 
-      let logMessage = `${method} ${url} ${statusCode} ${contentLength} ${ip}`;
+      let logMessage = `${statusCode} | ${method} ${routePath} | ${ip}`;
       const params = JSON.stringify(response.req.params);
-      logMessage += ` Param: ${params}`;
+      logMessage += ` | Param: ${params}`;
       const body = JSON.stringify(response.req.body);
-      logMessage += ` Body: ${body}`;
+      logMessage += ` | Body: ${body}`;
 
       this.logger.log(logMessage);
     });

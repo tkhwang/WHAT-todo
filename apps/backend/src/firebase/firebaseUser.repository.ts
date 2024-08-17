@@ -1,5 +1,10 @@
 import { BadRequestException, Inject, Injectable } from '@nestjs/common';
-import { APP_ERRORS, AuthProviders, COLLECTIONS } from '@whatTodo/models';
+import {
+  AddTodoRequest,
+  APP_ERRORS,
+  AuthProviders,
+  COLLECTIONS,
+} from '@whatTodo/models';
 import { app, firestore } from 'firebase-admin';
 
 @Injectable()
@@ -52,5 +57,25 @@ export class FirebaseUserRepository {
     if (userDocRef.size > 0) {
       throw new BadRequestException(APP_ERRORS.AUTH.USER_ALREADY_EXITS);
     }
+  }
+
+  async addUserTodo(
+    userId: string,
+    todoId: string,
+    addTodoDto: AddTodoRequest,
+  ) {
+    const newTodo = {
+      todoId,
+      createdAt: firestore.FieldValue.serverTimestamp(),
+      updatedAt: firestore.FieldValue.serverTimestamp(),
+    };
+
+    const data = await this.#userCollection
+      .doc(userId)
+      .collection(COLLECTIONS.TODOS)
+      .doc(todoId)
+      .set(newTodo);
+
+    return data;
   }
 }
