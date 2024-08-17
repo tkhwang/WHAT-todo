@@ -10,7 +10,7 @@ export class TodosController {
 
   @Post('addTodo')
   @Auth()
-  async addTodo(@UserId() userId: string, @Body() newTodoDto: AddTodoRequest) {
-    return this.todosService.addTodo(newTodoDto);
+  async addTodo(@UserId() userId: string, @Body() addTodoDto: AddTodoRequest) {
+    return this.todosService.addTodo(userId, addTodoDto);
   }
 }

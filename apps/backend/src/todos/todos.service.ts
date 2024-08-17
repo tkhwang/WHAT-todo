@@ -8,7 +8,7 @@ export class TodosService {
     private readonly firebaseTodoRepository: FirebaseTodoRepository,
   ) {}
 
-  async addTodo(newTodo: AddTodoRequest) {
-    return this.firebaseTodoRepository.addNewTodo(newTodo);
+  async addTodo(userId: string, addTodoDto: AddTodoRequest) {
+    return this.firebaseTodoRepository.addNewTodo(userId, addTodoDto);
   }
 }

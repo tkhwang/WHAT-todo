@@ -12,9 +12,9 @@ export class FirebaseTodoRepository {
     this.#todoCollection = this.#db.collection(COLLECTIONS.TODOS);
   }
 
-  async addNewTodo(requestDto: AddTodoRequest) {
+  async addNewTodo(userId: string, addTodoDto: AddTodoRequest) {
     const newTodo = {
-      ...requestDto,
+      ...addTodoDto,
       createdAt: firestore.FieldValue.serverTimestamp(),
       updatedAt: firestore.FieldValue.serverTimestamp(),
     };
