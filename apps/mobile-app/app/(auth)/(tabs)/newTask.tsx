@@ -1,4 +1,4 @@
-import { StyleSheet, TextInput, View } from "react-native";
+import { KeyboardAvoidingView, Platform, StyleSheet, TextInput, View } from "react-native";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import BottomSheet, { BottomSheetBackdrop, BottomSheetView } from "@gorhom/bottom-sheet";
 import { Href, useLocalSearchParams, useRouter } from "expo-router";
@@ -47,23 +47,24 @@ export default function NewTaskScreen() {
   return (
     <ScreenWrapper>
       <MainHeader />
-      <View style={styles.container}>
-        <BottomSheet
-          key={key}
-          ref={bottomSheetRef}
-          index={0}
-          onChange={handleSheetChanges}
-          snapPoints={["3%", "50%"]}
-          backdropComponent={renderBackdrop}
-        >
-          <BottomSheetView style={styles.contentContainer}>
-            <Text>{t("bottomSheet.newTask.title")}</Text>
+
+      <BottomSheet
+        key={key}
+        ref={bottomSheetRef}
+        index={0}
+        onChange={handleSheetChanges}
+        snapPoints={["3%", "50%"]}
+        backdropComponent={renderBackdrop}
+      >
+        <BottomSheetView style={styles.contentContainer}>
+          <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === "ios" ? "padding" : "height"}>
             <View className={"flex-1 w-screen px-4"}>
+              <Text className={"text-xl font-bold text-center"}>{t("bottomSheet.newTask.title")}</Text>
               <TextInput ref={textInputRef} style={styles.textInput} placeholder={"Add new task..."} />
             </View>
-          </BottomSheetView>
-        </BottomSheet>
-      </View>
+          </KeyboardAvoidingView>
+        </BottomSheetView>
+      </BottomSheet>
     </ScreenWrapper>
   );
 }
