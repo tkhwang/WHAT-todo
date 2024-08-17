@@ -967,18 +967,18 @@ PODS:
   - EXJSONUtils (0.13.1)
   - EXManifests (0.14.3):
     - ExpoModulesCore
-  - Expo (51.0.26):
+  - Expo (51.0.28):
     - ExpoModulesCore
-  - expo-dev-client (4.0.22):
+  - expo-dev-client (4.0.23):
     - EXManifests
     - expo-dev-launcher
     - expo-dev-menu
     - expo-dev-menu-interface
     - EXUpdatesInterface
-  - expo-dev-launcher (4.0.24):
+  - expo-dev-launcher (4.0.25):
     - DoubleConversion
     - EXManifests
-    - expo-dev-launcher/Main (= 4.0.24)
+    - expo-dev-launcher/Main (= 4.0.25)
     - expo-dev-menu
     - expo-dev-menu-interface
     - ExpoModulesCore
@@ -1004,7 +1004,7 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - expo-dev-launcher/Main (4.0.24):
+  - expo-dev-launcher/Main (4.0.25):
     - DoubleConversion
     - EXManifests
     - expo-dev-launcher/Unsafe
@@ -1033,7 +1033,7 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - expo-dev-launcher/Unsafe (4.0.24):
+  - expo-dev-launcher/Unsafe (4.0.25):
     - DoubleConversion
     - EXManifests
     - expo-dev-menu
@@ -1061,10 +1061,10 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - expo-dev-menu (5.0.18):
+  - expo-dev-menu (5.0.19):
     - DoubleConversion
-    - expo-dev-menu/Main (= 5.0.18)
-    - expo-dev-menu/ReactNativeCompatibles (= 5.0.18)
+    - expo-dev-menu/Main (= 5.0.19)
+    - expo-dev-menu/ReactNativeCompatibles (= 5.0.19)
     - glog
     - hermes-engine
     - RCT-Folly (= 2024.01.01.00)
@@ -1085,7 +1085,7 @@ PODS:
     - ReactCommon/turbomodule/core
     - Yoga
   - expo-dev-menu-interface (1.8.3)
-  - expo-dev-menu/Main (5.0.18):
+  - expo-dev-menu/Main (5.0.19):
     - DoubleConversion
     - EXManifests
     - expo-dev-menu-interface
@@ -1111,7 +1111,7 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - expo-dev-menu/ReactNativeCompatibles (5.0.18):
+  - expo-dev-menu/ReactNativeCompatibles (5.0.19):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -1132,7 +1132,7 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - expo-dev-menu/SafeAreaView (5.0.18):
+  - expo-dev-menu/SafeAreaView (5.0.19):
     - DoubleConversion
     - ExpoModulesCore
     - glog
@@ -1154,7 +1154,7 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - expo-dev-menu/Vendored (5.0.18):
+  - expo-dev-menu/Vendored (5.0.19):
     - DoubleConversion
     - expo-dev-menu/SafeAreaView
     - glog
@@ -1188,7 +1188,7 @@ PODS:
     - ExpoModulesCore
   - ExpoFont (12.0.9):
     - ExpoModulesCore
-  - ExpoHead (3.5.21):
+  - ExpoHead (3.5.23):
     - ExpoModulesCore
   - ExpoImage (1.12.13):
     - ExpoModulesCore
@@ -1204,7 +1204,7 @@ PODS:
     - ExpoModulesCore
   - ExpoLocalization (15.0.3):
     - ExpoModulesCore
-  - ExpoModulesCore (1.12.20):
+  - ExpoModulesCore (1.12.21):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -2634,19 +2634,19 @@ PODS:
     - React-Core
   - RNDeviceInfo (11.1.0):
     - React-Core
-  - RNFBApp (20.3.0):
+  - RNFBApp (20.4.0):
     - Firebase/CoreOnly (= 10.29.0)
     - React-Core
-  - RNFBAuth (20.3.0):
+  - RNFBAuth (20.4.0):
     - Firebase/Auth (= 10.29.0)
     - React-Core
     - RNFBApp
-  - RNFBFirestore (20.3.0):
+  - RNFBFirestore (20.4.0):
     - Firebase/Firestore (= 10.29.0)
     - nanopb (< 2.30910.0, >= 2.30908.0)
     - React-Core
     - RNFBApp
-  - RNGestureHandler (2.18.1):
+  - RNGestureHandler (2.16.2):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -2670,51 +2670,7 @@ PODS:
   - RNGoogleSignin (12.2.1):
     - GoogleSignIn (~> 7.1)
     - React-Core
-  - RNReanimated (3.15.0):
-    - DoubleConversion
-    - glog
-    - hermes-engine
-    - RCT-Folly (= 2024.01.01.00)
-    - RCTRequired
-    - RCTTypeSafety
-    - React-Codegen
-    - React-Core
-    - React-debug
-    - React-Fabric
-    - React-featureflags
-    - React-graphics
-    - React-ImageManager
-    - React-NativeModulesApple
-    - React-RCTFabric
-    - React-rendererdebug
-    - React-utils
-    - ReactCommon/turbomodule/bridging
-    - ReactCommon/turbomodule/core
-    - RNReanimated/reanimated (= 3.15.0)
-    - RNReanimated/worklets (= 3.15.0)
-    - Yoga
-  - RNReanimated/reanimated (3.15.0):
-    - DoubleConversion
-    - glog
-    - hermes-engine
-    - RCT-Folly (= 2024.01.01.00)
-    - RCTRequired
-    - RCTTypeSafety
-    - React-Codegen
-    - React-Core
-    - React-debug
-    - React-Fabric
-    - React-featureflags
-    - React-graphics
-    - React-ImageManager
-    - React-NativeModulesApple
-    - React-RCTFabric
-    - React-rendererdebug
-    - React-utils
-    - ReactCommon/turbomodule/bridging
-    - ReactCommon/turbomodule/core
-    - Yoga
-  - RNReanimated/worklets (3.15.0):
+  - RNReanimated (3.10.1):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -3104,22 +3060,22 @@ SPEC CHECKSUMS:
   EXConstants: 409690fbfd5afea964e5e9d6c4eb2c2b59222c59
   EXJSONUtils: 30c17fd9cc364d722c0946a550dfbf1be92ef6a4
   EXManifests: c1fab4c3237675e7b0299ea8df0bcb14baca4f42
-  Expo: f3e39cddde295c79d206e972a59693cbb329ef46
-  expo-dev-client: 05a436763435d5f50bbdbcc51adf8b0b55d8dabc
-  expo-dev-launcher: b4a62edb5bea43c0d5bc40abee180a7b74f0b430
-  expo-dev-menu: 7f908025779bab759520ee56bd2859441e0be8c6
+  Expo: a9897504e76db42c472778bc1eeef7895092f3fe
+  expo-dev-client: 924e474dc9eccf507260a22c5a8301bed0497453
+  expo-dev-launcher: 5f27c01458fd729684cc49a345f4c9ca052f4864
+  expo-dev-menu: 9ff772f6918e5fdfd73f31cc7534b853925f3d47
   expo-dev-menu-interface: be32c09f1e03833050f0ee290dcc86b3ad0e73e4
   ExpoAdapterGoogleSignIn: 20e6be8bff6e951607ace66e6d3d11b30f2e9e3a
   ExpoAppleAuthentication: 265219fa0ba1110872079f55f56686b9737b0065
   ExpoAsset: 323700f291684f110fb55f0d4022a3362ea9f875
   ExpoFileSystem: 80bfe850b1f9922c16905822ecbf97acd711dc51
   ExpoFont: e7f2275c10ca8573c991e007329ad6bf98086485
-  ExpoHead: 342c7a6692f00bd9f23169183098a5c78eebe644
+  ExpoHead: fcb28a68ed4ba28f177394d2dfb8a0a8824cd103
   ExpoImage: cbe7617b4e0e7ba064cc4caa51bfc96262e51ef3
   ExpoInsights: e88a27cb4ba1b644f8f6bbb2473a5a8204767948
   ExpoKeepAwake: 3b8815d9dd1d419ee474df004021c69fdd316d08
   ExpoLocalization: f04eeec2e35bed01ab61c72ee1768ec04d093d01
-  ExpoModulesCore: 17a5163fddddcc6472ccf9d57a64f5a075a4c6db
+  ExpoModulesCore: 620690a98d712d142e0acce5933419b05a63214a
   ExpoSystemUI: d4f065a016cae6721b324eb659cdee4d4cf0cb26
   ExpoWebBrowser: 7595ccac6938eb65b076385fd23d035db9ecdc8e
   EXSplashScreen: d8b3c547b9b18a41d80c6f6b274c4c26664febd4
@@ -3204,12 +3160,12 @@ SPEC CHECKSUMS:
   RNAppleAuthentication: e99eaf3c4c01ad8ecb6125dd6f0cfd98871685b5
   RNCAsyncStorage: 826b603ae9c0f88b5ac4e956801f755109fa4d5c
   RNDeviceInfo: b899ce37a403a4dea52b7cb85e16e49c04a5b88e
-  RNFBApp: a7aff07a7f212149539fce51a1326c6d208b03ad
-  RNFBAuth: 3ed676e60d0ca3b2c71023240658e1f02bc752d7
-  RNFBFirestore: 2c8d40c5a28007d6a3d183e21141e2fedf7f6d41
-  RNGestureHandler: fc0d83b45872ee937ecc9814012d9b48586b4d7a
+  RNFBApp: 2f83756f4d8be2859af5e2cf54130c20e380119d
+  RNFBAuth: ae6e6195e2cf783f8ad1977186925c61358c8ec9
+  RNFBFirestore: c6f4790ed5b6e78da008c906657571be3800270b
+  RNGestureHandler: 20a4307fd21cbff339abfcfa68192f3f0a6a518b
   RNGoogleSignin: 08dc4ba7eac2096c7fecfe109f0950fa4683c803
-  RNReanimated: 45f0fd1250364dffec9aabd4a0959f2956a5e78b
+  RNReanimated: d51431fd3597a8f8320319dce8e42cee82a5445f
   RNScreens: 30249f9331c3b00ae7cb7922e11f58b3ed369c07
   RNSVG: 43b64ed39c14ce830d840903774154ca0c1f27ec
   SDWebImage: a79252b60f4678812d94316c91da69ec83089c9f
