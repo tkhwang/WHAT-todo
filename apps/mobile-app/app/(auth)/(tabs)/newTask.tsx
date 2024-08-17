@@ -7,6 +7,8 @@ import { useTranslation } from "react-i18next";
 import { Text } from "@/components/ui/text";
 import ScreenWrapper from "@/components/MainLayout/ScreenWrapper";
 import MainHeader from "@/components/MainLayout/MainHeader";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
 export default function NewTaskScreen() {
   const router = useRouter();
@@ -18,6 +20,8 @@ export default function NewTaskScreen() {
   const textInputRef = useRef<TextInput>(null);
 
   const [key, setKey] = useState(new Date().getTime());
+
+  const [newTask, setNewTask] = useState("");
 
   useEffect(() => {
     setTimeout(() => {
@@ -44,6 +48,10 @@ export default function NewTaskScreen() {
     [],
   );
 
+  const onChangeText = (text: string) => {
+    setNewTask(text);
+  };
+
   return (
     <ScreenWrapper>
       <MainHeader />
@@ -60,7 +68,20 @@ export default function NewTaskScreen() {
           <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === "ios" ? "padding" : "height"}>
             <View className={"flex-1 w-screen px-4"}>
               <Text className={"text-xl font-bold text-center"}>{t("bottomSheet.newTask.title")}</Text>
-              <TextInput ref={textInputRef} style={styles.textInput} placeholder={"Add new task..."} />
+              <Input
+                ref={textInputRef}
+                className={"my-4"}
+                placeholder={t("task.create.placehold")}
+                value={newTask}
+                onChangeText={onChangeText}
+                aria-labelledby={"inputLabel"}
+                aria-errormessage={"inputError"}
+              />
+              <View>
+                <Button className={""} variant={"default"}>
+                  <Text>{"Submit"}</Text>
+                </Button>
+              </View>
             </View>
           </KeyboardAvoidingView>
         </BottomSheetView>
