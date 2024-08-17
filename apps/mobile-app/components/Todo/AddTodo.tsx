@@ -1,4 +1,4 @@
-import { StyleSheet, TextInput, View } from "react-native";
+import { TextInput, View } from "react-native";
 import React, { RefObject, useCallback, useRef, useState } from "react";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Calendar, DateData } from "react-native-calendars";
@@ -48,8 +48,16 @@ export default function AddTodo({ bottomSheetRef }: Props) {
       todo: newTodo,
     };
 
-    await addTodoMutationAsync(newTodoDto);
-  }, [addTodoMutationAsync, newTodo]);
+    try {
+      await addTodoMutationAsync(newTodoDto);
+      bottomSheetRef.current?.close();
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        // TODO: (taekeun) handle error
+        console.log(error.message);
+      }
+    }
+  }, [addTodoMutationAsync, bottomSheetRef, newTodo]);
 
   return (
     <View className={"flex-1 px-10 gap-4"}>
