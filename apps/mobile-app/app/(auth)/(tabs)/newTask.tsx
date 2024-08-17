@@ -1,18 +1,15 @@
-import { KeyboardAvoidingView, Platform, StyleSheet, TextInput, View } from "react-native";
+import { TextInput } from "react-native";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import BottomSheet, { BottomSheetBackdrop, BottomSheetView } from "@gorhom/bottom-sheet";
 import { Href, useLocalSearchParams, useRouter } from "expo-router";
-import { useTranslation } from "react-i18next";
 
-import { Text } from "@/components/ui/text";
 import ScreenWrapper from "@/components/MainLayout/ScreenWrapper";
 import MainHeader from "@/components/MainLayout/MainHeader";
+import AddTodo from "@/components/Todo/AddTodo";
 
 export default function NewTaskScreen() {
   const router = useRouter();
   const { previousSegments } = useLocalSearchParams();
-
-  const { t } = useTranslation();
 
   const bottomSheetRef = useRef<BottomSheet>(null);
   const textInputRef = useRef<TextInput>(null);
@@ -47,41 +44,18 @@ export default function NewTaskScreen() {
   return (
     <ScreenWrapper>
       <MainHeader />
-
       <BottomSheet
         key={key}
         ref={bottomSheetRef}
         index={0}
         onChange={handleSheetChanges}
-        snapPoints={["3%", "50%"]}
+        snapPoints={["3%", "50%", "80%"]}
         backdropComponent={renderBackdrop}
       >
-        <BottomSheetView style={styles.contentContainer}>
-          <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === "ios" ? "padding" : "height"}>
-            <View className={"flex-1 w-screen px-4"}>
-              <Text className={"text-xl font-bold text-center"}>{t("bottomSheet.newTask.title")}</Text>
-              <TextInput ref={textInputRef} style={styles.textInput} placeholder={"Add new task..."} />
-            </View>
-          </KeyboardAvoidingView>
+        <BottomSheetView className={"flex-1 items-center w-screen"}>
+          <AddTodo bottomSheetRef={bottomSheetRef} />
         </BottomSheetView>
       </BottomSheet>
     </ScreenWrapper>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  contentContainer: {
-    flex: 1,
-    alignItems: "center",
-  },
-  textInput: {
-    width: "100%",
-    padding: 10,
-    borderColor: "gray",
-    borderWidth: 1,
-    marginTop: 20,
-  },
-});

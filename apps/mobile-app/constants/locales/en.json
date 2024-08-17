@@ -26,5 +26,6 @@
   "screen.profile.title": "Profile",
   "screen.profile.logout.title": "Confirm",
   "screen.profile.logout.description": "Are you sure you want to logout?",
-  "task.create.title": "Create new task"
+  "task.create.title": "Create new task",
+  "task.create.placehold": "Task Name"
 }

@@ -1,5 +1,5 @@
 import { BadRequestException, Inject, Injectable } from '@nestjs/common';
-import { APP_ERRORS, AuthProviders } from '@whatTodo/models';
+import { APP_ERRORS, AuthProviders, COLLECTIONS } from '@whatTodo/models';
 import { app, firestore } from 'firebase-admin';
 
 @Injectable()
@@ -9,7 +9,7 @@ export class FirebaseUserRepository {
 
   constructor(@Inject('FIREBASE_APP') private firebaseApp: app.App) {
     this.#db = firebaseApp.firestore();
-    this.#userCollection = this.#db.collection('users');
+    this.#userCollection = this.#db.collection(COLLECTIONS.USERS);
   }
 
   async createUser({

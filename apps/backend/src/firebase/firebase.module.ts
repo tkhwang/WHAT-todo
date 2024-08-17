@@ -3,6 +3,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService, ConfigType } from '@nestjs/config';
 import * as admin from 'firebase-admin';
 import firebaseConfig from 'src/config/firebase.config';
+import { FirebaseTodoRepository } from './firebaseTodo.repository';
 
 const firebaseProvider = {
   provide: 'FIREBASE_APP',
@@ -36,7 +37,7 @@ const firebaseProvider = {
 
 @Module({
   imports: [ConfigModule.forFeature(firebaseConfig)],
-  providers: [firebaseProvider, FirebaseUserRepository],
-  exports: [FirebaseUserRepository],
+  providers: [firebaseProvider, FirebaseUserRepository, FirebaseTodoRepository],
+  exports: [FirebaseUserRepository, FirebaseTodoRepository],
 })
 export class FirebaseModule {}
