@@ -17,10 +17,10 @@ export default function NewTaskScreen() {
   const [key, setKey] = useState(new Date().getTime());
 
   useEffect(() => {
+    textInputRef.current?.focus();
     setTimeout(() => {
       bottomSheetRef.current?.snapToIndex(1);
     }, 1000);
-    textInputRef.current?.focus();
   });
 
   const handleSheetChanges = useCallback(
@@ -51,11 +51,11 @@ export default function NewTaskScreen() {
             ref={bottomSheetRef}
             index={0}
             onChange={handleSheetChanges}
-            snapPoints={["3%", "60%", "90%"]}
+            snapPoints={["3%", "65%", "90%"]}
             backdropComponent={renderBackdrop}
           >
             <BottomSheetView className={"flex-1 items-center w-screen"}>
-              <AddTodo bottomSheetRef={bottomSheetRef} />
+              <AddTodo bottomSheetRef={bottomSheetRef} textInputRef={textInputRef} />
             </BottomSheetView>
           </BottomSheet>
         </View>

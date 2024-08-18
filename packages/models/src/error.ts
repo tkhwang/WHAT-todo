@@ -5,4 +5,7 @@ export const APP_ERRORS = {
     VERITY_ID_UNKNOWN_ACTION: "verify-id-unknown-action",
     VERITY_NAME_UNKNOWN_ACTION: "verify-name-unknown-action",
   },
+  AddTodo: {
+    ADD_TODO_UNKNOWN_ACTION: "add-todo-unknown-action",
+  },
 }
