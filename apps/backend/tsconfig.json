@@ -1,6 +1,9 @@
 {
   "compilerOptions": {
     "module": "commonjs",
+    // TODO: should enable
+    // "strict": true,
+    // "strictNullChecks": true,
     "declaration": true,
     "removeComments": true,
     "emitDecoratorMetadata": true,
@@ -12,7 +15,6 @@
     "baseUrl": "./",
     "incremental": true,
     "skipLibCheck": true,
-    "strictNullChecks": false,
     "noImplicitAny": false,
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
