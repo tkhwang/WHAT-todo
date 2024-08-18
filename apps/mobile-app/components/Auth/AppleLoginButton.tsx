@@ -1,17 +1,15 @@
 import { AppleButton, appleAuth } from "@invertase/react-native-apple-authentication";
 import { useCallback, useState } from "react";
 import { StyleSheet, Platform, View } from "react-native";
-import firestore from "@react-native-firebase/firestore";
 import auth from "@react-native-firebase/auth";
-import { useAtom } from "jotai";
-import { useRouter } from "expo-router";
-import { COLLECTIONS } from "@whatTodo/models";
+import { useSetAtom } from "jotai";
 
-import { authIsSignedInAtom } from "@/states/auth";
 import { useColorScheme } from "@/lib/useColorScheme";
 import { useAuth } from "@/context/AuthProvider";
 import { appTheme } from "@/constants/uiConsts";
 import { hp } from "@/helpers/common";
+import { usePlatformSignInAndCheckUser } from "@/hooks/usePlatformSignInAndCheckUser";
+import { authSignUpPlatformAtom } from "@/states/auth";
 
 import Loading from "../Loading";
 
@@ -22,16 +20,16 @@ import Loading from "../Loading";
  * @return {*}
  */
 export function AppleLoginButton() {
-  const router = useRouter();
   const { isDarkColorScheme } = useColorScheme();
 
-  const { user, login, setUser } = useAuth();
-
+  const { setUser } = useAuth();
+  const { platformSignInAndNavigateToSignupIfNotRegistered } = usePlatformSignInAndCheckUser();
   const [isLoading, setIsLoading] = useState(false);
-  const [authIsSignedIn, setAuthIsSignedIn] = useAtom(authIsSignedInAtom);
+  const setAuthSignUpPlatform = useSetAtom(authSignUpPlatformAtom);
 
   const handlePressSignin = useCallback(async () => {
     try {
+      setAuthSignUpPlatform("apple");
       setIsLoading(true);
 
       const appleAuthRequestResponse = await appleAuth.performRequest({
@@ -46,44 +44,16 @@ export function AppleLoginButton() {
       const { identityToken, nonce } = appleAuthRequestResponse;
       const appleCredential = auth.AppleAuthProvider.credential(identityToken, nonce);
 
-      // apple signin
-      // const { user } = await auth().signInWithCredential(appleCredential);
-      const user = await login(appleCredential);
-      // setAuthIsSignedIn(true);
-
-      if (user) {
-        const userDocRef = await firestore().collection(COLLECTIONS.USERS).doc(user.uid).get();
-
-        console.log("🚀 ~ handlePressSignin ~ userDocRef.exists:", userDocRef.exists);
-
-        // signin
-        if (userDocRef.exists) {
-          const user = {
-            id: userDocRef.id,
-            ...userDocRef.data(),
-          };
-          setUser(user);
-          // signup
-        } else {
-          // TODO: check duplicate navigation
-          router.replace({
-            pathname: "/(public)/signup",
-            params: {
-              email: user.email,
-              uid: user.uid,
-            },
-          });
-          console.log(`[+][handlePressSignin] replace to /signup`);
-        }
-      }
+      await platformSignInAndNavigateToSignupIfNotRegistered(appleCredential);
     } catch (error: unknown) {
       if (error instanceof Error) {
         console.log(`[-][AppleLogin]:handlePress failed with error: ${error.message}`);
         setIsLoading(false);
         setUser(null);
+        setAuthSignUpPlatform(null);
       }
     }
-  }, [login, router, setUser]);
+  }, [platformSignInAndNavigateToSignupIfNotRegistered, setAuthSignUpPlatform, setUser]);
 
   if (Platform.OS !== "ios") return null;
 
@@ -99,7 +69,8 @@ export function AppleLoginButton() {
     <View>
       <AppleButton
         buttonStyle={isDarkColorScheme ? AppleButton.Style.WHITE : AppleButton.Style.BLACK}
-        buttonType={AppleButton.Type.SIGN_IN}
+        buttonType={AppleButton.Type.CONTINUE}
+        cornerRadius={15}
         style={styles.appleButton}
         onPress={handlePressSignin}
       />
@@ -109,7 +80,6 @@ export function AppleLoginButton() {
 
 const styles = StyleSheet.create({
   appleButton: {
-    backgroundColor: appTheme.colors.primary,
     height: hp(6.6),
     justifyContent: "center",
     alignItems: "center",

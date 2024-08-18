@@ -7,6 +7,7 @@
   "app.screen.profile": "Profile",
   "auth.action.checkId": "Check",
   "auth.action.register": "Register",
+  "auth.action.signgin.login": "Continue with Google",
   "auth.register.description": "Register your name and id.",
   "auth.email": "Email",
   "auth.name": "Name",

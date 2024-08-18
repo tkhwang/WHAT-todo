@@ -1,4 +1,4 @@
-export type AuthProviders = "apple"
+export type AuthProviders = "apple" | "android"
 export interface AuthSignupRequest {
   id: string
   email: string

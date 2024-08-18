@@ -7,6 +7,7 @@ import { AppleLoginButton } from "@/components/Auth/AppleLoginButton";
 import ScreenWrapper from "@/components/MainLayout/ScreenWrapper";
 import { hp, wp } from "@/helpers/common";
 import { appTheme } from "@/constants/uiConsts";
+import GoogleSigninButton from "@/components/Auth/GoogleSigninButton";
 
 export default function PublicSigninScreen() {
   const { t } = useTranslation();
@@ -29,6 +30,7 @@ export default function PublicSigninScreen() {
         {/* footer */}
         <View style={styles.footer}>
           <AppleLoginButton />
+          <GoogleSigninButton />
         </View>
         {/* <Auth /> */}
       </View>
