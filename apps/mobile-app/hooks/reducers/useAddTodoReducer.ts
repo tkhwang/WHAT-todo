@@ -25,8 +25,6 @@ export type ActionAddTodo =
 
 export function useAddTodoReducer() {
   function addTodoReducer(current: StateAddTodo, action: ActionAddTodo): StateAddTodo {
-    const currentState = current.state;
-
     switch (action.type) {
       case "INITIAL":
         return {

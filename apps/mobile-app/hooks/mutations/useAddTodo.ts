@@ -4,7 +4,11 @@ import { AxiosResponse } from "axios";
 
 import { httpClient } from "@/utils/httpClient";
 
+import { useAddTodoReducer } from "../reducers/useAddTodoReducer";
+
 export function useAddTodo() {
+  const [, addTodoDispatch] = useAddTodoReducer();
+
   return useMutation({
     mutationFn: async (requestDto: AddTodoRequest) => {
       const response = await httpClient.post<AddTodoRequest, AxiosResponse<AddTodoResponse>>(
@@ -12,6 +16,12 @@ export function useAddTodo() {
         requestDto,
       );
       return response.data;
+    },
+    onError(error) {
+      addTodoDispatch({ type: "ERROR", addTodoErrorMessage: error.message });
+    },
+    onSuccess() {
+      addTodoDispatch({ type: "UPLOAD_DONE" });
     },
   });
 }

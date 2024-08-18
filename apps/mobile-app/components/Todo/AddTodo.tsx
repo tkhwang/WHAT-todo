@@ -58,17 +58,21 @@ export default function AddTodo({ bottomSheetRef, textInputRef }: Props) {
       todo: addTodo,
     };
 
-    try {
-      addTodoDispatch({ type: "UPLOAD" });
-      await addTodoMutationAsync(addTodoDto);
-      bottomSheetRef.current?.close();
-      addTodoDispatch({ type: "UPLOAD_DONE" });
-    } catch (error: unknown) {
-      if (error instanceof Error) {
-        addTodoDispatch({ type: "ERROR", addTodoErrorMessage: error.message });
-        console.log(error.message);
-      }
-    }
+    addTodoDispatch({ type: "UPLOAD" });
+    await addTodoMutationAsync(addTodoDto);
+    bottomSheetRef.current?.close();
+
+    // try {
+    //   addTodoDispatch({ type: "UPLOAD" });
+    //   await addTodoMutationAsync(addTodoDto);
+    //   bottomSheetRef.current?.close();
+    //   addTodoDispatch({ type: "UPLOAD_DONE" });
+    // } catch (error: unknown) {
+    //   if (error instanceof Error) {
+    //     addTodoDispatch({ type: "ERROR", addTodoErrorMessage: error.message });
+    //     console.log(error.message);
+    //   }
+    // }
   }, [addTodo, addTodoDispatch, addTodoMutationAsync, bottomSheetRef]);
 
   return (
