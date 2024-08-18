@@ -1,5 +1,4 @@
 import { ReactNode, createContext, useEffect, useContext, useState, useCallback, useMemo } from "react";
-import { Platform } from "react-native";
 import * as AppleAuthentication from "expo-apple-authentication";
 import auth, { FirebaseAuthTypes } from "@react-native-firebase/auth";
 import firestore from "@react-native-firebase/firestore";
@@ -60,7 +59,7 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
             id: userDocRef.id,
             ...userDocRef.data(),
           };
-          setUser(user);
+          setUser(userDoc);
           // signup
         } else {
           const pathname = authIsSignedIn ? "/(public)/signup" : "/(public)/signin";
@@ -112,24 +111,21 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
     [onIdTokenChanged],
   );
 
-  const appleLogin = async (appleCredential: FirebaseAuthTypes.AuthCredential) => {
-    try {
-      const { user } = await auth().signInWithCredential(appleCredential);
-      setAuthIsSignedIn(true);
-      return user;
-    } catch (error: unknown) {
-      if (error instanceof Error) {
-        console.log(`[-][AppleLogin]:handlePress failed with error: ${error.message}`);
-        setAuthIsSignedIn(false);
+  const login = useCallback(
+    async (credential: FirebaseAuthTypes.AuthCredential) => {
+      try {
+        const { user } = await auth().signInWithCredential(credential);
+        setAuthIsSignedIn(true);
+        return user;
+      } catch (error: unknown) {
+        if (error instanceof Error) {
+          console.log(`[-][AppleLogin]:handlePress failed with error: ${error.message}`);
+          setAuthIsSignedIn(false);
+        }
       }
-    }
-  };
-
-  const googleLogin = async () => {
-    return Promise.resolve(null);
-  };
-
-  const login = Platform.OS === "ios" ? appleLogin : googleLogin;
+    },
+    [setAuthIsSignedIn],
+  );
 
   const logout = useCallback(async () => {
     try {
