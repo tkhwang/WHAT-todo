@@ -22,10 +22,10 @@
   "auth.id.error.short": "ID must be at least 3 characters",
   "auth.id.error.long": "ID must be less than 32 characters",
   "auth.id.error.duplicate": "ID already exists",
-  "bottomSheet.newTask.title": "Add new task",
   "screen.profile.title": "Profile",
   "screen.profile.logout.title": "Confirm",
   "screen.profile.logout.description": "Are you sure you want to logout?",
-  "task.create.title": "Create new task",
-  "task.create.placehold": "Task Name"
+  "todo.add.title": "Add todo",
+  "todo.add.placehold": "Todo Name",
+  "todo.action.add": "Add"
 }
