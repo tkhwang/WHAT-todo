@@ -3,7 +3,8 @@ import { KeyboardAvoidingView, Platform, StyleSheet, View } from "react-native";
 import { useGlobalSearchParams, useRouter } from "expo-router";
 import { useTranslation } from "react-i18next";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { AuthSignupRequest, AuthVerifyIdRequest } from "@whatTodo/models";
+import { APP_ERRORS, AuthSignupRequest, AuthVerifyIdRequest } from "@whatTodo/models";
+import { useAtom } from "jotai";
 
 import { Text } from "@/components/ui/text";
 import ScreenWrapper from "@/components/MainLayout/ScreenWrapper";
@@ -17,6 +18,7 @@ import { useAuthSignup } from "@/hooks/mutations/useAuthSignup";
 import { useAuthVerifyId } from "@/hooks/mutations/useAuthVerifyId";
 import BackButton from "@/components/Button/BackButton";
 import Button from "@/components/Button/Button";
+import { authSignUpPlatformAtom } from "@/states/auth";
 
 export default function PublicSignupScreen() {
   const router = useRouter();
@@ -30,6 +32,7 @@ export default function PublicSignupScreen() {
 
   const [isIdLoading, setIsIdLoading] = useState(false);
   const [isNameLoading, setIsNameLoading] = useState(false);
+  const [authSignUpPlatform, setAuthSignUpPlatform] = useAtom(authSignUpPlatformAtom);
 
   const [{ state: authNameReducerState, name, nameError }, dispatchAuthName] = useAuthNameReducer();
   const [{ state: authVerifyIdReducerState, id, idError }, dispatchAuthVerifyId] = useAuthVerifyIdReducer();
@@ -82,6 +85,8 @@ export default function PublicSignupScreen() {
         // check status code 400
         if (error?.response?.status === 400) {
           dispatchAuthVerifyId({ type: "duplicate", id });
+        } else {
+          console.log(`[-][handleClickCheckId] failed: ${error}`);
         }
       }
     } finally {
@@ -90,21 +95,25 @@ export default function PublicSignupScreen() {
   }, [authVerifyIdMutationAsync, dispatchAuthVerifyId, id]);
 
   const handleClickRegister = useCallback(async () => {
+    if (!authSignUpPlatform) throw new Error(APP_ERRORS.AUTH.PLATFORM_NOT_CONFIGURED);
+
     const authSignupRequest: AuthSignupRequest = {
       id: uid,
       email,
       whatTodoId: id,
       name,
-      provider: "apple",
+      provider: authSignUpPlatform,
     };
 
     try {
       setIsNameLoading(true);
       await authSignupMutationAsync(authSignupRequest);
-    } catch (error) {
+    } catch (error: unknown) {
       setIsNameLoading(false);
+    } finally {
+      setAuthSignUpPlatform(null);
     }
-  }, [authSignupMutationAsync, email, id, name, uid]);
+  }, [authSignUpPlatform, authSignupMutationAsync, email, id, name, setAuthSignUpPlatform, uid]);
 
   return (
     <ScreenWrapper>

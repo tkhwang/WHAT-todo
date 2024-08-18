@@ -7,6 +7,7 @@
   "app.screen.profile": "프로필",
   "auth.action.checkId": "중복체크",
   "auth.action.register": "회원가입",
+  "auth.action.signgin.login": "구글로 시작하기",
   "auth.register.description": "사용하실 이름과 아이디를 등록해주세요",
   "auth.email": "이메일",
   "auth.name": "이름",
