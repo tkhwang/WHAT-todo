@@ -85,6 +85,8 @@ export default function PublicSignupScreen() {
         // check status code 400
         if (error?.response?.status === 400) {
           dispatchAuthVerifyId({ type: "duplicate", id });
+        } else {
+          console.log(`[-][handleClickCheckId] failed: ${error}`);
         }
       }
     } finally {

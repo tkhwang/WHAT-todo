@@ -2,10 +2,12 @@ import auth from "@react-native-firebase/auth";
 import { GoogleSignin } from "@react-native-google-signin/google-signin";
 import { View } from "react-native";
 import { useCallback, useState } from "react";
+import { useSetAtom } from "jotai";
 
 import { appTheme } from "@/constants/uiConsts";
 import { useAuth } from "@/context/AuthProvider";
 import { usePlatformSignInAndCheckUser } from "@/hooks/usePlatformSignInAndCheckUser";
+import { authSignUpPlatformAtom } from "@/states/auth";
 
 import Button from "../Button/Button";
 
@@ -21,10 +23,12 @@ GoogleSignin.configure({
 export default function GoogleSigninButton() {
   const { user, login, setUser } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
+  const setAuthSignUpPlatform = useSetAtom(authSignUpPlatformAtom);
 
   const { platformSignInAndNavigateToSignupIfNotRegistered } = usePlatformSignInAndCheckUser();
 
   const handlePressSignin = useCallback(async () => {
+    setAuthSignUpPlatform("android");
     setIsLoading(true);
 
     try {
@@ -38,15 +42,16 @@ export default function GoogleSigninButton() {
         console.log(`[-][GoogleSigninButton] failed: ${error.message}`);
         setIsLoading(false);
         setUser(null);
+        setAuthSignUpPlatform(null);
       }
     }
-  }, [platformSignInAndNavigateToSignupIfNotRegistered, setUser]);
+  }, [platformSignInAndNavigateToSignupIfNotRegistered, setAuthSignUpPlatform, setUser]);
 
   return (
     <View>
       <Button
         onPress={handlePressSignin}
-        title={"Google Signin"}
+        title={"Continue with Google"}
         color={appTheme.colors.primary}
         loading={false}
         buttonStyle={{ backgroundColor: appTheme.colors.primary }}

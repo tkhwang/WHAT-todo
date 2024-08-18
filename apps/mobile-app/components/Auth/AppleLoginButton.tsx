@@ -69,7 +69,8 @@ export function AppleLoginButton() {
     <View>
       <AppleButton
         buttonStyle={isDarkColorScheme ? AppleButton.Style.WHITE : AppleButton.Style.BLACK}
-        buttonType={AppleButton.Type.SIGN_IN}
+        buttonType={AppleButton.Type.CONTINUE}
+        cornerRadius={15}
         style={styles.appleButton}
         onPress={handlePressSignin}
       />
@@ -79,7 +80,6 @@ export function AppleLoginButton() {
 
 const styles = StyleSheet.create({
   appleButton: {
-    backgroundColor: appTheme.colors.primary,
     height: hp(6.6),
     justifyContent: "center",
     alignItems: "center",

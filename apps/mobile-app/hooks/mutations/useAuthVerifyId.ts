@@ -13,5 +13,8 @@ export function useAuthVerifyId() {
       );
       return response.data;
     },
+    onError: (error, variables, context) => {
+      console.log(`[-][useAuthVerifyId] failed: ${error}`);
+    },
   });
 }
