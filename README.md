@@ -4,24 +4,28 @@ Todo from experts with supervisors
 
 ## Tech stacks
 
-### Mobile
+### Mobile : `apps/mobile-app`
 
-- [expo SDK50](https://expo.dev/) bare workflow
+- [expo SDK51](https://expo.dev/)
+  - bare workflow
 - UI
   - tailwind css
   - [rnr : React Native Reusables](https://rnr-docs.vercel.app/getting-started/introduction/)
-- iOS
-- Android
 
-### Web
+### Web : `apps/web`
 
 - [next.js](https://nextjs.org/)
 
-### Backend
+### Backend : `apps/backend`
 
 - [nest.js](https://nestjs.com/)
 - [firebase](https://firebase.google.com/)
   -firebase admin
+
+### `packages/models`
+
+- API request/response types
+- common types
 
 ## EAS Build
 
