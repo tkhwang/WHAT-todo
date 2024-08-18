@@ -33,6 +33,14 @@
 				<string>me.tkhwang.whattodo</string>
 			</array>
 		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.591368550384-b9q943b9n7o8ik3r935o2b7l13sdqlb3</string>
+			</array>
+		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>33</string>
