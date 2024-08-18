@@ -8,8 +8,10 @@ export class AuthService {
   async validateToken(token: string) {
     try {
       return await FirebaseAdmin.auth().verifyIdToken(token);
-    } catch (error) {
-      throw new UnauthorizedException(error.message);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        throw new UnauthorizedException(error.message);
+      }
     }
   }
 }
