@@ -1,5 +1,5 @@
 export * from "./src/auth"
 export * from "./src/axios"
 export * from "./src/error"
-export * from "./src/firebase"
+export * from "./src/firestore"
 export * from "./src/todos"
