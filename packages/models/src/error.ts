@@ -6,4 +6,7 @@ export const APP_ERRORS = {
     VERITY_NAME_UNKNOWN_ACTION: "verify-name-unknown-action",
     PLATFORM_NOT_CONFIGURED: "platform-not-configured",
   },
+  AddTodo: {
+    ADD_TODO_UNKNOWN_ACTION: "add-todo-unknown-action",
+  },
 }

@@ -1,22 +1,24 @@
 import { useTranslation } from "react-i18next";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet } from "react-native";
+import { useAtomValue } from "jotai";
 
-import { Text } from "@/components/ui/text";
 import ScreenWrapper from "@/components/MainLayout/ScreenWrapper";
 import { hp, wp } from "@/helpers/common";
 import { appTheme } from "@/constants/uiConsts";
 import MainHeader from "@/components/MainLayout/MainHeader";
 import FloatingActionButton from "@/components/Button/FloatingActionButton";
+import Today from "@/components/Todo/Today";
+import { myIdAtom } from "@/states/me";
 
 export default function HomeScreen() {
   const { t } = useTranslation();
 
+  const myId = useAtomValue(myIdAtom);
+
   return (
     <ScreenWrapper>
       <MainHeader />
-      <View className={"flex-1 justify-center items-center"}>
-        <Text className={"text-xl font-semibold"}>{t("app.screen.today")}</Text>
-      </View>
+      <Today />
       <FloatingActionButton />
     </ScreenWrapper>
   );

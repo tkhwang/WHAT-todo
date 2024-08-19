@@ -66,6 +66,7 @@ export class FirebaseUserRepository {
   ) {
     const newTodo = {
       todoId,
+      userId,
       createdAt: firestore.FieldValue.serverTimestamp(),
       updatedAt: firestore.FieldValue.serverTimestamp(),
     };

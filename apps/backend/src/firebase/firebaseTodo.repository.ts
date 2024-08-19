@@ -15,6 +15,7 @@ export class FirebaseTodoRepository {
   async addTodo(userId: string, addTodoDto: AddTodoRequest) {
     const newTodo = {
       ...addTodoDto,
+      userId,
       createdAt: firestore.FieldValue.serverTimestamp(),
       updatedAt: firestore.FieldValue.serverTimestamp(),
     };

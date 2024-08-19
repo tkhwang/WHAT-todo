@@ -3,12 +3,13 @@ import * as AppleAuthentication from "expo-apple-authentication";
 import auth, { FirebaseAuthTypes } from "@react-native-firebase/auth";
 import firestore from "@react-native-firebase/firestore";
 import { useRouter } from "expo-router";
-import { useAtom } from "jotai";
+import { useAtom, useSetAtom } from "jotai";
 import { COLLECTIONS } from "@whatTodo/models";
 
 import { authIsSignedInAtom } from "@/states/auth";
 import { updateHttpClientBearerToken } from "@/utils/httpClient";
 import { useProtectedRoute } from "@/hooks/useProtectedRoute";
+import { myIdAtom } from "@/states/me";
 
 type AuthProvider = {
   user: FirebaseAuthTypes.User | null;
@@ -45,6 +46,7 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
 
   const [authIsSignedIn, setAuthIsSignedIn] = useAtom(authIsSignedInAtom);
   const [user, setUser] = useState<FirebaseAuthTypes.User | null>(null);
+  const setMyId = useSetAtom(myIdAtom);
 
   const onAuthStateChanged = useCallback(
     async (user: FirebaseAuthTypes.User | null) => {
@@ -60,6 +62,7 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
             ...userDocRef.data(),
           };
           setUser(userDoc);
+          setMyId(userDoc.id);
           // signup
         } else {
           const pathname = authIsSignedIn ? "/(public)/signup" : "/(public)/signin";
@@ -74,7 +77,7 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
         }
       }
     },
-    [authIsSignedIn, router],
+    [authIsSignedIn, router, setMyId],
   );
 
   const onIdTokenChanged = useCallback(async (user: FirebaseAuthTypes.User | null) => {
