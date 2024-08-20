@@ -22,7 +22,6 @@ module.exports = {
     "react/prop-types": 0,
     "no-extra-semi": "error",
     "react/jsx-filename-extension": [2, { extensions: [".js", ".jsx", ".ts", ".tsx"] }],
-    "arrow-parens": ["warn", "as-needed"],
     "no-unused-vars": ["off"],
     "no-console": ["off"],
     "import/prefer-default-export": ["off"],
