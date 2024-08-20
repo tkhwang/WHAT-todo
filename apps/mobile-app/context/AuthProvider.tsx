@@ -9,7 +9,7 @@ import { COLLECTIONS } from "@whatTodo/models";
 import { authIsSignedInAtom } from "@/states/auth";
 import { updateHttpClientBearerToken } from "@/utils/httpClient";
 import { useProtectedRoute } from "@/hooks/useProtectedRoute";
-import { myIdAtom } from "@/states/me";
+import { myUserIdAtom } from "@/states/me";
 
 type AuthProvider = {
   user: FirebaseAuthTypes.User | null;
@@ -46,7 +46,7 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
 
   const [authIsSignedIn, setAuthIsSignedIn] = useAtom(authIsSignedInAtom);
   const [user, setUser] = useState<FirebaseAuthTypes.User | null>(null);
-  const setMyId = useSetAtom(myIdAtom);
+  const setUserId = useSetAtom(myUserIdAtom);
 
   const onAuthStateChanged = useCallback(
     async (user: FirebaseAuthTypes.User | null) => {
@@ -62,7 +62,7 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
             ...userDocRef.data(),
           };
           setUser(userDoc);
-          setMyId(userDoc.id);
+          setUserId(userDoc.id);
           // signup
         } else {
           const pathname = authIsSignedIn ? "/(public)/signup" : "/(public)/signin";
@@ -77,7 +77,7 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
         }
       }
     },
-    [authIsSignedIn, router, setMyId],
+    [authIsSignedIn, router, setUserId],
   );
 
   const onIdTokenChanged = useCallback(async (user: FirebaseAuthTypes.User | null) => {

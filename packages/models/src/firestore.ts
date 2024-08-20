@@ -3,6 +3,4 @@ export const COLLECTIONS = {
   TODOS: "todos",
 }
 
-export const MY_COLLECTIONS = {
-  TODOS: "todos",
-}
+export type FirestoreSnapshotListenerPool = Map<string, () => void>
