@@ -5,3 +5,8 @@ export interface ITodo {
   createdAt: Date
   updatedAt: Date
 }
+
+export interface IUseTodos {
+  data: ITodo[]
+  arePending: boolean
+}
