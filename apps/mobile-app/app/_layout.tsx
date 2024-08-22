@@ -98,6 +98,7 @@ function RootLayoutNav() {
         <ThemeProvider value={isDarkColorScheme ? DARK_THEME : LIGHT_THEME}>
           <GestureHandlerRootView style={{ flex: 1 }}>
             <Stack>
+              <Stack.Screen name={"(auth)/splash"} options={{ headerShown: false }} />
               <Stack.Screen name={"(auth)/(tabs)"} options={{ headerShown: false }} />
               <Stack.Screen name={"(public)/signin"} options={{ headerShown: false }} />
               <Stack.Screen name={"(public)/signup"} options={{ headerShown: false }} />

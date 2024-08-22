@@ -13,7 +13,8 @@ export function useProtectedRoute(user: FirebaseAuthTypes.User | null) {
     if (!user && inAuthGroup) {
       router.replace("/signin");
     } else if (user && !inAuthGroup) {
-      router.replace("/(auth)/(tabs)/");
+      // router.replace("/(auth)/(tabs)/");
+      router.replace("/(auth)/splash");
     }
   }, [user, segments]);
 }

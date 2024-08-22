@@ -3,6 +3,7 @@
 
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTLinkingManager.h>
+#import "RNSplashScreen.h"
 
 @implementation AppDelegate
 
@@ -15,6 +16,7 @@
   self.initialProps = @{};
 
   [FIRApp configure];
+  [RNSplashScreen show];
 
   return [super application:application didFinishLaunchingWithOptions:launchOptions];
 }
