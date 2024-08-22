@@ -19,8 +19,8 @@ export default function SplashScreen() {
     <ScreenWrapper>
       <View className={"flex-1 justify-between items-center mb-6"}>
         <Image className={"w-60 h-60 mt-auto mb-auto"} source={require("@/assets/images/splash.png")} />
-        <Text className={"text-sm text-gray-500"}>{"WHAT-todo"}</Text>
-        <Text className={"text-sm text-gray-500"}>
+        <Text className={"text-sm text-gray-400"}>{"WHAT-todo"}</Text>
+        <Text className={"text-sm text-gray-400"}>
           {"Version: $"}
           {EAS_UPDATE_VERSION_SEMVER}
         </Text>
