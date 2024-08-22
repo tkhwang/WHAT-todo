@@ -1,8 +1,9 @@
-import { Button, TouchableOpacity, StyleSheet, View, Alert } from "react-native";
+import { Button as RNButton, TouchableOpacity, StyleSheet, View, Alert } from "react-native";
 import { getBuildNumber, getVersion } from "react-native-device-info";
-import { useCallback, useEffect } from "react";
+import { useCallback } from "react";
 import { Router, useRouter } from "expo-router";
 import { useTranslation } from "react-i18next";
+import crashlytics from "@react-native-firebase/crashlytics";
 
 import { Text } from "@/components/ui/text";
 import { useAuth } from "@/context/AuthProvider";
@@ -12,6 +13,7 @@ import { appTheme } from "@/constants/uiConsts";
 import Header from "@/components/MainLayout/Header";
 import { hp, wp } from "@/helpers/common";
 import Icon from "@/assets/icons";
+import { Button } from "@/components/ui/button";
 
 interface UserHeaderProps {
   user: any;
@@ -51,6 +53,11 @@ function UserHeader({ user, router, handleLogout }: UserHeaderProps) {
             {"Version : "}
             {EAS_UPDATE_VERSION}
           </Text>
+        </View>
+        <View className={"p-4"}>
+          <Button onPress={() => crashlytics().crash()}>
+            <Text className={"text-xl font-semibold"}>{"Test Crash"}</Text>
+          </Button>
         </View>
       </View>
     </View>
