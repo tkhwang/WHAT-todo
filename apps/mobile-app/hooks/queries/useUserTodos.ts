@@ -41,6 +41,8 @@ export function useUserTodos() {
         .doc(myUserId)
         .collection(COLLECTIONS.TODOS)
         .onSnapshot((snpashot) => {
+          if (!snpashot) return;
+
           const prvUserTodos = getUserTodos();
           if (!prvUserTodos) {
             const userTodos = snpashot.docs.map((doc) => {
