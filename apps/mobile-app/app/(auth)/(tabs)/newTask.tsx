@@ -1,6 +1,6 @@
 import { KeyboardAvoidingView, Platform, TextInput, View } from "react-native";
-import React, { useCallback, useEffect, useRef, useState } from "react";
-import BottomSheet, { BottomSheetBackdrop, BottomSheetView } from "@gorhom/bottom-sheet";
+import React, { useCallback, useEffect, useMemo, useRef } from "react";
+import { BottomSheetBackdrop, BottomSheetModal } from "@gorhom/bottom-sheet";
 import { Href, useLocalSearchParams, useRouter } from "expo-router";
 
 import ScreenWrapper from "@/components/MainLayout/ScreenWrapper";
@@ -11,34 +11,26 @@ export default function NewTaskScreen() {
   const router = useRouter();
   const { previousSegments } = useLocalSearchParams();
 
-  const bottomSheetRef = useRef<BottomSheet>(null);
+  const bottomSheetModalRef = useRef<BottomSheetModal>(null);
   const textInputRef = useRef<TextInput>(null);
 
-  const [key, setKey] = useState(new Date().getTime());
+  const snapPoints = useMemo(() => ["75%"], []);
 
+  // TODO: (tkhwang) check depedency
   useEffect(() => {
+    bottomSheetModalRef.current?.present();
     textInputRef.current?.focus();
-    setTimeout(() => {
-      bottomSheetRef.current?.snapToIndex(1);
-    }, 1000);
   });
 
-  const handleSheetChanges = useCallback(
-    (index: number) => {
-      if (index === -1) {
-        setKey(new Date().getTime());
-        if (Array.isArray(previousSegments)) {
-          const targetSegments = `/${previousSegments.join("/")}/`;
-          router.replace(targetSegments as Href<string | object>);
-        }
+  const renderBackdrop = useCallback(
+    (props) => {
+      if (Array.isArray(previousSegments)) {
+        const targetSegments = `/${previousSegments.join("/")}/`;
+        router.replace(targetSegments as Href<string | object>);
       }
+      return <BottomSheetBackdrop {...props} disappearsOnIndex={-1} appearsOnIndex={0} pressBehavior={"close"} />;
     },
     [previousSegments, router],
-  );
-
-  const renderBackdrop = useCallback(
-    (props) => <BottomSheetBackdrop {...props} disappearsOnIndex={-1} appearsOnIndex={0} pressBehavior={"close"} />,
-    [],
   );
 
   return (
@@ -46,18 +38,16 @@ export default function NewTaskScreen() {
       <MainHeader />
       <KeyboardAvoidingView className={"flex-1 w-screen"} behavior={Platform.OS === "ios" ? "padding" : "height"}>
         <View className={"flex-1 w-screen justify-end w-full"}>
-          <BottomSheet
-            key={key}
-            ref={bottomSheetRef}
+          <BottomSheetModal
+            ref={bottomSheetModalRef}
             index={0}
-            onChange={handleSheetChanges}
-            snapPoints={["3%", "65%", "90%"]}
+            snapPoints={snapPoints}
             backdropComponent={renderBackdrop}
           >
-            <BottomSheetView className={"flex-1 items-center w-screen"}>
-              <AddTodo bottomSheetRef={bottomSheetRef} textInputRef={textInputRef} />
-            </BottomSheetView>
-          </BottomSheet>
+            <View className={"flex-1 items-center"}>
+              <AddTodo bottomSheetRef={bottomSheetModalRef} textInputRef={textInputRef} />
+            </View>
+          </BottomSheetModal>
         </View>
       </KeyboardAvoidingView>
     </ScreenWrapper>
