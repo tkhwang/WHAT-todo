@@ -10,6 +10,7 @@ import React, { useEffect } from "react";
 import "@/utils/i18n";
 import { Platform } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 
 import AuthProvider from "@/context/AuthProvider";
 import { ReactQueryClientProvider } from "@/config/ReactQueryClientProvider";
@@ -97,12 +98,14 @@ function RootLayoutNav() {
       <AuthProvider>
         <ThemeProvider value={isDarkColorScheme ? DARK_THEME : LIGHT_THEME}>
           <GestureHandlerRootView style={{ flex: 1 }}>
-            <Stack>
-              <Stack.Screen name={"(auth)/splash"} options={{ headerShown: false, animation: "fade" }} />
-              <Stack.Screen name={"(auth)/(tabs)"} options={{ headerShown: false, animation: "fade" }} />
-              <Stack.Screen name={"(public)/signin"} options={{ headerShown: false, animation: "fade" }} />
-              <Stack.Screen name={"(public)/signup"} options={{ headerShown: false, animation: "fade" }} />
-            </Stack>
+            <BottomSheetModalProvider>
+              <Stack>
+                <Stack.Screen name={"(auth)/splash"} options={{ headerShown: false, animation: "fade" }} />
+                <Stack.Screen name={"(auth)/(tabs)"} options={{ headerShown: false, animation: "fade" }} />
+                <Stack.Screen name={"(public)/signin"} options={{ headerShown: false, animation: "fade" }} />
+                <Stack.Screen name={"(public)/signup"} options={{ headerShown: false, animation: "fade" }} />
+              </Stack>
+            </BottomSheetModalProvider>
           </GestureHandlerRootView>
         </ThemeProvider>
       </AuthProvider>
