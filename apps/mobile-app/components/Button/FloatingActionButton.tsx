@@ -1,16 +1,16 @@
-import React, { useCallback } from "react";
+import React, { RefObject, useCallback } from "react";
 import { FloatingAction } from "react-native-floating-action";
-import { useRouter, useSegments } from "expo-router";
+import { BottomSheetModalMethods } from "@gorhom/bottom-sheet/lib/typescript/types";
 
 import Icon from "@/assets/icons";
 import { hp } from "@/helpers/common";
 import { appTheme } from "@/constants/uiConsts";
 
-export default function FloatingActionButton() {
-  const router = useRouter();
+interface Props {
+  bottomSheetModalRef: RefObject<BottomSheetModalMethods>;
+}
 
-  const segments = useSegments();
-
+export default function FloatingActionButton({ bottomSheetModalRef }: Props) {
   const actions = [
     {
       text: "new Task",
@@ -26,15 +26,10 @@ export default function FloatingActionButton() {
       console.log(`selected button: ${name}`);
       if (!name) return;
 
-      if (name === "new-task") {
-        router.push("/(auth)/(tabs)/newTask");
-        router.setParams({ previousSegments: segments });
-      }
+      bottomSheetModalRef.current?.present();
     },
-    [router, segments],
+    [bottomSheetModalRef],
   );
 
-  return (
-    <FloatingAction overrideWithAction actions={actions} color={appTheme.colors.primary} onPressItem={handlePress} />
-  );
+  return <FloatingAction actions={actions} color={appTheme.colors.primary} onPressItem={handlePress} />;
 }
