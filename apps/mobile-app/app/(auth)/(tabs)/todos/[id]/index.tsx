@@ -2,7 +2,7 @@ import { useLocalSearchParams } from "expo-router";
 import { useTranslation } from "react-i18next";
 
 import ScreenWrapper from "@/components/MainLayout/ScreenWrapper";
-import Todo from "@/components/Todo/Todo";
+import Todo from "@/components/Todo/TodoDetail";
 import Header from "@/components/MainLayout/Header";
 
 export default function TodoScreen() {
