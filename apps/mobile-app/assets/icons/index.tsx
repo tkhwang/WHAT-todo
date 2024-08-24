@@ -18,10 +18,12 @@ import Add from "./Add";
 import CalendarCheckOut from "./CalendarCheckOut";
 import CalendarUndated from "./CalendarUndated";
 import CalendarDownload from "./CalendarDownload";
+import AddCircle from "./AddCircle";
 
 const icons = {
   accountSetting: AccountSetting,
   add: Add,
+  addCircle: AddCircle,
   arrowLeft: ArrowLeft,
   arrowRight: ArrowRight,
   calendar: Calendar,
