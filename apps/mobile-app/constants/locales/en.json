@@ -26,7 +26,7 @@
   "screen.profile.title": "Profile",
   "screen.profile.logout.title": "Confirm",
   "screen.profile.logout.description": "Are you sure you want to logout?",
-  "screen.todo.title": "Todo",
+  "screen.task.title": "Task",
   "todo.add.task": "Add a Task",
   "todo.add.title": "Add todo",
   "todo.add.placehold": "Todo Name",
