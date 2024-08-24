@@ -1,6 +1,6 @@
 import { useEffect, useMemo } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { COLLECTIONS } from "@whatTodo/models";
+import { COLLECTIONS, ITodo } from "@whatTodo/models";
 
 import { updateTodoCache } from "@/services/Todo/updateTodoCache";
 
@@ -22,7 +22,7 @@ export function useTodo(todoId: string) {
     [queryClient, queryKey, todoId],
   );
 
-  return useQuery({
+  return useQuery<ITodo>({
     queryKey,
     queryFn: () => new Promise((): void => {}),
     enabled: !!todoId,

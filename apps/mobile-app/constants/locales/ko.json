@@ -26,7 +26,15 @@
   "screen.profile.title": "프로필",
   "screen.profile.logout.title": "확인",
   "screen.profile.logout.description": "정말로 로그아웃 하시겠습니까 ?",
+  "screen.task.title": "태스트",
+  "todo.add.task": "새로운 태스크 추가",
   "todo.add.title": "새로운 투두 추가",
   "todo.add.placehold": "투두 이름",
-  "todo.action.add": "추가"
+  "todo.action.add": "추가",
+  "todo.addDueDate.title": "일정 추가",
+  "todo.addDueDate.bottomSheet.title": "일정",
+  "todo.addDueDate.today": "오늘",
+  "todo.addDueDate.tomorrow": "내일",
+  "todo.addDueDate.nextWeek": "다음주",
+  "todo.addDueDate.pickADay": "날짜 선택"
 }

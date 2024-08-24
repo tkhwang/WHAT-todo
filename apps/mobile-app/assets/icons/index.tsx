@@ -1,4 +1,5 @@
 import { NumberProp, SvgProps } from "react-native-svg";
+import { AlertCircle, ArrowRight, CalendarMinus, Delete } from "lucide-react-native";
 
 import { appTheme } from "@/constants/uiConsts";
 
@@ -14,16 +15,30 @@ import Logout from "./Logout";
 import Calendar from "./Calendar";
 import CheckList from "./CheckList";
 import Add from "./Add";
+import CalendarCheckOut from "./CalendarCheckOut";
+import CalendarUndated from "./CalendarUndated";
+import CalendarDownload from "./CalendarDownload";
+import AddCircle from "./AddCircle";
+import NoteEdit from "./NoteEdit";
 
 const icons = {
   accountSetting: AccountSetting,
   add: Add,
+  addCircle: AddCircle,
+  alertCircle: AlertCircle,
   arrowLeft: ArrowLeft,
+  arrowRight: ArrowRight,
   calendar: Calendar,
+  calendarCheckOut: CalendarCheckOut,
+  calendarDownload: CalendarDownload,
+  calendarUndated: CalendarUndated,
+  calendarMinus: CalendarMinus,
   checkList: CheckList,
   checkmarkSquare: CheckmarkSquare,
+  delete: Delete,
   home: Home,
   logout: Logout,
+  noteEdit: NoteEdit,
   inboxCheck: InboxCheck,
   policeCap: PoliceCap,
   tag: Tag,

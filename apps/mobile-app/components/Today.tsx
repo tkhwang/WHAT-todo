@@ -5,13 +5,13 @@ import { ITodo } from "@whatTodo/models";
 import { Text } from "@/components/ui/text";
 import { useTodos } from "@/hooks/queries/useTodos";
 
-import TodoItem from "./TodoItem";
+import TodoListItem from "./Todo/TodoListItem";
 
 export default function Today() {
   const { data: todos, arePending } = useTodos();
 
   const renderItem = useCallback(({ item, index }: { item: ITodo; index: number }) => {
-    return <TodoItem todo={item} />;
+    return <TodoListItem todo={item} />;
   }, []);
 
   return (
@@ -24,7 +24,7 @@ export default function Today() {
 
       {/* Today */}
       <Text className={"text-2xl font-bold"}>{new Date().toLocaleDateString()}</Text>
-      <View className={"h-[1] bg-gray-400 mb-4"} />
+      <View className={"h-[1] bg-gray-400"} />
       <View style={{ flexShrink: 1 }}>
         <FlatList data={todos} renderItem={renderItem} keyExtractor={(item) => item.id} />
       </View>

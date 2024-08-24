@@ -1,4 +1,5 @@
 import { StyleSheet, View, TextInput, TextInputProps, ViewProps } from "react-native";
+import { LegacyRef } from "react";
 
 import { appTheme } from "@/constants/uiConsts";
 import { hp } from "@/helpers/common";
@@ -7,7 +8,7 @@ import { useColorScheme } from "@/lib/useColorScheme";
 interface Props extends TextInputProps {
   containerStyles?: ViewProps;
   icon?: React.ReactElement;
-  inputRef?: any;
+  inputRef?: LegacyRef<TextInput>;
   fontSize?: number;
 }
 

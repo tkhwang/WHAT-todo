@@ -26,7 +26,15 @@
   "screen.profile.title": "Profile",
   "screen.profile.logout.title": "Confirm",
   "screen.profile.logout.description": "Are you sure you want to logout?",
+  "screen.task.title": "Task",
+  "todo.add.task": "Add a Task",
   "todo.add.title": "Add todo",
   "todo.add.placehold": "Todo Name",
-  "todo.action.add": "Add"
+  "todo.action.add": "Add",
+  "todo.addDueDate.title": "Add due date",
+  "todo.addDueDate.bottomSheet.title": "Due",
+  "todo.addDueDate.today": "Today",
+  "todo.addDueDate.tomorrow": "Tomorrow",
+  "todo.addDueDate.nextWeek": "NextWeek",
+  "todo.addDueDate.pickADay": "Pick a Date"
 }

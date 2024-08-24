@@ -5,7 +5,6 @@ import { Colors } from "@/constants/Colors";
 import { useColorScheme } from "@/lib/useColorScheme";
 import Icon from "@/assets/icons";
 import { hp } from "@/helpers/common";
-import useTextColor from "@/hooks/useTextColor";
 
 function TabBarIcon({ name, color }: { name: string; color: string }) {
   return <Icon name={name} size={hp(3.2)} strokeWidth={2} color={color} />;
@@ -51,7 +50,7 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name={"newTask"}
+        name={"todos/[id]/index"}
         options={{
           tabBarButton: () => null, // This hides the screen from the tab bar
         }}
