@@ -5,7 +5,7 @@ import { ITodo } from "@whatTodo/models";
 import { Text } from "@/components/ui/text";
 import { useTodos } from "@/hooks/queries/useTodos";
 
-import TodoItem from "./TodoItem";
+import TodoItem from "./Todo/TodoItem";
 
 export default function Today() {
   const { data: todos, arePending } = useTodos();
