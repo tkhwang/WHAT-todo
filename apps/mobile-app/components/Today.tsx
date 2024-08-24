@@ -5,13 +5,13 @@ import { ITodo } from "@whatTodo/models";
 import { Text } from "@/components/ui/text";
 import { useTodos } from "@/hooks/queries/useTodos";
 
-import TodoItem from "./Todo/TodoItem";
+import TodoListItem from "./Todo/TodoListItem";
 
 export default function Today() {
   const { data: todos, arePending } = useTodos();
 
   const renderItem = useCallback(({ item, index }: { item: ITodo; index: number }) => {
-    return <TodoItem todo={item} />;
+    return <TodoListItem todo={item} />;
   }, []);
 
   return (

@@ -10,7 +10,7 @@ interface Props {
   todo: ITodo;
 }
 
-export default function TodoItem({ todo }: Props) {
+export default function TodoListItem({ todo }: Props) {
   const [checked, setChecked] = useState(false);
 
   const router = useRouter();
