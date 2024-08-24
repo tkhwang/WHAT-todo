@@ -1,4 +1,5 @@
 import { NumberProp, SvgProps } from "react-native-svg";
+import { CalendarMinus } from "lucide-react-native";
 
 import { appTheme } from "@/constants/uiConsts";
 
@@ -15,6 +16,8 @@ import Calendar from "./Calendar";
 import CheckList from "./CheckList";
 import Add from "./Add";
 import CalendarCheckOut from "./CalendarCheckOut";
+import CalendarUndated from "./CalendarUndated";
+import CalendarDownload from "./CalendarDownload";
 
 const icons = {
   accountSetting: AccountSetting,
@@ -22,6 +25,9 @@ const icons = {
   arrowLeft: ArrowLeft,
   calendar: Calendar,
   calendarCheckOut: CalendarCheckOut,
+  calendarDownload: CalendarDownload,
+  calendarUndated: CalendarUndated,
+  calendarMinus: CalendarMinus,
   checkList: CheckList,
   checkmarkSquare: CheckmarkSquare,
   home: Home,
