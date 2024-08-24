@@ -50,12 +50,6 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name={"newTask"}
-        options={{
-          tabBarButton: () => null, // This hides the screen from the tab bar
-        }}
-      />
-      <Tabs.Screen
         name={"todos/[id]/index"}
         options={{
           tabBarButton: () => null, // This hides the screen from the tab bar
