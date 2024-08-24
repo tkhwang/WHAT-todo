@@ -1,46 +1,55 @@
-import React, { RefObject, useState } from "react";
+import React, { RefObject, useCallback, useState } from "react";
 import { TextInput, View } from "react-native";
-import { BottomSheetMethods } from "@gorhom/bottom-sheet/lib/typescript/types";
 import { useTranslation } from "react-i18next";
+import { AddTodoRequest } from "@whatTodo/models";
 
-import { Text } from "@/components/ui/text";
 import { useAddTodoReducer } from "@/hooks/reducers/useAddTodoReducer";
-import { Input } from "@/components/ui/input";
+import Icon from "@/assets/icons";
+import { useAddTodo } from "@/hooks/mutations/useAddTodo";
+import Input from "@/components/Input";
 
 interface Props {
-  bottomSheetRef: RefObject<BottomSheetMethods>;
-  textInputRef: RefObject<TextInput>;
+  inputRef: RefObject<TextInput>;
 }
 
-export default function AddTodoSimple({ bottomSheetRef, textInputRef }: Props) {
+export default function AddTodoSimple({ inputRef }: Props) {
   const { t } = useTranslation();
+
   const [addTodo, setAddTodo] = useState("");
 
+  const { mutateAsync: addTodoMutationAsync } = useAddTodo();
   const [{ state: addTodoState, isAddTodoLoading, addTodoError }, addTodoDispatch] = useAddTodoReducer();
 
-  const onChangeText = (text: string) => {
-    setAddTodo(text);
-    if (text.length === 0) {
-      addTodoDispatch({ type: "INITIAL" });
-    } else {
-      addTodoDispatch({ type: "EDITING" });
-    }
-  };
+  const onChangeText = useCallback((addTodo: string) => {
+    setAddTodo(addTodo);
+  }, []);
+
+  const handleAddTodo = useCallback(async () => {
+    if (!addTodo) return;
+
+    const addTodoDto: AddTodoRequest = {
+      todo: addTodo,
+    };
+
+    addTodoDispatch({ type: "UPLOAD" });
+    await addTodoMutationAsync(addTodoDto);
+    setAddTodo("");
+  }, [addTodo, addTodoDispatch, addTodoMutationAsync]);
 
   return (
-    <View className={"flex-1 w-screen gap-4 p-4 mb-4"}>
-      <Text className={"text-xl font-bold text-center"}>{t("todo.add.title")}</Text>
-      <View className={"gap-4"}>
-        <Input
-          ref={textInputRef}
-          placeholder={t("todo.add.placehold")}
-          value={addTodo}
-          onChangeText={onChangeText}
-          aria-labelledby={"inputLabel"}
-          aria-errormessage={"inputError"}
-        />
-      </View>
-      <View className={"flex-1"} />
+    <View className={"w-screen p-4"}>
+      <Input
+        inputRef={inputRef}
+        value={addTodo}
+        onChangeText={onChangeText}
+        icon={<Icon name={"addCircle"} size={26} strokeWidth={1.6} />}
+        placeholder={t("todo.add.task")}
+        aria-labelledby={"inputLabel"}
+        aria-errormessage={"inputError"}
+        fontSize={15}
+        onFocus={() => inputRef.current?.focus()}
+        onSubmitEditing={handleAddTodo}
+      />
     </View>
   );
 }

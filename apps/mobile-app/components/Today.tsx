@@ -24,7 +24,7 @@ export default function Today() {
 
       {/* Today */}
       <Text className={"text-2xl font-bold"}>{new Date().toLocaleDateString()}</Text>
-      <View className={"h-[1] bg-gray-400 mb-4"} />
+      <View className={"h-[1] bg-gray-400"} />
       <View style={{ flexShrink: 1 }}>
         <FlatList data={todos} renderItem={renderItem} keyExtractor={(item) => item.id} />
       </View>
