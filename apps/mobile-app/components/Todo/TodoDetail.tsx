@@ -48,6 +48,11 @@ export default function TodoDetail({ todoId }: Props) {
         <Text className={"text-xl font-normal text-gray-500"}>{t("todo.addDueDate.title")}</Text>
       </Pressable>
 
+      {/* note */}
+      <Pressable className={"flex-row items-center gap-4"} onPress={handleDueDatePress}>
+        <Icon name={"noteEdit"} size={26} strokeWidth={1.6} />
+      </Pressable>
+
       <AddDueDateBottomSheet todoId={todoId} bottomSheetModalRef={bottomSheetModalRef} />
     </View>
   );
