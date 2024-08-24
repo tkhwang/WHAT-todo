@@ -25,10 +25,13 @@ export default function AddTodoButtomSheet() {
     [previousSegments, router],
   );
 
+  useEffect(() => {
+    textInputRef.current?.focus();
+  }, []);
+
   // TODO: (tkhwang) check depedency
   useEffect(() => {
     bottomSheetModalRef.current?.present();
-    textInputRef.current?.focus();
   });
 
   return (
