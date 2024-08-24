@@ -19,6 +19,7 @@ import CalendarCheckOut from "./CalendarCheckOut";
 import CalendarUndated from "./CalendarUndated";
 import CalendarDownload from "./CalendarDownload";
 import AddCircle from "./AddCircle";
+import NoteEdit from "./NoteEdit";
 
 const icons = {
   accountSetting: AccountSetting,
@@ -35,6 +36,7 @@ const icons = {
   checkmarkSquare: CheckmarkSquare,
   home: Home,
   logout: Logout,
+  noteEdit: NoteEdit,
   inboxCheck: InboxCheck,
   policeCap: PoliceCap,
   tag: Tag,
