@@ -14,7 +14,7 @@ interface Props {
   inputRef: RefObject<TextInput>;
 }
 
-export default function AddTodoSimple({ inputRef }: Props) {
+export default function AddTodoInput({ inputRef }: Props) {
   const { t } = useTranslation();
 
   const [showButttons, setShowButttons] = useState(false);
@@ -47,7 +47,8 @@ export default function AddTodoSimple({ inputRef }: Props) {
     // inputRef.current?.focus();
   };
 
-  const handleBlur = () => {
+  const handleBlur = (e: any) => {
+    console.log("🚀 ~ handleBlur ~ e:", e);
     setShowButttons(false);
   };
 
@@ -60,7 +61,7 @@ export default function AddTodoSimple({ inputRef }: Props) {
           inputRef={inputRef}
           value={task}
           onChangeText={onChangeTask}
-          icon={<Icon name={"addCircle"} size={26} strokeWidth={1.6} />}
+          icon={<Icon name={"plusSign"} size={26} strokeWidth={1.6} />}
           placeholder={t("todo.add.task")}
           aria-labelledby={"inputLabel"}
           aria-errormessage={"inputError"}
