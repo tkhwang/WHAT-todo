@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import { useRouter } from "expo-router";
 
 import Icon from "@/assets/icons";
-import { useDueDateStore } from "@/store/dueDate";
+import { useDueDateStore } from "@/stores/dueDate";
 
 interface Props {
   todoId: string;

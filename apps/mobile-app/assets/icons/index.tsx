@@ -20,6 +20,7 @@ import CalendarUndated from "./CalendarUndated";
 import CalendarDownload from "./CalendarDownload";
 import AddCircle from "./AddCircle";
 import NoteEdit from "./NoteEdit";
+import PlusSign from "./PlusSign";
 
 const icons = {
   accountSetting: AccountSetting,
@@ -39,6 +40,7 @@ const icons = {
   home: Home,
   logout: Logout,
   noteEdit: NoteEdit,
+  plusSign: PlusSign,
   inboxCheck: InboxCheck,
   policeCap: PoliceCap,
   tag: Tag,
