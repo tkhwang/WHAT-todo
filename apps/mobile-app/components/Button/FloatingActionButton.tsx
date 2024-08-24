@@ -4,12 +4,10 @@ import { useRouter, useSegments } from "expo-router";
 
 import Icon from "@/assets/icons";
 import { hp } from "@/helpers/common";
-import useTextColor from "@/hooks/useTextColor";
 import { appTheme } from "@/constants/uiConsts";
 
 export default function FloatingActionButton() {
   const router = useRouter();
-  const textColor = useTextColor();
 
   const segments = useSegments();
 
@@ -33,7 +31,7 @@ export default function FloatingActionButton() {
         router.setParams({ previousSegments: segments });
       }
     },
-    [router],
+    [router, segments],
   );
 
   return (
