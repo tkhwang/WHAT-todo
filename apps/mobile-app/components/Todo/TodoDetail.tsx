@@ -6,7 +6,7 @@ import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import { useTodo } from "@/hooks/queries/useTodo";
 import { Text } from "@/components/ui/text";
 import Icon from "@/assets/icons";
-import { useDueDateStore } from "@/store/dueDate";
+import { useDueDateStore } from "@/stores/dueDate";
 
 import { Checkbox } from "../ui/checkbox";
 import AddDueDateBottomSheet from "./add/AddDueDateBottomSheet";
