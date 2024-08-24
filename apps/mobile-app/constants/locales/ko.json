@@ -30,5 +30,10 @@
   "todo.add.title": "새로운 투두 추가",
   "todo.add.placehold": "투두 이름",
   "todo.action.add": "추가",
-  "todo.addDueDate.title": "일정 추가"
+  "todo.addDueDate.title": "일정 추가",
+  "todo.addDueDate.bottomSheet.title": "일정",
+  "todo.addDueDate.today": "오늘",
+  "todo.addDueDate.tomorrow": "내일",
+  "todo.addDueDate.nextWeek": "다음주",
+  "todo.addDueDate.pickADay": "날짜 선택"
 }

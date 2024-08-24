@@ -30,5 +30,10 @@
   "todo.add.title": "Add todo",
   "todo.add.placehold": "Todo Name",
   "todo.action.add": "Add",
-  "todo.addDueDate.title": "Add due date"
+  "todo.addDueDate.title": "Add due date",
+  "todo.addDueDate.bottomSheet.title": "Due",
+  "todo.addDueDate.today": "Today",
+  "todo.addDueDate.tomorrow": "Tomorrow",
+  "todo.addDueDate.nextWeek": "NextWeek",
+  "todo.addDueDate.pickADay": "Pick a Date"
 }
