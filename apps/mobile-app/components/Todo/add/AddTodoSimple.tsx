@@ -16,6 +16,7 @@ export default function AddTodoSimple({ inputRef }: Props) {
   const { t } = useTranslation();
 
   const [addTodo, setAddTodo] = useState("");
+  const [showButttons, setShowButttons] = useState(false);
 
   const { mutateAsync: addTodoMutationAsync } = useAddTodo();
   const [{ state: addTodoState, isAddTodoLoading, addTodoError }, addTodoDispatch] = useAddTodoReducer();
@@ -34,10 +35,20 @@ export default function AddTodoSimple({ inputRef }: Props) {
     addTodoDispatch({ type: "UPLOAD" });
     await addTodoMutationAsync(addTodoDto);
     setAddTodo("");
+    setShowButttons(false);
   }, [addTodo, addTodoDispatch, addTodoMutationAsync]);
 
+  const handleFocus = () => {
+    setShowButttons(true);
+    // inputRef.current?.focus();
+  };
+
+  const handleBlur = () => {
+    setShowButttons(false);
+  };
+
   return (
-    <View className={"w-screen p-4"}>
+    <View className={"w-screen p-4 mb-1 gap-4"}>
       <Input
         inputRef={inputRef}
         value={addTodo}
@@ -47,9 +58,17 @@ export default function AddTodoSimple({ inputRef }: Props) {
         aria-labelledby={"inputLabel"}
         aria-errormessage={"inputError"}
         fontSize={15}
-        onFocus={() => inputRef.current?.focus()}
+        onFocus={handleFocus}
+        onBlur={handleBlur}
         onSubmitEditing={handleAddTodo}
       />
+      {showButttons && (
+        <View className={"flex-row gap-6 mx-2"}>
+          <Icon name={"calendar"} size={22} strokeWidth={1.5} />
+          <Icon name={"alertCircle"} size={22} strokeWidth={1.5} />
+          <Icon name={"noteEdit"} size={22} strokeWidth={1.5} />
+        </View>
+      )}
     </View>
   );
 }
