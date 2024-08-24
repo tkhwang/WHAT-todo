@@ -10,9 +10,9 @@ import { useAddTodo } from "@/hooks/mutations/useAddTodo";
 import { useAddTodoReducer } from "@/hooks/reducers/useAddTodoReducer";
 import { appTheme } from "@/constants/uiConsts";
 
-import { Input } from "../ui/input";
-import { Button as RNRButton } from "../ui/button";
-import Button from "../Button/Button";
+import { Input } from "../../ui/input";
+import { Button as RNRButton } from "../../ui/button";
+import Button from "../../Button/Button";
 
 interface Props {
   bottomSheetRef: RefObject<BottomSheetMethods>;

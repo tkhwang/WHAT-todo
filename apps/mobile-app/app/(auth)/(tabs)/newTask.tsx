@@ -5,7 +5,7 @@ import { Href, useLocalSearchParams, useRouter } from "expo-router";
 
 import ScreenWrapper from "@/components/MainLayout/ScreenWrapper";
 import MainHeader from "@/components/MainLayout/MainHeader";
-import AddTodo from "@/components/Todo/AddTodo";
+import AddTodo from "@/components/Todo/add/AddTodo";
 
 export default function NewTaskScreen() {
   const router = useRouter();
