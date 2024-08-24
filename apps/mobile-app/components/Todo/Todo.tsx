@@ -1,12 +1,14 @@
 import { Pressable, View } from "react-native";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { BottomSheetModal } from "@gorhom/bottom-sheet";
 
 import { useTodo } from "@/hooks/queries/useTodo";
 import { Text } from "@/components/ui/text";
 import Icon from "@/assets/icons";
 
 import { Checkbox } from "../ui/checkbox";
+import AddDueDateBottomSheet from "./add/AddDueDateBottomSheet";
 
 interface Props {
   todoId: string;
@@ -16,10 +18,16 @@ export default function Todo({ todoId }: Props) {
   const { t } = useTranslation();
   const { data: todo, isSuccess } = useTodo(todoId);
 
+  const bottomSheetModalRef = useRef<BottomSheetModal>(null);
+
   const [checked, setChecked] = useState(false);
 
   const handlePress = () => {
     setChecked(!checked);
+  };
+
+  const handleDueDatePress = () => {
+    bottomSheetModalRef.current?.present();
   };
 
   if (!isSuccess) return null;
@@ -33,10 +41,12 @@ export default function Todo({ todoId }: Props) {
       </Pressable>
 
       {/* due date */}
-      <View className={"flex-row items-center gap-4"}>
+      <Pressable className={"flex-row items-center gap-4"} onPress={handleDueDatePress}>
         <Icon name={"calendar"} size={26} strokeWidth={1.6} />
         <Text className={"text-xl font-normal text-gray-500"}>{t("todo.addDueDate.title")}</Text>
-      </View>
+      </Pressable>
+
+      <AddDueDateBottomSheet bottomSheetModalRef={bottomSheetModalRef} />
     </View>
   );
 }
