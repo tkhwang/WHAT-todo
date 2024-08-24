@@ -47,8 +47,7 @@ export default function AddTodoInput({ inputRef }: Props) {
     // inputRef.current?.focus();
   };
 
-  const handleBlur = (e: any) => {
-    console.log("🚀 ~ handleBlur ~ e:", e);
+  const handleBlur = () => {
     setShowButttons(false);
   };
 
