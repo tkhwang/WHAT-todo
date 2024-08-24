@@ -1,5 +1,5 @@
 import { NumberProp, SvgProps } from "react-native-svg";
-import { ArrowRight, CalendarMinus } from "lucide-react-native";
+import { AlertCircle, ArrowRight, CalendarMinus } from "lucide-react-native";
 
 import { appTheme } from "@/constants/uiConsts";
 
@@ -25,6 +25,7 @@ const icons = {
   accountSetting: AccountSetting,
   add: Add,
   addCircle: AddCircle,
+  alertCircle: AlertCircle,
   arrowLeft: ArrowLeft,
   arrowRight: ArrowRight,
   calendar: Calendar,
