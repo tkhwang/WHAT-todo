@@ -3,10 +3,12 @@ import { TextInput, View } from "react-native";
 import { useTranslation } from "react-i18next";
 import { AddTodoRequest } from "@whatTodo/models";
 
-import { useAddTodoReducer } from "@/hooks/reducers/useAddTodoReducer";
 import Icon from "@/assets/icons";
 import { useAddTodo } from "@/hooks/mutations/useAddTodo";
 import Input from "@/components/Input";
+import { useTodoStore } from "@/stores/todo";
+import Loading from "@/components/Loading";
+import { appTheme } from "@/constants/uiConsts";
 
 interface Props {
   inputRef: RefObject<TextInput>;
@@ -15,28 +17,30 @@ interface Props {
 export default function AddTodoSimple({ inputRef }: Props) {
   const { t } = useTranslation();
 
-  const [addTodo, setAddTodo] = useState("");
   const [showButttons, setShowButttons] = useState(false);
-
+  const { task, isLoading, setIsLoading, updateTask, reset } = useTodoStore();
   const { mutateAsync: addTodoMutationAsync } = useAddTodo();
-  const [{ state: addTodoState, isAddTodoLoading, addTodoError }, addTodoDispatch] = useAddTodoReducer();
 
-  const onChangeText = useCallback((addTodo: string) => {
-    setAddTodo(addTodo);
-  }, []);
+  const onChangeTask = useCallback(
+    (task: string) => {
+      updateTask(task);
+    },
+    [updateTask],
+  );
 
-  const handleAddTodo = useCallback(async () => {
-    if (!addTodo) return;
+  const handleSubmitTask = useCallback(async () => {
+    if (!task) return;
 
-    const addTodoDto: AddTodoRequest = {
-      todo: addTodo,
+    const newTaskDto: AddTodoRequest = {
+      todo: task,
     };
 
-    addTodoDispatch({ type: "UPLOAD" });
-    await addTodoMutationAsync(addTodoDto);
-    setAddTodo("");
+    setIsLoading(true);
+    await addTodoMutationAsync(newTaskDto);
     setShowButttons(false);
-  }, [addTodo, addTodoDispatch, addTodoMutationAsync]);
+
+    reset();
+  }, [addTodoMutationAsync, reset, setIsLoading, task]);
 
   const handleFocus = () => {
     setShowButttons(true);
@@ -49,19 +53,23 @@ export default function AddTodoSimple({ inputRef }: Props) {
 
   return (
     <View className={"w-screen p-4 mb-1 gap-4"}>
-      <Input
-        inputRef={inputRef}
-        value={addTodo}
-        onChangeText={onChangeText}
-        icon={<Icon name={"addCircle"} size={26} strokeWidth={1.6} />}
-        placeholder={t("todo.add.task")}
-        aria-labelledby={"inputLabel"}
-        aria-errormessage={"inputError"}
-        fontSize={15}
-        onFocus={handleFocus}
-        onBlur={handleBlur}
-        onSubmitEditing={handleAddTodo}
-      />
+      {isLoading ? (
+        <Loading size={"small"} color={appTheme.colors.primary} />
+      ) : (
+        <Input
+          inputRef={inputRef}
+          value={task}
+          onChangeText={onChangeTask}
+          icon={<Icon name={"addCircle"} size={26} strokeWidth={1.6} />}
+          placeholder={t("todo.add.task")}
+          aria-labelledby={"inputLabel"}
+          aria-errormessage={"inputError"}
+          fontSize={15}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
+          onSubmitEditing={handleSubmitTask}
+        />
+      )}
       {showButttons && (
         <View className={"flex-row gap-6 mx-2"}>
           <Icon name={"calendar"} size={22} strokeWidth={1.5} />
