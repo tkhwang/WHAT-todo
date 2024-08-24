@@ -6,6 +6,7 @@ import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import { useTodo } from "@/hooks/queries/useTodo";
 import { Text } from "@/components/ui/text";
 import Icon from "@/assets/icons";
+import { useDueDateStore } from "@/store/dueDate";
 
 import { Checkbox } from "../ui/checkbox";
 import AddDueDateBottomSheet from "./add/AddDueDateBottomSheet";
@@ -21,6 +22,7 @@ export default function TodoDetail({ todoId }: Props) {
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
 
   const [checked, setChecked] = useState(false);
+  const { dueDate } = useDueDateStore();
 
   const handlePress = () => {
     setChecked(!checked);
@@ -46,7 +48,7 @@ export default function TodoDetail({ todoId }: Props) {
         <Text className={"text-xl font-normal text-gray-500"}>{t("todo.addDueDate.title")}</Text>
       </Pressable>
 
-      <AddDueDateBottomSheet bottomSheetModalRef={bottomSheetModalRef} />
+      <AddDueDateBottomSheet todoId={todoId} bottomSheetModalRef={bottomSheetModalRef} />
     </View>
   );
 }

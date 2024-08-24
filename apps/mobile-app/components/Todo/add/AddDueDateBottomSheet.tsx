@@ -1,18 +1,22 @@
-import { Button, Text, View } from "react-native";
-import { RefObject, useCallback, useMemo, useRef } from "react";
+import { Button, Pressable, Text, View } from "react-native";
+import { RefObject, useCallback, useEffect, useMemo, useRef } from "react";
 import { BottomSheetBackdrop, BottomSheetModal } from "@gorhom/bottom-sheet";
 import { BottomSheetModalMethods } from "@gorhom/bottom-sheet/lib/typescript/types";
 import { useTranslation } from "react-i18next";
 import { useRouter } from "expo-router";
 
 import Icon from "@/assets/icons";
+import { useDueDateStore } from "@/store/dueDate";
 
 interface Props {
+  todoId: string;
   bottomSheetModalRef: RefObject<BottomSheetModalMethods>;
 }
-export default function AddDueDateBottomSheet({ bottomSheetModalRef }: Props) {
+export default function AddDueDateBottomSheet({ todoId, bottomSheetModalRef }: Props) {
   const { t } = useTranslation();
   const router = useRouter();
+
+  const { setToday, setTomorrow, setNextWeek, reset: resetDueDateStore } = useDueDateStore();
 
   const snapPoints = useMemo(() => ["35%", "75%"], []);
 
@@ -20,9 +24,14 @@ export default function AddDueDateBottomSheet({ bottomSheetModalRef }: Props) {
     return <BottomSheetBackdrop {...props} disappearsOnIndex={-1} appearsOnIndex={0} pressBehavior={"close"} />;
   }, []);
 
-  const handlePress = () => {
+  const backToDetail = useCallback(() => {
     bottomSheetModalRef.current?.close();
-    router.push("/(auth)/(tabs)/");
+    router.push(`/(auth)/(tabs)/todos/${todoId}`);
+  }, [bottomSheetModalRef, router, todoId]);
+
+  const handlePressToday = () => {
+    setToday();
+    backToDetail();
   };
 
   return (
@@ -32,15 +41,15 @@ export default function AddDueDateBottomSheet({ bottomSheetModalRef }: Props) {
         <View className={"flex-row justify-center items-center"}>
           <Text className={"text-xl font-semibold text-center"}>{t("todo.addDueDate.bottomSheet.title")}</Text>
           <View className={"absolute right-0"}>
-            <Button onPress={handlePress} title={"Done"} />
+            <Button onPress={backToDetail} title={"Done"} />
           </View>
         </View>
 
         {/* today */}
-        <View className={"flex-row gap-4"}>
+        <Pressable className={"flex-row gap-4"} onPress={handlePressToday}>
           <Icon name={"calendarMinus"} size={26} strokeWidth={1.6} />
           <Text className={"text-xl font-normal"}>{t("todo.addDueDate.today")}</Text>
-        </View>
+        </Pressable>
 
         {/* tomorrow */}
         <View className={"flex-row gap-4"}>
