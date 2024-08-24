@@ -14,12 +14,14 @@ import Logout from "./Logout";
 import Calendar from "./Calendar";
 import CheckList from "./CheckList";
 import Add from "./Add";
+import CalendarCheckOut from "./CalendarCheckOut";
 
 const icons = {
   accountSetting: AccountSetting,
   add: Add,
   arrowLeft: ArrowLeft,
   calendar: Calendar,
+  calendarCheckOut: CalendarCheckOut,
   checkList: CheckList,
   checkmarkSquare: CheckmarkSquare,
   home: Home,
