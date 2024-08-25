@@ -3,11 +3,10 @@ import { AddTodoRequest, AddTodoResponse } from "@whatTodo/models";
 import { AxiosResponse } from "axios";
 
 import { httpClient } from "@/utils/httpClient";
-
-import { useAddTodoReducer } from "../reducers/useAddTodoReducer";
+import { useTodoStore } from "@/stores/todo";
 
 export function useAddTodo() {
-  const [, addTodoDispatch] = useAddTodoReducer();
+  const { setIsLoading } = useTodoStore();
 
   return useMutation({
     mutationFn: async (requestDto: AddTodoRequest) => {
@@ -17,11 +16,14 @@ export function useAddTodo() {
       );
       return response.data;
     },
-    onError(error) {
-      addTodoDispatch({ type: "ERROR", addTodoErrorMessage: error.message });
+    onMutate() {
+      setIsLoading(true);
+    },
+    onError() {
+      setIsLoading(false);
     },
     onSuccess() {
-      addTodoDispatch({ type: "UPLOAD_DONE" });
+      setIsLoading(true);
     },
   });
 }
