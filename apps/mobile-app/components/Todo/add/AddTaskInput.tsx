@@ -1,25 +1,25 @@
 import React, { RefObject, useCallback, useState } from "react";
 import { TextInput, View } from "react-native";
 import { useTranslation } from "react-i18next";
-import { AddTodoRequest } from "@whatTodo/models";
+import { AddTaskRequest } from "@whatTodo/models";
 
 import Icon from "@/assets/icons";
-import { useAddTodo } from "@/hooks/mutations/useAddTodo";
 import Input from "@/components/Input";
 import { useTodoStore } from "@/stores/todo";
 import Loading from "@/components/Loading";
 import { appTheme } from "@/constants/uiConsts";
+import { useAddTask } from "@/hooks/mutations/useAddTask";
 
 interface Props {
   inputRef: RefObject<TextInput>;
 }
 
-export default function AddTodoInput({ inputRef }: Props) {
+export default function AddTaskInput({ inputRef }: Props) {
   const { t } = useTranslation();
 
   const [showButttons, setShowButttons] = useState(false);
   const { task, isLoading, updateTask, reset } = useTodoStore();
-  const { mutateAsync: addTodoMutationAsync } = useAddTodo();
+  const { mutateAsync: addTaskMutationAsync } = useAddTask();
 
   const onChangeTask = useCallback(
     (task: string) => {
@@ -31,15 +31,15 @@ export default function AddTodoInput({ inputRef }: Props) {
   const handleSubmitTask = useCallback(async () => {
     if (!task) return;
 
-    const newTaskDto: AddTodoRequest = {
+    const newTaskDto: AddTaskRequest = {
       todo: task,
     };
 
-    await addTodoMutationAsync(newTaskDto);
+    await addTaskMutationAsync(newTaskDto);
     setShowButttons(false);
 
     reset();
-  }, [addTodoMutationAsync, reset, task]);
+  }, [addTaskMutationAsync, reset, task]);
 
   const handleFocus = () => {
     setShowButttons(true);

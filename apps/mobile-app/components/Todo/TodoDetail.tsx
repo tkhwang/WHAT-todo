@@ -22,13 +22,15 @@ export default function TodoDetail({ todoId }: Props) {
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
 
   const [checked, setChecked] = useState(false);
-  const { dueDate } = useDueDateStore();
+
+  const init = useDueDateStore((state) => state.init);
 
   const handlePress = () => {
     setChecked(!checked);
   };
 
   const handleDueDatePress = () => {
+    init();
     bottomSheetModalRef.current?.present();
   };
 

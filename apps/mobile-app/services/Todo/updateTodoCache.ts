@@ -10,8 +10,8 @@ export function updateTodoCache(todoId: string, queryClient: QueryClient) {
     return {
       ...todoDoc,
       id: docId,
-      createdAt: createdAt.toDate(),
-      updatedAt: updatedAt.toDate(),
+      createdAt: createdAt?.toDate(),
+      updatedAt: updatedAt?.toDate(),
     };
   };
 

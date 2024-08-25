@@ -1,17 +1,17 @@
 import { useMutation } from "@tanstack/react-query";
-import { AddTodoRequest, AddTodoResponse } from "@whatTodo/models";
+import { AddTaskRequest, AddTaskResponse } from "@whatTodo/models";
 import { AxiosResponse } from "axios";
 
 import { httpClient } from "@/utils/httpClient";
 import { useTodoStore } from "@/stores/todo";
 
-export function useAddTodo() {
+export function useAddTask() {
   const { setIsLoading } = useTodoStore();
 
   return useMutation({
-    mutationFn: async (requestDto: AddTodoRequest) => {
-      const response = await httpClient.post<AddTodoRequest, AxiosResponse<AddTodoResponse>>(
-        "/todos/addTodo",
+    mutationFn: async (requestDto: AddTaskRequest) => {
+      const response = await httpClient.post<AddTaskRequest, AxiosResponse<AddTaskResponse>>(
+        "/todos/addTask",
         requestDto,
       );
       return response.data;

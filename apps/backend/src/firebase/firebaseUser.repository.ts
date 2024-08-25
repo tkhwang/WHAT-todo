@@ -1,6 +1,6 @@
 import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import {
-  AddTodoRequest,
+  AddTaskRequest,
   APP_ERRORS,
   AuthProviders,
   COLLECTIONS,
@@ -62,7 +62,7 @@ export class FirebaseUserRepository {
   async addUserTodo(
     userId: string,
     todoId: string,
-    addTodoDto: AddTodoRequest,
+    addTaskDto: AddTaskRequest,
   ) {
     const newTodo = {
       todoId,
@@ -78,5 +78,21 @@ export class FirebaseUserRepository {
       .set(newTodo);
 
     return data;
+  }
+
+  async findUserTaskById(userId: string, taskId: string) {
+    return await this.#userCollection
+      .doc(userId)
+      .collection(COLLECTIONS.TODOS)
+      .doc(taskId)
+      .get();
+  }
+
+  async deleteUserTaskById(userId: string, taskId: string) {
+    return await this.#userCollection
+      .doc(userId)
+      .collection(COLLECTIONS.TODOS)
+      .doc(taskId)
+      .delete();
   }
 }
