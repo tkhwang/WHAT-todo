@@ -1,7 +1,7 @@
 import React, { RefObject, useCallback, useState } from "react";
 import { TextInput, View } from "react-native";
 import { useTranslation } from "react-i18next";
-import { AddTodoRequest } from "@whatTodo/models";
+import { AddTaskRequest } from "@whatTodo/models";
 
 import Icon from "@/assets/icons";
 import { useAddTodo } from "@/hooks/mutations/useAddTodo";
@@ -31,7 +31,7 @@ export default function AddTodoInput({ inputRef }: Props) {
   const handleSubmitTask = useCallback(async () => {
     if (!task) return;
 
-    const newTaskDto: AddTodoRequest = {
+    const newTaskDto: AddTaskRequest = {
       todo: task,
     };
 

@@ -1,2 +1,2 @@
-export * from "./dto/add-todo.dto"
+export * from "./dto/add-task.dto"
 export * from "./todo"

@@ -1,4 +1,4 @@
-import { AddTodoRequest } from '@whatTodo/models';
+import { AddTaskRequest } from '@whatTodo/models';
 import { FirebaseTodoRepository } from './../firebase/firebaseTodo.repository';
 import { Injectable } from '@nestjs/common';
 import { FirebaseUserRepository } from 'src/firebase/firebaseUser.repository';
@@ -10,7 +10,7 @@ export class TodosService {
     private readonly firebaseUserRepository: FirebaseUserRepository,
   ) {}
 
-  async addTodo(userId: string, addTodoDto: AddTodoRequest) {
+  async addTodo(userId: string, addTodoDto: AddTaskRequest) {
     try {
       const addTodo = await this.firebaseTodoRepository.addTodo(
         userId,

@@ -1,4 +1,4 @@
-import { AddTodoRequest } from '@whatTodo/models';
+import { AddTaskRequest } from '@whatTodo/models';
 import { TodosService } from './todos.service';
 import { Body, Controller, Post } from '@nestjs/common';
 import { UserId } from 'src/users/userId.decorators';
@@ -10,7 +10,7 @@ export class TodosController {
 
   @Post('addTodo')
   @Auth()
-  async addTodo(@UserId() userId: string, @Body() addTodoDto: AddTodoRequest) {
+  async addTodo(@UserId() userId: string, @Body() addTodoDto: AddTaskRequest) {
     return this.todosService.addTodo(userId, addTodoDto);
   }
 }

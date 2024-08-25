@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { COLLECTIONS, AddTodoRequest } from '@whatTodo/models';
+import { COLLECTIONS, AddTaskRequest } from '@whatTodo/models';
 import { app, firestore } from 'firebase-admin';
 
 @Injectable()
@@ -12,7 +12,7 @@ export class FirebaseTodoRepository {
     this.#todoCollection = this.#db.collection(COLLECTIONS.TODOS);
   }
 
-  async addTodo(userId: string, addTodoDto: AddTodoRequest) {
+  async addTodo(userId: string, addTodoDto: AddTaskRequest) {
     const newTodo = {
       ...addTodoDto,
       userId,

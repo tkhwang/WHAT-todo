@@ -1,6 +1,6 @@
 import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import {
-  AddTodoRequest,
+  AddTaskRequest,
   APP_ERRORS,
   AuthProviders,
   COLLECTIONS,
@@ -62,7 +62,7 @@ export class FirebaseUserRepository {
   async addUserTodo(
     userId: string,
     todoId: string,
-    addTodoDto: AddTodoRequest,
+    addTodoDto: AddTaskRequest,
   ) {
     const newTodo = {
       todoId,
