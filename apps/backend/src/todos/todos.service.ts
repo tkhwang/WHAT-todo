@@ -10,16 +10,16 @@ export class TodosService {
     private readonly firebaseUserRepository: FirebaseUserRepository,
   ) {}
 
-  async addTodo(userId: string, addTodoDto: AddTaskRequest) {
+  async addTask(userId: string, addTaskDto: AddTaskRequest) {
     try {
-      const addTodo = await this.firebaseTodoRepository.addTodo(
+      const addTask = await this.firebaseTodoRepository.addTask(
         userId,
-        addTodoDto,
+        addTaskDto,
       );
       await this.firebaseUserRepository.addUserTodo(
         userId,
-        addTodo.id,
-        addTodoDto,
+        addTask.id,
+        addTaskDto,
       );
     } catch (error) {}
   }

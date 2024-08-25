@@ -4,7 +4,7 @@ import { KeyboardAvoidingView, Platform, TextInput, View } from "react-native";
 import ScreenWrapper from "@/components/MainLayout/ScreenWrapper";
 import MainHeader from "@/components/MainLayout/MainHeader";
 import Today from "@/components/Today";
-import AddTodoInput from "@/components/Todo/add/AddTodoInput";
+import AddTaskInput from "@/components/Todo/add/AddTaskInput";
 
 export default function HomeScreen() {
   const inputRef = useRef<TextInput>(null);
@@ -19,7 +19,7 @@ export default function HomeScreen() {
       <KeyboardAvoidingView className={"flex-1 w-screen"} behavior={Platform.OS === "ios" ? "padding" : "height"}>
         <View className={"flex-1 w-screen justify-end w-full"}>
           <Today />
-          <AddTodoInput inputRef={inputRef} />
+          <AddTaskInput inputRef={inputRef} />
         </View>
       </KeyboardAvoidingView>
     </ScreenWrapper>

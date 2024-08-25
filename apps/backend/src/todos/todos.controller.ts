@@ -8,9 +8,9 @@ import { Auth } from 'src/auth/auth.decorator';
 export class TodosController {
   constructor(private readonly todosService: TodosService) {}
 
-  @Post('addTodo')
+  @Post('addTask')
   @Auth()
-  async addTodo(@UserId() userId: string, @Body() addTodoDto: AddTaskRequest) {
-    return this.todosService.addTodo(userId, addTodoDto);
+  async addTask(@UserId() userId: string, @Body() addTaskDto: AddTaskRequest) {
+    return this.todosService.addTask(userId, addTaskDto);
   }
 }

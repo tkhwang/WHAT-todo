@@ -62,7 +62,7 @@ export class FirebaseUserRepository {
   async addUserTodo(
     userId: string,
     todoId: string,
-    addTodoDto: AddTaskRequest,
+    addTaskDto: AddTaskRequest,
   ) {
     const newTodo = {
       todoId,

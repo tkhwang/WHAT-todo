@@ -12,14 +12,14 @@ export class FirebaseTodoRepository {
     this.#todoCollection = this.#db.collection(COLLECTIONS.TODOS);
   }
 
-  async addTodo(userId: string, addTodoDto: AddTaskRequest) {
-    const newTodo = {
-      ...addTodoDto,
+  async addTask(userId: string, addTaskDto: AddTaskRequest) {
+    const newTask = {
+      ...addTaskDto,
       userId,
       createdAt: firestore.FieldValue.serverTimestamp(),
       updatedAt: firestore.FieldValue.serverTimestamp(),
     };
 
-    return await this.#todoCollection.add(newTodo);
+    return await this.#todoCollection.add(newTask);
   }
 }
