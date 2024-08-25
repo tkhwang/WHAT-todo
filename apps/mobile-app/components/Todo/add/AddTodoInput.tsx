@@ -18,7 +18,7 @@ export default function AddTodoInput({ inputRef }: Props) {
   const { t } = useTranslation();
 
   const [showButttons, setShowButttons] = useState(false);
-  const { task, isLoading, setIsLoading, updateTask, reset } = useTodoStore();
+  const { task, isLoading, updateTask, reset } = useTodoStore();
   const { mutateAsync: addTodoMutationAsync } = useAddTodo();
 
   const onChangeTask = useCallback(
@@ -35,12 +35,11 @@ export default function AddTodoInput({ inputRef }: Props) {
       todo: task,
     };
 
-    setIsLoading(true);
     await addTodoMutationAsync(newTaskDto);
     setShowButttons(false);
 
     reset();
-  }, [addTodoMutationAsync, reset, setIsLoading, task]);
+  }, [addTodoMutationAsync, reset, task]);
 
   const handleFocus = () => {
     setShowButttons(true);
