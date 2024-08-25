@@ -21,8 +21,6 @@ export default function HomeScreen() {
           <Today />
           <AddTodoInput inputRef={inputRef} />
         </View>
-        {/* <FloatingActionButton bottomSheetModalRef={bottomSheetModalRef} /> */}
-        {/* <AddTodoBottomSheetSimple bottomSheetModalRef={bottomSheetModalRef} /> */}
       </KeyboardAvoidingView>
     </ScreenWrapper>
   );
