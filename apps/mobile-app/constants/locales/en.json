@@ -1,7 +1,6 @@
 {
   "app.name": "WHAT-todo",
   "app.punchline": "Todo from expert with supervisor",
-  "app.screen.today": "Today",
   "app.screen.upcoming": "Upcoming",
   "app.screen.expert": "Expert",
   "app.screen.profile": "Profile",
@@ -36,5 +35,6 @@
   "todo.addDueDate.today": "Today",
   "todo.addDueDate.tomorrow": "Tomorrow",
   "todo.addDueDate.nextWeek": "NextWeek",
-  "todo.addDueDate.pickADay": "Pick a Date"
+  "todo.addDueDate.pickADay": "Pick a Date",
+  "todo.default.list": "My Day"
 }

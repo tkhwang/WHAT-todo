@@ -24,7 +24,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name={"index"}
         options={{
-          title: t("app.screen.today"),
+          title: t("todo.default.list"),
           tabBarIcon: ({ color, focused }) => <TabBarIcon name={"checkmarkSquare"} color={color} />,
         }}
       />

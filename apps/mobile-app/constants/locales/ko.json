@@ -1,7 +1,6 @@
 {
   "app.name": "왓-투두",
   "app.punchline": "전문가가 짜주고 조력자와 함께하는 투두앱",
-  "app.screen.today": "오늘",
   "app.screen.upcoming": "다음",
   "app.screen.expert": "전문가",
   "app.screen.profile": "프로필",
@@ -36,5 +35,6 @@
   "todo.addDueDate.today": "오늘",
   "todo.addDueDate.tomorrow": "내일",
   "todo.addDueDate.nextWeek": "다음주",
-  "todo.addDueDate.pickADay": "날짜 선택"
+  "todo.addDueDate.pickADay": "날짜 선택",
+  "todo.default.list": "오늘"
 }
