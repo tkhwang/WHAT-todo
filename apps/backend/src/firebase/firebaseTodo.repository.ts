@@ -1,4 +1,9 @@
-import { Inject, Injectable } from '@nestjs/common';
+import {
+  Inject,
+  Injectable,
+  NotFoundException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { COLLECTIONS, AddTaskRequest } from '@whatTodo/models';
 import { app, firestore } from 'firebase-admin';
 
@@ -21,5 +26,24 @@ export class FirebaseTodoRepository {
     };
 
     return await this.#todoCollection.add(newTask);
+  }
+
+  async findTaskById(userId: string, taskId: string) {
+    const taskDoc = await this.#todoCollection.doc(taskId).get();
+
+    if (!taskDoc.exists) throw new NotFoundException('Task not found');
+    if (taskDoc.data().userId !== userId) throw new UnauthorizedException();
+
+    return {
+      id: taskDoc.id,
+      ...taskDoc.data(),
+    };
+  }
+
+  async deleteTaskById(userId: string, taskId: string) {
+    const task = await this.findTaskById(userId, taskId);
+    if (task) {
+      await this.#todoCollection.doc(taskId).delete();
+    }
   }
 }

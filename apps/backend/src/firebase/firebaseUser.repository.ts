@@ -79,4 +79,20 @@ export class FirebaseUserRepository {
 
     return data;
   }
+
+  async findUserTaskById(userId: string, taskId: string) {
+    return await this.#userCollection
+      .doc(userId)
+      .collection(COLLECTIONS.TODOS)
+      .doc(taskId)
+      .get();
+  }
+
+  async deleteUserTaskById(userId: string, taskId: string) {
+    return await this.#userCollection
+      .doc(userId)
+      .collection(COLLECTIONS.TODOS)
+      .doc(taskId)
+      .delete();
+  }
 }
