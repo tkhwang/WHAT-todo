@@ -25,7 +25,12 @@ export default function Today() {
       </View>
 
       <View style={{ flexShrink: 1 }}>
-        <FlatList data={todos} renderItem={renderItem} keyExtractor={(item) => item.id} />
+        <FlatList
+          data={todos}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.id}
+          ItemSeparatorComponent={() => <View style={{ height: 4 }} />}
+        />
       </View>
 
       {/* bottom div */}
