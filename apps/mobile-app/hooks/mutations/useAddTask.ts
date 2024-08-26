@@ -11,7 +11,7 @@ export function useAddTask() {
   return useMutation({
     mutationFn: async (requestDto: AddTaskRequest) => {
       const response = await httpClient.post<AddTaskRequest, AxiosResponse<AddTaskResponse>>(
-        "/todos/addTask",
+        "/tasks/addTask",
         requestDto,
       );
       return response.data;

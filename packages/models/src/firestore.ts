@@ -1,6 +1,8 @@
 export const COLLECTIONS = {
+  LISTS: "lists",
+  STEPS: "steps",
+  TASKS: "tasks",
   USERS: "users",
-  TODOS: "todos",
 }
 
 export type FirestoreSnapshotListenerPool = Map<string, () => void>

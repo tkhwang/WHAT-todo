@@ -1,7 +1,7 @@
 import { AxiosResponse } from "axios";
 import { useMutation } from "@tanstack/react-query";
-import { DeleteTaskRequest, DeleteTaskResponse } from "@whatTodo/models/src/todo/dto/delete-task.dto";
 import { useRouter } from "expo-router";
+import { DeleteTaskRequest, DeleteTaskResponse } from "@whatTodo/models";
 
 import { httpClient } from "@/utils/httpClient";
 
@@ -11,7 +11,7 @@ export function useDeleteTask() {
   return useMutation({
     mutationFn: async (requestDto: DeleteTaskRequest) => {
       const response = await httpClient.post<DeleteTaskRequest, AxiosResponse<DeleteTaskResponse>>(
-        "/todos/deleteTask",
+        "/tasks/deleteTask",
         requestDto,
       );
       return response.data;

@@ -3,7 +3,7 @@ import { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 
-import { useTodo } from "@/hooks/queries/useTodo";
+import { useTask } from "@/hooks/queries/useTask";
 import { Text } from "@/components/ui/text";
 import Icon from "@/assets/icons";
 import { useDueDateStore } from "@/stores/dueDate";
@@ -15,9 +15,9 @@ interface Props {
   todoId: string;
 }
 
-export default function TodoDetail({ todoId }: Props) {
+export default function TaskDetail({ todoId }: Props) {
   const { t } = useTranslation();
-  const { data: todo, isSuccess } = useTodo(todoId);
+  const { data: todo, isSuccess } = useTask(todoId);
 
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
 

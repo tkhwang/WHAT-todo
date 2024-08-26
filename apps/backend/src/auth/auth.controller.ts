@@ -1,10 +1,14 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { AuthSignupRequest, AuthVerifyIdRequest } from '@whatTodo/models';
 import { UsersService } from 'src/users/users.service';
+import { AuthService } from './auth.service';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(
+    private readonly authService: AuthService,
+    private readonly usersService: UsersService,
+  ) {}
 
   @Post('verifyId')
   async verifyId(@Body() verifyIdRequest: AuthVerifyIdRequest) {
@@ -15,7 +19,7 @@ export class AuthController {
   @Post('signup')
   async signup(@Body() signupRequest: AuthSignupRequest) {
     const { id, email, whatTodoId, name, provider } = signupRequest;
-    return this.usersService.createUser({
+    return this.authService.createUser({
       id,
       email,
       whatTodoId,

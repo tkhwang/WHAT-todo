@@ -8,7 +8,7 @@ import {
 import { app, firestore } from 'firebase-admin';
 
 @Injectable()
-export class FirebaseUserRepository {
+export class FirestoreUserRepository {
   #db: FirebaseFirestore.Firestore;
   #userCollection: FirebaseFirestore.CollectionReference;
 
@@ -43,6 +43,14 @@ export class FirebaseUserRepository {
           createdAt: firestore.FieldValue.serverTimestamp(),
           updatedAt: firestore.FieldValue.serverTimestamp(),
         });
+
+        return {
+          id,
+          email,
+          whatTodoId,
+          name,
+          provider,
+        };
       }
     } catch (error) {
       throw new Error(APP_ERRORS.AUTH.REGISTRATION_FAILURE);
@@ -73,7 +81,7 @@ export class FirebaseUserRepository {
 
     const data = await this.#userCollection
       .doc(userId)
-      .collection(COLLECTIONS.TODOS)
+      .collection(COLLECTIONS.TASKS)
       .doc(todoId)
       .set(newTodo);
 
@@ -83,7 +91,7 @@ export class FirebaseUserRepository {
   async findUserTaskById(userId: string, taskId: string) {
     return await this.#userCollection
       .doc(userId)
-      .collection(COLLECTIONS.TODOS)
+      .collection(COLLECTIONS.TASKS)
       .doc(taskId)
       .get();
   }
@@ -91,7 +99,7 @@ export class FirebaseUserRepository {
   async deleteUserTaskById(userId: string, taskId: string) {
     return await this.#userCollection
       .doc(userId)
-      .collection(COLLECTIONS.TODOS)
+      .collection(COLLECTIONS.TASKS)
       .doc(taskId)
       .delete();
   }

@@ -1,31 +1,31 @@
 import { useEffect, useMemo } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { COLLECTIONS, ITodo } from "@whatTodo/models";
+import { COLLECTIONS, ITask } from "@whatTodo/models";
 
-import { updateTodoCache } from "@/services/Todo/updateTodoCache";
+import { updateTaskCache } from "@/services/Task/updateTaskCache";
 
-export function useTodo(todoId: string) {
+export function useTask(taskId: string) {
   const queryClient = useQueryClient();
 
   const queryKey = useMemo(() => {
-    return [COLLECTIONS.TODOS, todoId];
-  }, [todoId]);
+    return [COLLECTIONS.TASKS, taskId];
+  }, [taskId]);
 
   useEffect(
     function setupTodosEffect() {
-      const unsubscribe = updateTodoCache(todoId, queryClient);
+      const unsubscribe = updateTaskCache(taskId, queryClient);
 
       return () => {
         unsubscribe();
       };
     },
-    [queryClient, queryKey, todoId],
+    [queryClient, queryKey, taskId],
   );
 
-  return useQuery<ITodo>({
+  return useQuery<ITask>({
     queryKey,
     queryFn: () => new Promise((): void => {}),
-    enabled: !!todoId,
+    enabled: !!taskId,
     staleTime: Infinity,
   });
 }
