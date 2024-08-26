@@ -1,11 +1,15 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { AuthProviders } from '@whatTodo/models';
 import * as FirebaseAdmin from 'firebase-admin';
+import { FirestoreListRepository } from 'src/firebase/firestore-list.repository';
 import { UsersService } from 'src/users/users.service';
 
 @Injectable()
 export class AuthService {
-  constructor(private readonly userService: UsersService) {}
+  constructor(
+    private readonly userService: UsersService,
+    private readonly firestoreListRepository: FirestoreListRepository,
+  ) {}
 
   async validateToken(token: string) {
     try {
@@ -37,6 +41,8 @@ export class AuthService {
       name,
       provider,
     });
+
+    const list = await this.firestoreListRepository.addList(user.id);
 
     return user;
   }

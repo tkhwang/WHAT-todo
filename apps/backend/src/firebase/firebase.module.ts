@@ -46,6 +46,11 @@ const firebaseProvider = {
     FirestoreTaskRepository,
     FirestoreUserRepository,
   ],
-  exports: [FirestoreUserRepository, FirestoreTaskRepository],
+  exports: [
+    FirestoreListRepository,
+    FirestoreStepRepository,
+    FirestoreTaskRepository,
+    FirestoreUserRepository,
+  ],
 })
 export class FirebaseModule {}

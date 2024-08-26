@@ -43,6 +43,14 @@ export class FirestoreUserRepository {
           createdAt: firestore.FieldValue.serverTimestamp(),
           updatedAt: firestore.FieldValue.serverTimestamp(),
         });
+
+        return {
+          id,
+          email,
+          whatTodoId,
+          name,
+          provider,
+        };
       }
     } catch (error) {
       throw new Error(APP_ERRORS.AUTH.REGISTRATION_FAILURE);
