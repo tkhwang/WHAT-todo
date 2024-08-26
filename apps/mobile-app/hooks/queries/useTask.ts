@@ -4,28 +4,28 @@ import { COLLECTIONS, ITodo } from "@whatTodo/models";
 
 import { updateTodoCache } from "@/services/Todo/updateTodoCache";
 
-export function useTodo(todoId: string) {
+export function useTask(taskId: string) {
   const queryClient = useQueryClient();
 
   const queryKey = useMemo(() => {
-    return [COLLECTIONS.TASKS, todoId];
-  }, [todoId]);
+    return [COLLECTIONS.TASKS, taskId];
+  }, [taskId]);
 
   useEffect(
     function setupTodosEffect() {
-      const unsubscribe = updateTodoCache(todoId, queryClient);
+      const unsubscribe = updateTodoCache(taskId, queryClient);
 
       return () => {
         unsubscribe();
       };
     },
-    [queryClient, queryKey, todoId],
+    [queryClient, queryKey, taskId],
   );
 
   return useQuery<ITodo>({
     queryKey,
     queryFn: () => new Promise((): void => {}),
-    enabled: !!todoId,
+    enabled: !!taskId,
     staleTime: Infinity,
   });
 }

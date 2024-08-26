@@ -14,23 +14,23 @@ export function useUserTasks() {
 
   useEffect(
     function setupUserTodosEffect() {
-      const convert = (userTodoDoc: ITodo, docId: string) => {
-        const { createdAt, updatedAt } = userTodoDoc;
+      const convert = (userTaskDoc: ITodo, docId: string) => {
+        const { createdAt, updatedAt } = userTaskDoc;
         return {
-          ...userTodoDoc,
+          ...userTaskDoc,
           id: docId,
           createdAt: createdAt.toDate(),
           updatedAt: updatedAt.toDate(),
         };
       };
 
-      const getUserTodos = () => {
+      const getUserTasks = () => {
         const cachedUserTodos = queryClient.getQueryData<ITodo[]>([COLLECTIONS.USERS, myUserId, COLLECTIONS.TASKS]);
         return cachedUserTodos;
       };
 
-      const setUserTodos = (userTodos: ITodo[]) => {
-        queryClient.setQueryData([COLLECTIONS.USERS, myUserId, COLLECTIONS.TASKS], userTodos);
+      const setUserTasks = (userTasks: ITodo[]) => {
+        queryClient.setQueryData([COLLECTIONS.USERS, myUserId, COLLECTIONS.TASKS], userTasks);
       };
 
       const key = `${COLLECTIONS.USERS}/${myUserId}/${COLLECTIONS.TASKS}`;
@@ -43,29 +43,29 @@ export function useUserTasks() {
         .onSnapshot((snpashot) => {
           if (!snpashot) return;
 
-          const prvUserTodos = getUserTodos();
-          if (!prvUserTodos) {
-            const userTodos = snpashot.docs.map((doc) => {
+          const prvUserTasks = getUserTasks();
+          if (!prvUserTasks) {
+            const userTasks = snpashot.docs.map((doc) => {
               const userTodoDoc = doc.data() as ITodo;
               return convert(userTodoDoc, doc.id);
             });
-            setUserTodos(userTodos);
+            setUserTasks(userTasks);
           } else {
             snpashot.docChanges().forEach((change) => {
               if (change.type === "added") {
-                const userTodoDoc = change.doc.data() as ITodo;
-                const userTodos = [convert(userTodoDoc, change.doc.id), ...prvUserTodos];
-                setUserTodos(userTodos);
+                const userTaskDoc = change.doc.data() as ITodo;
+                const userTasks = [convert(userTaskDoc, change.doc.id), ...prvUserTasks];
+                setUserTasks(userTasks);
               } else if (change.type === "modified") {
-                const userTodosDoc = change.doc.data() as ITodo;
-                const userTodos = prvUserTodos.map((userTodo) => {
-                  if (userTodo.id === change.doc.id) return convert(userTodosDoc, change.doc.id);
+                const userTasksDoc = change.doc.data() as ITodo;
+                const userTasks = prvUserTasks.map((userTodo) => {
+                  if (userTodo.id === change.doc.id) return convert(userTasksDoc, change.doc.id);
                   return userTodo;
                 });
-                setUserTodos(userTodos);
+                setUserTasks(userTasks);
               } else if (change.type === "removed") {
-                const userTodos = prvUserTodos.filter((userTodo) => userTodo.id !== change.doc.id);
-                setUserTodos(userTodos);
+                const userTasks = prvUserTasks.filter((userTodo) => userTodo.id !== change.doc.id);
+                setUserTasks(userTasks);
               }
             });
           }

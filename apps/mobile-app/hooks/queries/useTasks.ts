@@ -9,18 +9,18 @@ import { useUserTasks } from "./useUserTasks";
 export function useTodos() {
   const queryClient = useQueryClient();
 
-  const { data: userTodos } = useUserTasks();
+  const { data: userTasks } = useUserTasks();
 
-  const todoIds = useMemo(() => {
-    return (userTodos ?? []).map((userTodo) => userTodo.id);
-  }, [userTodos]);
+  const taskIds = useMemo(() => {
+    return (userTasks ?? []).map((userTodo) => userTodo.id);
+  }, [userTasks]);
 
   useEffect(
     function setupTodosEffect() {
       const unsubscribes: (() => void)[] = [];
       // eslint-disable-next-line no-restricted-syntax
-      for (const todoId of todoIds ?? []) {
-        const unsubscribe = updateTodoCache(todoId, queryClient);
+      for (const taskId of taskIds ?? []) {
+        const unsubscribe = updateTodoCache(taskId, queryClient);
         unsubscribes.push(unsubscribe);
       }
 
@@ -28,15 +28,15 @@ export function useTodos() {
         unsubscribes.forEach((unsubscribe) => unsubscribe());
       };
     },
-    [queryClient, todoIds],
+    [queryClient, taskIds],
   );
 
   return useQueries({
     queries:
-      todoIds?.map((todoId) => ({
-        queryKey: [COLLECTIONS.TASKS, todoId],
+      taskIds?.map((taskId) => ({
+        queryKey: [COLLECTIONS.TASKS, taskId],
         queryFn: () => new Promise((): void => {}),
-        enabled: !!todoId,
+        enabled: !!taskId,
         staleTime: Infinity,
       })) ?? [],
     combine: (results) => {
