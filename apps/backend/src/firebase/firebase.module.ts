@@ -4,6 +4,8 @@ import { ConfigModule, ConfigService, ConfigType } from '@nestjs/config';
 import * as admin from 'firebase-admin';
 import firebaseConfig from 'src/config/firebase.config';
 import { FirebaseTaskRepository } from './firebase-task.repository';
+import { FirestoreListRepository } from './firestore-list.repository';
+import { FirestoreStepRepository } from './firestore-step.repository';
 
 const firebaseProvider = {
   provide: 'FIREBASE_APP',
@@ -37,7 +39,13 @@ const firebaseProvider = {
 
 @Module({
   imports: [ConfigModule.forFeature(firebaseConfig)],
-  providers: [firebaseProvider, FirebaseUserRepository, FirebaseTaskRepository],
+  providers: [
+    firebaseProvider,
+    FirestoreListRepository,
+    FirestoreStepRepository,
+    FirebaseTaskRepository,
+    FirebaseUserRepository,
+  ],
   exports: [FirebaseUserRepository, FirebaseTaskRepository],
 })
 export class FirebaseModule {}
