@@ -8,7 +8,7 @@ export function useTodo(todoId: string) {
   const queryClient = useQueryClient();
 
   const queryKey = useMemo(() => {
-    return [COLLECTIONS.TODOS, todoId];
+    return [COLLECTIONS.TASKS, todoId];
   }, [todoId]);
 
   useEffect(

@@ -8,13 +8,13 @@ import { COLLECTIONS, AddTaskRequest } from '@whatTodo/models';
 import { app, firestore } from 'firebase-admin';
 
 @Injectable()
-export class FirebaseTodoRepository {
+export class FirebaseTaskRepository {
   #db: FirebaseFirestore.Firestore;
-  #todoCollection: FirebaseFirestore.CollectionReference;
+  #taskCollection: FirebaseFirestore.CollectionReference;
 
   constructor(@Inject('FIREBASE_APP') private firebaseApp: app.App) {
     this.#db = firebaseApp.firestore();
-    this.#todoCollection = this.#db.collection(COLLECTIONS.TODOS);
+    this.#taskCollection = this.#db.collection(COLLECTIONS.TASKS);
   }
 
   async addTask(userId: string, addTaskDto: AddTaskRequest) {
@@ -25,11 +25,11 @@ export class FirebaseTodoRepository {
       updatedAt: firestore.FieldValue.serverTimestamp(),
     };
 
-    return await this.#todoCollection.add(newTask);
+    return await this.#taskCollection.add(newTask);
   }
 
   async findTaskById(userId: string, taskId: string) {
-    const taskDoc = await this.#todoCollection.doc(taskId).get();
+    const taskDoc = await this.#taskCollection.doc(taskId).get();
 
     if (!taskDoc.exists) throw new NotFoundException('Task not found');
     if (taskDoc.data().userId !== userId) throw new UnauthorizedException();
@@ -43,7 +43,7 @@ export class FirebaseTodoRepository {
   async deleteTaskById(userId: string, taskId: string) {
     const task = await this.findTaskById(userId, taskId);
     if (task) {
-      await this.#todoCollection.doc(taskId).delete();
+      await this.#taskCollection.doc(taskId).delete();
     }
   }
 }

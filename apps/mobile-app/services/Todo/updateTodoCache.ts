@@ -3,7 +3,7 @@ import { COLLECTIONS, ITodo } from "@whatTodo/models";
 import firestore from "@react-native-firebase/firestore";
 
 export function updateTodoCache(todoId: string, queryClient: QueryClient) {
-  const queryKey = [COLLECTIONS.TODOS, todoId];
+  const queryKey = [COLLECTIONS.TASKS, todoId];
 
   const convert = (todoDoc: ITodo, docId: string) => {
     const { createdAt, updatedAt } = todoDoc;
@@ -25,7 +25,7 @@ export function updateTodoCache(todoId: string, queryClient: QueryClient) {
   };
 
   const unsubscribe = firestore()
-    .collection(COLLECTIONS.TODOS)
+    .collection(COLLECTIONS.TASKS)
     .doc(todoId)
     .onSnapshot((doc) => {
       const todoDoc = {

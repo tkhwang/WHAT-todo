@@ -73,7 +73,7 @@ export class FirebaseUserRepository {
 
     const data = await this.#userCollection
       .doc(userId)
-      .collection(COLLECTIONS.TODOS)
+      .collection(COLLECTIONS.TASKS)
       .doc(todoId)
       .set(newTodo);
 
@@ -83,7 +83,7 @@ export class FirebaseUserRepository {
   async findUserTaskById(userId: string, taskId: string) {
     return await this.#userCollection
       .doc(userId)
-      .collection(COLLECTIONS.TODOS)
+      .collection(COLLECTIONS.TASKS)
       .doc(taskId)
       .get();
   }
@@ -91,7 +91,7 @@ export class FirebaseUserRepository {
   async deleteUserTaskById(userId: string, taskId: string) {
     return await this.#userCollection
       .doc(userId)
-      .collection(COLLECTIONS.TODOS)
+      .collection(COLLECTIONS.TASKS)
       .doc(taskId)
       .delete();
   }

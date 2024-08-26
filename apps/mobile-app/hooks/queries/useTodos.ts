@@ -34,7 +34,7 @@ export function useTodos() {
   return useQueries({
     queries:
       todoIds?.map((todoId) => ({
-        queryKey: [COLLECTIONS.TODOS, todoId],
+        queryKey: [COLLECTIONS.TASKS, todoId],
         queryFn: () => new Promise((): void => {}),
         enabled: !!todoId,
         staleTime: Infinity,

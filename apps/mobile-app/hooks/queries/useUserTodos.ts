@@ -25,21 +25,21 @@ export function useUserTodos() {
       };
 
       const getUserTodos = () => {
-        const cachedUserTodos = queryClient.getQueryData<ITodo[]>([COLLECTIONS.USERS, myUserId, COLLECTIONS.TODOS]);
+        const cachedUserTodos = queryClient.getQueryData<ITodo[]>([COLLECTIONS.USERS, myUserId, COLLECTIONS.TASKS]);
         return cachedUserTodos;
       };
 
       const setUserTodos = (userTodos: ITodo[]) => {
-        queryClient.setQueryData([COLLECTIONS.USERS, myUserId, COLLECTIONS.TODOS], userTodos);
+        queryClient.setQueryData([COLLECTIONS.USERS, myUserId, COLLECTIONS.TASKS], userTodos);
       };
 
-      const key = `${COLLECTIONS.USERS}/${myUserId}/${COLLECTIONS.TODOS}`;
+      const key = `${COLLECTIONS.USERS}/${myUserId}/${COLLECTIONS.TASKS}`;
       if (FirestoreSnapshotListener.has(key)) return;
 
       const unsubscribe = firestore()
         .collection(COLLECTIONS.USERS)
         .doc(myUserId)
-        .collection(COLLECTIONS.TODOS)
+        .collection(COLLECTIONS.TASKS)
         .onSnapshot((snpashot) => {
           if (!snpashot) return;
 
@@ -77,7 +77,7 @@ export function useUserTodos() {
   );
 
   return useQuery<ITodo[]>({
-    queryKey: [COLLECTIONS.USERS, myUserId, COLLECTIONS.TODOS],
+    queryKey: [COLLECTIONS.USERS, myUserId, COLLECTIONS.TASKS],
     queryFn: () => new Promise((): void => {}),
     enabled: !!myUserId,
     staleTime: Infinity,

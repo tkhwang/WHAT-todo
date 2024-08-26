@@ -1,17 +1,17 @@
-import { AddTaskRequest, DeleteTaskRequest } from '@whatTodo/models';
-import { TodosService } from './todos.service';
 import { Body, Controller, Post } from '@nestjs/common';
+import { TasksService } from './tasks.service';
 import { UserId } from 'src/users/userId.decorators';
 import { Auth } from 'src/auth/auth.decorator';
+import { AddTaskRequest, DeleteTaskRequest } from '@whatTodo/models';
 
-@Controller('todos')
-export class TodosController {
-  constructor(private readonly todosService: TodosService) {}
+@Controller('tasks')
+export class TasksController {
+  constructor(private readonly tasksService: TasksService) {}
 
   @Post('addTask')
   @Auth()
   async addTask(@UserId() userId: string, @Body() addTaskDto: AddTaskRequest) {
-    return this.todosService.addTask(userId, addTaskDto);
+    return this.tasksService.addTask(userId, addTaskDto);
   }
 
   @Post('deleteTask')
@@ -21,6 +21,6 @@ export class TodosController {
     @Body() requestDto: DeleteTaskRequest,
   ) {
     const { taskId } = requestDto;
-    return this.todosService.deleteTask(userId, taskId);
+    return this.tasksService.deleteTask(userId, taskId);
   }
 }

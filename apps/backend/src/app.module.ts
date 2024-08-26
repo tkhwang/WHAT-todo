@@ -6,7 +6,7 @@ import { FirebaseModule } from './firebase/firebase.module';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { appLoggerMiddleware } from './middleware/appLoggerMiddleware';
-import { TodosModule } from './todos/todos.module';
+import { TasksModule } from './tasks/tasks.module';
 
 @Module({
   imports: [
@@ -14,7 +14,7 @@ import { TodosModule } from './todos/todos.module';
     FirebaseModule,
     AuthModule,
     UsersModule,
-    TodosModule,
+    TasksModule,
   ],
   controllers: [AppController],
   providers: [AppService],

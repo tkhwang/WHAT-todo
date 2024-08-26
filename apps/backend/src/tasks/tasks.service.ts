@@ -1,12 +1,12 @@
-import { AddTaskRequest } from '@whatTodo/models';
-import { FirebaseTodoRepository } from './../firebase/firebaseTodo.repository';
 import { BadRequestException, Injectable } from '@nestjs/common';
+import { AddTaskRequest } from '@whatTodo/models';
+import { FirebaseTaskRepository } from 'src/firebase/firebaseTask.repository';
 import { FirebaseUserRepository } from 'src/firebase/firebaseUser.repository';
 
 @Injectable()
-export class TodosService {
+export class TasksService {
   constructor(
-    private readonly firebaseTodoRepository: FirebaseTodoRepository,
+    private readonly firebaseTodoRepository: FirebaseTaskRepository,
     private readonly firebaseUserRepository: FirebaseUserRepository,
   ) {}
 

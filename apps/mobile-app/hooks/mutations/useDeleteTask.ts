@@ -11,7 +11,7 @@ export function useDeleteTask() {
   return useMutation({
     mutationFn: async (requestDto: DeleteTaskRequest) => {
       const response = await httpClient.post<DeleteTaskRequest, AxiosResponse<DeleteTaskResponse>>(
-        "/todos/deleteTask",
+        "/tasks/deleteTask",
         requestDto,
       );
       return response.data;
