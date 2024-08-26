@@ -15,7 +15,7 @@ interface Props {
   todoId: string;
 }
 
-export default function TodoDetail({ todoId }: Props) {
+export default function TaskDetail({ todoId }: Props) {
   const { t } = useTranslation();
   const { data: todo, isSuccess } = useTask(todoId);
 

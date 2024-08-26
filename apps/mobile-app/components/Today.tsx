@@ -1,19 +1,19 @@
 import { FlatList, View } from "react-native";
 import { useCallback } from "react";
-import { ITodo } from "@whatTodo/models";
+import { ITask } from "@whatTodo/models";
 import { useTranslation } from "react-i18next";
 
 import { Text } from "@/components/ui/text";
 import { useTodos } from "@/hooks/queries/useTasks";
 
-import TodoListItem from "./Todo/TodoListItem";
+import TaskListItem from "./Task/TaskListItem";
 
 export default function Today() {
   const { t } = useTranslation();
   const { data: todos } = useTodos();
 
-  const renderItem = useCallback(({ item, index }: { item: ITodo; index: number }) => {
-    return <TodoListItem todo={item} />;
+  const renderItem = useCallback(({ item, index }: { item: ITask; index: number }) => {
+    return <TaskListItem todo={item} />;
   }, []);
 
   return (

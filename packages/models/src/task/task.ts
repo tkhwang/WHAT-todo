@@ -1,4 +1,4 @@
-export interface ITodo {
+export interface ITask {
   id: string
   todo: string
   dueDate: string
@@ -7,7 +7,7 @@ export interface ITodo {
   updatedAt: Date
 }
 
-export interface IUseTodos {
-  data: ITodo[]
-  arePending: boolean
-}
+// export interface IUseTodos {
+//   data: ITask[]
+//   arePending: boolean
+// }

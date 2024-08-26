@@ -1,5 +1,5 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { COLLECTIONS, ITodo } from "@whatTodo/models";
+import { COLLECTIONS, ITask } from "@whatTodo/models";
 import { useAtomValue } from "jotai";
 import { useEffect } from "react";
 import firestore from "@react-native-firebase/firestore";
@@ -14,7 +14,7 @@ export function useUserTasks() {
 
   useEffect(
     function setupUserTodosEffect() {
-      const convert = (userTaskDoc: ITodo, docId: string) => {
+      const convert = (userTaskDoc: ITask, docId: string) => {
         const { createdAt, updatedAt } = userTaskDoc;
         return {
           ...userTaskDoc,
@@ -25,11 +25,11 @@ export function useUserTasks() {
       };
 
       const getUserTasks = () => {
-        const cachedUserTodos = queryClient.getQueryData<ITodo[]>([COLLECTIONS.USERS, myUserId, COLLECTIONS.TASKS]);
+        const cachedUserTodos = queryClient.getQueryData<ITask[]>([COLLECTIONS.USERS, myUserId, COLLECTIONS.TASKS]);
         return cachedUserTodos;
       };
 
-      const setUserTasks = (userTasks: ITodo[]) => {
+      const setUserTasks = (userTasks: ITask[]) => {
         queryClient.setQueryData([COLLECTIONS.USERS, myUserId, COLLECTIONS.TASKS], userTasks);
       };
 
@@ -46,18 +46,18 @@ export function useUserTasks() {
           const prvUserTasks = getUserTasks();
           if (!prvUserTasks) {
             const userTasks = snpashot.docs.map((doc) => {
-              const userTodoDoc = doc.data() as ITodo;
+              const userTodoDoc = doc.data() as ITask;
               return convert(userTodoDoc, doc.id);
             });
             setUserTasks(userTasks);
           } else {
             snpashot.docChanges().forEach((change) => {
               if (change.type === "added") {
-                const userTaskDoc = change.doc.data() as ITodo;
+                const userTaskDoc = change.doc.data() as ITask;
                 const userTasks = [convert(userTaskDoc, change.doc.id), ...prvUserTasks];
                 setUserTasks(userTasks);
               } else if (change.type === "modified") {
-                const userTasksDoc = change.doc.data() as ITodo;
+                const userTasksDoc = change.doc.data() as ITask;
                 const userTasks = prvUserTasks.map((userTodo) => {
                   if (userTodo.id === change.doc.id) return convert(userTasksDoc, change.doc.id);
                   return userTodo;
@@ -76,7 +76,7 @@ export function useUserTasks() {
     [myUserId, queryClient],
   );
 
-  return useQuery<ITodo[]>({
+  return useQuery<ITask[]>({
     queryKey: [COLLECTIONS.USERS, myUserId, COLLECTIONS.TASKS],
     queryFn: () => new Promise((): void => {}),
     enabled: !!myUserId,

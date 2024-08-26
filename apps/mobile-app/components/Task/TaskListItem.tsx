@@ -1,4 +1,4 @@
-import { ITodo } from "@whatTodo/models";
+import { ITask } from "@whatTodo/models";
 import { Pressable, View } from "react-native";
 import { useState } from "react";
 import { useRouter } from "expo-router";
@@ -7,13 +7,12 @@ import { Text } from "@/components/ui/text";
 import { Checkbox } from "@/components/ui/checkbox";
 import { cn } from "@/lib/utils";
 import { useColorScheme } from "@/lib/useColorScheme";
-import { appTheme } from "@/constants/uiConsts";
 
 interface Props {
-  todo: ITodo;
+  todo: ITask;
 }
 
-export default function TodoListItem({ todo }: Props) {
+export default function TaskListItem({ todo }: Props) {
   const { isDarkColorScheme } = useColorScheme();
   const [checked, setChecked] = useState(false);
 

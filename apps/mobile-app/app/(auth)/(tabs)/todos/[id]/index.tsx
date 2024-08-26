@@ -1,10 +1,10 @@
 import { useLocalSearchParams } from "expo-router";
 import { useTranslation } from "react-i18next";
 import { TouchableOpacity, StyleSheet, View } from "react-native";
-import { DeleteTaskRequest } from "@whatTodo/models/src/todo/dto/delete-task.dto";
+import { DeleteTaskRequest } from "@whatTodo/models";
 
 import ScreenWrapper from "@/components/MainLayout/ScreenWrapper";
-import TodoDetail from "@/components/Todo/TodoDetail";
+import TaskDetail from "@/components/Task/TaskDetail";
 import Header from "@/components/MainLayout/Header";
 import Icon from "@/assets/icons";
 import { appTheme } from "@/constants/uiConsts";
@@ -36,7 +36,7 @@ export default function TodoScreen() {
             <Icon name={"delete"} color={appTheme.colors.rose} onPress={handleDelete} />
           </TouchableOpacity>
         )}
-        <TodoDetail todoId={taskId} />
+        <TaskDetail todoId={taskId} />
       </View>
     </ScreenWrapper>
   );
