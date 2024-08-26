@@ -2,7 +2,7 @@ import { useQueries, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useMemo } from "react";
 import { COLLECTIONS } from "@whatTodo/models";
 
-import { updateTodoCache } from "@/services/Todo/updateTodoCache";
+import { updateTaskCache } from "@/services/Task/updateTaskCache";
 
 import { useUserTasks } from "./useUserTasks";
 
@@ -20,7 +20,7 @@ export function useTodos() {
       const unsubscribes: (() => void)[] = [];
       // eslint-disable-next-line no-restricted-syntax
       for (const taskId of taskIds ?? []) {
-        const unsubscribe = updateTodoCache(taskId, queryClient);
+        const unsubscribe = updateTaskCache(taskId, queryClient);
         unsubscribes.push(unsubscribe);
       }
 

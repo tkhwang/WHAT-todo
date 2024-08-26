@@ -2,7 +2,7 @@ import { useEffect, useMemo } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { COLLECTIONS, ITask } from "@whatTodo/models";
 
-import { updateTodoCache } from "@/services/Todo/updateTodoCache";
+import { updateTaskCache } from "@/services/Task/updateTaskCache";
 
 export function useTask(taskId: string) {
   const queryClient = useQueryClient();
@@ -13,7 +13,7 @@ export function useTask(taskId: string) {
 
   useEffect(
     function setupTodosEffect() {
-      const unsubscribe = updateTodoCache(taskId, queryClient);
+      const unsubscribe = updateTaskCache(taskId, queryClient);
 
       return () => {
         unsubscribe();

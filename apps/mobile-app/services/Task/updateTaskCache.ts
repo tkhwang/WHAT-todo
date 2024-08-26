@@ -2,7 +2,7 @@ import { QueryClient } from "@tanstack/react-query";
 import { COLLECTIONS, ITask } from "@whatTodo/models";
 import firestore from "@react-native-firebase/firestore";
 
-export function updateTodoCache(todoId: string, queryClient: QueryClient) {
+export function updateTaskCache(todoId: string, queryClient: QueryClient) {
   const queryKey = [COLLECTIONS.TASKS, todoId];
 
   const convert = (todoDoc: ITask, docId: string) => {
