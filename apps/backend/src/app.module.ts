@@ -7,6 +7,8 @@ import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { appLoggerMiddleware } from './middleware/appLoggerMiddleware';
 import { TasksModule } from './tasks/tasks.module';
+import { ListsModule } from './lists/lists.module';
+import { StepsModule } from './steps/steps.module';
 
 @Module({
   imports: [
@@ -15,6 +17,8 @@ import { TasksModule } from './tasks/tasks.module';
     AuthModule,
     UsersModule,
     TasksModule,
+    ListsModule,
+    StepsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
