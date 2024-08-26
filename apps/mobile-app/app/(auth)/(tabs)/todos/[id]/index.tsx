@@ -9,13 +9,14 @@ import Header from "@/components/MainLayout/Header";
 import Icon from "@/assets/icons";
 import { appTheme } from "@/constants/uiConsts";
 import { useDeleteTask } from "@/hooks/mutations/useDeleteTask";
+import Loading from "@/components/Loading";
 
 export default function TodoScreen() {
   const { t } = useTranslation();
 
   const { id: taskId } = useLocalSearchParams() as { id: string };
 
-  const { mutateAsync } = useDeleteTask();
+  const { mutateAsync, isPending } = useDeleteTask();
 
   const handleDelete = async () => {
     const requestDto: DeleteTaskRequest = { taskId };
@@ -26,9 +27,15 @@ export default function TodoScreen() {
     <ScreenWrapper>
       <View className={"flex-1 px-4"}>
         <Header title={t("screen.task.title")} showBackButton />
-        <TouchableOpacity style={styles.logoutButton} onPress={handleDelete}>
-          <Icon name={"delete"} color={appTheme.colors.rose} onPress={handleDelete} />
-        </TouchableOpacity>
+        {isPending ? (
+          <View style={styles.iconButton}>
+            <Loading size={"small"} color={appTheme.colors.rose} />
+          </View>
+        ) : (
+          <TouchableOpacity style={styles.iconButton} onPress={handleDelete}>
+            <Icon name={"delete"} color={appTheme.colors.rose} onPress={handleDelete} />
+          </TouchableOpacity>
+        )}
         <TodoDetail todoId={taskId} />
       </View>
     </ScreenWrapper>
@@ -36,10 +43,10 @@ export default function TodoScreen() {
 }
 
 const styles = StyleSheet.create({
-  logoutButton: {
+  iconButton: {
     position: "absolute",
     right: 16,
-    padding: 5,
+    padding: 6,
     borderRadius: appTheme.radius.sm,
     backgroundColor: "#fee2e2",
   },
