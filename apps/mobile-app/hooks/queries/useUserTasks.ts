@@ -7,7 +7,7 @@ import firestore from "@react-native-firebase/firestore";
 import { myUserIdAtom } from "@/states/me";
 import { FirestoreSnapshotListener } from "@/firestore/FirestoreSnapshotListner";
 
-export function useUserTodos() {
+export function useUserTasks() {
   const queryClient = useQueryClient();
 
   const myUserId = useAtomValue(myUserIdAtom);

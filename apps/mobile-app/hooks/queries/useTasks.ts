@@ -4,12 +4,12 @@ import { COLLECTIONS } from "@whatTodo/models";
 
 import { updateTodoCache } from "@/services/Todo/updateTodoCache";
 
-import { useUserTodos } from "./useUserTodos";
+import { useUserTasks } from "./useUserTasks";
 
 export function useTodos() {
   const queryClient = useQueryClient();
 
-  const { data: userTodos } = useUserTodos();
+  const { data: userTodos } = useUserTasks();
 
   const todoIds = useMemo(() => {
     return (userTodos ?? []).map((userTodo) => userTodo.id);

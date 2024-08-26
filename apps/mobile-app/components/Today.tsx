@@ -4,7 +4,7 @@ import { ITodo } from "@whatTodo/models";
 import { useTranslation } from "react-i18next";
 
 import { Text } from "@/components/ui/text";
-import { useTodos } from "@/hooks/queries/useTodos";
+import { useTodos } from "@/hooks/queries/useTasks";
 
 import TodoListItem from "./Todo/TodoListItem";
 

@@ -3,7 +3,7 @@ import { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 
-import { useTodo } from "@/hooks/queries/useTodo";
+import { useTodo } from "@/hooks/queries/useTask";
 import { Text } from "@/components/ui/text";
 import Icon from "@/assets/icons";
 import { useDueDateStore } from "@/stores/dueDate";
