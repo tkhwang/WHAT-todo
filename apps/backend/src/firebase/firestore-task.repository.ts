@@ -8,7 +8,7 @@ import { COLLECTIONS, AddTaskRequest } from '@whatTodo/models';
 import { app, firestore } from 'firebase-admin';
 
 @Injectable()
-export class FirebaseTaskRepository {
+export class FirestoreTaskRepository {
   #db: FirebaseFirestore.Firestore;
   #taskCollection: FirebaseFirestore.CollectionReference;
 

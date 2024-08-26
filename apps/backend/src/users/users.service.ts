@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { AuthProviders } from '@whatTodo/models';
-import { FirebaseUserRepository } from 'src/firebase/firebase-user.repository';
+import { FirestoreUserRepository } from 'src/firebase/firestore-user.repository';
 
 @Injectable()
 export class UsersService {
   constructor(
-    private readonly firebaseUserRepository: FirebaseUserRepository,
+    private readonly firebaseUserRepository: FirestoreUserRepository,
   ) {}
 
   async createUser({

@@ -1,9 +1,9 @@
-import { FirebaseUserRepository } from './firebase-user.repository';
+import { FirestoreUserRepository } from './firestore-user.repository';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService, ConfigType } from '@nestjs/config';
 import * as admin from 'firebase-admin';
 import firebaseConfig from 'src/config/firebase.config';
-import { FirebaseTaskRepository } from './firebase-task.repository';
+import { FirestoreTaskRepository } from './firestore-task.repository';
 import { FirestoreListRepository } from './firestore-list.repository';
 import { FirestoreStepRepository } from './firestore-step.repository';
 
@@ -43,9 +43,9 @@ const firebaseProvider = {
     firebaseProvider,
     FirestoreListRepository,
     FirestoreStepRepository,
-    FirebaseTaskRepository,
-    FirebaseUserRepository,
+    FirestoreTaskRepository,
+    FirestoreUserRepository,
   ],
-  exports: [FirebaseUserRepository, FirebaseTaskRepository],
+  exports: [FirestoreUserRepository, FirestoreTaskRepository],
 })
 export class FirebaseModule {}

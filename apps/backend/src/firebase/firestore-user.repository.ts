@@ -8,7 +8,7 @@ import {
 import { app, firestore } from 'firebase-admin';
 
 @Injectable()
-export class FirebaseUserRepository {
+export class FirestoreUserRepository {
   #db: FirebaseFirestore.Firestore;
   #userCollection: FirebaseFirestore.CollectionReference;
 
