@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { AuthProviders } from '@whatTodo/models';
-import { FirebaseUserRepository } from 'src/firebase/firebaseUser.repository';
+import { FirebaseUserRepository } from 'src/firebase/firebase-user.repository';
 
 @Injectable()
 export class UsersService {

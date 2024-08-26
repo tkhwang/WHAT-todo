@@ -1,9 +1,9 @@
-import { FirebaseUserRepository } from './firebaseUser.repository';
+import { FirebaseUserRepository } from './firebase-user.repository';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService, ConfigType } from '@nestjs/config';
 import * as admin from 'firebase-admin';
 import firebaseConfig from 'src/config/firebase.config';
-import { FirebaseTaskRepository } from './firebaseTask.repository';
+import { FirebaseTaskRepository } from './firebase-task.repository';
 
 const firebaseProvider = {
   provide: 'FIREBASE_APP',

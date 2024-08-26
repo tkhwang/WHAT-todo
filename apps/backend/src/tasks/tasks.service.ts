@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { AddTaskRequest } from '@whatTodo/models';
-import { FirebaseTaskRepository } from 'src/firebase/firebaseTask.repository';
-import { FirebaseUserRepository } from 'src/firebase/firebaseUser.repository';
+import { FirebaseTaskRepository } from 'src/firebase/firebase-task.repository';
+import { FirebaseUserRepository } from 'src/firebase/firebase-user.repository';
 
 @Injectable()
 export class TasksService {
