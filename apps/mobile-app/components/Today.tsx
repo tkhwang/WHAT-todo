@@ -19,7 +19,7 @@ export default function Today() {
   return (
     <View className={"flex-1 p-4 gap-4"}>
       {/* Default todo list */}
-      <View className={""}>
+      <View className={"gap-4"}>
         <Text className={"text-4xl font-bold"}>{t("todo.default.list")}</Text>
         <Text className={"text-2xl font-bold"}>{new Date().toLocaleDateString()}</Text>
       </View>
@@ -32,9 +32,6 @@ export default function Today() {
           ItemSeparatorComponent={() => <View style={{ height: 4 }} />}
         />
       </View>
-
-      {/* bottom div */}
-      <View className={"h-[1] bg-gray-400"} />
     </View>
   );
 }
