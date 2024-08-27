@@ -11,15 +11,30 @@ export function useFirestore<T extends IFirebaseBaseDoc, M>() {
     return {
       ...doc,
       id: docId,
-      createdAt: createdAt.toDate(),
-      updatedAt: updatedAt.toDate(),
+      createdAt: createdAt?.toDate(),
+      updatedAt: updatedAt?.toDate(),
     } as M;
   }, []);
 
+  const getDoc = useCallback(
+    (key: string[]) => {
+      const cachedDoc = queryClient.getQueryData<M>(key);
+      return cachedDoc;
+    },
+    [queryClient],
+  );
+
   const getDocs = useCallback(
     (key: string[]) => {
-      const cachedUserTodos = queryClient.getQueryData<M[]>(key);
-      return cachedUserTodos;
+      const cachedDocs = queryClient.getQueryData<M[]>(key);
+      return cachedDocs;
+    },
+    [queryClient],
+  );
+
+  const setDoc = useCallback(
+    (key: string[], doc: M) => {
+      queryClient.setQueryData(key, doc);
     },
     [queryClient],
   );
@@ -31,5 +46,5 @@ export function useFirestore<T extends IFirebaseBaseDoc, M>() {
     [queryClient],
   );
 
-  return { convert, getDocs, setDocs };
+  return { convert, getDoc, getDocs, setDoc, setDocs };
 }
