@@ -3,6 +3,7 @@ export interface ITask {
   todo: string
   dueDate: string
   userId: string
+  isDone: boolean
   createdAt: Date
   updatedAt: Date
 }
