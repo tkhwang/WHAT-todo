@@ -33,7 +33,7 @@ export default function TaskListItem({ todo }: Props) {
 
         {/* todo description */}
         <View className={"flex-col gap-1 justify-center"}>
-          <Text className={"text-xl font-medium"}>{todo.todo}</Text>
+          <Text className={"text-xl font-medium"}>{todo.task}</Text>
           <Text className={"text-sm font-normal"}>{"..."}</Text>
         </View>
       </View>

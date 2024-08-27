@@ -32,7 +32,7 @@ export default function AddTaskInput({ inputRef }: Props) {
     if (!task) return;
 
     const newTaskDto: AddTaskRequest = {
-      todo: task,
+      task,
     };
 
     await addTaskMutationAsync(newTaskDto);

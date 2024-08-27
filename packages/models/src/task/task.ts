@@ -1,6 +1,6 @@
 export interface ITask {
   id: string
-  todo: string
+  task: string
   dueDate: string
   userId: string
   isDone: boolean

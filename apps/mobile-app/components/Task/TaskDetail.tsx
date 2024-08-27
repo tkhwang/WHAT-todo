@@ -41,7 +41,7 @@ export default function TaskDetail({ todoId }: Props) {
       {/* title */}
       <Pressable className={"flex-row gap-4 items-center"} onPress={handlePress}>
         <Checkbox checked={checked} onCheckedChange={setChecked} />
-        <Text className={"text-2xl font-bold"}>{todo.todo}</Text>
+        <Text className={"text-2xl font-bold"}>{todo.task}</Text>
       </Pressable>
 
       {/* due date */}

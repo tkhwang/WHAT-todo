@@ -1,5 +1,5 @@
 export interface AddTaskRequest {
-  todo: string
+  task: string
 }
 
 export interface AddTaskResponse {}
