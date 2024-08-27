@@ -2,6 +2,7 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { AuthProviders } from '@whatTodo/models';
 import * as FirebaseAdmin from 'firebase-admin';
 import { FirestoreListRepository } from 'src/firebase/firestore-list.repository';
+import { FirestoreUserRepository } from 'src/firebase/firestore-user.repository';
 import { UsersService } from 'src/users/users.service';
 
 @Injectable()
@@ -9,6 +10,7 @@ export class AuthService {
   constructor(
     private readonly userService: UsersService,
     private readonly firestoreListRepository: FirestoreListRepository,
+    private readonly firestoreUserRepository: FirestoreUserRepository,
   ) {}
 
   async validateToken(token: string) {
@@ -43,6 +45,11 @@ export class AuthService {
     });
 
     const list = await this.firestoreListRepository.addList(user.id);
+
+    const userList = await this.firestoreUserRepository.addUserList(
+      id,
+      list.id,
+    );
 
     return user;
   }
