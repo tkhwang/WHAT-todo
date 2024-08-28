@@ -6,7 +6,7 @@ import { updateTaskCache } from "@/services/Task/updateTaskCache";
 
 import { useUserTasks } from "./useUserTasks";
 
-export function useTodos(listId: string) {
+export function useTasks(listId: string) {
   const queryClient = useQueryClient();
 
   const { data: userTasks } = useUserTasks(listId);
