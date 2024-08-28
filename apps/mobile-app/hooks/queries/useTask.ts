@@ -3,39 +3,38 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { COLLECTIONS, ITask } from "@whatTodo/models";
 import firestore from "@react-native-firebase/firestore";
 
-import { IListFS } from "@/types";
+import { ITaskFS } from "@/types";
 
 import { useFirestore } from "../useFirestore";
 
-export function useTask(taskId: string) {
+export function useTask(taskId: string, isDone = false) {
   const queryClient = useQueryClient();
 
   const key = useMemo(() => {
     return [COLLECTIONS.TASKS, taskId];
   }, [taskId]);
 
-  const { convert, setDoc } = useFirestore();
+  const { convert, setDoc } = useFirestore<ITaskFS, ITask>();
 
-  useEffect(
-    function setupTodosEffect() {
-      const unsubscribe = firestore()
-        .collection(COLLECTIONS.TASKS)
-        .doc(taskId)
-        .onSnapshot((doc) => {
-          const taskDoc = {
-            id: doc.id,
-            ...doc.data(),
-          } as IListFS;
-          const list = convert(taskDoc, doc.id);
+  useEffect(() => {
+    const unsubscribe = firestore()
+      .collection(COLLECTIONS.TASKS)
+      .doc(taskId)
+      .onSnapshot((doc) => {
+        const taskDoc = {
+          id: doc.id,
+          ...doc.data(),
+        } as ITaskFS;
+        const list = convert(taskDoc, doc.id);
+        if (list.isDone === isDone) {
           setDoc(key, list);
-        });
+        }
+      });
 
-      return () => {
-        unsubscribe();
-      };
-    },
-    [queryClient, key, taskId, convert, setDoc],
-  );
+    return () => {
+      unsubscribe();
+    };
+  }, [queryClient, key, taskId, convert, setDoc, isDone]);
 
   return useQuery<ITask>({
     queryKey: key,
