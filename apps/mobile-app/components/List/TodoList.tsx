@@ -21,7 +21,9 @@ export function TodoList({ listId }: Props) {
   const setCurrentListId = useSetAtom(currentListIdAtom);
 
   const { data: list, isLoading } = useList(listId);
-  const { data: tasks } = useTasks(listId);
+
+  const { data: tasks } = useTasks(listId, false);
+  const { data: doneTasks } = useTasks(listId, true);
 
   useEffect(() => {
     setCurrentListId(listId);
@@ -39,15 +41,34 @@ export function TodoList({ listId }: Props) {
 
   return (
     <View className={"flex-1"}>
+      {/* List Title */}
       <View className={"flex-row gap-4 items-center py-4"}>
         <Icon name={"leftToRightListBullet"} size={26} strokeWidth={2} />
         <Text className={"text-2xl font-semibold"}>{list?.title}</Text>
       </View>
+
+      {/* tasks list */}
       <View style={{ flexShrink: 1 }}>
         <FlatList
           data={tasks}
           renderItem={renderItem}
-          keyExtractor={(item) => item.id}
+          keyExtractor={(item) => `tasks-list-${item.id}`}
+          ItemSeparatorComponent={ItemSeparator}
+        />
+      </View>
+
+      {/* List Title */}
+      <View className={"flex-row gap-4 items-center py-4"}>
+        <Icon name={"leftToRightListBullet"} size={26} strokeWidth={2} />
+        <Text className={"text-2xl font-semibold"}>{list?.title}</Text>
+      </View>
+
+      {/* tasks list */}
+      <View style={{ flexShrink: 1 }}>
+        <FlatList
+          data={doneTasks}
+          renderItem={renderItem}
+          keyExtractor={(item) => `tasks-done-list-${item.id}`}
           ItemSeparatorComponent={ItemSeparator}
         />
       </View>
