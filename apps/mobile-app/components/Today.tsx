@@ -1,19 +1,21 @@
 import { FlatList, View } from "react-native";
 import { useCallback } from "react";
-import { ITask } from "@whatTodo/models";
+import { IList } from "@whatTodo/models";
 import { useTranslation } from "react-i18next";
 
 import { Text } from "@/components/ui/text";
-import { useTodos } from "@/hooks/queries/useTasks";
+import { useLists } from "@/hooks/queries/useLists";
 
-import TaskListItem from "./Task/TaskListItem";
+import { TodoList } from "./List/TodoList";
+
+const ItemSeparator = () => <View style={{ height: 4 }} />;
 
 export default function Today() {
   const { t } = useTranslation();
-  const { data: todos } = useTodos();
+  const { data: lists, arePending } = useLists();
 
-  const renderItem = useCallback(({ item, index }: { item: ITask; index: number }) => {
-    return <TaskListItem todo={item} />;
+  const renderItem = useCallback(({ item, index }: { item: IList; index: number }) => {
+    return <TodoList listId={item.id} key={`todolist-${index}`} />;
   }, []);
 
   return (
@@ -26,10 +28,10 @@ export default function Today() {
 
       <View style={{ flexShrink: 1 }}>
         <FlatList
-          data={todos}
+          data={lists}
           renderItem={renderItem}
           keyExtractor={(item) => item.id}
-          ItemSeparatorComponent={() => <View style={{ height: 4 }} />}
+          ItemSeparatorComponent={ItemSeparator}
         />
       </View>
     </View>
