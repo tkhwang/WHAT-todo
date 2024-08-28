@@ -1,6 +1,6 @@
 import { useQueries, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useMemo } from "react";
-import { COLLECTIONS } from "@whatTodo/models";
+import { COLLECTIONS, ITask } from "@whatTodo/models";
 
 import { updateTaskCache } from "@/services/Task/updateTaskCache";
 
@@ -35,7 +35,7 @@ export function useTasks(listId: string) {
     queries:
       taskIds?.map((taskId) => ({
         queryKey: [COLLECTIONS.TASKS, taskId],
-        queryFn: () => new Promise((): void => {}),
+        queryFn: () => new Promise<ITask>((): void => {}),
         enabled: !!taskId,
         staleTime: Infinity,
       })) ?? [],
