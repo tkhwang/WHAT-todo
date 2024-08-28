@@ -2,6 +2,7 @@ import React, { RefObject, useCallback, useState } from "react";
 import { TextInput, View } from "react-native";
 import { useTranslation } from "react-i18next";
 import { AddTaskRequest } from "@whatTodo/models";
+import { useAtomValue } from "jotai";
 
 import Icon from "@/assets/icons";
 import Input from "@/components/Input";
@@ -9,6 +10,7 @@ import { useTodoStore } from "@/stores/todo";
 import Loading from "@/components/Loading";
 import { appTheme } from "@/constants/uiConsts";
 import { useAddTask } from "@/hooks/mutations/useAddTask";
+import { currentListIdAtom } from "@/states/list";
 
 interface Props {
   inputRef: RefObject<TextInput>;
@@ -16,6 +18,8 @@ interface Props {
 
 export default function AddTaskInput({ inputRef }: Props) {
   const { t } = useTranslation();
+
+  const currentListId = useAtomValue(currentListIdAtom);
 
   const [showButttons, setShowButttons] = useState(false);
   const { task, isLoading, updateTask, reset } = useTodoStore();
@@ -30,16 +34,18 @@ export default function AddTaskInput({ inputRef }: Props) {
 
   const handleSubmitTask = useCallback(async () => {
     if (!task) return;
+    if (!currentListId) return;
 
     const newTaskDto: AddTaskRequest = {
       task,
+      listId: currentListId,
     };
 
     await addTaskMutationAsync(newTaskDto);
     setShowButttons(false);
 
     reset();
-  }, [addTaskMutationAsync, reset, task]);
+  }, [addTaskMutationAsync, currentListId, reset, task]);
 
   const handleFocus = () => {
     setShowButttons(true);
