@@ -7,16 +7,24 @@ import { Text } from "@/components/ui/text";
 import { Checkbox } from "@/components/ui/checkbox";
 import { cn } from "@/lib/utils";
 import { useColorScheme } from "@/lib/useColorScheme";
+import { useToggleTaskIsDone } from "@/hooks/mutations/useToggleTaskIsDone";
 
 interface Props {
   todo: ITask;
 }
 
 export default function TaskListItem({ todo }: Props) {
+  const router = useRouter();
+
   const { isDarkColorScheme } = useColorScheme();
   const [checked, setChecked] = useState(false);
 
-  const router = useRouter();
+  const { mutateAsync: toggleTaskIsDoneMutation } = useToggleTaskIsDone();
+
+  const handlePressCheck = async () => {
+    await toggleTaskIsDoneMutation({ taskId: todo.id });
+    setChecked(!checked);
+  };
 
   const handlePress = () => {
     router.push(`/(auth)/(tabs)/todos/${todo.id}`);
@@ -29,7 +37,7 @@ export default function TaskListItem({ todo }: Props) {
     >
       <View className={"flex-row gap-4 items-center"}>
         {/* checkbox */}
-        <Checkbox checked={checked} onCheckedChange={setChecked} />
+        <Checkbox checked={checked} onCheckedChange={handlePressCheck} />
 
         {/* todo description */}
         <View className={"flex-col gap-1 justify-center"}>
