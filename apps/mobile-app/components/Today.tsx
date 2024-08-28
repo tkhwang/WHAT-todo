@@ -2,6 +2,8 @@ import { FlatList, View } from "react-native";
 import { useCallback } from "react";
 import { IList } from "@whatTodo/models";
 import { useTranslation } from "react-i18next";
+import dayjs from "dayjs";
+import isoWeek from "dayjs/plugin/isoWeek";
 
 import { Text } from "@/components/ui/text";
 import { useLists } from "@/hooks/queries/useLists";
@@ -9,6 +11,8 @@ import { useLists } from "@/hooks/queries/useLists";
 import { TodoList } from "./List/TodoList";
 
 const ItemSeparator = () => <View style={{ height: 4 }} />;
+
+dayjs.extend(isoWeek);
 
 export default function Today() {
   const { t } = useTranslation();
@@ -18,12 +22,14 @@ export default function Today() {
     return <TodoList listId={item.id} key={`todolist-${index}`} />;
   }, []);
 
+  const date = dayjs().format("MM/DD");
+  const week = dayjs().isoWeek();
+
   return (
     <View className={"flex-1 p-4 gap-4"}>
       {/* Default todo list */}
       <View className={"gap-4"}>
-        <Text className={"text-4xl font-bold"}>{t("todo.default.list")}</Text>
-        <Text className={"text-2xl font-bold"}>{new Date().toLocaleDateString()}</Text>
+        <Text className={"text-3xl font-bold"}>{`${date} | W${week}`}</Text>
       </View>
 
       <View style={{ flexShrink: 1 }}>
