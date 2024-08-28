@@ -10,7 +10,7 @@ import { ITaskFS } from "@/types";
 
 import { useFirestore } from "../useFirestore";
 
-export function useUserTasks() {
+export function useUserTasks(listId: string) {
   const queryClient = useQueryClient();
 
   const myUserId = useAtomValue(myUserIdAtom);
@@ -19,7 +19,7 @@ export function useUserTasks() {
 
   useEffect(
     function setupUserTodosEffect() {
-      const key = [COLLECTIONS.USERS, myUserId, COLLECTIONS.TASKS];
+      const key = [COLLECTIONS.USERS, myUserId, COLLECTIONS.TASKS, listId];
       const stringKey = key.join("/");
 
       if (FirestoreSnapshotListener.has(stringKey)) return;
@@ -28,6 +28,7 @@ export function useUserTasks() {
         .collection(COLLECTIONS.USERS)
         .doc(myUserId)
         .collection(COLLECTIONS.TASKS)
+        .where("listId", "==", listId)
         .onSnapshot((snpashot) => {
           if (!snpashot) return;
 
@@ -61,11 +62,11 @@ export function useUserTasks() {
           FirestoreSnapshotListener.set(stringKey, unsubscribe);
         });
     },
-    [convert, getDocs, myUserId, queryClient, setDocs],
+    [convert, getDocs, listId, myUserId, queryClient, setDocs],
   );
 
   return useQuery<ITask[]>({
-    queryKey: [COLLECTIONS.USERS, myUserId, COLLECTIONS.TASKS],
+    queryKey: [COLLECTIONS.USERS, myUserId, COLLECTIONS.TASKS, listId],
     queryFn: () => new Promise((): void => {}),
     enabled: !!myUserId,
     staleTime: Infinity,

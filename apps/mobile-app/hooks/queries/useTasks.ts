@@ -6,10 +6,10 @@ import { updateTaskCache } from "@/services/Task/updateTaskCache";
 
 import { useUserTasks } from "./useUserTasks";
 
-export function useTodos() {
+export function useTodos(listId: string) {
   const queryClient = useQueryClient();
 
-  const { data: userTasks } = useUserTasks();
+  const { data: userTasks } = useUserTasks(listId);
 
   const taskIds = useMemo(() => {
     return (userTasks ?? []).map((userTodo) => userTodo.id);
