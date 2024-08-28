@@ -1,7 +1,6 @@
 import { FlatList, View } from "react-native";
 import { useCallback } from "react";
 import { IList } from "@whatTodo/models";
-import { useTranslation } from "react-i18next";
 import dayjs from "dayjs";
 import isoWeek from "dayjs/plugin/isoWeek";
 
@@ -15,7 +14,6 @@ const ItemSeparator = () => <View style={{ height: 4 }} />;
 dayjs.extend(isoWeek);
 
 export default function Today() {
-  const { t } = useTranslation();
   const { data: lists, arePending } = useLists();
 
   const renderItem = useCallback(({ item, index }: { item: IList; index: number }) => {
