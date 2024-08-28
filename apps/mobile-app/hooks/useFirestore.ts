@@ -17,7 +17,7 @@ export function useFirestore<T extends IFirebaseBaseDoc, M>() {
   }, []);
 
   const getDoc = useCallback(
-    (key: string[]) => {
+    (key: (string | boolean)[]) => {
       const cachedDoc = queryClient.getQueryData<M>(key);
       return cachedDoc;
     },
@@ -25,7 +25,7 @@ export function useFirestore<T extends IFirebaseBaseDoc, M>() {
   );
 
   const getDocs = useCallback(
-    (key: string[]) => {
+    (key: (string | boolean)[]) => {
       const cachedDocs = queryClient.getQueryData<M[]>(key);
       return cachedDocs;
     },
@@ -33,14 +33,14 @@ export function useFirestore<T extends IFirebaseBaseDoc, M>() {
   );
 
   const setDoc = useCallback(
-    (key: string[], doc: M) => {
+    (key: (string | boolean)[], doc: M) => {
       queryClient.setQueryData(key, doc);
     },
     [queryClient],
   );
 
   const setDocs = useCallback(
-    (key: string[], docs: M[]) => {
+    (key: (string | boolean)[], docs: M[]) => {
       queryClient.setQueryData(key, docs);
     },
     [queryClient],
