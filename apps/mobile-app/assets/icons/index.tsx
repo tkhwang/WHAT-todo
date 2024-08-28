@@ -21,6 +21,7 @@ import CalendarDownload from "./CalendarDownload";
 import AddCircle from "./AddCircle";
 import NoteEdit from "./NoteEdit";
 import PlusSign from "./PlusSign";
+import Task from "./Task";
 
 const icons = {
   accountSetting: AccountSetting,
@@ -44,6 +45,7 @@ const icons = {
   inboxCheck: InboxCheck,
   policeCap: PoliceCap,
   tag: Tag,
+  task: Task,
   user: User,
 };
 
