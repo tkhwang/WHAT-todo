@@ -22,6 +22,7 @@ import AddCircle from "./AddCircle";
 import NoteEdit from "./NoteEdit";
 import PlusSign from "./PlusSign";
 import Task from "./Task";
+import LeftToRightListBullet from "./LeftToRightListBullet";
 
 const icons = {
   accountSetting: AccountSetting,
@@ -39,6 +40,7 @@ const icons = {
   checkmarkSquare: CheckmarkSquare,
   delete: Delete,
   home: Home,
+  leftToRightListBullet: LeftToRightListBullet,
   logout: Logout,
   noteEdit: NoteEdit,
   plusSign: PlusSign,
