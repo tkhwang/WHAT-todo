@@ -1,15 +1,18 @@
 import { useQueries, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useMemo } from "react";
-import { COLLECTIONS } from "@whatTodo/models";
-
-import { updateTaskCache } from "@/services/Task/updateTaskCache";
+import { COLLECTIONS, ITask } from "@whatTodo/models";
+import firestore from "@react-native-firebase/firestore";
 
 import { useUserTasks } from "./useUserTasks";
+import { useFirestore } from "../useFirestore";
+import { ITaskFS } from "@/types";
 
-export function useTodos() {
+export function useTasks(listId: string, isDone = false) {
   const queryClient = useQueryClient();
 
-  const { data: userTasks } = useUserTasks();
+  const { data: userTasks } = useUserTasks(listId);
+
+  const { convert, getDoc, setDoc } = useFirestore<ITaskFS, ITask>();
 
   const taskIds = useMemo(() => {
     return (userTasks ?? []).map((userTodo) => userTodo.id);
@@ -20,7 +23,19 @@ export function useTodos() {
       const unsubscribes: (() => void)[] = [];
       // eslint-disable-next-line no-restricted-syntax
       for (const taskId of taskIds ?? []) {
-        const unsubscribe = updateTaskCache(taskId, queryClient);
+        const key = [COLLECTIONS.TASKS, taskId];
+        const unsubscribe = firestore()
+          .collection(COLLECTIONS.TASKS)
+          .doc(taskId)
+          .onSnapshot((doc) => {
+            const taskDoc = {
+              id: doc.id,
+              ...doc.data(),
+            } as ITaskFS;
+            const task = convert(taskDoc, doc.id);
+            setDoc(key, task);
+          });
+
         unsubscribes.push(unsubscribe);
       }
 
@@ -35,7 +50,7 @@ export function useTodos() {
     queries:
       taskIds?.map((taskId) => ({
         queryKey: [COLLECTIONS.TASKS, taskId],
-        queryFn: () => new Promise((): void => {}),
+        queryFn: () => new Promise<ITask>((): void => {}),
         enabled: !!taskId,
         staleTime: Infinity,
       })) ?? [],

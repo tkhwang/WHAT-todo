@@ -73,19 +73,37 @@ export class FirestoreUserRepository {
     addTaskDto: AddTaskRequest,
   ) {
     const newTodo = {
+      ...addTaskDto,
       todoId,
       userId,
       createdAt: firestore.FieldValue.serverTimestamp(),
       updatedAt: firestore.FieldValue.serverTimestamp(),
     };
 
-    const data = await this.#userCollection
+    const userTodo = await this.#userCollection
       .doc(userId)
       .collection(COLLECTIONS.TASKS)
       .doc(todoId)
       .set(newTodo);
 
-    return data;
+    return userTodo;
+  }
+
+  async addUserList(userId: string, listId: string) {
+    const newList = {
+      listId,
+      userId,
+      createdAt: firestore.FieldValue.serverTimestamp(),
+      updatedAt: firestore.FieldValue.serverTimestamp(),
+    };
+
+    const list = await this.#userCollection
+      .doc(userId)
+      .collection(COLLECTIONS.LISTS)
+      .doc(listId)
+      .set(newList);
+
+    return list;
   }
 
   async findUserTaskById(userId: string, taskId: string) {

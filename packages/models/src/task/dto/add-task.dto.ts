@@ -1,5 +1,6 @@
 export interface AddTaskRequest {
-  todo: string
+  task: string
+  listId: string
 }
 
 export interface AddTaskResponse {}

@@ -4,7 +4,7 @@ import {
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
-import { COLLECTIONS, AddTaskRequest } from '@whatTodo/models';
+import { COLLECTIONS, AddTaskRequest, ITask } from '@whatTodo/models';
 import { app, firestore } from 'firebase-admin';
 
 @Injectable()
@@ -20,6 +20,7 @@ export class FirestoreTaskRepository {
   async addTask(userId: string, addTaskDto: AddTaskRequest) {
     const newTask = {
       ...addTaskDto,
+      isDone: false,
       userId,
       createdAt: firestore.FieldValue.serverTimestamp(),
       updatedAt: firestore.FieldValue.serverTimestamp(),
@@ -37,7 +38,7 @@ export class FirestoreTaskRepository {
     return {
       id: taskDoc.id,
       ...taskDoc.data(),
-    };
+    } as ITask;
   }
 
   async deleteTaskById(userId: string, taskId: string) {
@@ -45,5 +46,17 @@ export class FirestoreTaskRepository {
     if (task) {
       await this.#taskCollection.doc(taskId).delete();
     }
+  }
+
+  async toggleTaskIsDone(userId: string, taskId: string) {
+    const taskDoc = await this.findTaskById(userId, taskId);
+
+    if (!taskDoc) throw new NotFoundException(`[-] Task (${taskId}) not found`);
+    if (taskDoc.userId !== userId) throw new UnauthorizedException();
+
+    await this.#taskCollection.doc(taskId).update({
+      isDone: !taskDoc.isDone,
+      updatedAt: firestore.FieldValue.serverTimestamp(),
+    });
   }
 }

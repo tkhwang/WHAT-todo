@@ -1,19 +1,20 @@
-import { ITask } from "@whatTodo/models";
 import { Pressable, View } from "react-native";
 import { useState } from "react";
+import { ITask } from "@whatTodo/models";
 import { useRouter } from "expo-router";
 
 import { Text } from "@/components/ui/text";
-import { Checkbox } from "@/components/ui/checkbox";
 import { cn } from "@/lib/utils";
-import { useColorScheme } from "@/lib/useColorScheme";
 import { useToggleTaskIsDone } from "@/hooks/mutations/useToggleTaskIsDone";
+import { useColorScheme } from "@/lib/useColorScheme";
+
+import { Checkbox } from "../ui/checkbox";
 
 interface Props {
   todo: ITask;
 }
 
-export default function TaskListItem({ todo }: Props) {
+export function TaskListDoneItem({ todo }: Props) {
   const router = useRouter();
 
   const { isDarkColorScheme } = useColorScheme();
@@ -42,7 +43,6 @@ export default function TaskListItem({ todo }: Props) {
         {/* todo description */}
         <View className={"flex-col gap-1 justify-center"}>
           <Text className={"text-xl font-medium"}>{todo.task}</Text>
-          <Text className={"text-sm font-normal"}>{"..."}</Text>
         </View>
       </View>
     </Pressable>
