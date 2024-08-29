@@ -97,7 +97,7 @@ export function TodoList({ listId }: Props) {
 
       {/* List Title */}
       <View className={"flex-row gap-4 items-center py-4"}>
-        <Icon name={"leftToRightListBullet"} size={26} strokeWidth={2} />
+        <Icon name={"checkmarkSquare"} size={26} strokeWidth={2} />
         <Text className={"text-2xl font-semibold"}>{t("todo.list.isDone")}</Text>
       </View>
 
