@@ -10,9 +10,10 @@ import { cn } from "@/lib/utils";
 interface Props {
   size?: number;
   router: Router;
+  onBackPress?: () => void;
 }
 
-export default function BackButton({ size = 26, router }: Props) {
+export default function BackButton({ size = 26, router, onBackPress }: Props) {
   const { isDarkColorScheme } = useColorScheme();
 
   const styles = StyleSheet.create({
@@ -24,8 +25,13 @@ export default function BackButton({ size = 26, router }: Props) {
     },
   });
 
+  const handlePress = () => {
+    if (onBackPress) onBackPress();
+    router.back();
+  };
+
   return (
-    <Pressable onPress={() => router.back()} style={styles.button}>
+    <Pressable onPress={handlePress} style={styles.button}>
       <Icon name={"arrowLeft"} strokeWidth={2.5} size={size} color={appTheme.colors.text} />
     </Pressable>
   );
