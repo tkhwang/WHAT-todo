@@ -36,7 +36,7 @@ export default function TodoScreen() {
             <Icon name={"delete"} color={appTheme.colors.rose} onPress={handleDelete} />
           </TouchableOpacity>
         )}
-        <TaskDetail todoId={taskId} />
+        <TaskDetail taskId={taskId} />
       </View>
     </ScreenWrapper>
   );
