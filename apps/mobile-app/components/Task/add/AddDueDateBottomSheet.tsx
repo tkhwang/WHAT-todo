@@ -1,10 +1,10 @@
 import { Button, Pressable, Text, View } from "react-native";
-import { RefObject, useCallback, useEffect, useMemo, useRef } from "react";
+import { RefObject, useCallback, useEffect, useMemo } from "react";
 import { BottomSheetBackdrop, BottomSheetModal } from "@gorhom/bottom-sheet";
 import { BottomSheetModalMethods } from "@gorhom/bottom-sheet/lib/typescript/types";
 import { useTranslation } from "react-i18next";
 import { useRouter } from "expo-router";
-import { days } from "@whatTodo/models";
+import { days, Language } from "@whatTodo/models";
 
 import Icon from "@/assets/icons";
 import { useDueDateStore } from "@/stores/dueDate";
@@ -17,7 +17,7 @@ export default function AddDueDateBottomSheet({ todoId, bottomSheetModalRef }: P
   const { t, i18n } = useTranslation();
   const router = useRouter();
 
-  const chosenLanguage = useMemo<"en" | "ko">(() => i18n.language, [i18n.language]);
+  const chosenLanguage = useMemo<Language>(() => i18n.language as Language, [i18n.language]);
 
   const todayDay = useDueDateStore((state) => state.todayDay);
   const tomorrowDay = useDueDateStore((state) => state.tomorrowDay);
