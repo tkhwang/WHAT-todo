@@ -18,7 +18,7 @@ export function TaskListDoneItem({ todo }: Props) {
   const router = useRouter();
 
   const { isDarkColorScheme } = useColorScheme();
-  const [checked, setChecked] = useState(false);
+  const [checked, setChecked] = useState(true);
 
   const { mutateAsync: toggleTaskIsDoneMutation } = useToggleTaskIsDone();
 
