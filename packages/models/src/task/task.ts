@@ -5,6 +5,7 @@ export interface ITaskCommon {
   dueDate: string
   userId: string
   isDone: boolean
+  note?: string
 }
 
 export interface ITask extends ITaskCommon {
