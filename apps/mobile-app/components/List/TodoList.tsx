@@ -25,7 +25,7 @@ export function TodoList({ listId }: Props) {
 
   const { data: list, isLoading } = useList(listId);
 
-  const { data: tasks } = useCollection(
+  const { data: tasks } = useCollection<ITask>(
     COLLECTIONS.TASKS,
     {
       onSuccess: console.log,
@@ -42,7 +42,7 @@ export function TodoList({ listId }: Props) {
     return tasks?.sort((a, b) => b.updatedAt - a.updatedAt);
   }, [tasks]);
 
-  const { data: doneTasks } = useCollection(
+  const { data: doneTasks } = useCollection<ITask>(
     COLLECTIONS.TASKS,
     {
       onSuccess: console.log,
