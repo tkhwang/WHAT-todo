@@ -32,17 +32,14 @@ export function TaskListDoneItem({ todo }: Props) {
   };
 
   return (
-    <Pressable
-      className={cn("flex-col justify-center py-2 p-4 rounded-xl", isDarkColorScheme ? "bg-gray-900" : "bg-gray-200")}
-      onPress={handlePress}
-    >
+    <Pressable className={cn("flex-col justify-center py-2 px-2 rounded-xl")} onPress={handlePress}>
       <View className={"flex-row gap-4 items-center"}>
         {/* checkbox */}
         <Checkbox checked={checked} onCheckedChange={handlePressCheck} />
 
         {/* todo description */}
         <View className={"flex-col gap-1 justify-center"}>
-          <Text className={"text-xl font-medium"}>{todo.task}</Text>
+          <Text className={"text-xl font-normal line-through"}>{todo.task}</Text>
         </View>
       </View>
     </Pressable>
