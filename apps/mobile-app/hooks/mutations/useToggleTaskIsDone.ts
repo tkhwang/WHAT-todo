@@ -13,7 +13,7 @@ export function useToggleTaskIsDone() {
       const taskData = taskSnapshot.data();
       const toggledIsDone = !taskData?.isDone;
 
-      await taskRef.update({ isDone: toggledIsDone });
+      await taskRef.update({ isDone: toggledIsDone, updatedAt: firestore.FieldValue.serverTimestamp() });
     },
   });
 }

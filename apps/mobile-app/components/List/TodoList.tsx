@@ -39,7 +39,7 @@ export function TodoList({ listId }: Props) {
   );
 
   const sortedTasks = useMemo(() => {
-    return tasks?.sort((a, b) => b.createdAt - a.createdAt);
+    return tasks?.sort((a, b) => b.updatedAt - a.updatedAt);
   }, [tasks]);
 
   const { data: doneTasks } = useCollection(
@@ -56,7 +56,7 @@ export function TodoList({ listId }: Props) {
   );
 
   const sortedDoneTasks = useMemo(() => {
-    return doneTasks?.sort((a, b) => b.createdAt - a.createdAt);
+    return doneTasks?.sort((a, b) => b.updatedAt - a.updatedAt);
   }, [doneTasks]);
 
   useEffect(() => {
