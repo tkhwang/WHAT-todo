@@ -36,5 +36,6 @@
   "todo.addDueDate.tomorrow": "내일",
   "todo.addDueDate.nextWeek": "다음주",
   "todo.addDueDate.pickADay": "날짜 선택",
-  "todo.default.list": "오늘"
+  "todo.default.list": "오늘",
+  "todo.list.isDone": "완료된 태스크"
 }

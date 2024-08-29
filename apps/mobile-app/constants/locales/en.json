@@ -36,5 +36,6 @@
   "todo.addDueDate.tomorrow": "Tomorrow",
   "todo.addDueDate.nextWeek": "NextWeek",
   "todo.addDueDate.pickADay": "Pick a Date",
-  "todo.default.list": "My Day"
+  "todo.default.list": "My Day",
+  "todo.list.isDone": "Completed Tasks"
 }
