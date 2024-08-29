@@ -7,7 +7,7 @@ export type TaskStoreState = {
   dueDate?: Date
 }
 
-export const INIT_TODOSTORE_STATE: TaskStoreState = {
+export const INIT_TASKSTORE_STATE: TaskStoreState = {
   task: "",
   isLoading: false,
   isDone: false,
