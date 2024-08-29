@@ -6,7 +6,7 @@ import { useAtomValue } from "jotai";
 
 import Icon from "@/assets/icons";
 import Input from "@/components/Input";
-import { useTodoStore } from "@/stores/todo";
+import { useTaskStore } from "@/stores/todo";
 import Loading from "@/components/Loading";
 import { appTheme } from "@/constants/uiConsts";
 import { useAddTask } from "@/hooks/mutations/useAddTask";
@@ -22,7 +22,7 @@ export default function AddTaskInput({ inputRef }: Props) {
   const currentListId = useAtomValue(currentListIdAtom);
 
   const [showButttons, setShowButttons] = useState(false);
-  const { task, isLoading, updateTask, reset } = useTodoStore();
+  const { task, isLoading, updateTask, reset } = useTaskStore();
   const { mutateAsync: addTaskMutationAsync } = useAddTask();
 
   const onChangeTask = useCallback(

@@ -12,16 +12,17 @@ interface Props {
   title: string;
   showBackButton?: boolean;
   marginBottom?: number;
+  onBackPress?: () => void;
 }
 
-export default function Header({ title, showBackButton = false, marginBottom = 10 }: Props) {
+export default function Header({ title, showBackButton = false, marginBottom = 10, onBackPress }: Props) {
   const router = useRouter();
 
   return (
     <View style={[styles.container, { marginBottom }]}>
       {showBackButton && (
         <View style={styles.BackButton}>
-          <BackButton router={router} />
+          <BackButton router={router} onBackPress={onBackPress} />
         </View>
       )}
       <Text className={"text-2xl font-semibold"} style={styles.title}>

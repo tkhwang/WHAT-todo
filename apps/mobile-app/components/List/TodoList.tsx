@@ -12,6 +12,7 @@ import Icon from "@/assets/icons";
 
 import TaskListItem from "../Task/TaskListItem";
 import { TaskListDoneItem } from "../Task/TaskListDoneItem";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../ui/collapsible";
 
 interface Props {
   listId: string;
@@ -25,7 +26,7 @@ export function TodoList({ listId }: Props) {
 
   const { data: list, isLoading } = useList(listId);
 
-  const { data: tasks } = useCollection(
+  const { data: tasks } = useCollection<ITask>(
     COLLECTIONS.TASKS,
     {
       onSuccess: console.log,
@@ -42,7 +43,7 @@ export function TodoList({ listId }: Props) {
     return tasks?.sort((a, b) => b.updatedAt - a.updatedAt);
   }, [tasks]);
 
-  const { data: doneTasks } = useCollection(
+  const { data: doneTasks } = useCollection<ITask>(
     COLLECTIONS.TASKS,
     {
       onSuccess: console.log,
@@ -67,11 +68,11 @@ export function TodoList({ listId }: Props) {
     };
   }, [listId, setCurrentListId]);
 
-  const renderItem = useCallback(({ item, index }: { item: ITask; index: number }) => {
+  const renderItem = useCallback(({ item }: { item: ITask }) => {
     return <TaskListItem todo={item} />;
   }, []);
 
-  const renderDoneItem = useCallback(({ item, index }: { item: ITask; index: number }) => {
+  const renderDoneItem = useCallback(({ item }: { item: ITask }) => {
     return <TaskListDoneItem todo={item} />;
   }, []);
 
@@ -95,21 +96,27 @@ export function TodoList({ listId }: Props) {
         />
       </View>
 
-      {/* List Title */}
-      <View className={"flex-row gap-4 items-center py-4"}>
-        <Icon name={"checkmarkSquare"} size={26} strokeWidth={2} />
-        <Text className={"text-2xl font-semibold"}>{t("todo.list.isDone")}</Text>
-      </View>
-
-      {/* tasks list */}
-      <View style={{ flexShrink: 1 }}>
-        <FlatList
-          data={sortedDoneTasks}
-          renderItem={renderDoneItem}
-          keyExtractor={(item) => `tasks-list-${item.id}`}
-          ItemSeparatorComponent={ItemSeparator}
-        />
-      </View>
+      {/* Completed */}
+      {sortedDoneTasks && sortedDoneTasks.length > 0 && (
+        <View className={"flex-row gap-4 items-center py-4"}>
+          <Collapsible>
+            <CollapsibleTrigger className={"py-4"}>
+              <View className={"flex-row gap-4 items-center"}>
+                <Icon name={"checkList"} size={26} strokeWidth={2} />
+                <Text className={"text-xl font-normal"}>{t("todo.list.isDone")}</Text>
+              </View>
+            </CollapsibleTrigger>
+            <CollapsibleContent>
+              <FlatList
+                data={sortedDoneTasks}
+                renderItem={renderDoneItem}
+                keyExtractor={(item) => `tasks-list-${item.id}`}
+                ItemSeparatorComponent={ItemSeparator}
+              />
+            </CollapsibleContent>
+          </Collapsible>
+        </View>
+      )}
     </View>
   );
 }
