@@ -3,10 +3,10 @@ import { AddTaskRequest, AddTaskResponse } from "@whatTodo/models";
 import { AxiosResponse } from "axios";
 
 import { httpClient } from "@/utils/httpClient";
-import { useTodoStore } from "@/stores/todo";
+import { useTaskStore } from "@/stores/todo";
 
 export function useAddTask() {
-  const { setIsLoading } = useTodoStore();
+  const { setIsLoading } = useTaskStore();
 
   return useMutation({
     mutationFn: async (requestDto: AddTaskRequest) => {
