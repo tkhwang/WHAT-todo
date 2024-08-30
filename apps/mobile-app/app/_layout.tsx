@@ -11,8 +11,6 @@ import "@/utils/i18n";
 import { Platform } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
-import { firebase } from "@react-native-firebase/auth";
-import { ReactQueryFirestoreProvider } from "react-query-firestore";
 
 import AuthProvider from "@/context/AuthProvider";
 import { ReactQueryClientProvider } from "@/config/ReactQueryClientProvider";
@@ -104,20 +102,30 @@ function RootLayoutNav() {
   return (
     <ReactQueryClientProvider>
       <AuthProvider>
-        <ReactQueryFirestoreProvider firestore={firebase.app().firestore()} reactQueryConfig={reactQueryConfig}>
-          <ThemeProvider value={isDarkColorScheme ? DARK_THEME : LIGHT_THEME}>
-            <GestureHandlerRootView style={{ flex: 1 }}>
-              <BottomSheetModalProvider>
-                <Stack>
-                  <Stack.Screen name={"(auth)/splash"} options={{ headerShown: false, animation: "fade" }} />
-                  <Stack.Screen name={"(auth)/(tabs)"} options={{ headerShown: false, animation: "fade" }} />
-                  <Stack.Screen name={"(public)/signin"} options={{ headerShown: false, animation: "fade" }} />
-                  <Stack.Screen name={"(public)/signup"} options={{ headerShown: false, animation: "fade" }} />
-                </Stack>
-              </BottomSheetModalProvider>
-            </GestureHandlerRootView>
-          </ThemeProvider>
-        </ReactQueryFirestoreProvider>
+        <ThemeProvider value={isDarkColorScheme ? DARK_THEME : LIGHT_THEME}>
+          <GestureHandlerRootView style={{ flex: 1 }}>
+            <BottomSheetModalProvider>
+              <Stack>
+                <Stack.Screen
+                  name={"(auth)/splash"}
+                  options={{ headerShown: false, animation: "fade" }}
+                />
+                <Stack.Screen
+                  name={"(auth)/(tabs)"}
+                  options={{ headerShown: false, animation: "fade" }}
+                />
+                <Stack.Screen
+                  name={"(public)/signin"}
+                  options={{ headerShown: false, animation: "fade" }}
+                />
+                <Stack.Screen
+                  name={"(public)/signup"}
+                  options={{ headerShown: false, animation: "fade" }}
+                />
+              </Stack>
+            </BottomSheetModalProvider>
+          </GestureHandlerRootView>
+        </ThemeProvider>
       </AuthProvider>
     </ReactQueryClientProvider>
   );
