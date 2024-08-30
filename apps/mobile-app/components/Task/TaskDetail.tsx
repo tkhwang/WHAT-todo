@@ -1,14 +1,14 @@
 import { Pressable, TextInput, View } from "react-native";
-import { useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
-import { useDocument } from "react-query-firestore";
-import { COLLECTIONS, ITask } from "@whatTodo/models";
 
 import { Text } from "@/components/ui/text";
 import Icon from "@/assets/icons";
 import { useDueDateStore } from "@/stores/dueDate";
 import { cn } from "@/lib/utils";
+import { useTask } from "@/hooks/queries/useTask";
+import { useToggleTaskIsDone } from "@/hooks/mutations/useToggleTaskIsDone";
 
 import { Checkbox } from "../ui/checkbox";
 import AddDueDateBottomSheet from "./add/AddDueDateBottomSheet";
@@ -21,7 +21,7 @@ interface Props {
 export default function TaskDetail({ taskId }: Props) {
   const { t } = useTranslation();
 
-  const { data: task } = useDocument<ITask>(`${COLLECTIONS.TASKS}/${taskId}`);
+  const { data: task } = useTask(taskId);
 
   const inputRef = useRef<TextInput>(null);
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
@@ -31,9 +31,16 @@ export default function TaskDetail({ taskId }: Props) {
 
   const init = useDueDateStore((state) => state.init);
 
-  const handlePress = () => {
-    setChecked(!checked);
-  };
+  const { mutateAsync: toggleTaskIsDoneMutation } = useToggleTaskIsDone();
+
+  useEffect(() => {
+    if (task) setChecked(task.isDone);
+  }, [task]);
+
+  const handlePress = useCallback(async () => {
+    setChecked((prv) => !prv);
+    await toggleTaskIsDoneMutation({ taskId });
+  }, [taskId, toggleTaskIsDoneMutation]);
 
   const handleDueDatePress = () => {
     init();
@@ -45,10 +52,10 @@ export default function TaskDetail({ taskId }: Props) {
   return (
     <View className={"flex-1 flex-col gap-8"}>
       {/* title */}
-      <Pressable className={"flex-row pt-4 pl-1 gap-4 items-center"} onPress={handlePress}>
-        <Checkbox checked={checked} onCheckedChange={setChecked} />
+      <View className={"flex-row pt-4 pl-1 gap-4 items-center"}>
+        <Checkbox checked={checked} onCheckedChange={handlePress} />
         <Text className={cn("text-3xl font-bold", checked ? "line-through" : "")}>{task.task}</Text>
-      </Pressable>
+      </View>
 
       {/* due date */}
       <Pressable className={"flex-row items-center gap-4"} onPress={handleDueDatePress}>
