@@ -38,5 +38,6 @@
   "todo.addDueDate.pickADay": "날짜 선택",
   "todo.default.list": "오늘",
   "todo.list.isDone": "완료된 태스크",
-  "task.note.addNote.placehold": "메모 추가"
+  "task.note.addNote.placehold": "메모 추가",
+  "task.list.title": "리스트"
 }
