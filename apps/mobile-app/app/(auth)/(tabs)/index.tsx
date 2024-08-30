@@ -16,7 +16,10 @@ export default function HomeScreen() {
   return (
     <ScreenWrapper>
       <MainHeader />
-      <KeyboardAvoidingView className={"flex-1 w-screen"} behavior={Platform.OS === "ios" ? "padding" : "height"}>
+      <KeyboardAvoidingView
+        className={"flex-1 w-screen"}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+      >
         <View className={"flex-1 w-screen justify-end"}>
           <Today />
           <AddTaskInput inputRef={inputRef} />
