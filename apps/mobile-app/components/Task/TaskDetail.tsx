@@ -9,6 +9,7 @@ import { useDueDateStore } from "@/stores/dueDate";
 import { cn } from "@/lib/utils";
 import { useTask } from "@/hooks/queries/useTask";
 import { useToggleTaskIsDone } from "@/hooks/mutations/useToggleTaskIsDone";
+import { useList } from "@/hooks/queries/useList";
 
 import { Checkbox } from "../ui/checkbox";
 import AddDueDateBottomSheet from "./add/AddDueDateBottomSheet";
@@ -22,6 +23,7 @@ export default function TaskDetail({ taskId }: Props) {
   const { t } = useTranslation();
 
   const { data: task } = useTask(taskId);
+  const { data: list } = useList(task?.listId ?? "");
 
   const inputRef = useRef<TextInput>(null);
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
@@ -55,6 +57,13 @@ export default function TaskDetail({ taskId }: Props) {
       <View className={"flex-row pt-4 pl-1 gap-4 items-center"}>
         <Checkbox checked={checked} onCheckedChange={handlePress} />
         <Text className={cn("text-3xl font-bold", checked ? "line-through" : "")}>{task.task}</Text>
+      </View>
+
+      {/* list */}
+      <View className={"flex-row items-center gap-4"}>
+        <Icon name={"leftToRightListBullet"} size={26} strokeWidth={1.6} />
+        <Text className={"text-xl font-normal text-gray-500"}>{t("task.list.title")}</Text>
+        <Text className={"text-xl font-normal text-gray-500"}>{list?.title}</Text>
       </View>
 
       {/* due date */}
