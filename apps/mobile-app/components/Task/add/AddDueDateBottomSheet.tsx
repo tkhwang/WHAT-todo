@@ -27,7 +27,14 @@ export default function AddDueDateBottomSheet({ todoId, bottomSheetModalRef }: P
   const snapPoints = useMemo(() => ["35%", "75%"], []);
 
   const renderBackdrop = useCallback((props) => {
-    return <BottomSheetBackdrop {...props} disappearsOnIndex={-1} appearsOnIndex={0} pressBehavior={"close"} />;
+    return (
+      <BottomSheetBackdrop
+        {...props}
+        disappearsOnIndex={-1}
+        appearsOnIndex={0}
+        pressBehavior={"close"}
+      />
+    );
   }, []);
 
   const backToDetail = useCallback(() => {
@@ -47,11 +54,18 @@ export default function AddDueDateBottomSheet({ todoId, bottomSheetModalRef }: P
   }, [reset]);
 
   return (
-    <BottomSheetModal ref={bottomSheetModalRef} index={0} snapPoints={snapPoints} backdropComponent={renderBackdrop}>
+    <BottomSheetModal
+      ref={bottomSheetModalRef}
+      index={0}
+      snapPoints={snapPoints}
+      backdropComponent={renderBackdrop}
+    >
       <View className={"flex-1 w-screen p-4  gap-4"}>
         {/* title */}
         <View className={"flex-row justify-center items-center"}>
-          <Text className={"text-xl font-semibold text-center"}>{t("todo.addDueDate.bottomSheet.title")}</Text>
+          <Text className={"text-xl font-semibold text-center"}>
+            {t("todo.addDueDate.bottomSheet.title")}
+          </Text>
           <View className={"absolute -right-1"}>
             <Button onPress={backToDetail} title={"Done"} />
           </View>
@@ -61,14 +75,18 @@ export default function AddDueDateBottomSheet({ todoId, bottomSheetModalRef }: P
         <Pressable className={"flex-row gap-4"} onPress={handlePressToday}>
           <Icon name={"calendarMinus"} size={26} strokeWidth={1.6} />
           <Text className={"text-xl font-normal"}>{t("todo.addDueDate.today")}</Text>
-          <Text className={"text-xl font-normal text-gray-400 ml-auto"}>{days[chosenLanguage][todayDay]}</Text>
+          <Text className={"text-xl font-normal text-gray-400 ml-auto"}>
+            {days[chosenLanguage][todayDay]}
+          </Text>
         </Pressable>
 
         {/* tomorrow */}
         <View className={"flex-row gap-4"}>
           <Icon name={"calendarCheckOut"} size={26} strokeWidth={1.6} />
           <Text className={"text-xl font-normal"}>{t("todo.addDueDate.tomorrow")}</Text>
-          <Text className={"text-xl font-normal text-gray-400 ml-auto"}>{days[chosenLanguage][tomorrowDay]}</Text>
+          <Text className={"text-xl font-normal text-gray-400 ml-auto"}>
+            {days[chosenLanguage][tomorrowDay]}
+          </Text>
         </View>
 
         {/* next week */}

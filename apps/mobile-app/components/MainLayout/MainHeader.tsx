@@ -1,9 +1,10 @@
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, View } from "react-native";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { useRouter } from "expo-router";
 import dayjs from "dayjs";
 
+import { Text } from "@/components/ui/text";
 import { appTheme } from "@/constants/uiConsts";
 import { hp, wp } from "@/helpers/common";
 import Icon from "@/assets/icons";
