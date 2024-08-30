@@ -1,14 +1,14 @@
 import { FlatList, View } from "react-native";
 import { useSetAtom } from "jotai";
 import { useCallback, useEffect, useMemo } from "react";
-import { COLLECTIONS, ITask } from "@whatTodo/models";
-import { useCollection } from "react-query-firestore";
+import { ITask } from "@whatTodo/models";
 import { useTranslation } from "react-i18next";
 
 import { Text } from "@/components/ui/text";
 import { currentListIdAtom } from "@/states/list";
 import { useList } from "@/hooks/queries/useList";
 import Icon from "@/assets/icons";
+import { useTasks } from "@/hooks/queries/useTasks";
 
 import TaskListItem from "../Task/TaskListItem";
 import { TaskListDoneItem } from "../Task/TaskListDoneItem";
@@ -26,39 +26,15 @@ export function TodoList({ listId }: Props) {
 
   const { data: list, isLoading } = useList(listId);
 
-  const { data: tasks } = useCollection<ITask>(
-    COLLECTIONS.TASKS,
-    {
-      onSuccess: console.log,
-    },
-    {
-      where: [
-        ["listId", "==", listId],
-        ["isDone", "==", false],
-      ],
-    },
-  );
+  const { data: tasks } = useTasks(listId);
 
-  const sortedTasks = useMemo(() => {
-    return tasks?.sort((a, b) => b.updatedAt - a.updatedAt);
+  const activeTasks = useMemo(() => {
+    return (tasks ?? []).filter((task) => !task.isDone).sort((a, b) => b.updatedAt - a.updatedAt);
   }, [tasks]);
 
-  const { data: doneTasks } = useCollection<ITask>(
-    COLLECTIONS.TASKS,
-    {
-      onSuccess: console.log,
-    },
-    {
-      where: [
-        ["listId", "==", listId],
-        ["isDone", "==", true],
-      ],
-    },
-  );
-
-  const sortedDoneTasks = useMemo(() => {
-    return doneTasks?.sort((a, b) => b.updatedAt - a.updatedAt);
-  }, [doneTasks]);
+  const completedTasks = useMemo(() => {
+    return (tasks ?? []).filter((task) => task.isDone).sort((a, b) => b.updatedAt - a.updatedAt);
+  }, [tasks]);
 
   useEffect(() => {
     setCurrentListId(listId);
@@ -89,7 +65,7 @@ export function TodoList({ listId }: Props) {
       {/* tasks list */}
       <View style={{ flexShrink: 1 }}>
         <FlatList
-          data={sortedTasks}
+          data={activeTasks}
           renderItem={renderItem}
           keyExtractor={(item) => `tasks-list-${item.id}`}
           ItemSeparatorComponent={ItemSeparator}
@@ -97,7 +73,7 @@ export function TodoList({ listId }: Props) {
       </View>
 
       {/* Completed */}
-      {sortedDoneTasks && sortedDoneTasks.length > 0 && (
+      {completedTasks && completedTasks.length > 0 && (
         <View className={"flex-row gap-4 items-center py-4"}>
           <Collapsible>
             <CollapsibleTrigger className={"py-4"}>
@@ -108,7 +84,7 @@ export function TodoList({ listId }: Props) {
             </CollapsibleTrigger>
             <CollapsibleContent>
               <FlatList
-                data={sortedDoneTasks}
+                data={completedTasks}
                 renderItem={renderDoneItem}
                 keyExtractor={(item) => `tasks-list-${item.id}`}
                 ItemSeparatorComponent={ItemSeparator}

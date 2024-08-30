@@ -8,7 +8,7 @@ import { ITaskFS } from "@/types";
 import { useUserTasks } from "./useUserTasks";
 import { useFirestore } from "../useFirestore";
 
-export function useActiveTasks(listId: string) {
+export function useTasks(listId: string) {
   const queryClient = useQueryClient();
 
   const { data: userTasks } = useUserTasks(listId);
@@ -24,7 +24,7 @@ export function useActiveTasks(listId: string) {
       const unsubscribes: (() => void)[] = [];
       // eslint-disable-next-line no-restricted-syntax
       for (const taskId of taskIds ?? []) {
-        const key = [COLLECTIONS.TASKS, taskId, COLLECTIONS.IS_DONE, false];
+        const key = [COLLECTIONS.TASKS, taskId];
         const unsubscribe = firestore()
           .collection(COLLECTIONS.TASKS)
           .doc(taskId)
@@ -34,9 +34,7 @@ export function useActiveTasks(listId: string) {
               ...doc.data(),
             } as ITaskFS;
             const task = convert(taskDoc, doc.id);
-            if (!task.isDone) {
-              setDoc(key, task);
-            }
+            setDoc(key, task);
           });
 
         unsubscribes.push(unsubscribe);
@@ -52,7 +50,7 @@ export function useActiveTasks(listId: string) {
   return useQueries({
     queries:
       taskIds?.map((taskId) => ({
-        queryKey: [COLLECTIONS.TASKS, taskId, COLLECTIONS.IS_DONE, false],
+        queryKey: [COLLECTIONS.TASKS, taskId],
         queryFn: () => new Promise<ITask>((): void => {}),
         enabled: !!taskId,
         staleTime: Infinity,
