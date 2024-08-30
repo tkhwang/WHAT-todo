@@ -3,16 +3,17 @@ import { useEffect, useMemo } from "react";
 import { COLLECTIONS, ITask } from "@whatTodo/models";
 import firestore from "@react-native-firebase/firestore";
 
-import { useUserTasks } from "./useUserTasks";
-import { useFirestore } from "../useFirestore";
 import { ITaskFS } from "@/types";
 
-export function useTasks(listId: string, isDone = false) {
+import { useUserTasks } from "./useUserTasks";
+import { useFirestore } from "../useFirestore";
+
+export function useTasks(listId: string) {
   const queryClient = useQueryClient();
 
   const { data: userTasks } = useUserTasks(listId);
 
-  const { convert, getDoc, setDoc } = useFirestore<ITaskFS, ITask>();
+  const { convert, setDoc } = useFirestore<ITaskFS, ITask>();
 
   const taskIds = useMemo(() => {
     return (userTasks ?? []).map((userTodo) => userTodo.id);
@@ -43,7 +44,7 @@ export function useTasks(listId: string, isDone = false) {
         unsubscribes.forEach((unsubscribe) => unsubscribe());
       };
     },
-    [queryClient, taskIds],
+    [convert, queryClient, setDoc, taskIds],
   );
 
   return useQueries({

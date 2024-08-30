@@ -2,6 +2,7 @@ import { Pressable, StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { useRouter } from "expo-router";
+import dayjs from "dayjs";
 
 import { appTheme } from "@/constants/uiConsts";
 import { hp, wp } from "@/helpers/common";
@@ -16,13 +17,15 @@ export default function MainHeader() {
 
   const textColor = useTextColor();
 
+  const date = dayjs().format("MM/DD");
+  const week = dayjs().isoWeek();
+
   return (
     <View style={styles.container} className={"max-h-12"}>
       <View style={styles.header}>
         {/* app name */}
-        <Text style={styles.title} className={"text-1xl"}>
-          {t("app.name")}
-        </Text>
+
+        <Text className={"text-2xl font-semibold"}>{`${date} Week${week}`}</Text>
 
         {/* icon */}
         <View style={styles.icons}>
@@ -33,7 +36,12 @@ export default function MainHeader() {
             <Icon name={"inboxCheck"} size={hp(3.2)} strokeWidth={2} color={textColor} />
           </Pressable>
           <Pressable onPress={() => router.push("/(auth)/(tabs)/profile")}>
-            <Avatar uri={""} size={hp(4.3)} rounded={appTheme.radius.sm} style={{ borderWidth: 2 }} />
+            <Avatar
+              uri={""}
+              size={hp(4.3)}
+              rounded={appTheme.radius.sm}
+              style={{ borderWidth: 2 }}
+            />
           </Pressable>
         </View>
       </View>
