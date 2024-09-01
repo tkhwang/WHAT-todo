@@ -8,6 +8,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { cn } from "@/lib/utils";
 import { useColorScheme } from "@/lib/useColorScheme";
 import { useToggleTaskIsDone } from "@/hooks/mutations/useToggleTaskIsDone";
+import Icon from "@/assets/icons";
 
 interface Props {
   todo: ITask;
@@ -33,7 +34,7 @@ export default function TaskListItem({ todo }: Props) {
   return (
     <Pressable
       className={cn(
-        "flex-col justify-center py-2 p-4 rounded-xl",
+        "flex-col justify-center py-1 p-4 rounded-xl",
         isDarkColorScheme ? "bg-gray-900" : "bg-gray-200",
       )}
       onPress={handlePress}
@@ -43,9 +44,16 @@ export default function TaskListItem({ todo }: Props) {
         <Checkbox checked={checked} onCheckedChange={handlePressCheck} />
 
         {/* todo description */}
-        <View className={"flex-col gap-1 justify-center"}>
+        <View className={"flex-col gap-2 justify-center"}>
           <Text className={"text-xl font-medium"}>{todo.task}</Text>
-          <Text className={"text-sm font-normal"}>{"..."}</Text>
+          <View className={"flex-row gap-1"}>
+            {todo.note && (
+              <View className={"flex-row gap-1 items-center"}>
+                <Icon name={"noteEdit"} size={18} strokeWidth={1.5} />
+                <Text className={"text-base font-normal text-gray-500"}>{"Note"}</Text>
+              </View>
+            )}
+          </View>
         </View>
       </View>
     </Pressable>

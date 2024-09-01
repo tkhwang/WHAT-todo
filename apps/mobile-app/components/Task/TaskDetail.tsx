@@ -139,7 +139,8 @@ export default function TaskDetail({ taskId }: Props) {
             <Icon name={"noteEdit"} size={26} strokeWidth={1.6} />
             <Textarea
               ref={inputRef}
-              className={"w-full"}
+              className={"w-full p-4 mr-4"}
+              style={{ marginRight: 16 }}
               placeholder={t("task.note.addNote.placehold")}
               value={note}
               onBlur={handleBlur}
