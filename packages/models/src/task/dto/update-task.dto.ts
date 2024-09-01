@@ -1,5 +1,7 @@
 import { ITask } from "../task"
 
-export type UpdateTaskRequest = Partial<ITask>
+export interface UpdateTaskRequest {
+  taskId: string
+}
 
 export type UpdateTaskResponse = ITask

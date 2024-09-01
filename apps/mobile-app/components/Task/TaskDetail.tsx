@@ -1,5 +1,5 @@
 import { Keyboard, KeyboardAvoidingView, Platform, Pressable, TextInput, View } from "react-native";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { Dispatch, SetStateAction, useCallback, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 
@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils";
 import { useTask } from "@/hooks/queries/useTask";
 import { useToggleTaskIsDone } from "@/hooks/mutations/useToggleTaskIsDone";
 import { useList } from "@/hooks/queries/useList";
+import { useUpdateTask } from "@/hooks/mutations/useUpdateTask";
 
 import { Checkbox } from "../ui/checkbox";
 import AddDueDateBottomSheet from "./add/AddDueDateBottomSheet";
@@ -16,9 +17,10 @@ import { Textarea } from "../ui/textarea";
 
 interface Props {
   taskId: string;
+  setHandleBackPress: Dispatch<SetStateAction<void>>;
 }
 
-export default function TaskDetail({ taskId }: Props) {
+export default function TaskDetail({ taskId, setHandleBackPress }: Props) {
   const { t } = useTranslation();
 
   const { data: task } = useTask(taskId);
@@ -30,7 +32,15 @@ export default function TaskDetail({ taskId }: Props) {
   const [checked, setChecked] = useState(false);
   const [note, setNote] = useState("");
 
+  const { mutate: updateTaskMutate } = useUpdateTask();
   const { mutateAsync: toggleTaskIsDoneMutation } = useToggleTaskIsDone();
+
+  useEffect(() => {
+    setHandleBackPress(() => {
+      updateTaskMutate({ taskId });
+    });
+    console.log("[+][TaskDetail] setHandleBackPress");
+  }, [setHandleBackPress, taskId, updateTaskMutate]);
 
   useEffect(() => {
     if (task) setChecked(task.isDone);

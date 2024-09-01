@@ -6,6 +6,8 @@ export interface ITaskCommon {
   isDone: boolean
   dueDate?: Date
   note?: string
+  //
+  isLocalUpdated?: boolean
 }
 
 export interface ITask extends ITaskCommon {
