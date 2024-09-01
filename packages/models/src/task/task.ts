@@ -2,9 +2,9 @@ export interface ITaskCommon {
   id: string
   task: string
   listId: string
-  dueDate: string
   userId: string
   isDone: boolean
+  dueDate?: Date
   note?: string
 }
 
