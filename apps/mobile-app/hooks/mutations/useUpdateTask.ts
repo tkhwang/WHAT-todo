@@ -16,6 +16,7 @@ export function useUpdateTask() {
       const { isDone, dueDate, note } = updateTaskRequestDto;
 
       if (isDone === prvIsDone && dueDate === prvDueDate && note === prvNote) {
+        console.log(`[+][useUpdateTask] nothing changed and skipped update`);
         return cache;
       }
 
@@ -30,6 +31,7 @@ export function useUpdateTask() {
         ...(updateTaskRequestDto.note && { note: updateTaskRequestDto.note }),
         updatedAt: firestore.FieldValue.serverTimestamp(),
       };
+      if (!updateTaskRequestDto.note || updateTaskRequestDto.note === "") delete updatedTask.note;
 
       await taskRef.set(updatedTask);
 

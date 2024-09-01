@@ -64,7 +64,7 @@ export default function TaskDetail({ taskId }: Props) {
     const updateTaskRequestDto = {
       ...task,
       isDone: checked,
-      ...(note && { note }),
+      note: note === "" ? undefined : note,
     };
 
     updateTaskMutate(updateTaskRequestDto);
