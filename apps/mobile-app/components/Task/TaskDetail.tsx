@@ -1,7 +1,16 @@
-import { Keyboard, KeyboardAvoidingView, Platform, Pressable, TextInput, View } from "react-native";
-import { Dispatch, SetStateAction, useCallback, useEffect, useRef, useState } from "react";
+import {
+  Keyboard,
+  KeyboardAvoidingView,
+  Platform,
+  Pressable,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
+import { DeleteTaskRequest } from "@whatTodo/models";
 
 import { Text } from "@/components/ui/text";
 import Icon from "@/assets/icons";
@@ -10,17 +19,20 @@ import { useTask } from "@/hooks/queries/useTask";
 import { useToggleTaskIsDone } from "@/hooks/mutations/useToggleTaskIsDone";
 import { useList } from "@/hooks/queries/useList";
 import { useUpdateTask } from "@/hooks/mutations/useUpdateTask";
+import { useDeleteTask } from "@/hooks/mutations/useDeleteTask";
+import { appTheme } from "@/constants/uiConsts";
 
 import { Checkbox } from "../ui/checkbox";
 import AddDueDateBottomSheet from "./add/AddDueDateBottomSheet";
 import { Textarea } from "../ui/textarea";
+import Header from "../MainLayout/Header";
+import Loading from "../Loading";
 
 interface Props {
   taskId: string;
-  setHandleBackPress: Dispatch<SetStateAction<void>>;
 }
 
-export default function TaskDetail({ taskId, setHandleBackPress }: Props) {
+export default function TaskDetail({ taskId }: Props) {
   const { t } = useTranslation();
 
   const { data: task } = useTask(taskId);
@@ -32,19 +44,18 @@ export default function TaskDetail({ taskId, setHandleBackPress }: Props) {
   const [checked, setChecked] = useState(false);
   const [note, setNote] = useState("");
 
+  const { mutateAsync, isPending } = useDeleteTask();
   const { mutate: updateTaskMutate } = useUpdateTask();
   const { mutateAsync: toggleTaskIsDoneMutation } = useToggleTaskIsDone();
 
   useEffect(() => {
-    setHandleBackPress(() => {
-      updateTaskMutate({ taskId });
-    });
-    console.log("[+][TaskDetail] setHandleBackPress");
-  }, [setHandleBackPress, taskId, updateTaskMutate]);
-
-  useEffect(() => {
     if (task) setChecked(task.isDone);
   }, [task]);
+
+  const handleDelete = async () => {
+    const requestDto: DeleteTaskRequest = { taskId };
+    await mutateAsync(requestDto);
+  };
 
   const handlePress = useCallback(async () => {
     setChecked((prv) => !prv);
@@ -63,50 +74,68 @@ export default function TaskDetail({ taskId, setHandleBackPress }: Props) {
   if (!task) return null;
 
   return (
-    <KeyboardAvoidingView
-      className={"flex-1 w-screen"}
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-    >
-      <View className={"flex-1 flex-col gap-8 justify-end"}>
-        {/* title */}
-        <View className={"flex-row pt-4 pl-1 gap-4 items-center"}>
-          <Checkbox checked={checked} onCheckedChange={handlePress} />
-          <Text className={cn("text-3xl font-bold", checked ? "line-through" : "")}>
-            {task.task}
-          </Text>
+    <View className={"flex-1 px-4"}>
+      {/* Header */}
+      <Header title={t("screen.task.title")} showBackButton onBackPress={() => {}} />
+      {isPending ? (
+        <View style={styles.iconButton}>
+          <Loading size={"small"} color={appTheme.colors.rose} />
         </View>
+      ) : (
+        <TouchableOpacity
+          className={"absolute right-4 p-2 rounded-xl bg-red-200"}
+          onPress={handleDelete}
+        >
+          <Icon name={"delete"} color={appTheme.colors.rose} onPress={handleDelete} />
+        </TouchableOpacity>
+      )}
+      <KeyboardAvoidingView
+        className={"flex-1 w-screen"}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+      >
+        <View className={"flex-1 flex-col gap-8 justify-end"}>
+          {/* title */}
+          <View className={"flex-row pt-4 pl-1 gap-4 items-center"}>
+            <Checkbox checked={checked} onCheckedChange={handlePress} />
+            <Text className={cn("text-3xl font-bold", checked ? "line-through" : "")}>
+              {task.task}
+            </Text>
+          </View>
 
-        {/* list */}
-        <View className={"flex-row items-center gap-4"}>
-          <Icon name={"leftToRightListBullet"} size={26} strokeWidth={1.6} />
-          <Text className={"text-xl font-normal text-gray-500"}>{t("task.list.title")}</Text>
-          <Text className={"text-xl font-normal text-gray-500"}>{list?.title}</Text>
+          {/* list */}
+          <View className={"flex-row items-center gap-4"}>
+            <Icon name={"leftToRightListBullet"} size={26} strokeWidth={1.6} />
+            <Text className={"text-xl font-normal text-gray-500"}>{t("task.list.title")}</Text>
+            <Text className={"text-xl font-normal text-gray-500"}>{list?.title}</Text>
+          </View>
+
+          {/* due date */}
+          <Pressable className={"flex-row items-center gap-4"} onPress={handleDueDatePress}>
+            <Icon name={"calendar"} size={26} strokeWidth={1.6} />
+            <Text className={"text-xl font-normal text-gray-500"}>
+              {t("todo.addDueDate.title")}
+            </Text>
+          </Pressable>
+
+          {/* note */}
+          <View className={"flex-row items-center gap-4"}>
+            <Icon name={"noteEdit"} size={26} strokeWidth={1.6} />
+            <Textarea
+              ref={inputRef}
+              className={"w-full"}
+              placeholder={t("task.note.addNote.placehold")}
+              value={note}
+              onBlur={handleBlur}
+              onChangeText={setNote}
+              autoFocus={false}
+              aria-labelledby={"textareaLabel"}
+            />
+          </View>
+          <View className={"flex-1"} />
+
+          <AddDueDateBottomSheet todoId={taskId} bottomSheetModalRef={bottomSheetModalRef} />
         </View>
-
-        {/* due date */}
-        <Pressable className={"flex-row items-center gap-4"} onPress={handleDueDatePress}>
-          <Icon name={"calendar"} size={26} strokeWidth={1.6} />
-          <Text className={"text-xl font-normal text-gray-500"}>{t("todo.addDueDate.title")}</Text>
-        </Pressable>
-
-        {/* note */}
-        <View className={"flex-row items-center gap-4"}>
-          <Icon name={"noteEdit"} size={26} strokeWidth={1.6} />
-          <Textarea
-            ref={inputRef}
-            className={"w-full"}
-            placeholder={t("task.note.addNote.placehold")}
-            value={note}
-            onBlur={handleBlur}
-            onChangeText={setNote}
-            autoFocus={false}
-            aria-labelledby={"textareaLabel"}
-          />
-        </View>
-        <View className={"flex-1"} />
-
-        <AddDueDateBottomSheet todoId={taskId} bottomSheetModalRef={bottomSheetModalRef} />
-      </View>
-    </KeyboardAvoidingView>
+      </KeyboardAvoidingView>
+    </View>
   );
 }
