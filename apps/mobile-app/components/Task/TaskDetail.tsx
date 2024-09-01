@@ -44,23 +44,40 @@ export default function TaskDetail({ taskId }: Props) {
   const [checked, setChecked] = useState(false);
   const [note, setNote] = useState("");
 
-  const { mutateAsync, isPending } = useDeleteTask();
-  const { mutate: updateTaskMutate } = useUpdateTask();
   const { mutateAsync: toggleTaskIsDoneMutation } = useToggleTaskIsDone();
+  const { mutate: updateTaskMutate } = useUpdateTask();
+  const { mutateAsync, isPending } = useDeleteTask();
 
   useEffect(() => {
-    if (task) setChecked(task.isDone);
+    if (task) {
+      setChecked(task.isDone);
+      setNote(task.note ?? "");
+    }
+
+    return () => {
+      setNote("");
+    };
   }, [task]);
+
+  const handleBackPress = () => {
+    const updateTaskRequestDto = {
+      ...task,
+      isDone: checked,
+      ...(note && { note }),
+    };
+
+    updateTaskMutate(updateTaskRequestDto);
+  };
+
+  const handleToggleIsDone = useCallback(async () => {
+    setChecked((prv) => !prv);
+    await toggleTaskIsDoneMutation({ taskId });
+  }, [taskId, toggleTaskIsDoneMutation]);
 
   const handleDelete = async () => {
     const requestDto: DeleteTaskRequest = { taskId };
     await mutateAsync(requestDto);
   };
-
-  const handlePress = useCallback(async () => {
-    setChecked((prv) => !prv);
-    await toggleTaskIsDoneMutation({ taskId });
-  }, [taskId, toggleTaskIsDoneMutation]);
 
   const handleDueDatePress = () => {
     Keyboard.dismiss();
@@ -76,9 +93,9 @@ export default function TaskDetail({ taskId }: Props) {
   return (
     <View className={"flex-1 px-4"}>
       {/* Header */}
-      <Header title={t("screen.task.title")} showBackButton onBackPress={() => {}} />
+      <Header title={t("screen.task.title")} showBackButton onBackPress={handleBackPress} />
       {isPending ? (
-        <View style={styles.iconButton}>
+        <View className={"absolute right-4 p-2 rounded-xl bg-red-200"}>
           <Loading size={"small"} color={appTheme.colors.rose} />
         </View>
       ) : (
@@ -96,7 +113,7 @@ export default function TaskDetail({ taskId }: Props) {
         <View className={"flex-1 flex-col gap-8 justify-end"}>
           {/* title */}
           <View className={"flex-row pt-4 pl-1 gap-4 items-center"}>
-            <Checkbox checked={checked} onCheckedChange={handlePress} />
+            <Checkbox checked={checked} onCheckedChange={handleToggleIsDone} />
             <Text className={cn("text-3xl font-bold", checked ? "line-through" : "")}>
               {task.task}
             </Text>

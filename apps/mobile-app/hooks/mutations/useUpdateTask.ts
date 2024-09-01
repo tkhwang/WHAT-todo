@@ -6,40 +6,34 @@ export function useUpdateTask() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async ({ taskId }: UpdateTaskRequest) => {
+    mutationFn: async (updateTaskRequestDto: UpdateTaskRequest) => {
+      const { id: taskId } = updateTaskRequestDto;
+
       const cache = queryClient.getQueryData<ITask>([COLLECTIONS.TASKS, taskId]);
       if (!cache) throw new Error(`Task (${taskId}) not found`);
 
-      const { isLocalUpdated = false, ...cachedTask } = cache;
-      if (!isLocalUpdated) return {};
+      const { isDone: prvIsDone, dueDate: prvDueDate, note: prvNote } = cache;
+      const { isDone, dueDate, note } = updateTaskRequestDto;
+
+      if (isDone === prvIsDone && dueDate === prvDueDate && note === prvNote) {
+        return cache;
+      }
 
       const taskRef = firestore().collection(COLLECTIONS.TASKS).doc(taskId);
       const taskSnapshot = await taskRef.get();
       if (!taskSnapshot.exists) throw new Error("Task not found");
 
       const updatedTask = {
-        ...cachedTask,
-        updatedAt: firestore.FieldValue.serverTimestamp(),
-      };
-      await taskRef.update(updatedTask);
-      console.log("🚀 ~ mutationFn: ~ updatedTask:", updatedTask);
-
-      return cachedTask;
-    },
-    onMutate: async ({ taskId }) => {
-      const previousTask = queryClient.getQueryData<ITask>([COLLECTIONS.TASKS, taskId]);
-      if (!previousTask) throw new Error(`Task (${taskId}) not found`);
-
-      const updatedTask = {
-        ...previousTask,
+        ...updateTaskRequestDto,
+        isDone: updateTaskRequestDto.isDone,
+        ...(updateTaskRequestDto.dueDate && { dueDate: updateTaskRequestDto.dueDate }),
+        ...(updateTaskRequestDto.note && { note: updateTaskRequestDto.note }),
         updatedAt: firestore.FieldValue.serverTimestamp(),
       };
 
-      queryClient.setQueryData([COLLECTIONS.TASKS, taskId], updatedTask);
-      return { previousTask };
-    },
-    onError: (error, { taskId }, context) => {
-      queryClient.setQueryData([COLLECTIONS.TASKS, taskId], context?.previousTask);
+      await taskRef.set(updatedTask);
+
+      return cache;
     },
   });
 }
