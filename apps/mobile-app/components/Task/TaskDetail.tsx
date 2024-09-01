@@ -5,7 +5,6 @@ import { BottomSheetModal } from "@gorhom/bottom-sheet";
 
 import { Text } from "@/components/ui/text";
 import Icon from "@/assets/icons";
-import { useDueDateStore } from "@/stores/dueDate";
 import { cn } from "@/lib/utils";
 import { useTask } from "@/hooks/queries/useTask";
 import { useToggleTaskIsDone } from "@/hooks/mutations/useToggleTaskIsDone";
@@ -31,8 +30,6 @@ export default function TaskDetail({ taskId }: Props) {
   const [checked, setChecked] = useState(false);
   const [note, setNote] = useState("");
 
-  const init = useDueDateStore((state) => state.init);
-
   const { mutateAsync: toggleTaskIsDoneMutation } = useToggleTaskIsDone();
 
   useEffect(() => {
@@ -46,7 +43,6 @@ export default function TaskDetail({ taskId }: Props) {
 
   const handleDueDatePress = () => {
     Keyboard.dismiss();
-    init();
     bottomSheetModalRef.current?.present();
   };
 
