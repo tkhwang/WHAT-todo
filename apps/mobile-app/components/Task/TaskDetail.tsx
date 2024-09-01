@@ -37,6 +37,7 @@ export default function TaskDetail({ taskId }: Props) {
 
   const { data: task } = useTask(taskId);
   const { data: list } = useList(task?.listId ?? "");
+  const today = new Date();
 
   const inputRef = useRef<TextInput>(null);
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
@@ -151,7 +152,11 @@ export default function TaskDetail({ taskId }: Props) {
           </View>
           <View className={"flex-1"} />
 
-          <AddDueDateBottomSheet todoId={taskId} bottomSheetModalRef={bottomSheetModalRef} />
+          <AddDueDateBottomSheet
+            todoId={taskId}
+            bottomSheetModalRef={bottomSheetModalRef}
+            today={today}
+          />
         </View>
       </KeyboardAvoidingView>
     </View>

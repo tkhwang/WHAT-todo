@@ -10,8 +10,9 @@ import Icon from "@/assets/icons";
 interface Props {
   todoId: string;
   bottomSheetModalRef: RefObject<BottomSheetModalMethods>;
+  today: Date;
 }
-export default function AddDueDateBottomSheet({ todoId, bottomSheetModalRef }: Props) {
+export default function AddDueDateBottomSheet({ todoId, bottomSheetModalRef, today }: Props) {
   const { t } = useTranslation();
   const router = useRouter();
 
