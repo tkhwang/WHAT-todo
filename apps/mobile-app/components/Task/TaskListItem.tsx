@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils";
 import { useColorScheme } from "@/lib/useColorScheme";
 import { useToggleTaskIsDone } from "@/hooks/mutations/useToggleTaskIsDone";
 import Icon from "@/assets/icons";
+import { getDateWithDayOfWeek } from "@/utils";
 
 interface Props {
   todo: ITask;
@@ -46,7 +47,15 @@ export default function TaskListItem({ todo }: Props) {
         {/* todo description */}
         <View className={"flex-col gap-2 justify-center"}>
           <Text className={"text-xl font-medium"}>{todo.task}</Text>
-          <View className={"flex-row gap-1"}>
+          <View className={"flex-row gap-2"}>
+            {todo.dueDate && (
+              <View className={"flex-row gap-1 items-center"}>
+                <Icon name={"calendar"} size={18} strokeWidth={1.5} />
+                <Text className={"text-base font-normal text-gray-500"}>
+                  {getDateWithDayOfWeek(todo.dueDate, 0)}
+                </Text>
+              </View>
+            )}
             {todo.note && (
               <View className={"flex-row gap-1 items-center"}>
                 <Icon name={"noteEdit"} size={18} strokeWidth={1.5} />

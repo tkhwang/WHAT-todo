@@ -3,6 +3,7 @@ import {
   KeyboardAvoidingView,
   Platform,
   Pressable,
+  StyleSheet,
   TextInput,
   TouchableOpacity,
   View,
@@ -21,6 +22,7 @@ import { useList } from "@/hooks/queries/useList";
 import { useUpdateTask } from "@/hooks/mutations/useUpdateTask";
 import { useDeleteTask } from "@/hooks/mutations/useDeleteTask";
 import { appTheme } from "@/constants/uiConsts";
+import { getDateWithDayOfWeek } from "@/utils";
 
 import { Checkbox } from "../ui/checkbox";
 import AddDueDateBottomSheet from "./add/AddDueDateBottomSheet";
@@ -37,13 +39,15 @@ export default function TaskDetail({ taskId }: Props) {
 
   const { data: task } = useTask(taskId);
   const { data: list } = useList(task?.listId ?? "");
-  const today = new Date();
 
   const inputRef = useRef<TextInput>(null);
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
 
+  const today = new Date();
+
   const [checked, setChecked] = useState(false);
   const [note, setNote] = useState("");
+  const [dueDate, setDueDate] = useState<Date | null>(null);
 
   const { mutateAsync: toggleTaskIsDoneMutation } = useToggleTaskIsDone();
   const { mutate: updateTaskMutate } = useUpdateTask();
@@ -53,10 +57,12 @@ export default function TaskDetail({ taskId }: Props) {
     if (task) {
       setChecked(task.isDone);
       setNote(task.note ?? "");
+      if (task.dueDate) setDueDate(task.dueDate);
     }
 
     return () => {
       setNote("");
+      setDueDate(null);
     };
   }, [task]);
 
@@ -65,6 +71,7 @@ export default function TaskDetail({ taskId }: Props) {
       ...task,
       isDone: checked,
       note: note === "" ? undefined : note,
+      dueDate: dueDate === null ? undefined : dueDate,
     };
 
     updateTaskMutate(updateTaskRequestDto);
@@ -81,6 +88,8 @@ export default function TaskDetail({ taskId }: Props) {
   };
 
   const handleDueDatePress = () => {
+    if (dueDate) return;
+
     Keyboard.dismiss();
     bottomSheetModalRef.current?.present();
   };
@@ -96,14 +105,11 @@ export default function TaskDetail({ taskId }: Props) {
       {/* Header */}
       <Header title={t("screen.task.title")} showBackButton onBackPress={handleBackPress} />
       {isPending ? (
-        <View className={"absolute right-4 p-2 rounded-xl bg-red-200"}>
+        <View style={styles.logoutButton}>
           <Loading size={"small"} color={appTheme.colors.rose} />
         </View>
       ) : (
-        <TouchableOpacity
-          className={"absolute right-4 p-2 rounded-xl bg-red-200"}
-          onPress={handleDelete}
-        >
+        <TouchableOpacity style={styles.logoutButton} onPress={handleDelete}>
           <Icon name={"delete"} color={appTheme.colors.rose} onPress={handleDelete} />
         </TouchableOpacity>
       )}
@@ -128,11 +134,19 @@ export default function TaskDetail({ taskId }: Props) {
           </View>
 
           {/* due date */}
-          <Pressable className={"flex-row items-center gap-4"} onPress={handleDueDatePress}>
+          <Pressable className={"flex-row  items-center gap-4"} onPress={handleDueDatePress}>
             <Icon name={"calendar"} size={26} strokeWidth={1.6} />
-            <Text className={"text-xl font-normal text-gray-500"}>
-              {t("todo.addDueDate.title")}
+            <Text className={cn("text-xl font-normal", dueDate ? "" : "text-gray-400")}>
+              {dueDate ? getDateWithDayOfWeek(dueDate, 0) : t("todo.addDueDate.title")}
             </Text>
+            {dueDate && (
+              <Pressable
+                style={{ position: "absolute", right: 24 }}
+                onPress={() => setDueDate(null)}
+              >
+                <Icon name={"cancelCircle"} size={26} strokeWidth={1.6} />
+              </Pressable>
+            )}
           </Pressable>
 
           {/* note */}
@@ -156,9 +170,20 @@ export default function TaskDetail({ taskId }: Props) {
             todoId={taskId}
             bottomSheetModalRef={bottomSheetModalRef}
             today={today}
+            setDueDate={setDueDate}
           />
         </View>
       </KeyboardAvoidingView>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  logoutButton: {
+    position: "absolute",
+    right: 16,
+    padding: 6,
+    borderRadius: appTheme.radius.sm,
+    backgroundColor: "#fee2e2",
+  },
+});
