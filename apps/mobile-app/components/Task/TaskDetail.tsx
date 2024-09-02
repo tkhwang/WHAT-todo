@@ -3,6 +3,7 @@ import {
   KeyboardAvoidingView,
   Platform,
   Pressable,
+  StyleSheet,
   TextInput,
   TouchableOpacity,
   View,
@@ -96,14 +97,11 @@ export default function TaskDetail({ taskId }: Props) {
       {/* Header */}
       <Header title={t("screen.task.title")} showBackButton onBackPress={handleBackPress} />
       {isPending ? (
-        <View className={"absolute right-4 p-2 rounded-xl bg-red-200"}>
+        <View style={styles.logoutButton}>
           <Loading size={"small"} color={appTheme.colors.rose} />
         </View>
       ) : (
-        <TouchableOpacity
-          className={"absolute right-4 p-2 rounded-xl bg-red-200"}
-          onPress={handleDelete}
-        >
+        <TouchableOpacity style={styles.logoutButton} onPress={handleDelete}>
           <Icon name={"delete"} color={appTheme.colors.rose} onPress={handleDelete} />
         </TouchableOpacity>
       )}
@@ -162,3 +160,13 @@ export default function TaskDetail({ taskId }: Props) {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  logoutButton: {
+    position: "absolute",
+    right: 16,
+    padding: 6,
+    borderRadius: appTheme.radius.sm,
+    backgroundColor: "#fee2e2",
+  },
+});
