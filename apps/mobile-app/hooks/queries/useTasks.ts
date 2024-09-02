@@ -33,7 +33,10 @@ export function useTasks(listId: string) {
               id: doc.id,
               ...doc.data(),
             } as ITaskFS;
-            const task = convert(taskDoc, doc.id);
+            const task = {
+              ...convert(taskDoc, doc.id),
+              ...(taskDoc.dueDate ? { dueDate: taskDoc.dueDate.toDate() } : {}),
+            };
             setDoc(key, task);
           });
 
