@@ -1,18 +1,30 @@
 import { Button, Pressable, Text, View } from "react-native";
-import { RefObject, useCallback, useMemo } from "react";
+import { Dispatch, RefObject, SetStateAction, useCallback, useMemo } from "react";
 import { BottomSheetBackdrop, BottomSheetModal } from "@gorhom/bottom-sheet";
 import { BottomSheetModalMethods } from "@gorhom/bottom-sheet/lib/typescript/types";
 import { useTranslation } from "react-i18next";
 import { useRouter } from "expo-router";
+import dayjs from "dayjs";
+import weekday from "dayjs/plugin/weekday";
 
 import Icon from "@/assets/icons";
+import { getDateWithDayOfWeek } from "@/utils/date";
+
+dayjs.extend(weekday);
 
 interface Props {
   todoId: string;
   bottomSheetModalRef: RefObject<BottomSheetModalMethods>;
   today: Date;
+  setDueDate: Dispatch<SetStateAction<Date | null>>;
 }
-export default function AddDueDateBottomSheet({ todoId, bottomSheetModalRef, today }: Props) {
+
+export default function AddDueDateBottomSheet({
+  todoId,
+  bottomSheetModalRef,
+  today,
+  setDueDate,
+}: Props) {
   const { t } = useTranslation();
   const router = useRouter();
 
@@ -35,6 +47,17 @@ export default function AddDueDateBottomSheet({ todoId, bottomSheetModalRef, tod
   }, [bottomSheetModalRef, router, todoId]);
 
   const handlePressToday = () => {
+    setDueDate(today);
+    backToDetail();
+  };
+
+  const handlePressTomorrow = () => {
+    setDueDate(dayjs(today).add(1, "day").toDate());
+    backToDetail();
+  };
+
+  const handlePressNextWeek = () => {
+    setDueDate(dayjs(today).add(7, "day").toDate());
     backToDetail();
   };
 
@@ -60,21 +83,28 @@ export default function AddDueDateBottomSheet({ todoId, bottomSheetModalRef, tod
         <Pressable className={"flex-row gap-4"} onPress={handlePressToday}>
           <Icon name={"calendarMinus"} size={26} strokeWidth={1.6} />
           <Text className={"text-xl font-normal"}>{t("todo.addDueDate.today")}</Text>
-          <Text className={"text-xl font-normal text-gray-400 ml-auto"}>{"Today"}</Text>
+          <Text className={"text-xl font-normal text-gray-400 ml-auto"}>
+            {getDateWithDayOfWeek(today, 0)}
+          </Text>
         </Pressable>
 
         {/* tomorrow */}
-        <View className={"flex-row gap-4"}>
+        <Pressable className={"flex-row gap-4"} onPress={handlePressTomorrow}>
           <Icon name={"calendarCheckOut"} size={26} strokeWidth={1.6} />
           <Text className={"text-xl font-normal"}>{t("todo.addDueDate.tomorrow")}</Text>
-          <Text className={"text-xl font-normal text-gray-400 ml-auto"}>{"Tomorrow"}</Text>
-        </View>
+          <Text className={"text-xl font-normal text-gray-400 ml-auto"}>
+            {getDateWithDayOfWeek(today, 1)}
+          </Text>
+        </Pressable>
 
         {/* next week */}
-        <View className={"flex-row gap-4"}>
+        <Pressable className={"flex-row gap-4"} onPress={handlePressNextWeek}>
           <Icon name={"calendarDownload"} size={26} strokeWidth={1.6} />
           <Text className={"text-xl font-normal"}>{t("todo.addDueDate.nextWeek")}</Text>
-        </View>
+          <Text className={"text-xl font-normal text-gray-400 ml-auto"}>
+            {getDateWithDayOfWeek(today, 7)}
+          </Text>
+        </Pressable>
 
         {/* pick a date */}
         <View className={"flex-row flex-1 gap-4"}>

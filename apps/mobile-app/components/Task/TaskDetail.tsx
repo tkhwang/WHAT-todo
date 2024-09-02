@@ -22,6 +22,7 @@ import { useList } from "@/hooks/queries/useList";
 import { useUpdateTask } from "@/hooks/mutations/useUpdateTask";
 import { useDeleteTask } from "@/hooks/mutations/useDeleteTask";
 import { appTheme } from "@/constants/uiConsts";
+import { getDateWithDayOfWeek } from "@/utils";
 
 import { Checkbox } from "../ui/checkbox";
 import AddDueDateBottomSheet from "./add/AddDueDateBottomSheet";
@@ -38,13 +39,15 @@ export default function TaskDetail({ taskId }: Props) {
 
   const { data: task } = useTask(taskId);
   const { data: list } = useList(task?.listId ?? "");
-  const today = new Date();
 
   const inputRef = useRef<TextInput>(null);
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
 
+  const today = new Date();
+
   const [checked, setChecked] = useState(false);
   const [note, setNote] = useState("");
+  const [dueDate, setDueDate] = useState<Date | null>(null);
 
   const { mutateAsync: toggleTaskIsDoneMutation } = useToggleTaskIsDone();
   const { mutate: updateTaskMutate } = useUpdateTask();
@@ -54,10 +57,12 @@ export default function TaskDetail({ taskId }: Props) {
     if (task) {
       setChecked(task.isDone);
       setNote(task.note ?? "");
+      if (task.dueDate) setDueDate(task.dueDate);
     }
 
     return () => {
       setNote("");
+      setDueDate(null);
     };
   }, [task]);
 
@@ -83,7 +88,12 @@ export default function TaskDetail({ taskId }: Props) {
 
   const handleDueDatePress = () => {
     Keyboard.dismiss();
-    bottomSheetModalRef.current?.present();
+
+    if (dueDate) {
+      setDueDate(null);
+    } else {
+      bottomSheetModalRef.current?.present();
+    }
   };
 
   const handleBlur = () => {
@@ -126,11 +136,19 @@ export default function TaskDetail({ taskId }: Props) {
           </View>
 
           {/* due date */}
-          <Pressable className={"flex-row items-center gap-4"} onPress={handleDueDatePress}>
+          <Pressable className={"flex-row  items-center gap-4"} onPress={handleDueDatePress}>
             <Icon name={"calendar"} size={26} strokeWidth={1.6} />
-            <Text className={"text-xl font-normal text-gray-500"}>
-              {t("todo.addDueDate.title")}
+            <Text className={cn("text-xl font-normal", dueDate ? "" : "text-gray-400")}>
+              {dueDate ? getDateWithDayOfWeek(dueDate, 0) : t("todo.addDueDate.title")}
             </Text>
+            {dueDate && (
+              <Icon
+                style={{ position: "absolute", right: 24 }}
+                name={"cancelCircle"}
+                size={26}
+                strokeWidth={1.6}
+              />
+            )}
           </Pressable>
 
           {/* note */}
@@ -154,6 +172,7 @@ export default function TaskDetail({ taskId }: Props) {
             todoId={taskId}
             bottomSheetModalRef={bottomSheetModalRef}
             today={today}
+            setDueDate={setDueDate}
           />
         </View>
       </KeyboardAvoidingView>
