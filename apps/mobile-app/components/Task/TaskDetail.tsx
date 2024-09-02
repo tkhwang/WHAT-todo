@@ -71,6 +71,7 @@ export default function TaskDetail({ taskId }: Props) {
       ...task,
       isDone: checked,
       note: note === "" ? undefined : note,
+      ...(dueDate ? { dueDate } : {}),
     };
 
     updateTaskMutate(updateTaskRequestDto);
@@ -87,13 +88,10 @@ export default function TaskDetail({ taskId }: Props) {
   };
 
   const handleDueDatePress = () => {
-    Keyboard.dismiss();
+    if (dueDate) return;
 
-    if (dueDate) {
-      setDueDate(null);
-    } else {
-      bottomSheetModalRef.current?.present();
-    }
+    Keyboard.dismiss();
+    bottomSheetModalRef.current?.present();
   };
 
   const handleBlur = () => {
@@ -142,12 +140,12 @@ export default function TaskDetail({ taskId }: Props) {
               {dueDate ? getDateWithDayOfWeek(dueDate, 0) : t("todo.addDueDate.title")}
             </Text>
             {dueDate && (
-              <Icon
+              <Pressable
                 style={{ position: "absolute", right: 24 }}
-                name={"cancelCircle"}
-                size={26}
-                strokeWidth={1.6}
-              />
+                onPress={() => setDueDate(null)}
+              >
+                <Icon name={"cancelCircle"} size={26} strokeWidth={1.6} />
+              </Pressable>
             )}
           </Pressable>
 
