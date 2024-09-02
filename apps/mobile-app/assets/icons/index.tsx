@@ -23,6 +23,7 @@ import NoteEdit from "./NoteEdit";
 import PlusSign from "./PlusSign";
 import Task from "./Task";
 import LeftToRightListBullet from "./LeftToRightListBullet";
+import CancelCircle from "./CanelCircle";
 
 const icons = {
   accountSetting: AccountSetting,
@@ -36,6 +37,7 @@ const icons = {
   calendarDownload: CalendarDownload,
   calendarUndated: CalendarUndated,
   calendarMinus: CalendarMinus,
+  cancelCircle: CancelCircle,
   checkList: CheckList,
   checkmarkSquare: CheckmarkSquare,
   delete: Delete,
