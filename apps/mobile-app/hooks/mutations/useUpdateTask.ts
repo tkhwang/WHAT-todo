@@ -31,7 +31,9 @@ export function useUpdateTask() {
         ...(updateTaskRequestDto.note && { note: updateTaskRequestDto.note }),
         updatedAt: firestore.FieldValue.serverTimestamp(),
       };
+
       if (!updateTaskRequestDto.note || updateTaskRequestDto.note === "") delete updatedTask.note;
+      if (!updateTaskRequestDto.dueDate) delete updatedTask.dueDate;
 
       await taskRef.set(updatedTask);
 

@@ -71,7 +71,7 @@ export default function TaskDetail({ taskId }: Props) {
       ...task,
       isDone: checked,
       note: note === "" ? undefined : note,
-      ...(dueDate ? { dueDate } : {}),
+      dueDate: dueDate === null ? undefined : dueDate,
     };
 
     updateTaskMutate(updateTaskRequestDto);
