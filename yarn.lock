@@ -887,6 +887,13 @@
   dependencies:
     "@jridgewell/trace-mapping" "0.3.9"
 
+"@dev-plugins/react-query@^0.0.7":
+  version "0.0.7"
+  resolved "https://registry.yarnpkg.com/@dev-plugins/react-query/-/react-query-0.0.7.tgz#143ad52782a60de8e2acd9f2103f4112de7e96f4"
+  integrity sha512-A54YRUEwSHjEl4OrnP9QDwbgx4XOzCIreqYfCzPB0E4EV5U7ykCdxsm6gNhfy5EQfNvkqzrSRhO8GsR8fCfxdw==
+  dependencies:
+    flatted "^3.2.9"
+
 "@egjs/hammerjs@^2.0.17":
   version "2.0.17"
   resolved "https://registry.yarnpkg.com/@egjs/hammerjs/-/hammerjs-2.0.17.tgz#5dc02af75a6a06e4c2db0202cae38c9263895124"
