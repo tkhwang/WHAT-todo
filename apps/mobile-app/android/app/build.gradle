@@ -90,8 +90,8 @@ android {
         applicationId 'me.tkhwang.whattodo'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 54
-        versionName "1.54.1"
+        versionCode 55
+        versionName "1.55.1"
     }
     signingConfigs {
         debug {
