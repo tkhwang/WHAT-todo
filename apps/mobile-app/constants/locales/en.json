@@ -39,5 +39,6 @@
   "todo.default.list": "My Day",
   "todo.list.isDone": "Completed Tasks",
   "task.note.addNote.placehold": "Add a note",
-  "task.list.title": "List"
+  "task.list.title": "List",
+  "task.list.priority": "Priority"
 }
