@@ -20,9 +20,7 @@ export function useDeleteTask() {
     onMutate({ taskId }) {
       const previousValue = queryClient.getQueryData([COLLECTIONS.TASKS, taskId]);
 
-      queryClient.setQueryData([COLLECTIONS.TASKS], (prvs: ITask[]) => {
-        return prvs ? prvs.filter((task: ITask) => task.id !== taskId) : [];
-      });
+      queryClient.setQueryData([COLLECTIONS.TASKS, taskId], undefined);
 
       router.back();
 
@@ -31,9 +29,9 @@ export function useDeleteTask() {
     onSuccess: () => {
       // do nothing
     },
-    onError(error, variables, context) {
+    onError(error, { taskId }, context) {
       console.error(`[-][useDeleteTask] optimistic delete failed: ${error}`);
-      queryClient.setQueryData([COLLECTIONS.TASKS], context?.previousValue);
+      queryClient.setQueryData([COLLECTIONS.TASKS, taskId], context?.previousValue);
     },
   });
 }
