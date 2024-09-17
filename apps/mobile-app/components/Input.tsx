@@ -19,9 +19,9 @@ export default function Input({ containerStyles, icon, inputRef, ...props }: Pro
     <View style={[styles.container, containerStyles && containerStyles]}>
       {icon && icon}
       <TextInput
+        className={"text-foreground"}
         style={{
           flex: 1,
-          color: isDarkColorScheme ? appTheme.colors.textDark : appTheme.colors.text,
         }}
         placeholderTextColor={isDarkColorScheme ? appTheme.colors.gray : appTheme.colors.text}
         ref={inputRef && inputRef}
