@@ -35,8 +35,10 @@ export default function TaskListItem({ todo }: Props) {
   return (
     <Pressable
       className={cn(
-        "flex-col justify-center py-1 p-4 rounded-xl border",
-        isDarkColorScheme ? "border-gray-600 bg-gray-900" : "border-gray-400 bg-gray-100",
+        "flex-col justify-center py-1 p-4 rounded-xl border shadow-md",
+        isDarkColorScheme
+          ? "border-gray-600 bg-gray-900 shadow-slate-700"
+          : "border-gray-400 bg-gray-100 shadow-slate-200",
       )}
       onPress={handlePress}
     >
