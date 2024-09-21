@@ -18,7 +18,7 @@ interface Props {
   listId: string;
 }
 
-const ItemSeparator = () => <View style={{ height: 8 }} />;
+const ItemSeparator = () => <View style={{ height: 12 }} />;
 
 export function TodoList({ listId }: Props) {
   const { t } = useTranslation();
