@@ -57,7 +57,7 @@ export default function TaskDetail({ listId, taskId }: Props) {
 
   const { mutateAsync: toggleTaskIsDoneMutation } = useToggleTaskIsDone();
   const { mutate: updateTaskMutate } = useUpdateTask();
-  const { mutateAsync, isPending } = useDeleteTask();
+  const { mutate: deleteTaskMutate, isPending } = useDeleteTask();
 
   useEffect(() => {
     if (task) {
@@ -88,9 +88,9 @@ export default function TaskDetail({ listId, taskId }: Props) {
     await toggleTaskIsDoneMutation({ taskId });
   }, [taskId, toggleTaskIsDoneMutation]);
 
-  const handleDelete = async () => {
+  const handleDelete = () => {
     const requestDto: DeleteTaskRequest = { taskId };
-    await mutateAsync(requestDto);
+    deleteTaskMutate(requestDto);
   };
 
   const handleDueDatePress = () => {
