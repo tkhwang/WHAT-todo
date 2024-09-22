@@ -12,10 +12,11 @@ import Icon from "@/assets/icons";
 import { getDateWithDayOfWeek } from "@/utils";
 
 interface Props {
-  todo: ITask;
+  listId: string;
+  task: ITask;
 }
 
-export default function TaskListItem({ todo }: Props) {
+export default function TaskListItem({ listId, task }: Props) {
   const router = useRouter();
 
   const { isDarkColorScheme } = useColorScheme();
@@ -24,12 +25,12 @@ export default function TaskListItem({ todo }: Props) {
   const { mutateAsync: toggleTaskIsDoneMutation } = useToggleTaskIsDone();
 
   const handlePressCheck = async () => {
-    await toggleTaskIsDoneMutation({ taskId: todo.id });
+    await toggleTaskIsDoneMutation({ taskId: task.id });
     setChecked(!checked);
   };
 
   const handlePress = () => {
-    router.push(`/(auth)/(tabs)/todos/${todo.id}`);
+    router.push(`/(auth)/(tabs)/todos/${listId}/${task.id}`);
   };
 
   return (
@@ -48,17 +49,17 @@ export default function TaskListItem({ todo }: Props) {
 
         {/* todo description */}
         <View className={"flex-col gap-2 justify-center"}>
-          <Text className={"text-xl font-medium"}>{todo.task}</Text>
+          <Text className={"text-xl font-medium"}>{task.task}</Text>
           <View className={"flex-row gap-2"}>
-            {todo.dueDate && (
+            {task.dueDate && (
               <View className={"flex-row gap-1 items-center"}>
                 <Icon name={"calendar"} size={18} strokeWidth={1.5} />
                 <Text className={"text-base font-normal text-gray-500"}>
-                  {getDateWithDayOfWeek(todo.dueDate, 0)}
+                  {getDateWithDayOfWeek(task.dueDate, 0)}
                 </Text>
               </View>
             )}
-            {todo.note && (
+            {task.note && (
               <View className={"flex-row gap-1 items-center"}>
                 <Icon name={"noteEdit"} size={18} strokeWidth={1.5} />
                 <Text className={"text-base font-normal text-gray-500"}>{"Note"}</Text>

@@ -11,18 +11,18 @@ import {
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
-import { DeleteTaskRequest } from "@whatTodo/models";
+import { DeleteTaskRequest, IList, ITask } from "@whatTodo/models";
 
 import { Text } from "@/components/ui/text";
 import Icon from "@/assets/icons";
 import { cn } from "@/lib/utils";
-import { useTask } from "@/hooks/queries/useTask";
 import { useToggleTaskIsDone } from "@/hooks/mutations/useToggleTaskIsDone";
-import { useList } from "@/hooks/queries/useList";
 import { useUpdateTask } from "@/hooks/mutations/useUpdateTask";
 import { useDeleteTask } from "@/hooks/mutations/useDeleteTask";
 import { appTheme } from "@/constants/uiConsts";
 import { getDateWithDayOfWeek } from "@/utils";
+import { useLists } from "@/hooks/queries/useLists";
+import { useTasks } from "@/hooks/queries/useTasks";
 
 import { Checkbox } from "../ui/checkbox";
 import AddDueDateBottomSheet from "./add/AddDueDateBottomSheet";
@@ -31,14 +31,20 @@ import Header from "../MainLayout/Header";
 import Loading from "../Loading";
 
 interface Props {
+  listId: string;
   taskId: string;
 }
 
-export default function TaskDetail({ taskId }: Props) {
+export default function TaskDetail({ listId, taskId }: Props) {
   const { t } = useTranslation();
 
-  const { data: task } = useTask(taskId);
-  const { data: list } = useList(task?.listId ?? "");
+  const { data: list } = useLists<IList | undefined>((lists: IList[]) =>
+    lists.find((list) => list.id === listId),
+  );
+
+  const { data: task } = useTasks<ITask | undefined>(listId, (tasks) =>
+    tasks.find((task) => task.id === taskId),
+  );
 
   const inputRef = useRef<TextInput>(null);
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
@@ -98,7 +104,7 @@ export default function TaskDetail({ taskId }: Props) {
     Keyboard.dismiss();
   };
 
-  if (!task) return null;
+  if (!task || !list) return null;
 
   return (
     <View className={"flex-1 px-4"}>
@@ -130,11 +136,11 @@ export default function TaskDetail({ taskId }: Props) {
           <View className={"flex-row items-center gap-4"}>
             <Icon name={"leftToRightListBullet"} size={26} strokeWidth={1.6} />
             <Text className={"text-xl font-normal text-gray-500"}>{t("task.list.title")}</Text>
-            <Text className={"text-xl font-normal text-gray-500"}>{list?.title}</Text>
+            <Text className={"text-xl font-normal text-gray-500"}>{list.title}</Text>
           </View>
 
           {/* due date */}
-          <Pressable className={"flex-row  items-center gap-4"} onPress={handleDueDatePress}>
+          {/* <Pressable className={"flex-row  items-center gap-4"} onPress={handleDueDatePress}>
             <Icon name={"calendar"} size={26} strokeWidth={1.6} />
             <Text className={cn("text-xl font-normal", dueDate ? "" : "text-gray-400")}>
               {dueDate ? getDateWithDayOfWeek(dueDate, 0) : t("todo.addDueDate.title")}
@@ -147,7 +153,7 @@ export default function TaskDetail({ taskId }: Props) {
                 <Icon name={"cancelCircle"} size={26} strokeWidth={1.6} />
               </Pressable>
             )}
-          </Pressable>
+          </Pressable> */}
 
           {/* note */}
           <View className={"flex-row items-center gap-4"}>

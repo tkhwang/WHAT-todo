@@ -4,11 +4,11 @@ import ScreenWrapper from "@/components/MainLayout/ScreenWrapper";
 import TaskDetail from "@/components/Task/TaskDetail";
 
 export default function TodoScreen() {
-  const { id: taskId } = useLocalSearchParams() as { id: string };
+  const { listId, taskId } = useLocalSearchParams<{ listId: string; taskId: string }>();
 
   return (
     <ScreenWrapper>
-      <TaskDetail taskId={taskId} />
+      <TaskDetail listId={listId} taskId={taskId} />
     </ScreenWrapper>
   );
 }

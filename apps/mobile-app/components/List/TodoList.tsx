@@ -1,14 +1,14 @@
 import { FlatList, View } from "react-native";
 import { useSetAtom } from "jotai";
 import { useCallback, useEffect, useMemo } from "react";
-import { ITask } from "@whatTodo/models";
+import { IList, ITask } from "@whatTodo/models";
 import { useTranslation } from "react-i18next";
 
 import { Text } from "@/components/ui/text";
 import { currentListIdAtom } from "@/states/list";
-import { useList } from "@/hooks/queries/useList";
 import Icon from "@/assets/icons";
 import { useTasks } from "@/hooks/queries/useTasks";
+import { useLists } from "@/hooks/queries/useLists";
 
 import TaskListItem from "../Task/TaskListItem";
 import { TaskListDoneItem } from "../Task/TaskListDoneItem";
@@ -24,7 +24,9 @@ export function TodoList({ listId }: Props) {
   const { t } = useTranslation();
   const setCurrentListId = useSetAtom(currentListIdAtom);
 
-  const { data: list, isLoading } = useList(listId);
+  const { data: list, isLoading } = useLists<IList | undefined>((lists: IList[]) =>
+    lists.find((list) => list.id === listId),
+  );
 
   const { data: tasks } = useTasks(listId);
 
@@ -44,15 +46,19 @@ export function TodoList({ listId }: Props) {
     };
   }, [listId, setCurrentListId]);
 
-  const renderItem = useCallback(({ item }: { item: ITask }) => {
-    return <TaskListItem todo={item} />;
-  }, []);
+  const renderItem = useCallback(
+    ({ item }: { item: ITask }) => {
+      return <TaskListItem listId={listId} task={item} />;
+    },
+    [listId],
+  );
 
   const renderDoneItem = useCallback(({ item }: { item: ITask }) => {
     return <TaskListDoneItem todo={item} />;
   }, []);
 
   if (isLoading) return null;
+  if (!list) return null;
 
   return (
     <View className={"flex-1"}>

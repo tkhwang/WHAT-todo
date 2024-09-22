@@ -1,4 +1,4 @@
-import { useQueries, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { useEffect, useMemo } from "react";
 import { COLLECTIONS, ITask } from "@whatTodo/models";
 import firestore from "@react-native-firebase/firestore";
@@ -8,65 +8,49 @@ import { ITaskFS } from "@/types";
 import { useUserTasks } from "./useUserTasks";
 import { useFirestore } from "../useFirestore";
 
-export function useTasks(listId: string) {
-  const queryClient = useQueryClient();
-
+export function useTasks<TSelected = ITask[]>(
+  listId: string,
+  select?: (tasks: ITask[]) => TSelected,
+) {
   const { data: userTasks } = useUserTasks(listId);
 
-  const { convert, setDoc } = useFirestore<ITaskFS, ITask>();
+  const { convert, setDocs } = useFirestore<ITaskFS, ITask>();
 
   const taskIds = useMemo(() => {
     return (userTasks ?? []).map((userTodo) => userTodo.id);
   }, [userTasks]);
 
   useEffect(
-    function setupTodosEffect() {
-      const unsubscribes: (() => void)[] = [];
-      // eslint-disable-next-line no-restricted-syntax
-      for (const taskId of taskIds ?? []) {
-        const key = [COLLECTIONS.TASKS, taskId];
-        const unsubscribe = firestore()
-          .collection(COLLECTIONS.TASKS)
-          .doc(taskId)
-          .onSnapshot((doc) => {
-            const taskDoc = {
-              id: doc.id,
-              ...doc.data(),
-            } as ITaskFS;
-            const task = {
-              ...convert(taskDoc, doc.id),
-              ...(taskDoc.dueDate ? { dueDate: taskDoc.dueDate.toDate() } : {}),
-            };
-            setDoc(key, task);
+    function setupTasksEffect() {
+      if (!taskIds.length) return undefined;
+
+      const key = [COLLECTIONS.TASKS];
+      const unsubscribe = firestore()
+        .collection(COLLECTIONS.TASKS)
+        .where(firestore.FieldPath.documentId(), "in", taskIds)
+        .onSnapshot((snapshot) => {
+          if (!snapshot) return;
+
+          const tasks = snapshot.docs.map((doc) => {
+            const taskDoc = doc.data() as ITaskFS;
+            return convert(taskDoc, doc.id);
           });
 
-        unsubscribes.push(unsubscribe);
-      }
+          setDocs(key, tasks);
+        });
 
-      return () => {
-        unsubscribes.forEach((unsubscribe) => unsubscribe());
+      return function cleanUpTasksEffect() {
+        unsubscribe();
       };
     },
-    [convert, queryClient, setDoc, taskIds],
+    [convert, setDocs, taskIds],
   );
 
-  return useQueries({
-    queries:
-      taskIds?.map((taskId) => ({
-        queryKey: [COLLECTIONS.TASKS, taskId],
-        queryFn: () => new Promise<ITask>((): void => {}),
-        enabled: !!taskId,
-        staleTime: Infinity,
-      })) ?? [],
-    combine: (results) => {
-      const sortedTodosByUpdatedAt = results
-        .flatMap((result) => (result.data ? [result.data] : []))
-        .sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
-      return {
-        // data: results.flatMap((result) => (result.data ? [result.data] : [])),
-        data: sortedTodosByUpdatedAt,
-        arePending: results.some((result) => result.isPending),
-      };
-    },
+  return useQuery<ITask[], Error, TSelected>({
+    queryKey: [COLLECTIONS.TASKS],
+    queryFn: () => new Promise((): void => {}),
+    select,
+    enabled: !!taskIds && taskIds.length > 0,
+    staleTime: Infinity,
   });
 }

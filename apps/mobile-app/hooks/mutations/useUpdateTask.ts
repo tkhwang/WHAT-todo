@@ -9,15 +9,16 @@ export function useUpdateTask() {
     mutationFn: async (updateTaskRequestDto: UpdateTaskRequest) => {
       const { id: taskId } = updateTaskRequestDto;
 
-      const cache = queryClient.getQueryData<ITask>([COLLECTIONS.TASKS, taskId]);
-      if (!cache) throw new Error(`Task (${taskId}) not found`);
+      const allCachedTasks = queryClient.getQueryData<ITask[]>([COLLECTIONS.TASKS]);
+      const cachedTask = allCachedTasks?.find((task) => task.id === taskId);
+      if (!cachedTask) throw new Error(`Task (${taskId}) not found`);
 
-      const { isDone: prvIsDone, dueDate: prvDueDate, note: prvNote } = cache;
+      const { isDone: prvIsDone, dueDate: prvDueDate, note: prvNote } = cachedTask;
       const { isDone, dueDate, note } = updateTaskRequestDto;
 
       if (isDone === prvIsDone && dueDate === prvDueDate && note === prvNote) {
         console.log(`[+][useUpdateTask] nothing changed and skipped update`);
-        return cache;
+        return cachedTask;
       }
 
       const taskRef = firestore().collection(COLLECTIONS.TASKS).doc(taskId);
@@ -37,7 +38,7 @@ export function useUpdateTask() {
 
       await taskRef.set(updatedTask);
 
-      return cache;
+      return cachedTask;
     },
   });
 }
