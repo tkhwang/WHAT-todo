@@ -46,9 +46,12 @@ export function TodoList({ listId }: Props) {
     };
   }, [listId, setCurrentListId]);
 
-  const renderItem = useCallback(({ item }: { item: ITask }) => {
-    return <TaskListItem todo={item} />;
-  }, []);
+  const renderItem = useCallback(
+    ({ item }: { item: ITask }) => {
+      return <TaskListItem listId={listId} task={item} />;
+    },
+    [listId],
+  );
 
   const renderDoneItem = useCallback(({ item }: { item: ITask }) => {
     return <TaskListDoneItem todo={item} />;
