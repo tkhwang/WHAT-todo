@@ -19,9 +19,12 @@ export function useLists<TSelected = IList[]>(select?: (lists: IList[]) => TSele
 
   useEffect(
     function useListsEffect() {
+      if (!listIds.length) return undefined;
+
       const key = [COLLECTIONS.LISTS];
       const unusbscribe = firestore()
         .collection(COLLECTIONS.LISTS)
+        .where(firestore.FieldPath.documentId(), "in", listIds)
         .onSnapshot((snapshot) => {
           if (!snapshot) return;
 
