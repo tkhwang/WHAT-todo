@@ -8,7 +8,7 @@ import { IListFS } from "@/types";
 import { useUserLists } from "./useUserLists";
 import { useFirestore } from "../useFirestore";
 
-export function useLists(select?: (lists: IList[]) => IList[]) {
+export function useLists<TSelected = IList[]>(select?: (lists: IList[]) => TSelected) {
   const { data: userLists } = useUserLists();
 
   const { convert, setDoc, setDocs } = useFirestore();
@@ -39,7 +39,7 @@ export function useLists(select?: (lists: IList[]) => IList[]) {
     [convert, listIds, setDoc, setDocs],
   );
 
-  return useQuery<IList[], Error>({
+  return useQuery<IList[], Error, TSelected>({
     queryKey: [COLLECTIONS.LISTS],
     queryFn: () => new Promise((): void => {}),
     select,
