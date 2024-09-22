@@ -19,18 +19,16 @@ export function useDeleteTask() {
     },
     onMutate({ taskId }) {
       const previousValue = queryClient.getQueryData<ITask[]>([COLLECTIONS.TASKS]);
-
       const deletedTasks = (previousValue ?? []).filter((task) => task.id !== taskId);
-
       queryClient.setQueryData([COLLECTIONS.TASKS], deletedTasks);
+
+      router.back();
+
       return { previousValue };
     },
     onSuccess: () => {},
     onError(error, { taskId }, context) {
       queryClient.setQueryData([COLLECTIONS.TASKS], context?.previousValue);
-    },
-    onSettled() {
-      router.back();
     },
   });
 }
