@@ -38,8 +38,8 @@ export default function TaskDetail({ taskId }: Props) {
   const { t } = useTranslation();
 
   const { data: task } = useTask(taskId);
-  const { data: list } = useLists((lists: IList[]) =>
-    lists.filter((list) => list.id === task?.listId),
+  const { data: list } = useLists<IList | undefined>((lists: IList[]) =>
+    lists.find((list) => list.id === task?.listId),
   );
 
   const inputRef = useRef<TextInput>(null);
@@ -100,7 +100,7 @@ export default function TaskDetail({ taskId }: Props) {
     Keyboard.dismiss();
   };
 
-  if (!task) return null;
+  if (!task || !list) return null;
 
   return (
     <View className={"flex-1 px-4"}>
@@ -132,7 +132,7 @@ export default function TaskDetail({ taskId }: Props) {
           <View className={"flex-row items-center gap-4"}>
             <Icon name={"leftToRightListBullet"} size={26} strokeWidth={1.6} />
             <Text className={"text-xl font-normal text-gray-500"}>{t("task.list.title")}</Text>
-            <Text className={"text-xl font-normal text-gray-500"}>{list?.title}</Text>
+            <Text className={"text-xl font-normal text-gray-500"}>{list.title}</Text>
           </View>
 
           {/* due date */}

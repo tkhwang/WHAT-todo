@@ -24,8 +24,8 @@ export function TodoList({ listId }: Props) {
   const { t } = useTranslation();
   const setCurrentListId = useSetAtom(currentListIdAtom);
 
-  const { data: list, isLoading } = useLists((lists: IList[]) =>
-    lists.filter((list) => list.id === listId),
+  const { data: list, isLoading } = useLists<IList | undefined>((lists: IList[]) =>
+    lists.find((list) => list.id === listId),
   );
 
   const { data: tasks } = useTasks(listId);
@@ -55,6 +55,7 @@ export function TodoList({ listId }: Props) {
   }, []);
 
   if (isLoading) return null;
+  if (!list) return null;
 
   return (
     <View className={"flex-1"}>
