@@ -1,11 +1,13 @@
-import { useMutation } from "@tanstack/react-query";
-import { AddTaskRequest, AddTaskResponse } from "@whatTodo/models";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { AddTaskRequest, AddTaskResponse, COLLECTIONS, ITask } from "@whatTodo/models";
 import { AxiosResponse } from "axios";
 
 import { httpClient } from "@/utils/httpClient";
 import { useTaskStore } from "@/stores/todo";
 
 export function useAddTask() {
+  const queryClient = useQueryClient();
+
   const { setIsLoading } = useTaskStore();
 
   return useMutation({
@@ -16,14 +18,28 @@ export function useAddTask() {
       );
       return response.data;
     },
-    onMutate() {
+    async onMutate(newTask: AddTaskRequest) {
       setIsLoading(true);
+
+      await queryClient.cancelQueries({ queryKey: [COLLECTIONS.TASKS] });
+
+      const previousTasks = queryClient.getQueryData<ITask[]>([COLLECTIONS.TASKS]);
+
+      queryClient.setQueryData([COLLECTIONS.TASKS], (old: ITask[]) => {
+        if (!old) return [];
+        return [...old, newTask];
+      });
+
+      return { previousTasks };
     },
-    onError() {
-      setIsLoading(false);
+    onError(error, variables, context) {
+      queryClient.setQueryData([COLLECTIONS.TASKS], context?.previousTasks);
     },
     onSuccess() {
-      setIsLoading(true);
+      // do nothing
+    },
+    onSettled() {
+      setIsLoading(false);
     },
   });
 }

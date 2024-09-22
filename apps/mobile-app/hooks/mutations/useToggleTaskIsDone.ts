@@ -20,21 +20,28 @@ export function useToggleTaskIsDone() {
       });
     },
     onMutate: async ({ taskId }) => {
-      const key = [COLLECTIONS.TASKS, taskId];
+      const key = [COLLECTIONS.TASKS];
 
-      await queryClient.cancelQueries({ queryKey: [COLLECTIONS.TASKS, taskId] });
+      await queryClient.cancelQueries({ queryKey: [COLLECTIONS.TASKS] });
       const previousTask = queryClient.getQueryData(key);
 
-      queryClient.setQueryData(key, (prv: ITask) => ({
-        ...prv,
-        isDone: !prv?.isDone,
-        updatedAt: new Date().toISOString(),
-      }));
+      queryClient.setQueryData(key, (prv: ITask[]) => {
+        if (!prv) return [];
+
+        return prv.map((task) => {
+          if (task.id !== taskId) return task;
+
+          return {
+            ...task,
+            isDone: !task.isDone,
+          };
+        });
+      });
 
       return { previousTask };
     },
     onError: (_, { taskId }, context) => {
-      const key = [COLLECTIONS.TASKS, taskId];
+      const key = [COLLECTIONS.TASKS];
       queryClient.setQueryData(key, context?.previousTask);
     },
   });

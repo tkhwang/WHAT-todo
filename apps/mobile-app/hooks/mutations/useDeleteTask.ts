@@ -1,7 +1,7 @@
 import { AxiosResponse } from "axios";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "expo-router";
-import { COLLECTIONS, DeleteTaskRequest, DeleteTaskResponse } from "@whatTodo/models";
+import { COLLECTIONS, DeleteTaskRequest, DeleteTaskResponse, ITask } from "@whatTodo/models";
 
 import { httpClient } from "@/utils/httpClient";
 
@@ -18,20 +18,17 @@ export function useDeleteTask() {
       return response.data;
     },
     onMutate({ taskId }) {
-      const previousValue = queryClient.getQueryData([COLLECTIONS.TASKS, taskId]);
+      const previousValue = queryClient.getQueryData<ITask[]>([COLLECTIONS.TASKS]);
+      const deletedTasks = (previousValue ?? []).filter((task) => task.id !== taskId);
+      queryClient.setQueryData([COLLECTIONS.TASKS], deletedTasks);
 
-      queryClient.setQueryData([COLLECTIONS.TASKS, taskId], undefined);
+      router.back();
 
       return { previousValue };
     },
-    onSuccess: () => {
-      router.back();
-    },
+    onSuccess: () => {},
     onError(error, { taskId }, context) {
-      console.error(`[-][useDeleteTask] optimistic delete failed: ${error}`);
-      queryClient.setQueryData([COLLECTIONS.TASKS, taskId], context?.previousValue);
-
-      router.back();
+      queryClient.setQueryData([COLLECTIONS.TASKS], context?.previousValue);
     },
   });
 }
