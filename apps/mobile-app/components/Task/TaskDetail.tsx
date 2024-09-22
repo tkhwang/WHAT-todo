@@ -11,18 +11,18 @@ import {
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
-import { DeleteTaskRequest } from "@whatTodo/models";
+import { DeleteTaskRequest, IList } from "@whatTodo/models";
 
 import { Text } from "@/components/ui/text";
 import Icon from "@/assets/icons";
 import { cn } from "@/lib/utils";
 import { useTask } from "@/hooks/queries/useTask";
 import { useToggleTaskIsDone } from "@/hooks/mutations/useToggleTaskIsDone";
-import { useList } from "@/hooks/queries/useList";
 import { useUpdateTask } from "@/hooks/mutations/useUpdateTask";
 import { useDeleteTask } from "@/hooks/mutations/useDeleteTask";
 import { appTheme } from "@/constants/uiConsts";
 import { getDateWithDayOfWeek } from "@/utils";
+import { useLists } from "@/hooks/queries/useLists";
 
 import { Checkbox } from "../ui/checkbox";
 import AddDueDateBottomSheet from "./add/AddDueDateBottomSheet";
@@ -38,7 +38,9 @@ export default function TaskDetail({ taskId }: Props) {
   const { t } = useTranslation();
 
   const { data: task } = useTask(taskId);
-  const { data: list } = useList(task?.listId ?? "");
+  const { data: list } = useLists((lists: IList[]) =>
+    lists.filter((list) => list.id === task?.listId),
+  );
 
   const inputRef = useRef<TextInput>(null);
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
