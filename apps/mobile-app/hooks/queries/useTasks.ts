@@ -8,7 +8,10 @@ import { ITaskFS } from "@/types";
 import { useUserTasks } from "./useUserTasks";
 import { useFirestore } from "../useFirestore";
 
-export function useTasks(listId: string) {
+export function useTasks<TSelected = ITask[]>(
+  listId: string,
+  select?: (tasks: ITask[]) => TSelected,
+) {
   const { data: userTasks } = useUserTasks(listId);
 
   const { convert, setDocs } = useFirestore<ITaskFS, ITask>();
@@ -43,9 +46,10 @@ export function useTasks(listId: string) {
     [convert, setDocs, taskIds],
   );
 
-  return useQuery<ITask[], Error>({
+  return useQuery<ITask[], Error, TSelected>({
     queryKey: [COLLECTIONS.TASKS],
     queryFn: () => new Promise((): void => {}),
+    select,
     enabled: !!taskIds && taskIds.length > 0,
     staleTime: Infinity,
   });
