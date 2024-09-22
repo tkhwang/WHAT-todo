@@ -140,7 +140,7 @@ export default function TaskDetail({ listId, taskId }: Props) {
           </View>
 
           {/* due date */}
-          <Pressable className={"flex-row  items-center gap-4"} onPress={handleDueDatePress}>
+          {/* <Pressable className={"flex-row  items-center gap-4"} onPress={handleDueDatePress}>
             <Icon name={"calendar"} size={26} strokeWidth={1.6} />
             <Text className={cn("text-xl font-normal", dueDate ? "" : "text-gray-400")}>
               {dueDate ? getDateWithDayOfWeek(dueDate, 0) : t("todo.addDueDate.title")}
@@ -153,7 +153,7 @@ export default function TaskDetail({ listId, taskId }: Props) {
                 <Icon name={"cancelCircle"} size={26} strokeWidth={1.6} />
               </Pressable>
             )}
-          </Pressable>
+          </Pressable> */}
 
           {/* note */}
           <View className={"flex-row items-center gap-4"}>
