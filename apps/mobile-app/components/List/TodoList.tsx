@@ -53,9 +53,12 @@ export function TodoList({ listId }: Props) {
     [listId],
   );
 
-  const renderDoneItem = useCallback(({ item }: { item: ITask }) => {
-    return <TaskListDoneItem todo={item} />;
-  }, []);
+  const renderDoneItem = useCallback(
+    ({ item }: { item: ITask }) => {
+      return <TaskListDoneItem listId={listId} task={item} />;
+    },
+    [listId],
+  );
 
   if (isLoading) return null;
   if (!list) return null;

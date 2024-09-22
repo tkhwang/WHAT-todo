@@ -11,24 +11,25 @@ import { useColorScheme } from "@/lib/useColorScheme";
 import { Checkbox } from "../ui/checkbox";
 
 interface Props {
-  todo: ITask;
+  listId: string;
+  task: ITask;
 }
 
-export function TaskListDoneItem({ todo }: Props) {
+export function TaskListDoneItem({ listId, task }: Props) {
   const router = useRouter();
 
   const { isDarkColorScheme } = useColorScheme();
   const [checked, setChecked] = useState(true);
 
-  const { mutateAsync: toggleTaskIsDoneMutation } = useToggleTaskIsDone();
+  const { mutate: toggleTaskIsDoneMutate } = useToggleTaskIsDone();
 
-  const handlePressCheck = async () => {
-    await toggleTaskIsDoneMutation({ taskId: todo.id });
+  const handlePressCheck = () => {
+    toggleTaskIsDoneMutate({ taskId: task.id });
     setChecked(!checked);
   };
 
   const handlePress = () => {
-    router.push(`/(auth)/(tabs)/todos/${todo.id}`);
+    router.push(`/(auth)/(tabs)/todos/${listId}/${task.id}`);
   };
 
   return (
@@ -39,7 +40,7 @@ export function TaskListDoneItem({ todo }: Props) {
 
         {/* todo description */}
         <View className={"flex-col gap-1 justify-center"}>
-          <Text className={"text-xl font-normal line-through"}>{todo.task}</Text>
+          <Text className={"text-xl font-normal line-through"}>{task.task}</Text>
         </View>
       </View>
     </Pressable>
