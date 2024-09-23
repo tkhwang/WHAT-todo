@@ -23,7 +23,7 @@ export default function AddTaskInput({ inputRef }: Props) {
 
   const [showButttons, setShowButttons] = useState(false);
   const { task, isLoading, updateTask, reset } = useTaskStore();
-  const { mutateAsync: addTaskMutationAsync } = useAddTask();
+  const { mutate: addTaskMutate } = useAddTask();
 
   const onChangeTask = useCallback(
     (task: string) => {
@@ -32,7 +32,7 @@ export default function AddTaskInput({ inputRef }: Props) {
     [updateTask],
   );
 
-  const handleSubmitTask = useCallback(async () => {
+  const handleSubmitTask = useCallback(() => {
     if (!task) return;
     if (!currentListId) return;
 
@@ -41,11 +41,11 @@ export default function AddTaskInput({ inputRef }: Props) {
       listId: currentListId,
     };
 
-    await addTaskMutationAsync(newTaskDto);
+    addTaskMutate(newTaskDto);
     setShowButttons(false);
 
     reset();
-  }, [addTaskMutationAsync, currentListId, reset, task]);
+  }, [addTaskMutate, currentListId, reset, task]);
 
   const handleFocus = () => {
     setShowButttons(true);
@@ -58,23 +58,19 @@ export default function AddTaskInput({ inputRef }: Props) {
 
   return (
     <View className={"w-screen p-4 mb-1 gap-4"}>
-      {isLoading ? (
-        <Loading size={"small"} color={appTheme.colors.primary} />
-      ) : (
-        <Input
-          inputRef={inputRef}
-          value={task}
-          onChangeText={onChangeTask}
-          icon={<Icon name={"plusSign"} size={26} strokeWidth={1.6} />}
-          placeholder={t("todo.add.task")}
-          aria-labelledby={"inputLabel"}
-          aria-errormessage={"inputError"}
-          fontSize={15}
-          onFocus={handleFocus}
-          onBlur={handleBlur}
-          onSubmitEditing={handleSubmitTask}
-        />
-      )}
+      <Input
+        inputRef={inputRef}
+        value={task}
+        onChangeText={onChangeTask}
+        icon={<Icon name={"plusSign"} size={26} strokeWidth={1.6} />}
+        placeholder={t("todo.add.task")}
+        aria-labelledby={"inputLabel"}
+        aria-errormessage={"inputError"}
+        fontSize={15}
+        onFocus={handleFocus}
+        onBlur={handleBlur}
+        onSubmitEditing={handleSubmitTask}
+      />
       {showButttons && (
         <View className={"flex-row gap-6 mx-2"}>
           <Icon name={"calendar"} size={22} strokeWidth={1.5} />
