@@ -80,13 +80,17 @@ export class FirestoreUserRepository {
       updatedAt: firestore.FieldValue.serverTimestamp(),
     };
 
-    const userTodo = await this.#userCollection
+    const userTodoRef = this.#userCollection
       .doc(userId)
       .collection(COLLECTIONS.TASKS)
-      .doc(todoId)
-      .set(newTodo);
+      .doc(todoId);
+    await userTodoRef.set(newTodo);
+    const userTodoId = userTodoRef.id;
 
-    return userTodo;
+    return {
+      ...newTodo,
+      id: userTodoId,
+    };
   }
 
   async addUserList(userId: string, listId: string) {

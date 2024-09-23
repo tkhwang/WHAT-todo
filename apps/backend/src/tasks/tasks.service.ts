@@ -16,12 +16,14 @@ export class TasksService {
         userId,
         addTaskDto,
       );
-      await this.firestoreUserRepository.addUserTodo(
+      return await this.firestoreUserRepository.addUserTodo(
         userId,
         addTask.id,
         addTaskDto,
       );
-    } catch (error) {}
+    } catch (error) {
+      throw new Error(error);
+    }
   }
 
   async deleteTask(userId: string, taskId: string) {
