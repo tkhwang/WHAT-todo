@@ -41,10 +41,18 @@ export function useAddTask() {
     onError(error, variables, context) {
       queryClient.setQueryData([COLLECTIONS.TASKS], context?.previousTasks);
     },
-    onSuccess(data, variables, context) {
+    onSuccess(newTaskFromServer, variables, context) {
       queryClient.setQueryData([COLLECTIONS.TASKS], (old: ITask[]) => {
         if (!old) return [];
-        return old.filter((oldTask) => oldTask.id.startsWith(TASK_OPTIMISTIC_ADD_KEY));
+
+        return old.map((task) => {
+          if (task.id.startsWith(TASK_OPTIMISTIC_ADD_KEY))
+            return {
+              ...task,
+              id: newTaskFromServer.id,
+            };
+          return task;
+        });
       });
     },
     onSettled() {
