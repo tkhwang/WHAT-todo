@@ -10,6 +10,7 @@ import { useColorScheme } from "@/lib/useColorScheme";
 import { useToggleTaskIsDone } from "@/hooks/mutations/useToggleTaskIsDone";
 import Icon from "@/assets/icons";
 import { getDateWithDayOfWeek } from "@/utils";
+import { TASK_OPTIMISTIC_ADD_KEY } from "@/constants/appConsts";
 
 interface Props {
   listId: string;
@@ -40,6 +41,7 @@ export default function TaskListItem({ listId, task }: Props) {
         isDarkColorScheme
           ? "border-gray-600 bg-gray-900 shadow-slate-500"
           : "border-gray-400 bg-gray-100 shadow-slate-400",
+        task.id.startsWith(TASK_OPTIMISTIC_ADD_KEY) && "opacity-80",
       )}
       onPress={handlePress}
     >

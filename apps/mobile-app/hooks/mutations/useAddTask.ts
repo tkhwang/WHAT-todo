@@ -4,6 +4,7 @@ import { AxiosResponse } from "axios";
 
 import { httpClient } from "@/utils/httpClient";
 import { useTaskStore } from "@/stores/todo";
+import { TASK_OPTIMISTIC_ADD_KEY } from "@/constants/appConsts";
 
 export function useAddTask() {
   const queryClient = useQueryClient();
@@ -25,9 +26,14 @@ export function useAddTask() {
 
       const previousTasks = queryClient.getQueryData<ITask[]>([COLLECTIONS.TASKS]);
 
+      const newTaskWithDummyId = {
+        ...newTask,
+        id: `${TASK_OPTIMISTIC_ADD_KEY}-${new Date().getTime()}`,
+      };
+
       queryClient.setQueryData([COLLECTIONS.TASKS], (old: ITask[]) => {
         if (!old) return [];
-        return [...old, newTask];
+        return [newTaskWithDummyId, ...old];
       });
 
       return { previousTasks };
@@ -35,8 +41,19 @@ export function useAddTask() {
     onError(error, variables, context) {
       queryClient.setQueryData([COLLECTIONS.TASKS], context?.previousTasks);
     },
-    onSuccess() {
-      // do nothing
+    onSuccess(newTaskFromServer, variables, context) {
+      queryClient.setQueryData([COLLECTIONS.TASKS], (old: ITask[]) => {
+        if (!old) return [];
+
+        return old.map((task) => {
+          if (task.id.startsWith(TASK_OPTIMISTIC_ADD_KEY))
+            return {
+              ...task,
+              id: newTaskFromServer.id,
+            };
+          return task;
+        });
+      });
     },
     onSettled() {
       setIsLoading(false);

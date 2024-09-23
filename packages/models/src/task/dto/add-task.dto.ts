@@ -3,4 +3,10 @@ export interface AddTaskRequest {
   listId: string
 }
 
-export interface AddTaskResponse {}
+export interface AddTaskResponse {
+  id: string
+  isDone: boolean
+  listId: string
+  task: string
+  userId: string
+}
