@@ -41,7 +41,7 @@ export default function TaskListItem({ listId, task }: Props) {
         isDarkColorScheme
           ? "border-gray-600 bg-gray-900 shadow-slate-500"
           : "border-gray-400 bg-gray-100 shadow-slate-400",
-        task.id.startsWith(TASK_OPTIMISTIC_ADD_KEY) && "opacity-50",
+        task.id.startsWith(TASK_OPTIMISTIC_ADD_KEY) && "opacity-80",
       )}
       onPress={handlePress}
     >
