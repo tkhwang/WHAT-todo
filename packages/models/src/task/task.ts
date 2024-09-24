@@ -14,3 +14,5 @@ export interface ITask extends ITaskCommon {
   createdAt: Date
   updatedAt: Date
 }
+
+export type TaskType = "todo" | "not-todo"
