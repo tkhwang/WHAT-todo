@@ -2755,6 +2755,13 @@
   dependencies:
     "@radix-ui/react-use-layout-effect" "1.1.0"
 
+"@radix-ui/react-label@^2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@radix-ui/react-label/-/react-label-2.1.0.tgz#3aa2418d70bb242be37c51ff5e51a2adcbc372e3"
+  integrity sha512-peLblDlFw/ngk3UWq0VnYaOLy6agTZZ+MUO/WhVfm14vJGML+xH4FAl2XQGLqdefjNb7ApRg6Yn7U42ZhmYXdw==
+  dependencies:
+    "@radix-ui/react-primitive" "2.0.0"
+
 "@radix-ui/react-presence@1.1.0":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@radix-ui/react-presence/-/react-presence-1.1.0.tgz#227d84d20ca6bfe7da97104b1a8b48a833bfb478"
@@ -2828,6 +2835,28 @@
     "@radix-ui/react-use-controllable-state" "1.1.0"
     "@radix-ui/react-use-previous" "1.1.0"
     "@radix-ui/react-use-size" "1.1.0"
+
+"@radix-ui/react-toggle-group@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@radix-ui/react-toggle-group/-/react-toggle-group-1.1.0.tgz#28714c4d1ff4961a8fd259b1feef58b4cac92f80"
+  integrity sha512-PpTJV68dZU2oqqgq75Uzto5o/XfOVgkrJ9rulVmfTKxWp3HfUjHE6CP/WLRR4AzPX9HWxw7vFow2me85Yu+Naw==
+  dependencies:
+    "@radix-ui/primitive" "1.1.0"
+    "@radix-ui/react-context" "1.1.0"
+    "@radix-ui/react-direction" "1.1.0"
+    "@radix-ui/react-primitive" "2.0.0"
+    "@radix-ui/react-roving-focus" "1.1.0"
+    "@radix-ui/react-toggle" "1.1.0"
+    "@radix-ui/react-use-controllable-state" "1.1.0"
+
+"@radix-ui/react-toggle@1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@radix-ui/react-toggle/-/react-toggle-1.1.0.tgz#1f7697b82917019330a16c6f96f649f46b4606cf"
+  integrity sha512-gwoxaKZ0oJ4vIgzsfESBuSgJNdc0rv12VhHgcqN0TEJmmZixXG/2XpsLK8kzNWYcnaoRIEEQc0bEi3dIvdUpjw==
+  dependencies:
+    "@radix-ui/primitive" "1.1.0"
+    "@radix-ui/react-primitive" "2.0.0"
+    "@radix-ui/react-use-controllable-state" "1.1.0"
 
 "@radix-ui/react-use-callback-ref@1.1.0":
   version "1.1.0"
@@ -3387,6 +3416,15 @@
   dependencies:
     "@rn-primitives/types" "1.0.3"
 
+"@rn-primitives/label@^1.0.4":
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@rn-primitives/label/-/label-1.0.4.tgz#140181749fb0981267bd977cc695b02f0de22c21"
+  integrity sha512-t6UfXkuXp/bk33uvS5Tks6gawTTa4k8hWzrI2i3akrxHoBhg7KTzAMgJN5C5ze5qYK0txIDSxJXTzh25myfkSA==
+  dependencies:
+    "@radix-ui/react-label" "^2.1.0"
+    "@rn-primitives/slot" "1.0.4"
+    "@rn-primitives/types" "1.0.4"
+
 "@rn-primitives/radio-group@^1.0.4":
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/@rn-primitives/radio-group/-/radio-group-1.0.4.tgz#a5937890eb866cbecd2236d5109dc9771f542abd"
@@ -3396,12 +3434,12 @@
     "@rn-primitives/slot" "1.0.4"
     "@rn-primitives/types" "1.0.4"
 
-"@rn-primitives/slot@1.0.3", "@rn-primitives/slot@^1.0.3":
+"@rn-primitives/slot@1.0.3":
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/@rn-primitives/slot/-/slot-1.0.3.tgz#878b488dd7844703eb0b4dbc51c239e1bdb0ca11"
   integrity sha512-sSDYwD2upLQUOva2cmNfaJqZlN+o0E/wa8uXEDEIYj6MJsG/O0k1t0jGXMqLP8BsQ3ZaTtUbqnG9eW/VQFOmdQ==
 
-"@rn-primitives/slot@1.0.4":
+"@rn-primitives/slot@1.0.4", "@rn-primitives/slot@^1.0.4":
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/@rn-primitives/slot/-/slot-1.0.4.tgz#606f6db4ac03df374207a242c43723c1f5af51d1"
   integrity sha512-sB+5xIY3mzphco3EN2JXQ7F7BAhsx1ufj0eP4EBu1uV45SbuEF7Zjg4czfiYftVc69rrPXpIgyK6dnMAD2/+pw==
@@ -3415,15 +3453,30 @@
     "@rn-primitives/slot" "1.0.4"
     "@rn-primitives/types" "1.0.4"
 
-"@rn-primitives/types@1.0.3", "@rn-primitives/types@^1.0.3":
+"@rn-primitives/toggle-group@^1.0.4":
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@rn-primitives/toggle-group/-/toggle-group-1.0.4.tgz#469e035144f82cff8a6a6fc41a164e59f17a9c91"
+  integrity sha512-cQ6WsgooDuZZfd/om1gTmM5sa89IbNOwKSk4CEpK67h9RriTPGf4t7o+5azFDv32hWNUzuC2jEt3FwrKB5nRig==
+  dependencies:
+    "@radix-ui/react-toggle-group" "^1.1.0"
+    "@rn-primitives/slot" "1.0.4"
+    "@rn-primitives/types" "1.0.4"
+    "@rn-primitives/utils" "1.0.4"
+
+"@rn-primitives/types@1.0.3":
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/@rn-primitives/types/-/types-1.0.3.tgz#1d0b084663859a889e5b7359eb2afe62ff311adb"
   integrity sha512-5GY4J6SBN2JosYS/8bvQZOZL+HZk85COaFlNnjiL3efoa9gH+v1dNi0F2gW/Gr0PuGF/xo/z0iOiVc5KrDsAkQ==
 
-"@rn-primitives/types@1.0.4":
+"@rn-primitives/types@1.0.4", "@rn-primitives/types@^1.0.4":
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/@rn-primitives/types/-/types-1.0.4.tgz#0dc50d60449fe62d9262f5577347280840bf98dd"
   integrity sha512-pp5H+IFrZym52/ZKMXUV4YUViX1yLBlSh4DfUgwxOAICOLKThbEXbEEinm0C3NSRzqXLmD/zJZI4pAGlh1J5iA==
+
+"@rn-primitives/utils@1.0.4":
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@rn-primitives/utils/-/utils-1.0.4.tgz#bf00ad9a04f4a0f482d3d246baae016d6e2547fc"
+  integrity sha512-kX/4aq5RJLO859UQ93m0kb7S0cVBLdG/kMwNOQcADhh2u3t8mX6kofcqt78IfQRFPIvOMB/7eiBpy9LyZWbrIA==
 
 "@rnx-kit/chromium-edge-launcher@^1.0.0":
   version "1.0.0"
