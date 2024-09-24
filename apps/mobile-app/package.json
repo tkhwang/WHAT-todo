@@ -36,6 +36,7 @@
     "@rn-primitives/collapsible": "^1.0.3",
     "@rn-primitives/radio-group": "^1.0.4",
     "@rn-primitives/slot": "^1.0.3",
+    "@rn-primitives/switch": "^1.0.4",
     "@rn-primitives/types": "^1.0.3",
     "@tanstack/react-query": "^5.51.21",
     "@whatTodo/models": "*",
