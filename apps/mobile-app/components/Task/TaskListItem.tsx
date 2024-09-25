@@ -12,6 +12,8 @@ import Icon from "@/assets/icons";
 import { getDateWithDayOfWeek } from "@/utils";
 import { TASK_OPTIMISTIC_ADD_KEY } from "@/constants/appConsts";
 
+import TaskTypeIcon from "./TaskTypeIcon";
+
 interface Props {
   listId: string;
   task: ITask;
@@ -51,23 +53,30 @@ export default function TaskListItem({ listId, task }: Props) {
 
         {/* todo description */}
         <View className={"flex-col gap-2 justify-center"}>
-          <Text className={"text-xl font-medium"}>{task.task}</Text>
-          <View className={"flex-row gap-2"}>
-            {task.dueDate && (
-              <View className={"flex-row gap-1 items-center"}>
-                <Icon name={"calendar"} size={18} strokeWidth={1.5} />
-                <Text className={"text-base font-normal text-gray-500"}>
-                  {getDateWithDayOfWeek(task.dueDate, 0)}
-                </Text>
-              </View>
-            )}
-            {task.note && (
-              <View className={"flex-row gap-1 items-center"}>
-                <Icon name={"noteEdit"} size={18} strokeWidth={1.5} />
-                <Text className={"text-base font-normal text-gray-500"}>{"Note"}</Text>
-              </View>
-            )}
+          {/* Task w/ TaskTypeIcon */}
+          <View className={"flex flex-row gap-2  justify-center items-center"}>
+            <TaskTypeIcon taskType={task.taskType} />
+            <Text className={"text-xl font-medium"}>{task.task}</Text>
           </View>
+          {/* Note */}
+          {(task.dueDate || task.note) && (
+            <View className={"flex-row gap-2"}>
+              {task.dueDate && (
+                <View className={"flex-row gap-1 items-center"}>
+                  <Icon name={"calendar"} size={18} strokeWidth={1.5} />
+                  <Text className={"text-base font-normal text-gray-500"}>
+                    {getDateWithDayOfWeek(task.dueDate, 0)}
+                  </Text>
+                </View>
+              )}
+              {task.note && (
+                <View className={"flex-row gap-1 items-center"}>
+                  <Icon name={"noteEdit"} size={18} strokeWidth={1.5} />
+                  <Text className={"text-base font-normal text-gray-500"}>{"Note"}</Text>
+                </View>
+              )}
+            </View>
+          )}
         </View>
       </View>
     </Pressable>
