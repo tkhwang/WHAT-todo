@@ -24,6 +24,7 @@ import PlusSign from "./PlusSign";
 import Task from "./Task";
 import LeftToRightListBullet from "./LeftToRightListBullet";
 import CancelCircle from "./CanelCircle";
+import NoteRemove from "./NoteRemove";
 
 const icons = {
   accountSetting: AccountSetting,
@@ -45,6 +46,7 @@ const icons = {
   leftToRightListBullet: LeftToRightListBullet,
   logout: Logout,
   noteEdit: NoteEdit,
+  noteRemove: NoteRemove,
   plusSign: PlusSign,
   inboxCheck: InboxCheck,
   policeCap: PoliceCap,
