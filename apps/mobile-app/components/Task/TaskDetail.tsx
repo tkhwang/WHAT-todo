@@ -109,7 +109,7 @@ export default function TaskDetail({ listId, taskId }: Props) {
   if (!task || !list) return null;
 
   return (
-    <View className={"flex-1 px-4"}>
+    <View className={"flex flex-1 px-4"}>
       {/* Header */}
       <Header title={t("screen.task.title")} showBackButton onBackPress={handleBackPress} />
       {isPending ? (
@@ -208,11 +208,11 @@ export default function TaskDetail({ listId, taskId }: Props) {
           </Pressable> */}
 
           {/* note */}
-          <View className={"flex-row items-center gap-4"}>
+          <View className={"flex-row items-center gap-4 pr-4"}>
             <Icon name={"noteEdit"} size={26} strokeWidth={1.6} />
             <Textarea
               ref={inputRef}
-              className={"w-full p-4 mr-4"}
+              className={"flex-1 p-4"}
               style={{ marginRight: 16 }}
               placeholder={t("task.note.addNote.placehold")}
               value={note}
@@ -222,6 +222,7 @@ export default function TaskDetail({ listId, taskId }: Props) {
               aria-labelledby={"textareaLabel"}
             />
           </View>
+
           <View className={"flex-1"} />
 
           <AddDueDateBottomSheet
