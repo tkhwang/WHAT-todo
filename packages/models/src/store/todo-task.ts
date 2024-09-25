@@ -1,4 +1,4 @@
-import { ITask } from "../task"
+import { ITask, TaskType } from "../task"
 
 export type TaskStoreState = {
   id: string
@@ -6,6 +6,7 @@ export type TaskStoreState = {
   listId: string
   userId: string
   isDone: boolean
+  taskType: TaskType
   dueDate?: Date
   note?: string
   // status
@@ -17,6 +18,7 @@ export const INIT_TASKSTORE_STATE: TaskStoreState = {
   task: "",
   listId: "",
   userId: "",
+  taskType: "todo",
   isDone: false,
   isLoading: false,
 }

@@ -1,13 +1,6 @@
-import {
-  COLLECTIONS,
-  INIT_TASKSTORE_STATE,
-  ITask,
-  TaskStoreActions,
-  TaskStoreState,
-} from "@whatTodo/models";
+import { INIT_TASKSTORE_STATE, ITask, TaskStoreActions, TaskStoreState } from "@whatTodo/models";
 import { create } from "zustand";
 import uuid from "react-native-uuid";
-import { QueryClient } from "@tanstack/react-query";
 
 import { TASK_OPTIMISTIC_ADD_KEY } from "@/constants/appConsts";
 
@@ -20,6 +13,7 @@ export const useTaskStore = create<TaskStoreState & TaskStoreActions>((set, get)
       listId: task.listId,
       userId: task.userId,
       isDone: task.isDone,
+      taskType: task.taskType,
       isLoading: false,
       ...(task.dueDate && { dueDate: task.dueDate }),
       ...(task.note && { note: task.note }),
@@ -32,6 +26,7 @@ export const useTaskStore = create<TaskStoreState & TaskStoreActions>((set, get)
       listId,
       task: "",
       isDone: false,
+      taskType: "todo",
       isLoading: false,
     });
   },
@@ -39,9 +34,10 @@ export const useTaskStore = create<TaskStoreState & TaskStoreActions>((set, get)
   updateTask: (task: string) => set({ task }),
   setIsLoading: (isLoading: boolean) => set({ isLoading }),
   toggleIsDone: () => set({ isDone: !get().isDone }),
+  toggleTaskType: () => set({ taskType: get().taskType === "todo" ? "not-todo" : "todo" }),
   reset: () => set(INIT_TASKSTORE_STATE),
   saveToFirestore: async (cachedTask: ITask) => {
-    const { task, isDone, listId, userId, dueDate, note } = get();
+    const { task, isDone, listId, userId, dueDate, note, taskType } = get();
     const {
       task: prvTask,
       isDone: prvIsDone,
@@ -49,6 +45,7 @@ export const useTaskStore = create<TaskStoreState & TaskStoreActions>((set, get)
       userId: prvUserId,
       dueDate: prvDueDate,
       note: prvNote,
+      taskType: prvTaskType,
     } = cachedTask;
 
     if (
@@ -57,7 +54,8 @@ export const useTaskStore = create<TaskStoreState & TaskStoreActions>((set, get)
       listId === prvListId &&
       userId === prvUserId &&
       dueDate === prvDueDate &&
-      note === prvNote
+      note === prvNote &&
+      taskType === prvTaskType
     ) {
       return;
     }

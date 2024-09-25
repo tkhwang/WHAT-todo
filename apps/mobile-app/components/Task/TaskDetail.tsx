@@ -2,7 +2,6 @@ import {
   Keyboard,
   KeyboardAvoidingView,
   Platform,
-  Pressable,
   StyleSheet,
   TextInput,
   TouchableOpacity,
@@ -20,7 +19,6 @@ import { useToggleTaskIsDone } from "@/hooks/mutations/useToggleTaskIsDone";
 import { useUpdateTask } from "@/hooks/mutations/useUpdateTask";
 import { useDeleteTask } from "@/hooks/mutations/useDeleteTask";
 import { appTheme } from "@/constants/uiConsts";
-import { getDateWithDayOfWeek } from "@/utils";
 import { useLists } from "@/hooks/queries/useLists";
 import { useTasks } from "@/hooks/queries/useTasks";
 
@@ -29,6 +27,7 @@ import AddDueDateBottomSheet from "./add/AddDueDateBottomSheet";
 import { Textarea } from "../ui/textarea";
 import Header from "../MainLayout/Header";
 import Loading from "../Loading";
+import { Switch } from "../ui/switch";
 
 interface Props {
   listId: string;
@@ -52,6 +51,8 @@ export default function TaskDetail({ listId, taskId }: Props) {
   const today = new Date();
 
   const [checked, setChecked] = useState(false);
+  const [isTodoType, setIsTodoType] = useState(true);
+
   const [note, setNote] = useState("");
   const [dueDate, setDueDate] = useState<Date | null>(null);
 
@@ -78,6 +79,7 @@ export default function TaskDetail({ listId, taskId }: Props) {
       isDone: checked,
       note: note === "" ? undefined : note,
       dueDate: dueDate === null ? undefined : dueDate,
+      taskType: isTodoType ? ("todo" as const) : ("not-todo" as const),
     };
 
     updateTaskMutate(updateTaskRequestDto);
@@ -137,6 +139,56 @@ export default function TaskDetail({ listId, taskId }: Props) {
             <Icon name={"leftToRightListBullet"} size={26} strokeWidth={1.6} />
             <Text className={"text-xl font-normal text-gray-500"}>{t("task.list.title")}</Text>
             <Text className={"text-xl font-normal text-gray-500"}>{list.title}</Text>
+          </View>
+
+          {/* todo type */}
+          <View className={"flex-row items-center gap-2"}>
+            {isTodoType ? (
+              <Icon
+                name={"checkmarkSquare"}
+                size={26}
+                strokeWidth={1.6}
+                color={appTheme.colors.secondary}
+              />
+            ) : (
+              <Icon
+                name={"noteRemove"}
+                size={26}
+                strokeWidth={1.6}
+                color={appTheme.colors.primary}
+              />
+            )}
+            <Text className={"text-xl font-normal text-gray-500"}>{t("task.list.type")}</Text>
+            <View className={"flex flex-row items-center justify-center flex-1 gap-4"}>
+              <View className={"flex flex-row flex-1 gap-2"}>
+                <Text
+                  className={cn(
+                    "flex-1 text-xl text-right",
+                    isTodoType ? "font-normal" : "font-semibold",
+                  )}
+                >
+                  {t("task.list.type.notTodo")}
+                </Text>
+                <Icon name={"noteRemove"} size={26} strokeWidth={1.6} />
+              </View>
+              <Switch
+                className={"flex-1"}
+                checked={isTodoType}
+                onCheckedChange={setIsTodoType}
+                nativeID={"todo"}
+              />
+              <View className={"flex flex-row flex-1 gap-2"}>
+                <Icon name={"checkmarkSquare"} size={26} strokeWidth={1.6} />
+                <Text
+                  className={cn(
+                    "flex-1  text-xl text-left",
+                    isTodoType ? "font-semibold" : "font-normal",
+                  )}
+                >
+                  {t("task.list.type.todo")}
+                </Text>
+              </View>
+            </View>
           </View>
 
           {/* due date */}
