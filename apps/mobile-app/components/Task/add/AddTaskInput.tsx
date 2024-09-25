@@ -39,6 +39,7 @@ export default function AddTaskInput({ inputRef }: Props) {
     const newTaskDto: AddTaskRequest = {
       task,
       listId: currentListId,
+      taskType: "todo",
     };
 
     addTaskMutate(newTaskDto);

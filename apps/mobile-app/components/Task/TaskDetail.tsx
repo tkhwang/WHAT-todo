@@ -79,6 +79,7 @@ export default function TaskDetail({ listId, taskId }: Props) {
       isDone: checked,
       note: note === "" ? undefined : note,
       dueDate: dueDate === null ? undefined : dueDate,
+      taskType: isTodoType ? ("todo" as const) : ("not-todo" as const),
     };
 
     updateTaskMutate(updateTaskRequestDto);
@@ -159,28 +160,34 @@ export default function TaskDetail({ listId, taskId }: Props) {
             )}
             <Text className={"text-xl font-normal text-gray-500"}>{t("task.list.type")}</Text>
             <View className={"flex flex-row items-center justify-center flex-1 gap-4"}>
-              <Text
-                className={cn(
-                  "flex-1 text-xl text-right",
-                  isTodoType ? "font-normal" : "font-semibold",
-                )}
-              >
-                {t("task.list.type.notTodo")}
-              </Text>
+              <View className={"flex flex-row flex-1 gap-2"}>
+                <Text
+                  className={cn(
+                    "flex-1 text-xl text-right",
+                    isTodoType ? "font-normal" : "font-semibold",
+                  )}
+                >
+                  {t("task.list.type.notTodo")}
+                </Text>
+                <Icon name={"noteRemove"} size={26} strokeWidth={1.6} />
+              </View>
               <Switch
                 className={"flex-1"}
                 checked={isTodoType}
                 onCheckedChange={setIsTodoType}
                 nativeID={"todo"}
               />
-              <Text
-                className={cn(
-                  "flex-1  text-xl text-left",
-                  isTodoType ? "font-semibold" : "font-normal",
-                )}
-              >
-                {t("task.list.type.todo")}
-              </Text>
+              <View className={"flex flex-row flex-1 gap-2"}>
+                <Icon name={"checkmarkSquare"} size={26} strokeWidth={1.6} />
+                <Text
+                  className={cn(
+                    "flex-1  text-xl text-left",
+                    isTodoType ? "font-semibold" : "font-normal",
+                  )}
+                >
+                  {t("task.list.type.todo")}
+                </Text>
+              </View>
             </View>
           </View>
 

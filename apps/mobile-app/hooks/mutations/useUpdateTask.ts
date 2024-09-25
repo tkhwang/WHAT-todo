@@ -13,10 +13,20 @@ export function useUpdateTask() {
       const cachedTask = allCachedTasks?.find((task) => task.id === taskId);
       if (!cachedTask) throw new Error(`Task (${taskId}) not found`);
 
-      const { isDone: prvIsDone, dueDate: prvDueDate, note: prvNote } = cachedTask;
-      const { isDone, dueDate, note } = updateTaskRequestDto;
+      const {
+        isDone: prvIsDone,
+        dueDate: prvDueDate,
+        note: prvNote,
+        taskType: prvTaskType,
+      } = cachedTask;
+      const { isDone, dueDate, note, taskType } = updateTaskRequestDto;
 
-      if (isDone === prvIsDone && dueDate === prvDueDate && note === prvNote) {
+      if (
+        isDone === prvIsDone &&
+        dueDate === prvDueDate &&
+        note === prvNote &&
+        prvTaskType === taskType
+      ) {
         console.log(`[+][useUpdateTask] nothing changed and skipped update`);
         return cachedTask;
       }
