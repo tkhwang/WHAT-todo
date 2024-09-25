@@ -40,5 +40,8 @@
   "todo.list.isDone": "Completed Tasks",
   "task.note.addNote.placehold": "Add a note",
   "task.list.title": "List",
+  "task.list.type": "Type",
+  "task.list.type.todo": "Todo",
+  "task.list.type.notTodo": "Not Todo",
   "task.list.priority": "Priority"
 }

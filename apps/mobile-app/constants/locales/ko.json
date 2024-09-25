@@ -40,5 +40,8 @@
   "todo.list.isDone": "완료된 태스크",
   "task.note.addNote.placehold": "메모 추가",
   "task.list.title": "리스트",
+  "task.list.type": "타입",
+  "task.list.type.todo": "할일",
+  "task.list.type.notTodo": "해서는 안되는 일",
   "task.list.priority": "우선순위"
 }
