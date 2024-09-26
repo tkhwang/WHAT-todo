@@ -144,23 +144,19 @@ export default function TaskDetail({ listId, taskId }: Props) {
           {/* todo type */}
           <View className={"flex-row items-center gap-2"}>
             {isTodoType ? (
-              <Icon
-                name={"checkmarkSquare"}
-                size={26}
-                strokeWidth={1.6}
-                color={appTheme.colors.secondary}
-              />
+              <Icon name={"checkmarkSquare"} size={26} strokeWidth={1.6} />
             ) : (
-              <Icon
-                name={"noteRemove"}
-                size={26}
-                strokeWidth={1.6}
-                color={appTheme.colors.primary}
-              />
+              <Icon name={"noteRemove"} size={26} strokeWidth={1.6} />
             )}
             <Text className={"text-xl font-normal text-gray-500"}>{t("task.list.type")}</Text>
             <View className={"flex flex-row items-center justify-center flex-1 gap-4"}>
               <View className={"flex flex-row flex-1 gap-2"}>
+                <Icon
+                  name={"noteRemove"}
+                  size={26}
+                  strokeWidth={1.6}
+                  color={isTodoType ? appTheme.colors.textLight : appTheme.colors.primary}
+                />
                 <Text
                   className={cn(
                     "flex-1 text-xl text-right",
@@ -169,7 +165,6 @@ export default function TaskDetail({ listId, taskId }: Props) {
                 >
                   {t("task.list.type.notTodo")}
                 </Text>
-                <Icon name={"noteRemove"} size={26} strokeWidth={1.6} />
               </View>
               <Switch
                 className={"flex-1"}
@@ -178,7 +173,12 @@ export default function TaskDetail({ listId, taskId }: Props) {
                 nativeID={"todo"}
               />
               <View className={"flex flex-row flex-1 gap-2"}>
-                <Icon name={"checkmarkSquare"} size={26} strokeWidth={1.6} />
+                <Icon
+                  name={"checkmarkSquare"}
+                  size={26}
+                  strokeWidth={1.6}
+                  color={isTodoType ? appTheme.colors.secondary : appTheme.colors.textLight}
+                />
                 <Text
                   className={cn(
                     "flex-1  text-xl text-left",
