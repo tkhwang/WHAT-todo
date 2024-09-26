@@ -21,13 +21,14 @@ import { useDeleteTask } from "@/hooks/mutations/useDeleteTask";
 import { appTheme } from "@/constants/uiConsts";
 import { useLists } from "@/hooks/queries/useLists";
 import { useTasks } from "@/hooks/queries/useTasks";
+import { useTaskStore } from "@/stores/todo";
 
 import { Checkbox } from "../ui/checkbox";
 import AddDueDateBottomSheet from "./add/AddDueDateBottomSheet";
 import { Textarea } from "../ui/textarea";
 import Header from "../MainLayout/Header";
 import Loading from "../Loading";
-import { Switch } from "../ui/switch";
+import TaskTypeSelect from "./TaskTypeSelect";
 
 interface Props {
   listId: string;
@@ -50,45 +51,41 @@ export default function TaskDetail({ listId, taskId }: Props) {
 
   const today = new Date();
 
-  const [checked, setChecked] = useState(false);
-  const [isTodoType, setIsTodoType] = useState(true);
-
-  const [note, setNote] = useState("");
   const [dueDate, setDueDate] = useState<Date | null>(null);
+
+  const { isDone, toggleIsDone, note, loadTask, setNote, taskType, resetTask } = useTaskStore();
 
   const { mutate: toggleTaskIsDoneMutate } = useToggleTaskIsDone();
   const { mutate: updateTaskMutate } = useUpdateTask();
   const { mutate: deleteTaskMutate, isPending } = useDeleteTask();
 
   useEffect(() => {
-    if (task) {
-      setChecked(task.isDone);
-      setNote(task.note ?? "");
-      if (task.dueDate) setDueDate(task.dueDate);
-    }
+    if (task) loadTask(task);
 
     return () => {
-      setNote("");
-      setDueDate(null);
+      resetTask();
     };
-  }, [task]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleBackPress = () => {
     const updateTaskRequestDto = {
       ...task,
-      isDone: checked,
+      isDone,
       note: note === "" ? undefined : note,
       dueDate: dueDate === null ? undefined : dueDate,
-      taskType: isTodoType ? ("todo" as const) : ("not-todo" as const),
+      taskType,
     };
 
     updateTaskMutate(updateTaskRequestDto);
+
+    resetTask();
   };
 
   const handleToggleIsDone = useCallback(() => {
-    setChecked((prv) => !prv);
+    toggleIsDone();
     toggleTaskIsDoneMutate({ taskId });
-  }, [taskId, toggleTaskIsDoneMutate]);
+  }, [taskId, toggleIsDone, toggleTaskIsDoneMutate]);
 
   const handleDelete = () => {
     const requestDto: DeleteTaskRequest = { taskId };
@@ -109,7 +106,7 @@ export default function TaskDetail({ listId, taskId }: Props) {
   if (!task || !list) return null;
 
   return (
-    <View className={"flex-1 px-4"}>
+    <View className={"flex flex-1 px-4"}>
       {/* Header */}
       <Header title={t("screen.task.title")} showBackButton onBackPress={handleBackPress} />
       {isPending ? (
@@ -128,8 +125,8 @@ export default function TaskDetail({ listId, taskId }: Props) {
         <View className={"flex-1 flex-col gap-8 justify-end"}>
           {/* title */}
           <View className={"flex-row pt-4 pl-1 gap-4 items-center"}>
-            <Checkbox checked={checked} onCheckedChange={handleToggleIsDone} />
-            <Text className={cn("text-3xl font-bold", checked ? "line-through" : "")}>
+            <Checkbox checked={isDone} onCheckedChange={handleToggleIsDone} />
+            <Text className={cn("text-3xl font-bold", isDone ? "line-through" : "")}>
               {task.task}
             </Text>
           </View>
@@ -143,52 +140,13 @@ export default function TaskDetail({ listId, taskId }: Props) {
 
           {/* todo type */}
           <View className={"flex-row items-center gap-2"}>
-            {isTodoType ? (
-              <Icon
-                name={"checkmarkSquare"}
-                size={26}
-                strokeWidth={1.6}
-                color={appTheme.colors.secondary}
-              />
+            {taskType === "todo" ? (
+              <Icon name={"checkmarkSquare"} size={26} strokeWidth={1.6} />
             ) : (
-              <Icon
-                name={"noteRemove"}
-                size={26}
-                strokeWidth={1.6}
-                color={appTheme.colors.primary}
-              />
+              <Icon name={"noteRemove"} size={26} strokeWidth={1.6} />
             )}
             <Text className={"text-xl font-normal text-gray-500"}>{t("task.list.type")}</Text>
-            <View className={"flex flex-row items-center justify-center flex-1 gap-4"}>
-              <View className={"flex flex-row flex-1 gap-2"}>
-                <Text
-                  className={cn(
-                    "flex-1 text-xl text-right",
-                    isTodoType ? "font-normal" : "font-semibold",
-                  )}
-                >
-                  {t("task.list.type.notTodo")}
-                </Text>
-                <Icon name={"noteRemove"} size={26} strokeWidth={1.6} />
-              </View>
-              <Switch
-                className={"flex-1"}
-                checked={isTodoType}
-                onCheckedChange={setIsTodoType}
-                nativeID={"todo"}
-              />
-              <View className={"flex flex-row flex-1 gap-2"}>
-                <Icon name={"checkmarkSquare"} size={26} strokeWidth={1.6} />
-                <Text
-                  className={cn(
-                    "flex-1  text-xl text-left",
-                    isTodoType ? "font-semibold" : "font-normal",
-                  )}
-                >
-                  {t("task.list.type.todo")}
-                </Text>
-              </View>
-            </View>
+            <TaskTypeSelect />
           </View>
 
           {/* due date */}
@@ -208,11 +166,11 @@ export default function TaskDetail({ listId, taskId }: Props) {
           </Pressable> */}
 
           {/* note */}
-          <View className={"flex-row items-center gap-4"}>
+          <View className={"flex-row items-center gap-4 pr-4"}>
             <Icon name={"noteEdit"} size={26} strokeWidth={1.6} />
             <Textarea
               ref={inputRef}
-              className={"w-full p-4 mr-4"}
+              className={"flex-1 p-4"}
               style={{ marginRight: 16 }}
               placeholder={t("task.note.addNote.placehold")}
               value={note}
@@ -222,6 +180,7 @@ export default function TaskDetail({ listId, taskId }: Props) {
               aria-labelledby={"textareaLabel"}
             />
           </View>
+
           <View className={"flex-1"} />
 
           <AddDueDateBottomSheet

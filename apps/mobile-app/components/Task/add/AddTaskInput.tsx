@@ -7,10 +7,10 @@ import { useAtomValue } from "jotai";
 import Icon from "@/assets/icons";
 import Input from "@/components/Input";
 import { useTaskStore } from "@/stores/todo";
-import Loading from "@/components/Loading";
-import { appTheme } from "@/constants/uiConsts";
 import { useAddTask } from "@/hooks/mutations/useAddTask";
 import { currentListIdAtom } from "@/states/list";
+
+import TaskTypeSelect from "../TaskTypeSelect";
 
 interface Props {
   inputRef: RefObject<TextInput>;
@@ -22,14 +22,16 @@ export default function AddTaskInput({ inputRef }: Props) {
   const currentListId = useAtomValue(currentListIdAtom);
 
   const [showButttons, setShowButttons] = useState(false);
-  const { task, isLoading, updateTask, reset } = useTaskStore();
+
+  const { task, taskType, setTask, resetTask } = useTaskStore();
+
   const { mutate: addTaskMutate } = useAddTask();
 
   const onChangeTask = useCallback(
     (task: string) => {
-      updateTask(task);
+      setTask(task);
     },
-    [updateTask],
+    [setTask],
   );
 
   const handleSubmitTask = useCallback(() => {
@@ -39,14 +41,14 @@ export default function AddTaskInput({ inputRef }: Props) {
     const newTaskDto: AddTaskRequest = {
       task,
       listId: currentListId,
-      taskType: "todo",
+      taskType,
     };
 
     addTaskMutate(newTaskDto);
     setShowButttons(false);
 
-    reset();
-  }, [addTaskMutate, currentListId, reset, task]);
+    resetTask();
+  }, [addTaskMutate, currentListId, resetTask, task, taskType]);
 
   const handleFocus = () => {
     setShowButttons(true);
@@ -74,9 +76,13 @@ export default function AddTaskInput({ inputRef }: Props) {
       />
       {showButttons && (
         <View className={"flex-row gap-6 mx-2"}>
-          <Icon name={"calendar"} size={22} strokeWidth={1.5} />
-          <Icon name={"alertCircle"} size={22} strokeWidth={1.5} />
-          <Icon name={"noteEdit"} size={22} strokeWidth={1.5} />
+          {/* <Icon name={"calendar"} size={22} strokeWidth={1.5} /> */}
+          {/* <Icon name={"alertCircle"} size={22} strokeWidth={1.5} /> */}
+          {/* <Icon name={"noteEdit"} size={22} strokeWidth={1.5} /> */}
+
+          <View className={"flex flex-1 p-4 justify-center items-center rounded-2xl"}>
+            <TaskTypeSelect />
+          </View>
         </View>
       )}
     </View>
