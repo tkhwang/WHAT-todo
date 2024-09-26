@@ -22,14 +22,16 @@ export default function AddTaskInput({ inputRef }: Props) {
   const currentListId = useAtomValue(currentListIdAtom);
 
   const [showButttons, setShowButttons] = useState(false);
-  const { task, isLoading, updateTask, reset } = useTaskStore();
+
+  const { task, taskType, setTask, resetTask } = useTaskStore();
+
   const { mutate: addTaskMutate } = useAddTask();
 
   const onChangeTask = useCallback(
     (task: string) => {
-      updateTask(task);
+      setTask(task);
     },
-    [updateTask],
+    [setTask],
   );
 
   const handleSubmitTask = useCallback(() => {
@@ -39,14 +41,14 @@ export default function AddTaskInput({ inputRef }: Props) {
     const newTaskDto: AddTaskRequest = {
       task,
       listId: currentListId,
-      taskType: "todo",
+      taskType,
     };
 
     addTaskMutate(newTaskDto);
     setShowButttons(false);
 
-    reset();
-  }, [addTaskMutate, currentListId, reset, task]);
+    resetTask();
+  }, [addTaskMutate, currentListId, resetTask, task, taskType]);
 
   const handleFocus = () => {
     setShowButttons(true);
