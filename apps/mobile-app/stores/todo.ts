@@ -31,10 +31,11 @@ export const useTaskStore = create<TaskStoreState & TaskStoreActions>((set, get)
     });
   },
   setDueDate: (dueDate: Date) => set({ dueDate }),
-  updateTask: (task: string) => set({ task }),
+  setTask: (task: string) => set({ task }),
+  setTaskType: (isTodoType: boolean) => set({ taskType: isTodoType ? "todo" : "not-todo" }),
+  setNote: (note: string) => set({ note }),
   setIsLoading: (isLoading: boolean) => set({ isLoading }),
   toggleIsDone: () => set({ isDone: !get().isDone }),
-  toggleTaskType: () => set({ taskType: get().taskType === "todo" ? "not-todo" : "todo" }),
   reset: () => set(INIT_TASKSTORE_STATE),
   saveToFirestore: async (cachedTask: ITask) => {
     const { task, isDone, listId, userId, dueDate, note, taskType } = get();
