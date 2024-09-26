@@ -7,10 +7,10 @@ import { useAtomValue } from "jotai";
 import Icon from "@/assets/icons";
 import Input from "@/components/Input";
 import { useTaskStore } from "@/stores/todo";
-import Loading from "@/components/Loading";
-import { appTheme } from "@/constants/uiConsts";
 import { useAddTask } from "@/hooks/mutations/useAddTask";
 import { currentListIdAtom } from "@/states/list";
+
+import TaskTypeSelect from "../TaskTypeSelect";
 
 interface Props {
   inputRef: RefObject<TextInput>;
@@ -74,9 +74,13 @@ export default function AddTaskInput({ inputRef }: Props) {
       />
       {showButttons && (
         <View className={"flex-row gap-6 mx-2"}>
-          <Icon name={"calendar"} size={22} strokeWidth={1.5} />
-          <Icon name={"alertCircle"} size={22} strokeWidth={1.5} />
-          <Icon name={"noteEdit"} size={22} strokeWidth={1.5} />
+          {/* <Icon name={"calendar"} size={22} strokeWidth={1.5} /> */}
+          {/* <Icon name={"alertCircle"} size={22} strokeWidth={1.5} /> */}
+          {/* <Icon name={"noteEdit"} size={22} strokeWidth={1.5} /> */}
+
+          <View className={"flex flex-1 p-4 justify-center items-center rounded-2xl"}>
+            <TaskTypeSelect />
+          </View>
         </View>
       )}
     </View>
