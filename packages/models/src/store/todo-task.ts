@@ -18,20 +18,21 @@ export const INIT_TASKSTORE_STATE: TaskStoreState = {
   task: "",
   listId: "",
   userId: "",
+  note: "",
   taskType: "todo",
   isDone: false,
   isLoading: false,
 }
 
 export type TaskStoreActions = {
-  load: (task: ITask) => void
+  loadTask: (task: ITask) => void
   new: (userId: string, listId: string) => void
   setTask: (task: string) => void
-  setTaskType: (isTodoType: boolean) => void
+  setTaskType: (taskType: TaskType) => void
   setNote: (note: string) => void
   setDueDate: (dueDate: Date) => void
   toggleIsDone: () => void
-  reset: () => void
+  resetTask: () => void
   saveToFirestore: (cachedTask: ITask) => Promise<void>
   // status
   setIsLoading: (isLoading: boolean) => void
