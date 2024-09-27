@@ -26,24 +26,24 @@ export const useTaskStore = create<TaskStoreState & TaskStoreActions>((set, get)
       ...(task.note && { note: task.note }),
     });
   },
-  new: (userId: string, listId: string) => {
+  newTask: (userId: string, listId: string, taskType: TaskType) => {
     set({
       id: `${TASK_OPTIMISTIC_ADD_KEY}-${uuid.v4()}`,
       userId,
       listId,
       task: "",
       isDone: false,
-      taskType: "todo",
+      taskType,
       isLoading: false,
     });
   },
-  setDueDate: (dueDate: Date) => set({ dueDate }),
+  resetTask: () => set(INIT_TASKSTORE_STATE),
+  toggleIsDone: () => set({ isDone: !get().isDone }),
   setTask: (task: string) => set({ task }),
   setTaskType: (taskType: TaskType) => set({ taskType }),
+  setDueDate: (dueDate: Date) => set({ dueDate }),
   setNote: (note: string) => set({ note }),
   setIsLoading: (isLoading: boolean) => set({ isLoading }),
-  toggleIsDone: () => set({ isDone: !get().isDone }),
-  resetTask: () => set(INIT_TASKSTORE_STATE),
   saveToFirestore: async (cachedTask: ITask) => {
     const { task, isDone, listId, userId, dueDate, note, taskType } = get();
     const {
