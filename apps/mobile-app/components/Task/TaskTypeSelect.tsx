@@ -5,6 +5,8 @@ import { TaskType } from "@whatTodo/models";
 import { Text } from "@/components/ui/text";
 import Icon from "@/assets/icons";
 import { appTheme } from "@/constants/uiConsts";
+import { useColorScheme } from "@/lib/useColorScheme";
+import { cn } from "@/lib/utils";
 
 import { Switch } from "../ui/switch";
 
@@ -16,10 +18,17 @@ interface Props {
 export default function TaskTypeSelect({ taskType, toggleTaskType }: Props) {
   const { t } = useTranslation();
 
+  const { isDarkColorScheme } = useColorScheme();
+
   return (
     <View className={"flex flex-row items-center justify-center gap-1"}>
       {/* Left: DON'T DO */}
-      <View className={"flex flex-row items-center gap-1 bg-gray-200 px-3 py-2 rounded-full"}>
+      <View
+        className={cn(
+          "flex flex-row items-center gap-1 px-3 py-2 rounded-full",
+          isDarkColorScheme ? "bg-gray-800" : "bg-gray-200",
+        )}
+      >
         <Text className={"text-sm font-normal"}>{t("task.list.type.notTodo")}</Text>
         <Icon
           name={"noteRemove"}
@@ -33,7 +42,12 @@ export default function TaskTypeSelect({ taskType, toggleTaskType }: Props) {
       <Switch checked={taskType === "todo"} onCheckedChange={toggleTaskType} nativeID={"todo"} />
 
       {/* RIGHT: TODO */}
-      <View className={"flex flex-row items-center gap-1 bg-gray-200 px-3 py-2 rounded-full"}>
+      <View
+        className={cn(
+          "flex flex-row items-center gap-1 px-3 py-2 rounded-full",
+          isDarkColorScheme ? "bg-gray-800" : "bg-gray-200",
+        )}
+      >
         <Icon
           name={"checkmarkSquare"}
           size={26}
