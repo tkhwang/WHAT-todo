@@ -3,13 +3,12 @@ import { AddTaskRequest, AddTaskResponse, COLLECTIONS, ITask } from "@whatTodo/m
 import { AxiosResponse } from "axios";
 
 import { httpClient } from "@/utils/httpClient";
-import { useTaskStore } from "@/stores/todo";
 import { TASK_OPTIMISTIC_ADD_KEY } from "@/constants/appConsts";
 
 export function useAddTask() {
   const queryClient = useQueryClient();
 
-  const { setIsLoading } = useTaskStore();
+  // const { setIsLoading } = useTaskStore();
 
   return useMutation({
     mutationFn: async (requestDto: AddTaskRequest) => {
@@ -20,7 +19,7 @@ export function useAddTask() {
       return response.data;
     },
     async onMutate(newTask: AddTaskRequest) {
-      setIsLoading(true);
+      // setIsLoading(true);
 
       await queryClient.cancelQueries({ queryKey: [COLLECTIONS.TASKS] });
 
@@ -56,7 +55,7 @@ export function useAddTask() {
       });
     },
     onSettled() {
-      setIsLoading(false);
+      // setIsLoading(false);
     },
   });
 }
