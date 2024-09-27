@@ -25,6 +25,7 @@ export const useTaskStore = create<TaskStoreState & TaskStoreActions>((set, get)
       ...(task.dueDate && { dueDate: task.dueDate }),
       ...(task.note && { note: task.note }),
     });
+    console.log(`[+][useTaskStore] loadTask: ${JSON.stringify(task)}`);
   },
   newTask: (userId: string, listId: string, taskType: TaskType) => {
     set({
@@ -36,45 +37,16 @@ export const useTaskStore = create<TaskStoreState & TaskStoreActions>((set, get)
       taskType,
       isLoading: false,
     });
+    console.log(`[+][useTaskStore] newTask`);
   },
-  resetTask: () => set(INIT_TASKSTORE_STATE),
+  resetTask: () => {
+    set(INIT_TASKSTORE_STATE);
+    console.log(`[+][useTaskStore] resetTask`);
+  },
   toggleIsDone: () => set({ isDone: !get().isDone }),
   setTask: (task: string) => set({ task }),
   setTaskType: (taskType: TaskType) => set({ taskType }),
   setDueDate: (dueDate: Date) => set({ dueDate }),
   setNote: (note: string) => set({ note }),
   setIsLoading: (isLoading: boolean) => set({ isLoading }),
-  saveToFirestore: async (cachedTask: ITask) => {
-    const { task, isDone, listId, userId, dueDate, note, taskType } = get();
-    const {
-      task: prvTask,
-      isDone: prvIsDone,
-      listId: prvListId,
-      userId: prvUserId,
-      dueDate: prvDueDate,
-      note: prvNote,
-      taskType: prvTaskType,
-    } = cachedTask;
-
-    if (
-      task === prvTask &&
-      isDone === prvIsDone &&
-      listId === prvListId &&
-      userId === prvUserId &&
-      dueDate === prvDueDate &&
-      note === prvNote &&
-      taskType === prvTaskType
-    ) {
-      return;
-    }
-
-    const updatedTask = {
-      task,
-      isDone,
-      listId,
-      userId,
-      ...(dueDate && { dueDate }),
-      ...(note && { note }),
-    };
-  },
 }));

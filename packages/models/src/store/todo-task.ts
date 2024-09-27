@@ -33,5 +33,4 @@ export type TaskStoreActions = {
   setNote: (note: string) => void
   setDueDate: (dueDate: Date) => void
   setIsLoading: (isLoading: boolean) => void
-  saveToFirestore: (cachedTask: ITask) => Promise<void>
 }
