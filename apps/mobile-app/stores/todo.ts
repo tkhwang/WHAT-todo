@@ -13,7 +13,7 @@ import { TASK_OPTIMISTIC_ADD_KEY } from "@/constants/appConsts";
 export const useTaskStore = create<TaskStoreState & TaskStoreActions>((set, get) => ({
   ...INIT_TASKSTORE_STATE,
   loadTask: (task: ITask) => {
-    set({
+    const loadedTask = {
       id: task.id,
       task: task.task,
       listId: task.listId,
@@ -24,8 +24,9 @@ export const useTaskStore = create<TaskStoreState & TaskStoreActions>((set, get)
       isLoading: false,
       ...(task.dueDate && { dueDate: task.dueDate }),
       ...(task.note && { note: task.note }),
-    });
-    console.log(`[+][useTaskStore] loadTask: ${JSON.stringify(task)}`);
+    };
+    set(loadedTask);
+    console.log(`[+][useTaskStore] loadTask: ${JSON.stringify(loadedTask)}`);
   },
   newTask: (userId: string, listId: string, taskType: TaskType) => {
     set({
