@@ -10,18 +10,16 @@ import {
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
-import { DeleteTaskRequest, IList, ITask } from "@whatTodo/models";
+import { DeleteTaskRequest, IList, ITask, TaskType } from "@whatTodo/models";
 
 import { Text } from "@/components/ui/text";
 import Icon from "@/assets/icons";
 import { cn } from "@/lib/utils";
-import { useToggleTaskIsDone } from "@/hooks/mutations/useToggleTaskIsDone";
 import { useUpdateTask } from "@/hooks/mutations/useUpdateTask";
 import { useDeleteTask } from "@/hooks/mutations/useDeleteTask";
 import { appTheme } from "@/constants/uiConsts";
 import { useLists } from "@/hooks/queries/useLists";
 import { useTasks } from "@/hooks/queries/useTasks";
-import { useTaskStore } from "@/stores/todo";
 
 import { Checkbox } from "../ui/checkbox";
 import AddDueDateBottomSheet from "./add/AddDueDateBottomSheet";
@@ -52,21 +50,28 @@ export default function TaskDetail({ listId, taskId }: Props) {
   const today = new Date();
 
   const [dueDate, setDueDate] = useState<Date | null>(null);
+  const [isDone, setIsDone] = useState(false);
+  const [note, setNote] = useState("");
+  const [taskType, setTaskType] = useState<TaskType>("todo");
 
-  const { isDone, toggleIsDone, note, loadTask, setNote, taskType, resetTask } = useTaskStore();
+  const toggleIsDone = useCallback(() => {
+    setIsDone((prv) => !prv);
+  }, []);
 
-  const { mutate: toggleTaskIsDoneMutate } = useToggleTaskIsDone();
+  const toggleTaskType = useCallback(() => {
+    setTaskType((prv) => (prv === "todo" ? "not-todo" : "todo"));
+  }, []);
+
   const { mutate: updateTaskMutate } = useUpdateTask();
   const { mutate: deleteTaskMutate, isPending } = useDeleteTask();
 
   useEffect(() => {
-    if (task) loadTask(task);
-
-    return () => {
-      resetTask();
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    if (task) {
+      setIsDone(task.isDone);
+      setNote(task.note ?? "");
+      setTaskType(task.taskType);
+    }
+  }, [task]);
 
   const handleBackPress = () => {
     const updateTaskRequestDto = {
@@ -78,14 +83,7 @@ export default function TaskDetail({ listId, taskId }: Props) {
     };
 
     updateTaskMutate(updateTaskRequestDto);
-
-    resetTask();
   };
-
-  const handleToggleIsDone = useCallback(() => {
-    toggleIsDone();
-    toggleTaskIsDoneMutate({ taskId });
-  }, [taskId, toggleIsDone, toggleTaskIsDoneMutate]);
 
   const handleDelete = () => {
     const requestDto: DeleteTaskRequest = { taskId };
@@ -125,7 +123,7 @@ export default function TaskDetail({ listId, taskId }: Props) {
         <View className={"flex-1 flex-col gap-8 justify-end"}>
           {/* title */}
           <View className={"flex-row pt-4 pl-1 gap-4 items-center"}>
-            <Checkbox checked={isDone} onCheckedChange={handleToggleIsDone} />
+            <Checkbox checked={isDone} onCheckedChange={toggleIsDone} />
             <Text className={cn("text-3xl font-bold", isDone ? "line-through" : "")}>
               {task.task}
             </Text>
@@ -146,7 +144,7 @@ export default function TaskDetail({ listId, taskId }: Props) {
               <Icon name={"noteRemove"} size={26} strokeWidth={1.6} />
             )}
             <Text className={"text-xl font-normal text-gray-500"}>{t("task.list.type")}</Text>
-            <TaskTypeSelect />
+            <TaskTypeSelect taskType={taskType} toggleTaskType={toggleTaskType} />
           </View>
 
           {/* due date */}
