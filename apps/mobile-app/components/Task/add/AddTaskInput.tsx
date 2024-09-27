@@ -1,12 +1,11 @@
 import React, { RefObject, useCallback, useState } from "react";
 import { TextInput, View } from "react-native";
 import { useTranslation } from "react-i18next";
-import { AddTaskRequest } from "@whatTodo/models";
+import { AddTaskRequest, TaskType } from "@whatTodo/models";
 import { useAtomValue } from "jotai";
 
 import Icon from "@/assets/icons";
 import Input from "@/components/Input";
-import { useTaskStore } from "@/stores/todo";
 import { useAddTask } from "@/hooks/mutations/useAddTask";
 import { currentListIdAtom } from "@/states/list";
 
@@ -23,7 +22,12 @@ export default function AddTaskInput({ inputRef }: Props) {
 
   const [showButttons, setShowButttons] = useState(false);
 
-  const { task, taskType, setTask, resetTask } = useTaskStore();
+  const [task, setTask] = useState("");
+  const [taskType, setTaskType] = useState<TaskType>("todo");
+
+  const toggleTaskType = useCallback(() => {
+    setTaskType((prv) => (prv === "todo" ? "not-todo" : "todo"));
+  }, []);
 
   const { mutate: addTaskMutate } = useAddTask();
 
@@ -47,8 +51,8 @@ export default function AddTaskInput({ inputRef }: Props) {
     addTaskMutate(newTaskDto);
     setShowButttons(false);
 
-    resetTask();
-  }, [addTaskMutate, currentListId, resetTask, task, taskType]);
+    setTask("");
+  }, [addTaskMutate, currentListId, task, taskType]);
 
   const handleFocus = () => {
     setShowButttons(true);
@@ -80,8 +84,8 @@ export default function AddTaskInput({ inputRef }: Props) {
           {/* <Icon name={"alertCircle"} size={22} strokeWidth={1.5} /> */}
           {/* <Icon name={"noteEdit"} size={22} strokeWidth={1.5} /> */}
 
-          <View className={"flex flex-1 p-4 justify-center items-center rounded-2xl"}>
-            <TaskTypeSelect />
+          <View className={"flex flex-1 justify-center items-center rounded-2xl"}>
+            <TaskTypeSelect taskType={taskType} toggleTaskType={toggleTaskType} />
           </View>
         </View>
       )}
