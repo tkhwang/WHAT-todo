@@ -40,16 +40,12 @@ export function useAddTask() {
     onError(error, variables, context) {
       queryClient.setQueryData([COLLECTIONS.TASKS], context?.previousTasks);
     },
-    onSuccess(newTaskFromServer, variables, context) {
+    onSuccess(newTaskFromServer, newTask, context) {
       queryClient.setQueryData([COLLECTIONS.TASKS], (old: ITask[]) => {
         if (!old) return [];
 
-        return old.map((task) => {
-          if (task.id.startsWith(TASK_OPTIMISTIC_ADD_KEY))
-            return {
-              ...task,
-              id: newTaskFromServer.id,
-            };
+        return old.map((task: ITask) => {
+          if (task === newTask) return newTaskFromServer;
           return task;
         });
       });
