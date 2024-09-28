@@ -1,13 +1,14 @@
 import { useQuery } from "@tanstack/react-query";
 import { useAtomValue } from "jotai";
 import { COLLECTIONS, IList } from "@whatTodo/models";
-import { useEffect } from "react";
 import firestore from "@react-native-firebase/firestore";
+import { useEffect } from "react";
 
 import { myUserIdAtom } from "@/states/me";
-import { FirestoreSnapshotListener } from "@/firestore/FirestoreSnapshotListner";
 import { IListFS } from "@/types";
+import { FirestoreSnapshotListener } from "@/firestore/FirestoreSnapshotListner";
 
+import { getUserListsQueryOptions } from "./queryOptions/getUserListsQueryOptions";
 import { useFirestore } from "../useFirestore";
 
 export function useUserLists() {
@@ -63,8 +64,7 @@ export function useUserLists() {
   );
 
   return useQuery<IList[]>({
-    queryKey: [COLLECTIONS.USERS, myUserId, COLLECTIONS.LISTS],
-    queryFn: () => new Promise((): void => {}),
+    ...getUserListsQueryOptions(myUserId),
     enabled: !!myUserId,
     staleTime: Infinity,
   });

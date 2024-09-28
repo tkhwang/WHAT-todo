@@ -1,6 +1,7 @@
 import { Image, View } from "react-native";
 import { useRouter } from "expo-router";
 import { useEffect } from "react";
+import { usePrefetchQuery, useQueryClient } from "@tanstack/react-query";
 
 import ScreenWrapper from "@/components/MainLayout/ScreenWrapper";
 import { Text } from "@/components/ui/text";
@@ -10,8 +11,9 @@ import { useLists } from "@/hooks/queries/useLists";
 export default function SplashScreen() {
   const router = useRouter();
 
-  // TODO: enhance by using prefetch
-  useLists();
+  // prefetch queries
+  const { data: lists } = useLists();
+  console.log("🚀 ~ SplashScreen ~ lists:", lists);
 
   useEffect(() => {
     setTimeout(() => {

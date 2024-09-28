@@ -1,11 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
-import { useEffect, useMemo } from "react";
-import firestore from "@react-native-firebase/firestore";
 import { COLLECTIONS, IList } from "@whatTodo/models";
+import firestore from "@react-native-firebase/firestore";
+import { useEffect, useMemo } from "react";
 
 import { IListFS } from "@/types";
 
 import { useUserLists } from "./useUserLists";
+import { getListsQueryOptions } from "./queryOptions/getListsQueryOptions";
 import { useFirestore } from "../useFirestore";
 
 export function useLists<TSelected = IList[]>(select?: (lists: IList[]) => TSelected) {
@@ -43,8 +44,7 @@ export function useLists<TSelected = IList[]>(select?: (lists: IList[]) => TSele
   );
 
   return useQuery<IList[], Error, TSelected>({
-    queryKey: [COLLECTIONS.LISTS],
-    queryFn: () => new Promise((): void => {}),
+    ...getListsQueryOptions(),
     select,
     enabled: !!userLists && userLists.length > 0,
     staleTime: Infinity,

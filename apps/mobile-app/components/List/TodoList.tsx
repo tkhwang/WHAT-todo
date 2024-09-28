@@ -29,6 +29,7 @@ export function TodoList({ listId }: Props) {
   );
 
   const { data: tasks } = useTasks(listId);
+  console.log("🚀 ~ TodoList ~ tasks.length:", tasks?.length);
 
   const activeTasks = useMemo(() => {
     return (tasks ?? []).filter((task) => !task.isDone).sort((a, b) => b.updatedAt - a.updatedAt);
