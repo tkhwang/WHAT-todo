@@ -3,7 +3,7 @@ import { useSetAtom } from "jotai";
 import React, { useCallback, useEffect, useMemo } from "react";
 import { IList, ITask } from "@whatTodo/models";
 import { useTranslation } from "react-i18next";
-import { SwipeListView } from "react-native-swipe-list-view";
+import { SwipeListView, SwipeRow } from "react-native-swipe-list-view";
 
 import { Text } from "@/components/ui/text";
 import { currentListIdAtom } from "@/states/list";
@@ -119,6 +119,9 @@ export function TodoList({ listId }: Props) {
           renderHiddenItem={renderHiddenItem}
           leftOpenValue={75}
           rightOpenValue={-75}
+          previewRowKey={"0"}
+          previewOpenValue={-40}
+          previewOpenDelay={3000}
         />
       </View>
 
