@@ -1,14 +1,16 @@
-import { FlatList, View } from "react-native";
+import { FlatList, StyleSheet, TouchableOpacity, View } from "react-native";
 import { useSetAtom } from "jotai";
-import { useCallback, useEffect, useMemo } from "react";
+import React, { useCallback, useEffect, useMemo } from "react";
 import { IList, ITask } from "@whatTodo/models";
 import { useTranslation } from "react-i18next";
+import { SwipeListView } from "react-native-swipe-list-view";
 
 import { Text } from "@/components/ui/text";
 import { currentListIdAtom } from "@/states/list";
 import Icon from "@/assets/icons";
 import { useTasks } from "@/hooks/queries/useTasks";
 import { useLists } from "@/hooks/queries/useLists";
+import { appTheme } from "@/constants/uiConsts";
 
 import TaskListItem from "../Task/TaskListItem";
 import { TaskListDoneItem } from "../Task/TaskListDoneItem";
@@ -54,6 +56,21 @@ export function TodoList({ listId }: Props) {
     [listId],
   );
 
+  const renderHiddenItem = (data, rowMap) => (
+    <View
+      className={
+        "relative flex flex-1 flex-row justify-between items-center pl-4 rounded-xl bg-gray-300"
+      }
+    >
+      <TouchableOpacity style={[styles.backRightBtn, styles.backRightBtnLeft]}>
+        <Text className={"text-white"}>{"Complete"}</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={[styles.backRightBtn, styles.backRightBtnRight]}>
+        <Text className={"text-white"}>{"Delete"}</Text>
+      </TouchableOpacity>
+    </View>
+  );
+
   const renderDoneItem = useCallback(
     ({ item }: { item: ITask }) => {
       return <TaskListDoneItem listId={listId} task={item} />;
@@ -74,12 +91,15 @@ export function TodoList({ listId }: Props) {
 
       {/* tasks list */}
       <View style={{ flexShrink: 1 }}>
-        <FlatList
+        <SwipeListView
           data={activeTasks}
           renderItem={renderItem}
           keyExtractor={(item) => `tasks-list-${item.id}`}
           ItemSeparatorComponent={ItemSeparator}
           contentContainerStyle={{ paddingVertical: 4 }}
+          renderHiddenItem={renderHiddenItem}
+          leftOpenValue={75}
+          rightOpenValue={-75}
         />
       </View>
 
@@ -107,3 +127,25 @@ export function TodoList({ listId }: Props) {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  backRightBtn: {
+    alignItems: "center",
+    bottom: 0,
+    justifyContent: "center",
+    position: "absolute",
+    top: 0,
+    width: 75,
+    borderRadius: 16,
+  },
+  backRightBtnLeft: {
+    // backgroundColor: "blue",
+    backgroundColor: appTheme.colors.secondary,
+    left: 0,
+  },
+  backRightBtnRight: {
+    // backgroundColor: "red",
+    backgroundColor: appTheme.colors.primary,
+    right: 0,
+  },
+});
