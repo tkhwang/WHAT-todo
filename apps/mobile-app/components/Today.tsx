@@ -14,6 +14,7 @@ dayjs.extend(isoWeek);
 
 export default function Today() {
   const { data: lists } = useLists();
+  console.log("🚀 ~ Today ~ lists:", lists);
 
   const renderItem = useCallback(({ item, index }: { item: IList; index: number }) => {
     return <TodoList listId={item.id} key={`todolist-${index}`} />;
