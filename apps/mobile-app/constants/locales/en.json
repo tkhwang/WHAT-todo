@@ -44,6 +44,7 @@
   "task.list.type.todo": "DO",
   "task.list.type.notTodo": "DON'T DO",
   "task.list.priority": "Priority",
-  "task.list.swipe.left": "Complete",
+  "task.list.swipe.left.complete": "Complete",
+  "task.list.swipe.left.uncomplete": "Uncomplete",
   "task.list.swipe.right": "Delete"
 }

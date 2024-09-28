@@ -44,6 +44,7 @@
   "task.list.type.todo": "할일",
   "task.list.type.notTodo": "안 할일",
   "task.list.priority": "우선순위",
-  "task.list.swipe.left": "완료",
+  "task.list.swipe.left.complete": "완료",
+  "task.list.swipe.left.uncomplete": "미완료",
   "task.list.swipe.right": "삭제"
 }
