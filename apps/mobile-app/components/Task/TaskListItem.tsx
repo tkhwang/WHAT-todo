@@ -1,6 +1,6 @@
 import { ITask } from "@whatTodo/models";
 import { Pressable, View } from "react-native";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "expo-router";
 
 import { Text } from "@/components/ui/text";
@@ -26,6 +26,10 @@ export default function TaskListItem({ listId, task }: Props) {
   const [checked, setChecked] = useState(false);
   const { mutate: toggleTaskIsDoneMutate } = useToggleTaskIsDone();
 
+  useEffect(() => {
+    setChecked(task.isDone);
+  }, [task.isDone]);
+
   const handlePressCheck = () => {
     toggleTaskIsDoneMutate({ taskId: task.id });
     setChecked(!checked);
@@ -42,6 +46,7 @@ export default function TaskListItem({ listId, task }: Props) {
         isDarkColorScheme
           ? "border-gray-600 bg-gray-900 shadow-slate-500"
           : "border-gray-400 bg-gray-100 shadow-slate-400",
+        task.isDone ? "border-dashed" : "",
         task.id.startsWith(TASK_OPTIMISTIC_ADD_KEY) && "opacity-80",
       )}
       onPress={handlePress}
@@ -55,7 +60,9 @@ export default function TaskListItem({ listId, task }: Props) {
           {/* Task w/ TaskTypeIcon */}
           <View className={"flex flex-row gap-2  justify-center items-center"}>
             <TaskTypeIcon taskType={task.taskType} />
-            <Text className={"text-xl font-medium"}>{task.task}</Text>
+            <Text className={cn("text-xl font-medium", task.isDone ? "line-through" : "")}>
+              {task.task}
+            </Text>
           </View>
           {/* Note */}
           {(task.dueDate || task.note) && (

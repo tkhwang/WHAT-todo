@@ -1,9 +1,9 @@
-import { FlatList, StyleSheet, TouchableOpacity, View } from "react-native";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { useSetAtom } from "jotai";
 import React, { useCallback, useEffect, useMemo } from "react";
 import { IList, ITask } from "@whatTodo/models";
 import { useTranslation } from "react-i18next";
-import { SwipeListView, SwipeRow } from "react-native-swipe-list-view";
+import { SwipeListView } from "react-native-swipe-list-view";
 
 import { Text } from "@/components/ui/text";
 import { currentListIdAtom } from "@/states/list";
@@ -79,13 +79,15 @@ export function TodoList({ listId }: Props) {
         style={[styles.backRightBtn, styles.backRightBtnLeft]}
         onPress={() => handleClickComplete(item)}
       >
-        <Text className={"text-white"}>{t("task.list.swipe.left")}</Text>
+        <Text className={"text-white text-sm"}>
+          {item.isDone ? t("task.list.swipe.left.uncomplete") : t("task.list.swipe.left.complete")}
+        </Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={[styles.backRightBtn, styles.backRightBtnRight]}
         onPress={() => handleClickDelete(item)}
       >
-        <Text className={"text-white"}>{t("task.list.swipe.right")}</Text>
+        <Text className={"text-white text-sm"}>{t("task.list.swipe.right")}</Text>
       </TouchableOpacity>
     </View>
   );
@@ -101,7 +103,7 @@ export function TodoList({ listId }: Props) {
   if (!list) return null;
 
   return (
-    <View className={"flex-1"}>
+    <View className={"flex flex-1"}>
       {/* List Title */}
       <View className={"flex-row gap-4 items-center py-4"}>
         <Icon name={"leftToRightListBullet"} size={26} strokeWidth={2} />
@@ -113,7 +115,7 @@ export function TodoList({ listId }: Props) {
         <SwipeListView
           data={activeTasks}
           renderItem={renderItem}
-          keyExtractor={(item) => `tasks-list-${item.id}`}
+          keyExtractor={(item) => `tasks-list-todo-${item.id}`}
           ItemSeparatorComponent={ItemSeparator}
           contentContainerStyle={{ paddingVertical: 4 }}
           renderHiddenItem={renderHiddenItem}
@@ -127,8 +129,8 @@ export function TodoList({ listId }: Props) {
 
       {/* Completed */}
       {completedTasks && completedTasks.length > 0 && (
-        <View className={"flex-row gap-4 items-center py-4"}>
-          <Collapsible>
+        <View className={"flex-row gap-4 items-center py-4 w-full"}>
+          <Collapsible className={"w-full"}>
             <CollapsibleTrigger className={"py-4"}>
               <View className={"flex-row gap-4 items-center"}>
                 <Icon name={"checkList"} size={26} strokeWidth={2} />
@@ -136,11 +138,18 @@ export function TodoList({ listId }: Props) {
               </View>
             </CollapsibleTrigger>
             <CollapsibleContent>
-              <FlatList
+              <SwipeListView
                 data={completedTasks}
-                renderItem={renderDoneItem}
-                keyExtractor={(item) => `tasks-list-${item.id}`}
+                renderItem={renderItem}
+                keyExtractor={(item) => `tasks-list-completed-${item.id}`}
                 ItemSeparatorComponent={ItemSeparator}
+                contentContainerStyle={{ paddingVertical: 4 }}
+                renderHiddenItem={renderHiddenItem}
+                leftOpenValue={80}
+                rightOpenValue={-80}
+                previewRowKey={"0"}
+                previewOpenValue={-40}
+                previewOpenDelay={3000}
               />
             </CollapsibleContent>
           </Collapsible>
@@ -157,7 +166,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     position: "absolute",
     top: 0,
-    width: 75,
+    width: 80,
     borderRadius: 16,
   },
   backRightBtnLeft: {
