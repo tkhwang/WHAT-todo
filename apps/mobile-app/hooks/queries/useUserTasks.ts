@@ -1,18 +1,17 @@
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { COLLECTIONS, ITask } from "@whatTodo/models";
 import { useAtomValue } from "jotai";
-import { useEffect } from "react";
 import firestore from "@react-native-firebase/firestore";
+import { useEffect } from "react";
 
 import { myUserIdAtom } from "@/states/me";
-import { FirestoreSnapshotListener } from "@/firestore/FirestoreSnapshotListner";
 import { ITaskFS } from "@/types";
+import { FirestoreSnapshotListener } from "@/firestore/FirestoreSnapshotListner";
 
+import { getUserTasksQueryOptions } from "./queryOptions/getUserTasksQueryOptions";
 import { useFirestore } from "../useFirestore";
 
 export function useUserTasks(listId: string) {
-  const queryClient = useQueryClient();
-
   const myUserId = useAtomValue(myUserIdAtom);
 
   const { convert, getDocs, setDocs } = useFirestore<ITaskFS, ITask>();
@@ -62,12 +61,11 @@ export function useUserTasks(listId: string) {
           FirestoreSnapshotListener.set(stringKey, unsubscribe);
         });
     },
-    [convert, getDocs, listId, myUserId, queryClient, setDocs],
+    [convert, getDocs, listId, myUserId, setDocs],
   );
 
   return useQuery<ITask[]>({
-    queryKey: [COLLECTIONS.USERS, myUserId, COLLECTIONS.TASKS, listId],
-    queryFn: () => new Promise((): void => {}),
+    ...getUserTasksQueryOptions(myUserId, listId),
     enabled: !!myUserId,
     staleTime: Infinity,
   });

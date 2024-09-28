@@ -6,6 +6,7 @@ import firestore from "@react-native-firebase/firestore";
 import { ITaskFS } from "@/types";
 
 import { useUserTasks } from "./useUserTasks";
+import { getTasksQueryOptions } from "./queryOptions/getTasksQueryOptions";
 import { useFirestore } from "../useFirestore";
 
 export function useTasks<TSelected = ITask[]>(
@@ -47,8 +48,7 @@ export function useTasks<TSelected = ITask[]>(
   );
 
   return useQuery<ITask[], Error, TSelected>({
-    queryKey: [COLLECTIONS.TASKS],
-    queryFn: () => new Promise((): void => {}),
+    ...getTasksQueryOptions(),
     select,
     enabled: !!taskIds && taskIds.length > 0,
     staleTime: Infinity,
