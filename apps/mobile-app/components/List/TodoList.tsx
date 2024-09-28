@@ -79,13 +79,13 @@ export function TodoList({ listId }: Props) {
         style={[styles.backRightBtn, styles.backRightBtnLeft]}
         onPress={() => handleClickComplete(item)}
       >
-        <Text className={"text-white"}>{"Complete"}</Text>
+        <Text className={"text-white"}>{t("task.list.swipe.left")}</Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={[styles.backRightBtn, styles.backRightBtnRight]}
         onPress={() => handleClickDelete(item)}
       >
-        <Text className={"text-white"}>{"Delete"}</Text>
+        <Text className={"text-white"}>{t("task.list.swipe.right")}</Text>
       </TouchableOpacity>
     </View>
   );
