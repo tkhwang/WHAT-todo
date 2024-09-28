@@ -24,11 +24,10 @@ export default function TaskListItem({ listId, task }: Props) {
 
   const { isDarkColorScheme } = useColorScheme();
   const [checked, setChecked] = useState(false);
+  const { mutate: toggleTaskIsDoneMutate } = useToggleTaskIsDone();
 
-  const { mutateAsync: toggleTaskIsDoneMutation } = useToggleTaskIsDone();
-
-  const handlePressCheck = async () => {
-    await toggleTaskIsDoneMutation({ taskId: task.id });
+  const handlePressCheck = () => {
+    toggleTaskIsDoneMutate({ taskId: task.id });
     setChecked(!checked);
   };
 
