@@ -35,7 +35,8 @@ export default function PublicSignupScreen() {
   const [authSignUpPlatform, setAuthSignUpPlatform] = useAtom(authSignUpPlatformAtom);
 
   const [{ state: authNameReducerState, name, nameError }, dispatchAuthName] = useAuthNameReducer();
-  const [{ state: authVerifyIdReducerState, id, idError }, dispatchAuthVerifyId] = useAuthVerifyIdReducer();
+  const [{ state: authVerifyIdReducerState, id, idError }, dispatchAuthVerifyId] =
+    useAuthVerifyIdReducer();
 
   const { mutateAsync: authVerifyIdMutationAsync } = useAuthVerifyId();
   const { mutateAsync: authSignupMutationAsync } = useAuthSignup();
@@ -58,8 +59,10 @@ export default function PublicSignupScreen() {
    *  ActionButton
    */
   const actionButtonState = useMemo(() => {
-    if (authNameReducerState === "READY" && authVerifyIdReducerState === "VERIFIED") return "read-to-register";
-    if (authNameReducerState === "READY" && authVerifyIdReducerState === "READY") return "read-to-check-id";
+    if (authNameReducerState === "READY" && authVerifyIdReducerState === "VERIFIED")
+      return "read-to-register";
+    if (authNameReducerState === "READY" && authVerifyIdReducerState === "READY")
+      return "read-to-check-id";
 
     setIsIdLoading(false);
     return "not-ready";
@@ -187,7 +190,9 @@ export default function PublicSignupScreen() {
                   loading={isIdLoading}
                   buttonStyle={{
                     backgroundColor:
-                      actionButtonState === "not-ready" ? appTheme.colors.gray : appTheme.colors.secondary,
+                      actionButtonState === "not-ready"
+                        ? appTheme.colors.gray
+                        : appTheme.colors.secondary,
                   }}
                 />
               )}
