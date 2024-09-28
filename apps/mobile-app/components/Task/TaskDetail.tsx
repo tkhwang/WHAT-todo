@@ -11,6 +11,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import { DeleteTaskRequest, IList, ITask, TaskType } from "@whatTodo/models";
+import { useRouter } from "expo-router";
 
 import { Text } from "@/components/ui/text";
 import Icon from "@/assets/icons";
@@ -34,6 +35,7 @@ interface Props {
 }
 
 export default function TaskDetail({ listId, taskId }: Props) {
+  const router = useRouter();
   const { t } = useTranslation();
 
   const { data: list } = useLists<IList | undefined>((lists: IList[]) =>
@@ -63,7 +65,7 @@ export default function TaskDetail({ listId, taskId }: Props) {
   }, []);
 
   const { mutate: updateTaskMutate } = useUpdateTask();
-  const { mutate: deleteTaskMutate, isPending } = useDeleteTask();
+  const { mutate: deleteTaskMutate, isPending } = useDeleteTask(() => router.back());
 
   useEffect(() => {
     if (task) {

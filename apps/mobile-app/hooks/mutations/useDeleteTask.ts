@@ -1,12 +1,10 @@
 import { AxiosResponse } from "axios";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useRouter } from "expo-router";
 import { COLLECTIONS, DeleteTaskRequest, DeleteTaskResponse, ITask } from "@whatTodo/models";
 
 import { httpClient } from "@/utils/httpClient";
 
-export function useDeleteTask() {
-  const router = useRouter();
+export function useDeleteTask(onDelete?: () => void) {
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -22,7 +20,7 @@ export function useDeleteTask() {
       const deletedTasks = (previousValue ?? []).filter((task) => task.id !== taskId);
       queryClient.setQueryData([COLLECTIONS.TASKS], deletedTasks);
 
-      router.back();
+      if (onDelete) onDelete();
 
       return { previousValue };
     },
