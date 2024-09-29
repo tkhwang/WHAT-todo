@@ -2,6 +2,7 @@
 import { View } from "react-native";
 import { useTranslation } from "react-i18next";
 import { useRef, useState } from "react";
+import { useDebounce } from "@uidotdev/usehooks";
 
 import { Text } from "@/components/ui/text";
 import ScreenWrapper from "@/components/MainLayout/ScreenWrapper";
@@ -15,9 +16,11 @@ export default function SendTodo() {
   const { t } = useTranslation();
 
   const inputRef = useRef(null);
-  const [searchText, setSearchText] = useState("");
 
-  const { data: searchedUsers } = useSearchUsers(searchText);
+  const [searchText, setSearchText] = useState("");
+  const debouncedSearchText = useDebounce(searchText, 400);
+
+  const { data: searchedUsers } = useSearchUsers(debouncedSearchText);
 
   const onBackPress = () => setSearchText("");
 
