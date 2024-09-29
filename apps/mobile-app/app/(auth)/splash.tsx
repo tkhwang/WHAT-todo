@@ -1,17 +1,19 @@
 import { Image, View } from "react-native";
 import { useRouter } from "expo-router";
 import { useEffect } from "react";
-import { usePrefetchQuery, useQueryClient } from "@tanstack/react-query";
 
 import ScreenWrapper from "@/components/MainLayout/ScreenWrapper";
 import { Text } from "@/components/ui/text";
 import { EAS_UPDATE_VERSION_SEMVER } from "@/constants/appConsts";
 import { useLists } from "@/hooks/queries/useLists";
+import { useUserLists } from "@/hooks/queries/useUserLists";
 
 export default function SplashScreen() {
   const router = useRouter();
 
   // prefetch queries
+  const { data: userLists } = useUserLists();
+  console.log("🚀 ~ SplashScreen ~ userLists:", userLists);
   const { data: lists } = useLists();
   console.log("🚀 ~ SplashScreen ~ lists:", lists);
 
