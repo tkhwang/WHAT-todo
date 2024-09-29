@@ -33,4 +33,8 @@ export class UsersService {
   async findById(id: string) {
     return this.firebaseUserRepository.findUserById(id);
   }
+
+  async findUserByText(searchText: string) {
+    return this.firebaseUserRepository.findUserByText(searchText);
+  }
 }
