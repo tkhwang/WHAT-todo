@@ -6,7 +6,10 @@ import { useTranslation } from "react-i18next";
 type ActionAuthVerifyIdUpdate = { type: "update"; id: string };
 type ActionAuthVerifyIdVerify = { type: "verify"; id: string };
 type ActionAuthVerifyIdDuplicate = { type: "duplicate"; id: string };
-export type ActionAuthVerifyId = ActionAuthVerifyIdUpdate | ActionAuthVerifyIdVerify | ActionAuthVerifyIdDuplicate;
+export type ActionAuthVerifyId =
+  | ActionAuthVerifyIdUpdate
+  | ActionAuthVerifyIdVerify
+  | ActionAuthVerifyIdDuplicate;
 
 // state
 export type StateAuthVerifyIdNames = "SHORT" | "READY" | "LONG" | "DUPLICATE" | "VERIFIED";
@@ -19,7 +22,10 @@ export interface StateAuthVerifyId {
 export function useAuthVerifyIdReducer() {
   const { t } = useTranslation();
 
-  function getNextStateAndError(action: ActionAuthVerifyId): { state: StateAuthVerifyIdNames; idError: string } {
+  function getNextStateAndError(action: ActionAuthVerifyId): {
+    state: StateAuthVerifyIdNames;
+    idError: string;
+  } {
     const { type, id: idText } = action;
 
     if (type === "duplicate") return { state: "DUPLICATE", idError: t("auth.id.error.duplicate") };
@@ -30,7 +36,10 @@ export function useAuthVerifyIdReducer() {
     return { state: "READY", idError: "" };
   }
 
-  const authVerifyIdReducer = (current: StateAuthVerifyId, action: ActionAuthVerifyId): StateAuthVerifyId => {
+  const authVerifyIdReducer = (
+    current: StateAuthVerifyId,
+    action: ActionAuthVerifyId,
+  ): StateAuthVerifyId => {
     const currentState = current.state;
     const { state: nextState, idError } = getNextStateAndError(action);
 

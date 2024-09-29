@@ -22,6 +22,7 @@
   "auth.id.error.short": "아이디는 3자 이상이어야 합니다",
   "auth.id.error.long": "아이디는 32자 이하여야 합니다",
   "auth.id.error.duplicate": "ID가 이미 사용중입니다.",
+  "expert.menu.send": "투두 보내기",
   "screen.profile.title": "프로필",
   "screen.profile.logout.title": "확인",
   "screen.profile.logout.description": "정말로 로그아웃 하시겠습니까 ?",
@@ -46,5 +47,8 @@
   "task.list.priority": "우선순위",
   "task.list.swipe.left.complete": "완료",
   "task.list.swipe.left.uncomplete": "미완료",
-  "task.list.swipe.right": "삭제"
+  "task.list.swipe.right": "삭제",
+  "title.expert.sendTodo": "투두 보내기",
+  "title.expert.sendTodo.select.user.text": "To",
+  "title.expert.sendTodo.searchText.placeholder": "Enter text of user's name, id text"
 }

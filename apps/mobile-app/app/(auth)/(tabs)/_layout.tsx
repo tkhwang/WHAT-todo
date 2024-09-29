@@ -55,6 +55,12 @@ export default function TabLayout() {
           tabBarButton: () => null, // This hides the screen from the tab bar
         }}
       />
+      <Tabs.Screen
+        name={"sendTodo"}
+        options={{
+          tabBarButton: () => null, // This hides the screen from the tab bar
+        }}
+      />
     </Tabs>
   );
 }

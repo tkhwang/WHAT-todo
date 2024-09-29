@@ -67,6 +67,40 @@ export class FirestoreUserRepository {
     }
   }
 
+  async findUserByText(searchText: string) {
+    const query = this.#userCollection.where(
+      firestore.FieldPath.documentId(),
+      '!=',
+      'dummy',
+    );
+
+    const nameQuery = query
+      .where('name', '>=', searchText)
+      .where('name', '<=', searchText + '\uf8ff');
+
+    const emailQuery = query
+      .where('email', '>=', searchText)
+      .where('email', '<=', searchText + '\uf8ff');
+
+    const whatTodoIdQuery = query
+      .where('whatTodoId', '>=', searchText)
+      .where('whatTodoId', '<=', searchText + '\uf8ff');
+
+    const [nameResults, emailResults, whatTodoIdResults] = await Promise.all([
+      nameQuery.get(),
+      emailQuery.get(),
+      whatTodoIdQuery.get(),
+    ]);
+
+    const results = new Set([
+      ...nameResults.docs,
+      ...emailResults.docs,
+      ...whatTodoIdResults.docs,
+    ]);
+
+    return Array.from(results).map((doc) => doc.data());
+  }
+
   async addUserTodo(
     userId: string,
     todoId: string,

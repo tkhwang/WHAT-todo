@@ -15,7 +15,12 @@ interface Props {
   onBackPress?: () => void;
 }
 
-export default function Header({ title, showBackButton = false, marginBottom = 10, onBackPress }: Props) {
+export default function Header({
+  title,
+  showBackButton = false,
+  marginBottom = 10,
+  onBackPress,
+}: Props) {
   const router = useRouter();
 
   return (
@@ -43,7 +48,6 @@ const styles = StyleSheet.create({
   title: {
     fontSize: hp(2.7),
     fontWeight: appTheme.fonts.semibold,
-    // color: appTheme.colors.textDark,
   },
   BackButton: {
     position: "absolute",
