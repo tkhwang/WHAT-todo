@@ -11,6 +11,7 @@ import Input from "@/components/Input";
 import Icon from "@/assets/icons";
 import { useSearchUsers } from "@/hooks/queries/useSearchUsers";
 import { IUserFS } from "@/types";
+import { SEARCH_USER_INPUT_DEBOUNCE_TIME } from "@/constants/appConsts";
 
 export default function SendTodo() {
   const { t } = useTranslation();
@@ -18,7 +19,7 @@ export default function SendTodo() {
   const inputRef = useRef(null);
 
   const [searchText, setSearchText] = useState("");
-  const debouncedSearchText = useDebounce(searchText, 400);
+  const debouncedSearchText = useDebounce(searchText, SEARCH_USER_INPUT_DEBOUNCE_TIME);
 
   const { data: searchedUsers } = useSearchUsers(debouncedSearchText);
 
@@ -44,13 +45,17 @@ export default function SendTodo() {
           fontSize={18}
         />
         <View className={"flex flex-col"}>
-          {(searchedUsers ?? []).map((user: IUserFS, index: number) => (
-            <View key={index} className={"flex py-2"}>
-              <Text key={`searched-user-name-${index}-${user.id}`}>{user.name}</Text>
-              <Text key={`searched-user-email-${index}-${user.id}`}>{user.email}</Text>
-              <Text key={`searched-user-whatTodoId-${index}-${user.id}`}>{user.whatTodoId}</Text>
-            </View>
-          ))}
+          {searchText
+            ? (searchedUsers ?? []).map((user: IUserFS, index: number) => (
+                <View key={index} className={"flex py-2"}>
+                  <Text key={`searched-user-name-${index}-${user.id}`}>{user.name}</Text>
+                  <Text key={`searched-user-email-${index}-${user.id}`}>{user.email}</Text>
+                  <Text key={`searched-user-whatTodoId-${index}-${user.id}`}>
+                    {user.whatTodoId}
+                  </Text>
+                </View>
+              ))
+            : null}
         </View>
       </View>
     </ScreenWrapper>
