@@ -48,5 +48,7 @@
   "task.list.swipe.left.complete": "Complete",
   "task.list.swipe.left.uncomplete": "Uncomplete",
   "task.list.swipe.right": "Delete",
-  "title.expert.sendTodo": "Send Todo"
+  "title.expert.sendTodo": "Send Todo",
+  "title.expert.sendTodo.select.user.text": "받을 유저",
+  "title.expert.sendTodo.searchText.placeholder": "유저의 이름, ID 텍스트를 입력"
 }

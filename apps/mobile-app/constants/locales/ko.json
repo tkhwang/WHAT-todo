@@ -48,5 +48,7 @@
   "task.list.swipe.left.complete": "완료",
   "task.list.swipe.left.uncomplete": "미완료",
   "task.list.swipe.right": "삭제",
-  "title.expert.sendTodo": "투두 보내기"
+  "title.expert.sendTodo": "투두 보내기",
+  "title.expert.sendTodo.select.user.text": "To",
+  "title.expert.sendTodo.searchText.placeholder": "Enter text of user's name, id text"
 }
