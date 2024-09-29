@@ -22,6 +22,7 @@
   "auth.id.error.short": "ID must be at least 3 characters",
   "auth.id.error.long": "ID must be less than 32 characters",
   "auth.id.error.duplicate": "ID already exists",
+  "expert.menu.send": "Send Todo",
   "screen.profile.title": "Profile",
   "screen.profile.logout.title": "Confirm",
   "screen.profile.logout.description": "Are you sure you want to logout?",
