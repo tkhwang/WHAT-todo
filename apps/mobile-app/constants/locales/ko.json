@@ -47,5 +47,6 @@
   "task.list.priority": "우선순위",
   "task.list.swipe.left.complete": "완료",
   "task.list.swipe.left.uncomplete": "미완료",
-  "task.list.swipe.right": "삭제"
+  "task.list.swipe.right": "삭제",
+  "title.expert.sendTodo": "투두 보내기"
 }

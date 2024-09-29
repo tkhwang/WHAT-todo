@@ -47,5 +47,6 @@
   "task.list.priority": "Priority",
   "task.list.swipe.left.complete": "Complete",
   "task.list.swipe.left.uncomplete": "Uncomplete",
-  "task.list.swipe.right": "Delete"
+  "task.list.swipe.right": "Delete",
+  "title.expert.sendTodo": "Send Todo"
 }
