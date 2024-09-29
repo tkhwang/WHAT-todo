@@ -4,7 +4,7 @@ import { APIS } from "@whatTodo/models";
 import { httpClient } from "@/utils";
 
 const getUsersBySearchText = async (searchText?: string) => {
-  if (!searchText) return [];
+  if (searchText === undefined || searchText == null) return [];
 
   const { data } = await httpClient.get(`/users/search?searchText=${searchText}`);
   return data;
