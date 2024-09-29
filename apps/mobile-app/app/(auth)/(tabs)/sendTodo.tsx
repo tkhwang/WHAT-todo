@@ -1,15 +1,16 @@
 import { View } from "react-native";
+import { useTranslation } from "react-i18next";
 
-import MainHeader from "@/components/MainLayout/MainHeader";
 import ScreenWrapper from "@/components/MainLayout/ScreenWrapper";
-import { Text } from "@/components/ui/text";
+import Header from "@/components/MainLayout/Header";
 
 export default function SendTodo() {
+  const { t } = useTranslation();
+
   return (
     <ScreenWrapper>
-      <MainHeader />
-      <View className={"flex flex-1 justify-center items-center"}>
-        <Text>{"SendTodo"}</Text>
+      <View className={"flex flex-1 flex-col p-4"}>
+        <Header title={t("title.expert.sendTodo")} showBackButton />
       </View>
     </ScreenWrapper>
   );
