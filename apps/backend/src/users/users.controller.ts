@@ -1,4 +1,4 @@
-import { Controller, Get, Query } from '@nestjs/common';
+import { Controller, Get, Param, Query } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { Auth } from 'src/auth/auth.decorator';
 
@@ -8,7 +8,7 @@ export class UsersController {
 
   @Get('search')
   @Auth()
-  async findUserByText(@Query() { searchText }: { searchText: string }) {
+  async findUserByText(@Query('searchText') searchText: string) {
     return this.usersService.findUserByText(searchText);
   }
 }
