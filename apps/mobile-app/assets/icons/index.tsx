@@ -25,6 +25,8 @@ import Task from "./Task";
 import LeftToRightListBullet from "./LeftToRightListBullet";
 import CancelCircle from "./CanelCircle";
 import NoteRemove from "./NoteRemove";
+import Passport from "./Passport";
+import MailAtSign from "./MailAtSign";
 
 const icons = {
   accountSetting: AccountSetting,
@@ -45,8 +47,10 @@ const icons = {
   home: Home,
   leftToRightListBullet: LeftToRightListBullet,
   logout: Logout,
+  mailAtSign: MailAtSign,
   noteEdit: NoteEdit,
   noteRemove: NoteRemove,
+  passport: Passport,
   plusSign: PlusSign,
   inboxCheck: InboxCheck,
   policeCap: PoliceCap,

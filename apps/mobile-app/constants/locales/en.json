@@ -27,6 +27,7 @@
   "screen.profile.logout.title": "Confirm",
   "screen.profile.logout.description": "Are you sure you want to logout?",
   "screen.task.title": "Task",
+  "sendTodo.cta.completeUsers-and-compose-todos": "Complete to select users",
   "todo.add.task": "Add a Task",
   "todo.add.title": "Add todo",
   "todo.add.placehold": "Todo Name",
@@ -49,6 +50,6 @@
   "task.list.swipe.left.uncomplete": "Uncomplete",
   "task.list.swipe.right": "Delete",
   "title.expert.sendTodo": "Send Todo",
-  "title.expert.sendTodo.select.user.text": "받을 유저",
-  "title.expert.sendTodo.searchText.placeholder": "유저의 이름, ID 텍스트를 입력"
+  "title.expert.sendTodo.select.user.text": "To",
+  "title.expert.sendTodo.searchText.placeholder": "Enter text of user's name, id text"
 }

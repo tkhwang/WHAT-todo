@@ -92,13 +92,23 @@ export class FirestoreUserRepository {
       whatTodoIdQuery.get(),
     ]);
 
-    const results = new Set([
+    const results = [
       ...nameResults.docs,
       ...emailResults.docs,
       ...whatTodoIdResults.docs,
-    ]);
+    ];
 
-    return Array.from(results).map((doc) => doc.data());
+    const uniqueResults = {};
+    results.forEach((doc) => {
+      if (uniqueResults[doc.id] === undefined) {
+        uniqueResults[doc.id] = {
+          id: doc.id,
+          ...doc.data(),
+        };
+      }
+    });
+
+    return Object.values(uniqueResults);
   }
 
   async addUserTodo(

@@ -1,4 +1,12 @@
-import { Pressable, PressableProps, StyleSheet, Text, TextProps, View, ViewProps } from "react-native";
+import {
+  Pressable,
+  PressableProps,
+  StyleSheet,
+  Text,
+  TextProps,
+  View,
+  ViewProps,
+} from "react-native";
 
 import { appTheme } from "@/constants/uiConsts";
 import { hp } from "@/helpers/common";
@@ -10,10 +18,10 @@ interface Props {
   textStyle: TextProps;
   title: string;
   onPress: () => void;
-  color: string;
-  disabled: boolean;
-  loading: boolean;
-  hasShadow: boolean;
+  color?: string;
+  disabled?: boolean;
+  loading?: boolean;
+  hasShadow?: boolean;
 }
 
 export default function Button({
@@ -43,7 +51,11 @@ export default function Button({
   }
 
   return (
-    <Pressable onPress={onPress} disabled={disabled} style={[styles.button, buttonStyle, hasShadow && shadowStyle]}>
+    <Pressable
+      onPress={onPress}
+      disabled={disabled}
+      style={[styles.button, buttonStyle, hasShadow && shadowStyle]}
+    >
       <Text style={[styles.text, textStyle]}>{title}</Text>
     </Pressable>
   );
