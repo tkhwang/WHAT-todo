@@ -1,12 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
 import { APIS } from "@whatTodo/models";
 
+import { IUserFS } from "@/types";
 import { httpClient } from "@/utils";
 
 const getUsersBySearchText = async (searchText?: string) => {
   if (searchText === undefined || searchText == null) return [];
 
-  const { data } = await httpClient.get(`/users/search?searchText=${searchText}`);
+  const { data } = await httpClient.get<IUserFS[]>(`/users/search?searchText=${searchText}`);
   return data;
 };
 
