@@ -25,8 +25,8 @@ import Task from "./Task";
 import LeftToRightListBullet from "./LeftToRightListBullet";
 import CancelCircle from "./CanelCircle";
 import NoteRemove from "./NoteRemove";
-import MailAtSign from "./MainAtSign";
 import Passport from "./Passport";
+import MailAtSign from "./MailAtSign";
 
 const icons = {
   accountSetting: AccountSetting,
