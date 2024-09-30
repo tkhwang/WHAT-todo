@@ -98,7 +98,10 @@ export class FirestoreUserRepository {
       ...whatTodoIdResults.docs,
     ]);
 
-    return Array.from(results).map((doc) => doc.data());
+    return Array.from(results).map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
   }
 
   async addUserTodo(
