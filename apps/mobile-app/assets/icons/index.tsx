@@ -27,11 +27,13 @@ import CancelCircle from "./CanelCircle";
 import NoteRemove from "./NoteRemove";
 import Passport from "./Passport";
 import MailAtSign from "./MailAtSign";
+import AiChemistry from "./AiChemistry";
 
 const icons = {
   accountSetting: AccountSetting,
   add: Add,
   addCircle: AddCircle,
+  aiChemistry: AiChemistry,
   alertCircle: AlertCircle,
   arrowLeft: ArrowLeft,
   arrowRight: ArrowRight,

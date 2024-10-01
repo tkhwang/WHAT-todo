@@ -39,7 +39,7 @@ export default function TabLayout() {
         name={"expert"}
         options={{
           title: t("app.screen.expert"),
-          tabBarIcon: ({ color, focused }) => <TabBarIcon name={"inboxCheck"} color={color} />,
+          tabBarIcon: ({ color, focused }) => <TabBarIcon name={"aiChemistry"} color={color} />,
         }}
       />
       <Tabs.Screen

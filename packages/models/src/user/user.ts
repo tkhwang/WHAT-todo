@@ -1,3 +1,5 @@
+export type UserType = "user" | "expert" | "supervisor"
+
 export interface IUserCommon {
   id: string
   name: string

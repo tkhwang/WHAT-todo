@@ -9,14 +9,19 @@ import { appTheme } from "@/constants/uiConsts";
 import Input from "../Input";
 import SearchUserLists from "./search/SearchUserLists";
 import Button from "../Button/Button";
+import UserTypeSwitch from "./UserTypeSwitch";
 
 interface Props {
   searchText: string;
   setSearchText: Dispatch<SetStateAction<string>>;
   searchedUsers?: IUserFS[];
+  userType: "user" | "supervisor";
+  toggleUserType: () => void;
   selectedUsers: IUserFS[];
   setSelectedUsers: Dispatch<SetStateAction<IUserFS[]>>;
-  setAreUsersSelected: Dispatch<SetStateAction<boolean>>;
+  selectedSupervisors: IUserFS[];
+  setSelectedSupervisors: Dispatch<SetStateAction<IUserFS[]>>;
+  setAreUsersSelectionDone: Dispatch<SetStateAction<boolean>>;
 }
 
 export default function SearchAndSelectUsers({
@@ -25,14 +30,17 @@ export default function SearchAndSelectUsers({
   searchedUsers,
   selectedUsers,
   setSelectedUsers,
-  setAreUsersSelected,
+  setSelectedSupervisors,
+  setAreUsersSelectionDone,
+  userType,
+  toggleUserType,
 }: Props) {
   const { t } = useTranslation();
 
   const inputRef = useRef(null);
 
   const handlePressToCompleteToUsers = () => {
-    setAreUsersSelected(true);
+    setAreUsersSelectionDone(true);
   };
 
   return (
@@ -48,15 +56,24 @@ export default function SearchAndSelectUsers({
         fontSize={18}
       />
 
+      {/* UserType select switch */}
+      <View className={"flex flex-row items-center w-full justify-center"}>
+        <UserTypeSwitch userType={userType} toggleUserType={toggleUserType} />
+      </View>
+
       {/* Searched User */}
       <SearchUserLists
         searchText={searchText}
+        setSearchText={setSearchText}
+        userType={userType}
         searchedUsers={searchedUsers}
         setSelectedUsers={setSelectedUsers}
+        setSelectedSupervisors={setSelectedSupervisors}
       />
 
       <View className={"flex flex-1"} />
 
+      {/* Button CTA */}
       <Button
         title={t("sendTodo.cta.completeUsers-and-compose-todos")}
         color={appTheme.colors.primary}
