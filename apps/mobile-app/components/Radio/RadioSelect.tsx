@@ -37,7 +37,7 @@ export default function RadioSelect({
         onValueChange={(label) => {
           setSwitchState(label);
         }}
-        className={"gap-3 flex flex-row"}
+        className={"gap-4 flex flex-row"}
       >
         <RadioGroupItemWithLabel
           value={truthyStateText}

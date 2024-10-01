@@ -2,26 +2,29 @@ import { useTranslation } from "react-i18next";
 
 import Icon from "@/assets/icons";
 
-import RadioSwitch from "../Switch/RadioSwitch";
+import RadioSelect from "../Radio/RadioSelect";
 
 interface Props {
   userType: "user" | "supervisor";
-  toggleUserType: () => void;
+  setUserType: (userType: "user" | "supervisor") => void;
 }
 
-export default function UserTypeSwitch({ userType, toggleUserType }: Props) {
+export default function UserTypeSwitch({ userType, setUserType }: Props) {
   const { t } = useTranslation();
 
   return (
-    <RadioSwitch
-      switchState={userType === "user"}
-      toggleSwitchState={toggleUserType}
+    <RadioSelect
+      switchState={userType}
+      // @ts-expect-error : type error : string vs const union
+      setSwitchState={setUserType}
       switchStateNativeId={"userType"}
       // truthy
-      truthyText={t("sendTodo.user.type.user")}
+      truthyStateText={"user"}
+      truthyDisplayText={t("sendTodo.user.type.user")}
       TruthyIcon={<Icon name={"user"} size={26} strokeWidth={1.6} />}
       // falsy
-      falseText={t("sendTodo.user.type.supervisor")}
+      falseStateText={"supervisor"}
+      falseDisplayText={t("sendTodo.user.type.supervisor")}
       FalsyIcon={<Icon name={"policeCap"} size={26} strokeWidth={1.6} />}
     />
   );
