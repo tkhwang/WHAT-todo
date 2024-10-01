@@ -23,12 +23,17 @@ export default function SendTodo() {
   const debouncedSearchText = useDebounce(searchText, SEARCH_USER_INPUT_DEBOUNCE_TIME);
   const { data: searchedUsers } = useSearchUsers(debouncedSearchText);
 
-  const onBackPress = () => setSearchText("");
+  const cleanupSelection = () => {
+    setSearchText("");
+    setSelectedUsers([]);
+    setAreUsersSelected(false);
+  };
+
+  const onBackPress = () => cleanupSelection();
 
   useEffect(() => {
     return () => {
-      setSearchText("");
-      setSelectedUsers([]);
+      cleanupSelection();
     };
   }, []);
 
