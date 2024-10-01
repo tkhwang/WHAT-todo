@@ -26,14 +26,14 @@ export default function SearchUser({
     if (userType === "user") {
       setSelectedUsers((prv) => {
         if (!prv.some((user) => user.id === searchedUser.id)) {
-          return [searchedUser, ...prv];
+          return [...prv, searchedUser];
         }
         return prv;
       });
     } else {
       setSelectedSupervisors((prv) => {
         if (!prv.some((user) => user.id === searchedUser.id)) {
-          return [searchedUser, ...prv];
+          return [...prv, searchedUser];
         }
         return prv;
       });
