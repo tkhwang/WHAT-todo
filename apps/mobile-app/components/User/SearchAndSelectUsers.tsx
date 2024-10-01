@@ -74,16 +74,18 @@ export default function SearchAndSelectUsers({
       <View className={"flex flex-1"} />
 
       {/* Button CTA */}
-      <Button
-        title={t("sendTodo.cta.completeUsers-and-compose-todos")}
-        color={appTheme.colors.primary}
-        disabled={selectedUsers.length === 0}
-        buttonStyle={{
-          backgroundColor:
-            selectedUsers.length === 0 ? appTheme.colors.gray : appTheme.colors.primary,
-        }}
-        onPress={handlePressToCompleteToUsers}
-      />
+      <View className={"py-4"}>
+        <Button
+          title={t("sendTodo.cta.completeUsers-and-compose-todos")}
+          color={appTheme.colors.primary}
+          disabled={selectedUsers.length === 0}
+          buttonStyle={{
+            backgroundColor:
+              selectedUsers.length === 0 ? appTheme.colors.gray : appTheme.colors.primary,
+          }}
+          onPress={handlePressToCompleteToUsers}
+        />
+      </View>
     </>
   );
 }
