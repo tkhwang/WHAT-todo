@@ -19,6 +19,7 @@ export default function SendTodo() {
   const [areUsersSelected, setAreUsersSelected] = useState(false);
   const [searchText, setSearchText] = useState("");
   const [selectedUsers, setSelectedUsers] = useState<IUserFS[]>([]);
+  const [userType, setUserType] = useState<"user" | "supervisor">("user");
 
   const debouncedSearchText = useDebounce(searchText, SEARCH_USER_INPUT_DEBOUNCE_TIME);
   const { data: searchedUsers } = useSearchUsers(debouncedSearchText);
@@ -41,11 +42,11 @@ export default function SendTodo() {
     <ScreenWrapper>
       <View className={"flex flex-1 flex-col p-4 gap-4"}>
         <Header title={t("title.expert.sendTodo")} showBackButton onBackPress={onBackPress} />
-
         {/* Title: Search User */}
-        <Text className={"text-xl font-semibold"}>
-          {`${t("title.expert.sendTodo.select.user.text")}:`}
-        </Text>
+
+        <Text className={"text-xl font-semibold"}>{`${t("sendTodo.user.type.user")}:`}</Text>
+
+        <Text className={"text-xl font-semibold"}>{`${t("sendTodo.user.type.supervisor")}:`}</Text>
 
         {/* Selected Users */}
         <SelectedUsers selectedUsers={selectedUsers} setSelectedUsers={setSelectedUsers} />
@@ -58,6 +59,8 @@ export default function SendTodo() {
             selectedUsers={selectedUsers}
             setSelectedUsers={setSelectedUsers}
             setAreUsersSelected={setAreUsersSelected}
+            isUserTypeUser={userType === "user"}
+            toggleUserType={() => setUserType((prv) => (prv === "user" ? "supervisor" : "user"))}
           />
         )}
       </View>
