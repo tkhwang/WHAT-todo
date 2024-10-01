@@ -27,6 +27,7 @@
   "screen.profile.logout.title": "Confirm",
   "screen.profile.logout.description": "Are you sure you want to logout?",
   "screen.task.title": "Task",
+  "sendTodo.user.type.user": "User",
   "sendTodo.user.type.expert": "Expert",
   "sendTodo.user.type.supervisor": "Supervisor",
   "sendTodo.cta.completeUsers-and-compose-todos": "Complete to select users",
@@ -52,6 +53,5 @@
   "task.list.swipe.left.uncomplete": "Uncomplete",
   "task.list.swipe.right": "Delete",
   "title.expert.sendTodo": "Send Todo",
-  "title.expert.sendTodo.select.user.text": "To",
   "title.expert.sendTodo.searchText.placeholder": "Enter text of user's name, id text"
 }
