@@ -15,7 +15,6 @@ import { useToggleTaskIsDone } from "@/hooks/mutations/useToggleTaskIsDone";
 import { useDeleteTask } from "@/hooks/mutations/useDeleteTask";
 
 import TaskListItem from "../Task/TaskListItem";
-import { TaskListDoneItem } from "../Task/TaskListDoneItem";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../ui/collapsible";
 
 interface Props {
@@ -90,13 +89,6 @@ export function TodoList({ listId }: Props) {
         <Text className={"text-white text-sm"}>{t("task.list.swipe.right")}</Text>
       </TouchableOpacity>
     </View>
-  );
-
-  const renderDoneItem = useCallback(
-    ({ item }: { item: ITask }) => {
-      return <TaskListDoneItem listId={listId} task={item} />;
-    },
-    [listId],
   );
 
   if (isLoading) return null;
