@@ -4,23 +4,24 @@ import { TaskType } from "@whatTodo/models";
 import Icon from "@/assets/icons";
 import { appTheme } from "@/constants/uiConsts";
 
-import RadioSwitch from "../Switch/RadioSwitch";
+import RadioSelect from "../Radio/RadioSelect";
 
 interface Props {
   taskType: TaskType;
-  toggleTaskType: () => void;
+  setTaskType: (taskType: TaskType) => void;
 }
 
-export default function TaskTypeSwitch({ taskType, toggleTaskType }: Props) {
+export default function TaskTypeSwitch({ taskType, setTaskType }: Props) {
   const { t } = useTranslation();
 
   return (
-    <RadioSwitch
-      switchState={taskType === "todo"}
-      toggleSwitchState={toggleTaskType}
-      switchStateNativeId={"todo"}
+    <RadioSelect
+      switchState={taskType}
+      // @ts-expect-error : type error : string vs const union
+      setSwitchState={setTaskType}
       // truthy
-      truthyText={t("task.list.type.todo")}
+      truthyStateText={"todo"}
+      truthyDisplayText={t("task.list.type.todo")}
       TruthyIcon={
         <Icon
           name={"checkmarkSquare"}
@@ -30,7 +31,8 @@ export default function TaskTypeSwitch({ taskType, toggleTaskType }: Props) {
         />
       }
       // falsy
-      falseText={t("task.list.type.notTodo")}
+      falseStateText={"not-todo"}
+      falseDisplayText={t("task.list.type.notTodo")}
       FalsyIcon={
         <Icon
           name={"noteRemove"}

@@ -16,7 +16,7 @@ interface Props {
   setSearchText: Dispatch<SetStateAction<string>>;
   searchedUsers?: IUserFS[];
   userType: "user" | "supervisor";
-  toggleUserType: () => void;
+  setUserType: (userType: "user" | "supervisor") => void;
   selectedUsers: IUserFS[];
   setSelectedUsers: Dispatch<SetStateAction<IUserFS[]>>;
   selectedSupervisors: IUserFS[];
@@ -33,7 +33,7 @@ export default function SearchAndSelectUsers({
   setSelectedSupervisors,
   setAreUsersSelectionDone,
   userType,
-  toggleUserType,
+  setUserType,
 }: Props) {
   const { t } = useTranslation();
 
@@ -58,7 +58,7 @@ export default function SearchAndSelectUsers({
 
       {/* UserType select switch */}
       <View className={"flex flex-row items-center w-full justify-center"}>
-        <UserTypeSwitch userType={userType} toggleUserType={toggleUserType} />
+        <UserTypeSwitch userType={userType} setUserType={setUserType} />
       </View>
 
       {/* Searched User */}

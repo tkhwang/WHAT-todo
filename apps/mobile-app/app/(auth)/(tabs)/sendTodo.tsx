@@ -29,6 +29,7 @@ export default function SendTodo() {
   const cleanupSelection = () => {
     setSearchText("");
     setSelectedUsers([]);
+    setSelectedSupervisors([]);
     setAreUsersSelectionDone(false);
     setUserType("user");
   };
@@ -71,7 +72,7 @@ export default function SendTodo() {
             searchedUsers={searchedUsers}
             // user type
             userType={userType}
-            toggleUserType={() => setUserType((prv) => (prv === "user" ? "supervisor" : "user"))}
+            setUserType={setUserType}
             // selectedUsers
             selectedUsers={selectedUsers}
             setSelectedUsers={setSelectedUsers}

@@ -146,7 +146,7 @@ export default function TaskDetail({ listId, taskId }: Props) {
               <Icon name={"noteRemove"} size={26} strokeWidth={1.6} />
             )}
             <Text className={"text-xl font-normal text-gray-500"}>{t("task.list.type")}</Text>
-            <TaskTypeSwitch taskType={taskType} toggleTaskType={toggleTaskType} />
+            <TaskTypeSwitch taskType={taskType} setTaskType={setTaskType} />
           </View>
 
           {/* due date */}
