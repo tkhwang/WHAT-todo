@@ -9,6 +9,7 @@ import { appTheme } from "@/constants/uiConsts";
 import Input from "../Input";
 import SearchUserLists from "./search/SearchUserLists";
 import Button from "../Button/Button";
+import UserTypeSwitch from "./UserTypeSwitch";
 
 interface Props {
   searchText: string;
@@ -17,6 +18,8 @@ interface Props {
   selectedUsers: IUserFS[];
   setSelectedUsers: Dispatch<SetStateAction<IUserFS[]>>;
   setAreUsersSelected: Dispatch<SetStateAction<boolean>>;
+  isUserTypeUser: boolean;
+  toggleUserType: () => void;
 }
 
 export default function SearchAndSelectUsers({
@@ -26,6 +29,8 @@ export default function SearchAndSelectUsers({
   selectedUsers,
   setSelectedUsers,
   setAreUsersSelected,
+  isUserTypeUser,
+  toggleUserType,
 }: Props) {
   const { t } = useTranslation();
 
@@ -48,6 +53,11 @@ export default function SearchAndSelectUsers({
         fontSize={18}
       />
 
+      {/* UserType select switch */}
+      <View className={"flex flex-row items-center w-full justify-center"}>
+        <UserTypeSwitch isUserTypeUser={isUserTypeUser} toggleUserType={toggleUserType} />
+      </View>
+
       {/* Searched User */}
       <SearchUserLists
         searchText={searchText}
@@ -57,6 +67,7 @@ export default function SearchAndSelectUsers({
 
       <View className={"flex flex-1"} />
 
+      {/* Button CTA */}
       <Button
         title={t("sendTodo.cta.completeUsers-and-compose-todos")}
         color={appTheme.colors.primary}
