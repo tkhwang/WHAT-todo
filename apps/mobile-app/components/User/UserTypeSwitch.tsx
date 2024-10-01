@@ -19,8 +19,8 @@ export default function UserTypeSwitch({ isUserTypeUser, toggleUserType }: Props
       toggleSwitchState={toggleUserType}
       switchStateNativeId={"userType"}
       // truthy
-      truthyText={t("sendTodo.user.type.expert")}
-      TruthyIcon={<Icon name={"aiChemistry"} size={26} strokeWidth={1.6} />}
+      truthyText={t("sendTodo.user.type.user")}
+      TruthyIcon={<Icon name={"user"} size={26} strokeWidth={1.6} />}
       // falsy
       falseText={t("sendTodo.user.type.supervisor")}
       FalsyIcon={<Icon name={"policeCap"} size={26} strokeWidth={1.6} />}
