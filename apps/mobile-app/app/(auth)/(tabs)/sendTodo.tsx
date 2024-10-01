@@ -28,6 +28,7 @@ export default function SendTodo() {
     setSearchText("");
     setSelectedUsers([]);
     setAreUsersSelected(false);
+    setUserType("user");
   };
 
   const onBackPress = () => cleanupSelection();
