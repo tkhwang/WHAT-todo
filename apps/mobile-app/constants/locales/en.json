@@ -27,6 +27,8 @@
   "screen.profile.logout.title": "Confirm",
   "screen.profile.logout.description": "Are you sure you want to logout?",
   "screen.task.title": "Task",
+  "sendTodo.user.type.expert": "Expert",
+  "sendTodo.user.type.supervisor": "Supervisor",
   "sendTodo.cta.completeUsers-and-compose-todos": "Complete to select users",
   "todo.add.task": "Add a Task",
   "todo.add.title": "Add todo",

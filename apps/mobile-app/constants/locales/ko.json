@@ -1,6 +1,6 @@
 {
   "app.name": "왓-투두",
-  "app.punchline": "전문가가 짜주고 조력자와 함께하는 투두앱",
+  "app.punchline": "전문가가 짜주고 관리자와 함께하는 투두앱",
   "app.screen.upcoming": "다음",
   "app.screen.expert": "전문가",
   "app.screen.profile": "프로필",
@@ -27,6 +27,8 @@
   "screen.profile.logout.title": "확인",
   "screen.profile.logout.description": "정말로 로그아웃 하시겠습니까 ?",
   "screen.task.title": "태스트",
+  "sendTodo.user.type.expert": "전문가",
+  "sendTodo.user.type.supervisor": "관리자",
   "sendTodo.cta.completeUsers-and-compose-todos": "유저 선택 완료",
   "todo.add.task": "새로운 태스크 추가",
   "todo.add.title": "새로운 투두 추가",
