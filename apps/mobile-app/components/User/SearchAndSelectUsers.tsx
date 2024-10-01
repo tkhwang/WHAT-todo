@@ -15,11 +15,13 @@ interface Props {
   searchText: string;
   setSearchText: Dispatch<SetStateAction<string>>;
   searchedUsers?: IUserFS[];
+  userType: "user" | "supervisor";
+  toggleUserType: () => void;
   selectedUsers: IUserFS[];
   setSelectedUsers: Dispatch<SetStateAction<IUserFS[]>>;
-  setAreUsersSelected: Dispatch<SetStateAction<boolean>>;
-  isUserTypeUser: boolean;
-  toggleUserType: () => void;
+  selectedSupervisors: IUserFS[];
+  setSelectedSupervisors: Dispatch<SetStateAction<IUserFS[]>>;
+  setAreUsersSelectionDone: Dispatch<SetStateAction<boolean>>;
 }
 
 export default function SearchAndSelectUsers({
@@ -28,8 +30,9 @@ export default function SearchAndSelectUsers({
   searchedUsers,
   selectedUsers,
   setSelectedUsers,
-  setAreUsersSelected,
-  isUserTypeUser,
+  setSelectedSupervisors,
+  setAreUsersSelectionDone,
+  userType,
   toggleUserType,
 }: Props) {
   const { t } = useTranslation();
@@ -37,7 +40,7 @@ export default function SearchAndSelectUsers({
   const inputRef = useRef(null);
 
   const handlePressToCompleteToUsers = () => {
-    setAreUsersSelected(true);
+    setAreUsersSelectionDone(true);
   };
 
   return (
@@ -55,14 +58,17 @@ export default function SearchAndSelectUsers({
 
       {/* UserType select switch */}
       <View className={"flex flex-row items-center w-full justify-center"}>
-        <UserTypeSwitch isUserTypeUser={isUserTypeUser} toggleUserType={toggleUserType} />
+        <UserTypeSwitch userType={userType} toggleUserType={toggleUserType} />
       </View>
 
       {/* Searched User */}
       <SearchUserLists
         searchText={searchText}
+        setSearchText={setSearchText}
+        userType={userType}
         searchedUsers={searchedUsers}
         setSelectedUsers={setSelectedUsers}
+        setSelectedSupervisors={setSelectedSupervisors}
       />
 
       <View className={"flex flex-1"} />

@@ -5,17 +5,16 @@ import Icon from "@/assets/icons";
 import RadioSwitch from "../Switch/RadioSwitch";
 
 interface Props {
-  isUserTypeUser: boolean;
+  userType: "user" | "supervisor";
   toggleUserType: () => void;
 }
 
-export default function UserTypeSwitch({ isUserTypeUser, toggleUserType }: Props) {
+export default function UserTypeSwitch({ userType, toggleUserType }: Props) {
   const { t } = useTranslation();
 
   return (
     <RadioSwitch
-      switchState={isUserTypeUser}
-      // toggleSwitchState={() => setUserType(userType === "user" ? "supervisor" : "user")}
+      switchState={userType === "user"}
       toggleSwitchState={toggleUserType}
       switchStateNativeId={"userType"}
       // truthy

@@ -16,10 +16,12 @@ import SearchAndSelectUsers from "@/components/User/SearchAndSelectUsers";
 export default function SendTodo() {
   const { t } = useTranslation();
 
-  const [areUsersSelected, setAreUsersSelected] = useState(false);
   const [searchText, setSearchText] = useState("");
-  const [selectedUsers, setSelectedUsers] = useState<IUserFS[]>([]);
   const [userType, setUserType] = useState<"user" | "supervisor">("user");
+  const [selectedUsers, setSelectedUsers] = useState<IUserFS[]>([]);
+  const [selectedSupervisors, setSelectedSupervisors] = useState<IUserFS[]>([]);
+
+  const [areUsersSelectionDone, setAreUsersSelectionDone] = useState(false);
 
   const debouncedSearchText = useDebounce(searchText, SEARCH_USER_INPUT_DEBOUNCE_TIME);
   const { data: searchedUsers } = useSearchUsers(debouncedSearchText);
@@ -27,7 +29,7 @@ export default function SendTodo() {
   const cleanupSelection = () => {
     setSearchText("");
     setSelectedUsers([]);
-    setAreUsersSelected(false);
+    setAreUsersSelectionDone(false);
     setUserType("user");
   };
 
@@ -45,23 +47,39 @@ export default function SendTodo() {
         <Header title={t("title.expert.sendTodo")} showBackButton onBackPress={onBackPress} />
         {/* Title: Search User */}
 
-        <Text className={"text-xl font-semibold"}>{`${t("sendTodo.user.type.user")}:`}</Text>
+        {/* Selected User */}
+        <View className={"flex flex-col gap-2"}>
+          <Text className={"text-xl font-semibold"}>{`${t("sendTodo.user.type.user")}:`}</Text>
+          <SelectedUsers selectedUsers={selectedUsers} setSelectedUsers={setSelectedUsers} />
+        </View>
 
-        <Text className={"text-xl font-semibold"}>{`${t("sendTodo.user.type.supervisor")}:`}</Text>
+        {/* Selected Supervisors */}
+        <View className={"flex flex-col gap-2"}>
+          <Text
+            className={"text-xl font-semibold"}
+          >{`${t("sendTodo.user.type.supervisor")}:`}</Text>
+          <SelectedUsers
+            selectedUsers={selectedSupervisors}
+            setSelectedUsers={setSelectedSupervisors}
+          />
+        </View>
 
-        {/* Selected Users */}
-        <SelectedUsers selectedUsers={selectedUsers} setSelectedUsers={setSelectedUsers} />
-
-        {!areUsersSelected && (
+        {!areUsersSelectionDone && (
           <SearchAndSelectUsers
             searchText={searchText}
             setSearchText={setSearchText}
             searchedUsers={searchedUsers}
+            // user type
+            userType={userType}
+            toggleUserType={() => setUserType((prv) => (prv === "user" ? "supervisor" : "user"))}
+            // selectedUsers
             selectedUsers={selectedUsers}
             setSelectedUsers={setSelectedUsers}
-            setAreUsersSelected={setAreUsersSelected}
-            isUserTypeUser={userType === "user"}
-            toggleUserType={() => setUserType((prv) => (prv === "user" ? "supervisor" : "user"))}
+            // selectedSupervisors
+            selectedSupervisors={selectedSupervisors}
+            setSelectedSupervisors={setSelectedSupervisors}
+            // user selection one flag
+            setAreUsersSelectionDone={setAreUsersSelectionDone}
           />
         )}
       </View>

@@ -7,18 +7,38 @@ import Icon from "@/assets/icons";
 
 interface Props {
   index: number;
+  userType: "user" | "supervisor";
+  setSearchText: Dispatch<SetStateAction<string>>;
   searchedUser: IUserFS;
   setSelectedUsers: Dispatch<SetStateAction<IUserFS[]>>;
+  setSelectedSupervisors: Dispatch<SetStateAction<IUserFS[]>>;
 }
 
-export default function SearchUser({ index, searchedUser, setSelectedUsers }: Props) {
+export default function SearchUser({
+  index,
+  userType,
+  setSearchText,
+  searchedUser,
+  setSelectedUsers,
+  setSelectedSupervisors,
+}: Props) {
   const handlePress = () => {
-    setSelectedUsers((prv) => {
-      if (!prv.some((user) => user.id === searchedUser.id)) {
-        return [searchedUser, ...prv];
-      }
-      return prv;
-    });
+    if (userType === "user") {
+      setSelectedUsers((prv) => {
+        if (!prv.some((user) => user.id === searchedUser.id)) {
+          return [searchedUser, ...prv];
+        }
+        return prv;
+      });
+    } else {
+      setSelectedSupervisors((prv) => {
+        if (!prv.some((user) => user.id === searchedUser.id)) {
+          return [searchedUser, ...prv];
+        }
+        return prv;
+      });
+    }
+    setSearchText("");
   };
 
   return (
