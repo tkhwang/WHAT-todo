@@ -9,7 +9,7 @@ import Input from "@/components/Input";
 import { useAddTask } from "@/hooks/mutations/useAddTask";
 import { currentListIdAtom } from "@/states/list";
 
-import TaskTypeSelect from "../TaskTypeSelect";
+import TaskTypeSwitch from "../TaskTypeSwitch";
 
 interface Props {
   inputRef: RefObject<TextInput>;
@@ -85,7 +85,7 @@ export default function AddTaskInput({ inputRef }: Props) {
           {/* <Icon name={"noteEdit"} size={22} strokeWidth={1.5} /> */}
 
           <View className={"flex flex-1 justify-center items-center rounded-2xl"}>
-            <TaskTypeSelect taskType={taskType} toggleTaskType={toggleTaskType} />
+            <TaskTypeSwitch taskType={taskType} toggleTaskType={toggleTaskType} />
           </View>
         </View>
       )}

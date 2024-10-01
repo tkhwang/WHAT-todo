@@ -27,7 +27,7 @@ import AddDueDateBottomSheet from "./add/AddDueDateBottomSheet";
 import { Textarea } from "../ui/textarea";
 import Header from "../MainLayout/Header";
 import Loading from "../Loading";
-import TaskTypeSelect from "./TaskTypeSelect";
+import TaskTypeSwitch from "./TaskTypeSwitch";
 
 interface Props {
   listId: string;
@@ -146,7 +146,7 @@ export default function TaskDetail({ listId, taskId }: Props) {
               <Icon name={"noteRemove"} size={26} strokeWidth={1.6} />
             )}
             <Text className={"text-xl font-normal text-gray-500"}>{t("task.list.type")}</Text>
-            <TaskTypeSelect taskType={taskType} toggleTaskType={toggleTaskType} />
+            <TaskTypeSwitch taskType={taskType} toggleTaskType={toggleTaskType} />
           </View>
 
           {/* due date */}

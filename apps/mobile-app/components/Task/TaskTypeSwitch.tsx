@@ -11,7 +11,7 @@ interface Props {
   toggleTaskType: () => void;
 }
 
-export default function TaskTypeSelect({ taskType, toggleTaskType }: Props) {
+export default function TaskTypeSwitch({ taskType, toggleTaskType }: Props) {
   const { t } = useTranslation();
 
   return (
