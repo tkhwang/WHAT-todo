@@ -4,6 +4,8 @@ import * as RadioGroupPrimitive from "@rn-primitives/radio-group";
 
 import { cn } from "@/lib/utils";
 
+import { Label } from "./label";
+
 const RadioGroup = React.forwardRef<
   React.ElementRef<typeof RadioGroupPrimitive.Root>,
   React.ComponentPropsWithoutRef<typeof RadioGroupPrimitive.Root>
@@ -38,6 +40,29 @@ const RadioGroupItem = React.forwardRef<
     </RadioGroupPrimitive.Item>
   );
 });
+
+function RadioGroupItemWithLabel({
+  value,
+  displayValue,
+  onLabelPress,
+  Icon,
+}: {
+  value: string;
+  displayValue: string;
+  onLabelPress: () => void;
+  Icon?: React.ReactNode;
+}) {
+  return (
+    <View className={"flex-row gap-2 items-center"}>
+      <RadioGroupItem aria-labelledby={`label-for-${value}`} value={value} />
+      {Icon && Icon}
+      <Label nativeID={`label-for-${value}`} onPress={onLabelPress}>
+        {displayValue}
+      </Label>
+    </View>
+  );
+}
+
 RadioGroupItem.displayName = RadioGroupPrimitive.Item.displayName;
 
-export { RadioGroup, RadioGroupItem };
+export { RadioGroup, RadioGroupItem, RadioGroupItemWithLabel };
