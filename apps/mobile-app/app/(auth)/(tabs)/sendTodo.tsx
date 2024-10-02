@@ -13,6 +13,7 @@ import { SEARCH_USER_INPUT_DEBOUNCE_TIME } from "@/constants/appConsts";
 import { IUserFS } from "@/types";
 import SelectedUsers from "@/components/User/select/SelectedUsers";
 import SearchAndSelectUsers from "@/components/User/SearchAndSelectUsers";
+import AddTaskForm from "@/components/Task/add/AddTaskForm";
 
 export default function SendTodo() {
   const { t } = useTranslation();
@@ -72,7 +73,9 @@ export default function SendTodo() {
             />
           </View>
 
-          {!areUsersSelectionDone && (
+          {areUsersSelectionDone ? (
+            <AddTaskForm />
+          ) : (
             <SearchAndSelectUsers
               searchText={searchText}
               setSearchText={setSearchText}
