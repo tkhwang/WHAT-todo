@@ -1,8 +1,9 @@
 /* eslint-disable react/no-array-index-key */
 import { KeyboardAvoidingView, Platform, View } from "react-native";
 import { useTranslation } from "react-i18next";
-import { useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { useDebounce } from "@uidotdev/usehooks";
+import { useFocusEffect } from "expo-router";
 
 import { Text } from "@/components/ui/text";
 import ScreenWrapper from "@/components/MainLayout/ScreenWrapper";
@@ -26,21 +27,23 @@ export default function SendTodo() {
   const debouncedSearchText = useDebounce(searchText, SEARCH_USER_INPUT_DEBOUNCE_TIME);
   const { data: searchedUsers } = useSearchUsers(debouncedSearchText);
 
-  const cleanupSelection = () => {
+  const cleanupSelection = useCallback(() => {
     setSearchText("");
     setSelectedUsers([]);
     setSelectedSupervisors([]);
     setAreUsersSelectionDone(false);
     setUserType("user");
-  };
+  }, []);
 
   const onBackPress = () => cleanupSelection();
 
-  useEffect(() => {
+  const handleFocusEffect = useCallback(() => {
     return () => {
       cleanupSelection();
     };
-  }, []);
+  }, [cleanupSelection]);
+
+  useFocusEffect(handleFocusEffect);
 
   return (
     <ScreenWrapper>
