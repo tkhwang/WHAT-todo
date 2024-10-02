@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { useCallback, useState } from "react";
 import { useDebounce } from "@uidotdev/usehooks";
 import { useFocusEffect } from "expo-router";
+import { SEND_TODO_STEPS } from "@whatTodo/models";
 
 import { Text } from "@/components/ui/text";
 import ScreenWrapper from "@/components/MainLayout/ScreenWrapper";
@@ -12,8 +13,11 @@ import { useSearchUsers } from "@/hooks/queries/useSearchUsers";
 import { SEARCH_USER_INPUT_DEBOUNCE_TIME } from "@/constants/appConsts";
 import { IUserFS } from "@/types";
 import SelectedUsers from "@/components/User/select/SelectedUsers";
-import SearchAndSelectUsers from "@/components/User/SearchAndSelectUsers";
-import SendTodoForm from "@/components/Task/add/SendTodoForm";
+import SendTodoForm from "@/components/Task/send/SendTodoForm";
+import SendTodoStepsSearch from "@/components/Task/send/steps/SendTodoStepsSearch";
+import Button from "@/components/Button/Button";
+import { appTheme } from "@/constants/uiConsts";
+import SendTodoStepsTitle from "@/components/Task/send/steps/SendTodoStepsTitle";
 
 export default function SendTodo() {
   const { t } = useTranslation();
@@ -23,6 +27,7 @@ export default function SendTodo() {
   const [selectedUsers, setSelectedUsers] = useState<IUserFS[]>([]);
   const [selectedSupervisors, setSelectedSupervisors] = useState<IUserFS[]>([]);
 
+  const [sendTodoSteps, setSendTodoSteps] = useState(SEND_TODO_STEPS.SEARCH);
   const [areUsersSelectionDone, setAreUsersSelectionDone] = useState(false);
 
   const debouncedSearchText = useDebounce(searchText, SEARCH_USER_INPUT_DEBOUNCE_TIME);
@@ -73,10 +78,11 @@ export default function SendTodo() {
             />
           </View>
 
-          {areUsersSelectionDone ? (
-            <SendTodoForm />
-          ) : (
-            <SearchAndSelectUsers
+          <SendTodoStepsTitle sendTodoSteps={sendTodoSteps} />
+
+          {/* STEPS */}
+          {sendTodoSteps === SEND_TODO_STEPS.SEARCH ? (
+            <SendTodoStepsSearch
               searchText={searchText}
               setSearchText={setSearchText}
               searchedUsers={searchedUsers}
@@ -92,7 +98,23 @@ export default function SendTodo() {
               // user selection one flag
               setAreUsersSelectionDone={setAreUsersSelectionDone}
             />
-          )}
+          ) : sendTodoSteps === SEND_TODO_STEPS.SELECT ? (
+            <SendTodoForm />
+          ) : null}
+
+          {/* Button CTA */}
+          <View className={"py-4"}>
+            <Button
+              title={t("sendTodo.cta.completeUsers-and-compose-todos")}
+              color={appTheme.colors.primary}
+              disabled={selectedUsers.length === 0}
+              buttonStyle={{
+                backgroundColor:
+                  selectedUsers.length > 0 ? appTheme.colors.primary : appTheme.colors.gray,
+              }}
+              // onPress={handlePressToCompleteToUsers}
+            />
+          </View>
         </View>
       </KeyboardAvoidingView>
     </ScreenWrapper>

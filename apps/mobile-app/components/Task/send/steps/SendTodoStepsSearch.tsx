@@ -6,10 +6,10 @@ import { IUserFS } from "@/types";
 import Icon from "@/assets/icons";
 import { appTheme } from "@/constants/uiConsts";
 
-import Input from "../Input";
-import SearchUserLists from "./search/SearchUserLists";
-import Button from "../Button/Button";
-import UserTypeSwitch from "./UserTypeSwitch";
+import Input from "../../../Input";
+import SearchUserLists from "../../../User/search/SearchUserLists";
+import Button from "../../../Button/Button";
+import UserTypeSwitch from "../../../User/UserTypeSwitch";
 
 interface Props {
   searchText: string;
@@ -24,7 +24,7 @@ interface Props {
   setAreUsersSelectionDone: Dispatch<SetStateAction<boolean>>;
 }
 
-export default function SearchAndSelectUsers({
+export default function SendTodoStepsSearch({
   searchText,
   setSearchText,
   searchedUsers,
@@ -77,20 +77,6 @@ export default function SearchAndSelectUsers({
           />
         </View>
       </ScrollView>
-
-      {/* Button CTA */}
-      <View className={"py-4"}>
-        <Button
-          title={t("sendTodo.cta.completeUsers-and-compose-todos")}
-          color={appTheme.colors.primary}
-          disabled={selectedUsers.length === 0}
-          buttonStyle={{
-            backgroundColor:
-              selectedUsers.length === 0 ? appTheme.colors.gray : appTheme.colors.primary,
-          }}
-          onPress={handlePressToCompleteToUsers}
-        />
-      </View>
     </KeyboardAvoidingView>
   );
 }

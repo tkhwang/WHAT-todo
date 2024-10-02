@@ -9,7 +9,7 @@ import { appTheme } from "@/constants/uiConsts";
 import Button from "@/components/Button/Button";
 import Icon from "@/assets/icons";
 
-import AddTaskForm from "./AddTaskForm";
+import AddTaskForm from "../add/AddTaskForm";
 import TaskTypeIcon from "../TaskTypeIcon";
 
 const ItemSeparator = () => <View style={{ height: 8 }} />;
