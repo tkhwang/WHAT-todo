@@ -84,9 +84,7 @@ export default function AddTaskInput({ inputRef }: Props) {
           {/* <Icon name={"alertCircle"} size={22} strokeWidth={1.5} /> */}
           {/* <Icon name={"noteEdit"} size={22} strokeWidth={1.5} /> */}
 
-          <View className={"flex flex-1 justify-center items-center rounded-2xl"}>
-            <TaskTypeSwitch taskType={taskType} toggleTaskType={toggleTaskType} />
-          </View>
+          <TaskTypeSwitch taskType={taskType} setTaskType={setTaskType} />
         </View>
       )}
     </View>
