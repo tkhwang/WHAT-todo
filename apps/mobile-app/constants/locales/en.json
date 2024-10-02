@@ -33,6 +33,7 @@
   "sendTodo.cta.completeUsers-and-compose-todos": "Complete to select users",
   "sendTodo.cta.add-to-task": "Add a Task",
   "sendTodo.list.title": "Title",
+  "sendTodo.task.title": "Task",
   "sendTodo.list.title.placeholder": "Write todo title...",
   "todo.add.task": "Add a Task",
   "todo.add.title": "Add todo",
