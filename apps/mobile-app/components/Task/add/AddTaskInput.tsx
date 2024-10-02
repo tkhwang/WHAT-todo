@@ -9,7 +9,7 @@ import Input from "@/components/Input";
 import { useAddTask } from "@/hooks/mutations/useAddTask";
 import { currentListIdAtom } from "@/states/list";
 
-import TaskTypeSwitch from "../TaskTypeSwitch";
+import TaskTypeRadioSelect from "../TaskTypeRadioSelect";
 
 interface Props {
   inputRef: RefObject<TextInput>;
@@ -84,7 +84,7 @@ export default function AddTaskInput({ inputRef }: Props) {
           {/* <Icon name={"alertCircle"} size={22} strokeWidth={1.5} /> */}
           {/* <Icon name={"noteEdit"} size={22} strokeWidth={1.5} /> */}
 
-          <TaskTypeSwitch taskType={taskType} setTaskType={setTaskType} />
+          <TaskTypeRadioSelect taskType={taskType} setTaskType={setTaskType} />
         </View>
       )}
     </View>
