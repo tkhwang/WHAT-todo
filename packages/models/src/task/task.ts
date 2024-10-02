@@ -23,3 +23,8 @@ export interface IAddTask {
   task: string
   taskType: TaskType
 }
+
+export const SEND_TODO_STEPS = {
+  SEARCH: "send-todo-steps-search",
+  SELECT: "send-todo-steps-select",
+}
