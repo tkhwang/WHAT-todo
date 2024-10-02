@@ -1,5 +1,5 @@
 /* eslint-disable react/no-array-index-key */
-import { View } from "react-native";
+import { KeyboardAvoidingView, Platform, View } from "react-native";
 import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
 import { useDebounce } from "@uidotdev/usehooks";
@@ -44,46 +44,51 @@ export default function SendTodo() {
 
   return (
     <ScreenWrapper>
-      <View className={"flex flex-1 flex-col p-4 gap-4"}>
-        <Header title={t("title.expert.sendTodo")} showBackButton onBackPress={onBackPress} />
-        {/* Title: Search User */}
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={{ flex: 1 }}
+      >
+        <View className={"flex flex-1 flex-col p-4 gap-4"}>
+          <Header title={t("title.expert.sendTodo")} showBackButton onBackPress={onBackPress} />
+          {/* Title: Search User */}
 
-        {/* Selected User */}
-        <View className={"flex flex-col gap-2"}>
-          <Text className={"text-xl font-semibold"}>{`${t("sendTodo.user.type.user")}:`}</Text>
-          <SelectedUsers selectedUsers={selectedUsers} setSelectedUsers={setSelectedUsers} />
+          {/* Selected User */}
+          <View className={"flex flex-col gap-2"}>
+            <Text className={"text-xl font-semibold"}>{`${t("sendTodo.user.type.user")}:`}</Text>
+            <SelectedUsers selectedUsers={selectedUsers} setSelectedUsers={setSelectedUsers} />
+          </View>
+
+          {/* Selected Supervisors */}
+          <View className={"flex flex-col gap-2"}>
+            <Text
+              className={"text-xl font-semibold"}
+            >{`${t("sendTodo.user.type.supervisor")}:`}</Text>
+            <SelectedUsers
+              selectedUsers={selectedSupervisors}
+              setSelectedUsers={setSelectedSupervisors}
+            />
+          </View>
+
+          {!areUsersSelectionDone && (
+            <SearchAndSelectUsers
+              searchText={searchText}
+              setSearchText={setSearchText}
+              searchedUsers={searchedUsers}
+              // user type
+              userType={userType}
+              setUserType={setUserType}
+              // selectedUsers
+              selectedUsers={selectedUsers}
+              setSelectedUsers={setSelectedUsers}
+              // selectedSupervisors
+              selectedSupervisors={selectedSupervisors}
+              setSelectedSupervisors={setSelectedSupervisors}
+              // user selection one flag
+              setAreUsersSelectionDone={setAreUsersSelectionDone}
+            />
+          )}
         </View>
-
-        {/* Selected Supervisors */}
-        <View className={"flex flex-col gap-2"}>
-          <Text
-            className={"text-xl font-semibold"}
-          >{`${t("sendTodo.user.type.supervisor")}:`}</Text>
-          <SelectedUsers
-            selectedUsers={selectedSupervisors}
-            setSelectedUsers={setSelectedSupervisors}
-          />
-        </View>
-
-        {!areUsersSelectionDone && (
-          <SearchAndSelectUsers
-            searchText={searchText}
-            setSearchText={setSearchText}
-            searchedUsers={searchedUsers}
-            // user type
-            userType={userType}
-            setUserType={setUserType}
-            // selectedUsers
-            selectedUsers={selectedUsers}
-            setSelectedUsers={setSelectedUsers}
-            // selectedSupervisors
-            selectedSupervisors={selectedSupervisors}
-            setSelectedSupervisors={setSelectedSupervisors}
-            // user selection one flag
-            setAreUsersSelectionDone={setAreUsersSelectionDone}
-          />
-        )}
-      </View>
+      </KeyboardAvoidingView>
     </ScreenWrapper>
   );
 }
