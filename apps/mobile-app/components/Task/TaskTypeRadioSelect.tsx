@@ -11,7 +11,7 @@ interface Props {
   setTaskType: (taskType: TaskType) => void;
 }
 
-export default function TaskTypeSwitch({ taskType, setTaskType }: Props) {
+export default function TaskTypeRadioSelect({ taskType, setTaskType }: Props) {
   const { t } = useTranslation();
 
   return (

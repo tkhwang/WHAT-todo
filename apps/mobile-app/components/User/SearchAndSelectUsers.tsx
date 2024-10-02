@@ -1,4 +1,4 @@
-import { View } from "react-native";
+import { KeyboardAvoidingView, Platform, ScrollView, View } from "react-native";
 import { Dispatch, SetStateAction, useRef } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -44,46 +44,53 @@ export default function SearchAndSelectUsers({
   };
 
   return (
-    <>
-      {/* User name search input */}
-      <Input
-        inputRef={inputRef}
-        icon={<Icon name={"user"} size={26} strokeWidth={1.6} />}
-        placeholder={t("title.expert.sendTodo.searchText.placeholder")}
-        onChangeText={(value) => setSearchText(value)}
-        autoCapitalize={"none"}
-        value={searchText}
-        fontSize={18}
-      />
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={{ flex: 1 }}
+    >
+      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+        <View style={{ flex: 1 }}>
+          {/* User name search input */}
+          <Input
+            inputRef={inputRef}
+            icon={<Icon name={"user"} size={26} strokeWidth={1.6} />}
+            placeholder={t("title.expert.sendTodo.searchText.placeholder")}
+            onChangeText={(value) => setSearchText(value)}
+            autoCapitalize={"none"}
+            value={searchText}
+            fontSize={18}
+          />
 
-      {/* UserType select switch */}
-      <View className={"flex flex-row items-center w-full justify-center"}>
-        <UserTypeSwitch userType={userType} setUserType={setUserType} />
-      </View>
+          {/* UserType select switch */}
+          <View className={"flex flex-row items-center w-full justify-center"}>
+            <UserTypeSwitch userType={userType} setUserType={setUserType} />
+          </View>
 
-      {/* Searched User */}
-      <SearchUserLists
-        searchText={searchText}
-        setSearchText={setSearchText}
-        userType={userType}
-        searchedUsers={searchedUsers}
-        setSelectedUsers={setSelectedUsers}
-        setSelectedSupervisors={setSelectedSupervisors}
-      />
-
-      <View className={"flex flex-1"} />
+          {/* Searched User */}
+          <SearchUserLists
+            searchText={searchText}
+            setSearchText={setSearchText}
+            userType={userType}
+            searchedUsers={searchedUsers}
+            setSelectedUsers={setSelectedUsers}
+            setSelectedSupervisors={setSelectedSupervisors}
+          />
+        </View>
+      </ScrollView>
 
       {/* Button CTA */}
-      <Button
-        title={t("sendTodo.cta.completeUsers-and-compose-todos")}
-        color={appTheme.colors.primary}
-        disabled={selectedUsers.length === 0}
-        buttonStyle={{
-          backgroundColor:
-            selectedUsers.length === 0 ? appTheme.colors.gray : appTheme.colors.primary,
-        }}
-        onPress={handlePressToCompleteToUsers}
-      />
-    </>
+      <View className={"py-4"}>
+        <Button
+          title={t("sendTodo.cta.completeUsers-and-compose-todos")}
+          color={appTheme.colors.primary}
+          disabled={selectedUsers.length === 0}
+          buttonStyle={{
+            backgroundColor:
+              selectedUsers.length === 0 ? appTheme.colors.gray : appTheme.colors.primary,
+          }}
+          onPress={handlePressToCompleteToUsers}
+        />
+      </View>
+    </KeyboardAvoidingView>
   );
 }

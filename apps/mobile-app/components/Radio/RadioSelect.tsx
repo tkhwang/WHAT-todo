@@ -31,7 +31,7 @@ export default function RadioSelect({
   }
 
   return (
-    <View className={"items-center justify-center flex-1 p-6"}>
+    <View className={"w-full items-center justify-start flex flex-1 px-4 py-2"}>
       <RadioGroup
         value={switchState}
         onValueChange={(label) => {

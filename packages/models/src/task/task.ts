@@ -17,3 +17,9 @@ export interface ITask extends ITaskCommon {
   createdAt: Date
   updatedAt: Date
 }
+
+export interface IAddTask {
+  id: number
+  task: string
+  taskType: TaskType
+}

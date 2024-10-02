@@ -27,7 +27,7 @@ import AddDueDateBottomSheet from "./add/AddDueDateBottomSheet";
 import { Textarea } from "../ui/textarea";
 import Header from "../MainLayout/Header";
 import Loading from "../Loading";
-import TaskTypeSwitch from "./TaskTypeSwitch";
+import TaskTypeRadioSelect from "./TaskTypeRadioSelect";
 
 interface Props {
   listId: string;
@@ -122,7 +122,7 @@ export default function TaskDetail({ listId, taskId }: Props) {
         className={"flex-1 w-screen"}
         behavior={Platform.OS === "ios" ? "padding" : "height"}
       >
-        <View className={"flex-1 flex-col gap-8 justify-end"}>
+        <View className={"flex-1 flex-col gap-4 justify-end"}>
           {/* title */}
           <View className={"flex-row pt-4 pl-1 gap-4 items-center"}>
             <Checkbox checked={isDone} onCheckedChange={toggleIsDone} />
@@ -139,14 +139,14 @@ export default function TaskDetail({ listId, taskId }: Props) {
           </View>
 
           {/* todo type */}
-          <View className={"flex-row items-center gap-2"}>
+          <View className={"flex-row items-center justify-start gap-2"}>
             {taskType === "todo" ? (
               <Icon name={"checkmarkSquare"} size={26} strokeWidth={1.6} />
             ) : (
               <Icon name={"noteRemove"} size={26} strokeWidth={1.6} />
             )}
             <Text className={"text-xl font-normal text-gray-500"}>{t("task.list.type")}</Text>
-            <TaskTypeSwitch taskType={taskType} setTaskType={setTaskType} />
+            <TaskTypeRadioSelect taskType={taskType} setTaskType={setTaskType} />
           </View>
 
           {/* due date */}
