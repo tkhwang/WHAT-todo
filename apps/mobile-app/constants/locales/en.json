@@ -32,6 +32,7 @@
   "sendTodo.user.type.supervisor": "Supervisor",
   "sendTodo.cta.completeUsers-and-compose-todos": "Complete to select users",
   "sendTodo.cta.add-to-task": "Add a Task",
+  "sendTodo.cta.send-todo": "Send Todo",
   "sendTodo.list.title": "Title",
   "sendTodo.task.title": "Task",
   "sendTodo.list.title.placeholder": "Write todo title...",

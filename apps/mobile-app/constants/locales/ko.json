@@ -35,6 +35,7 @@
   "sendTodo.user.type.expert": "전문가",
   "sendTodo.user.type.supervisor": "관리자",
   "sendTodo.cta.completeUsers-and-compose-todos": "유저 선택 완료",
+  "sendTodo.cta.send-todo": "투두 보내기",
   "todo.add.task": "새로운 태스크 추가",
   "todo.add.title": "새로운 투두 추가",
   "todo.add.placehold": "투두 이름",
