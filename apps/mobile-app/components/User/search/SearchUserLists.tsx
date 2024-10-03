@@ -7,6 +7,7 @@ import { useSearchUsers } from "@/hooks/queries/useSearchUsers";
 import { SEARCH_USER_INPUT_DEBOUNCE_TIME } from "@/constants/appConsts";
 
 import SearchUser from "./SearchUser";
+import SearchUserSkeletonLists from "./SearchUserSkeletonLists";
 
 interface Props {
   searchText?: string;
@@ -25,12 +26,15 @@ export default function SearchUserLists({
   setSelectedSupervisors,
 }: Props) {
   const debouncedSearchText = useDebounce(searchText, SEARCH_USER_INPUT_DEBOUNCE_TIME);
-  const { data: searchedUsers } = useSearchUsers(debouncedSearchText);
+  const { data: searchedUsers, isLoading } = useSearchUsers(debouncedSearchText);
 
   return (
     <View className={"flex flex-col gap-2"}>
-      {searchText
-        ? (searchedUsers ?? []).map((user: IUserFS, index: number) => (
+      {searchText ? (
+        isLoading ? (
+          <SearchUserSkeletonLists />
+        ) : (
+          (searchedUsers ?? []).map((user: IUserFS, index: number) => (
             <SearchUser
               key={`${user.id}`}
               index={index}
@@ -41,7 +45,8 @@ export default function SearchUserLists({
               setSelectedSupervisors={setSelectedSupervisors}
             />
           ))
-        : null}
+        )
+      ) : null}
     </View>
   );
 }
