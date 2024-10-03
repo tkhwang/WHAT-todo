@@ -67,15 +67,17 @@ export default function SendTodoStepsSearch({
           </View>
 
           {/* User name search input */}
-          <Input
-            inputRef={inputRef}
-            icon={<Icon name={"user"} size={26} strokeWidth={1.6} />}
-            placeholder={t("title.expert.sendTodo.searchText.placeholder")}
-            onChangeText={(value) => setSearchText(value)}
-            autoCapitalize={"none"}
-            value={searchText}
-            fontSize={18}
-          />
+          <View className={"py-4"}>
+            <Input
+              inputRef={inputRef}
+              icon={<Icon name={"user"} size={26} strokeWidth={1.6} />}
+              placeholder={t("title.expert.sendTodo.searchText.placeholder")}
+              onChangeText={(value) => setSearchText(value)}
+              autoCapitalize={"none"}
+              value={searchText}
+              fontSize={18}
+            />
+          </View>
 
           {/* UserType select switch */}
           <View className={"flex flex-row items-center w-full justify-center"}>
