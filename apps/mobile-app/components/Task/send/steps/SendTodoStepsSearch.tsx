@@ -4,17 +4,14 @@ import { useTranslation } from "react-i18next";
 
 import { IUserFS } from "@/types";
 import Icon from "@/assets/icons";
-import { appTheme } from "@/constants/uiConsts";
 
 import Input from "../../../Input";
 import SearchUserLists from "../../../User/search/SearchUserLists";
-import Button from "../../../Button/Button";
 import UserTypeSwitch from "../../../User/UserTypeSwitch";
 
 interface Props {
   searchText: string;
   setSearchText: Dispatch<SetStateAction<string>>;
-  searchedUsers?: IUserFS[];
   userType: "user" | "supervisor";
   setUserType: (userType: "user" | "supervisor") => void;
   selectedUsers: IUserFS[];
@@ -27,7 +24,6 @@ interface Props {
 export default function SendTodoStepsSearch({
   searchText,
   setSearchText,
-  searchedUsers,
   selectedUsers,
   setSelectedUsers,
   setSelectedSupervisors,
@@ -71,7 +67,6 @@ export default function SendTodoStepsSearch({
             searchText={searchText}
             setSearchText={setSearchText}
             userType={userType}
-            searchedUsers={searchedUsers}
             setSelectedUsers={setSelectedUsers}
             setSelectedSupervisors={setSelectedSupervisors}
           />

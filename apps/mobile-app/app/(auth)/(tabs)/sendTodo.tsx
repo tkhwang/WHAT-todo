@@ -2,21 +2,16 @@
 import { KeyboardAvoidingView, Platform, View } from "react-native";
 import { useTranslation } from "react-i18next";
 import { useCallback, useState } from "react";
-import { useDebounce } from "@uidotdev/usehooks";
 import { useFocusEffect } from "expo-router";
 import { SEND_TODO_STEPS } from "@whatTodo/models";
 
 import { Text } from "@/components/ui/text";
 import ScreenWrapper from "@/components/MainLayout/ScreenWrapper";
 import Header from "@/components/MainLayout/Header";
-import { useSearchUsers } from "@/hooks/queries/useSearchUsers";
-import { SEARCH_USER_INPUT_DEBOUNCE_TIME } from "@/constants/appConsts";
 import { IUserFS } from "@/types";
 import SelectedUsers from "@/components/User/select/SelectedUsers";
 import SendTodoForm from "@/components/Task/send/SendTodoForm";
 import SendTodoStepsSearch from "@/components/Task/send/steps/SendTodoStepsSearch";
-import Button from "@/components/Button/Button";
-import { appTheme } from "@/constants/uiConsts";
 import SendTodoStepsTitle from "@/components/Task/send/steps/SendTodoStepsTitle";
 import SendTodoStepsCtaButton from "@/components/Task/send/steps/SendTodoStepsCtaButton";
 
@@ -30,9 +25,6 @@ export default function SendTodo() {
 
   const [sendTodoSteps, setSendTodoSteps] = useState(SEND_TODO_STEPS.SEARCH);
   const [areUsersSelectionDone, setAreUsersSelectionDone] = useState(false);
-
-  const debouncedSearchText = useDebounce(searchText, SEARCH_USER_INPUT_DEBOUNCE_TIME);
-  const { data: searchedUsers } = useSearchUsers(debouncedSearchText);
 
   const cleanupSelection = useCallback(() => {
     setSearchText("");
@@ -87,7 +79,6 @@ export default function SendTodo() {
             <SendTodoStepsSearch
               searchText={searchText}
               setSearchText={setSearchText}
-              searchedUsers={searchedUsers}
               // user type
               userType={userType}
               setUserType={setUserType}
