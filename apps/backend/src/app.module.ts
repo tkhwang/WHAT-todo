@@ -9,6 +9,7 @@ import { appLoggerMiddleware } from './middleware/appLoggerMiddleware';
 import { TasksModule } from './tasks/tasks.module';
 import { ListsModule } from './lists/lists.module';
 import { StepsModule } from './steps/steps.module';
+import { TodosModule } from './todos/todos.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { StepsModule } from './steps/steps.module';
     TasksModule,
     ListsModule,
     StepsModule,
+    TodosModule,
   ],
   controllers: [AppController],
   providers: [AppService],
