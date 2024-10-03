@@ -3,13 +3,11 @@ import { KeyboardAvoidingView, Platform, View } from "react-native";
 import { useTranslation } from "react-i18next";
 import { useCallback, useState } from "react";
 import { useFocusEffect } from "expo-router";
-import { SEND_TODO_STEPS } from "@whatTodo/models";
+import { IAddTask, SEND_TODO_STEPS } from "@whatTodo/models";
 
-import { Text } from "@/components/ui/text";
 import ScreenWrapper from "@/components/MainLayout/ScreenWrapper";
 import Header from "@/components/MainLayout/Header";
 import { IUserFS } from "@/types";
-import SelectedUsers from "@/components/User/select/SelectedUsers";
 import SendTodoForm from "@/components/Task/send/SendTodoForm";
 import SendTodoStepsSearch from "@/components/Task/send/steps/SendTodoStepsSearch";
 import SendTodoStepsTitle from "@/components/Task/send/steps/SendTodoStepsTitle";
@@ -18,13 +16,19 @@ import SendTodoStepsCtaButton from "@/components/Task/send/steps/SendTodoStepsCt
 export default function SendTodo() {
   const { t } = useTranslation();
 
+  // Steps
+  const [sendTodoSteps, setSendTodoSteps] = useState(SEND_TODO_STEPS.SEARCH);
+  const [areUsersSelectionDone, setAreUsersSelectionDone] = useState(false);
+
+  // Search
   const [searchText, setSearchText] = useState("");
   const [userType, setUserType] = useState<"user" | "supervisor">("user");
   const [selectedUsers, setSelectedUsers] = useState<IUserFS[]>([]);
   const [selectedSupervisors, setSelectedSupervisors] = useState<IUserFS[]>([]);
 
-  const [sendTodoSteps, setSendTodoSteps] = useState(SEND_TODO_STEPS.SEARCH);
-  const [areUsersSelectionDone, setAreUsersSelectionDone] = useState(false);
+  // Select
+  const [todoListTitle, setTodoListTitle] = useState("");
+  const [todoTasks, setTodoTasks] = useState<IAddTask[]>([]);
 
   const cleanupSelection = useCallback(() => {
     setSearchText("");
@@ -54,26 +58,8 @@ export default function SendTodo() {
           <Header title={t("title.expert.sendTodo")} showBackButton onBackPress={onBackPress} />
           {/* Title: Search User */}
 
-          {/* Selected User */}
-          <View className={"flex flex-col gap-2"}>
-            <Text className={"text-xl font-semibold"}>{`${t("sendTodo.user.type.user")}:`}</Text>
-            <SelectedUsers selectedUsers={selectedUsers} setSelectedUsers={setSelectedUsers} />
-          </View>
-
-          {/* Selected Supervisors */}
-          <View className={"flex flex-col gap-2"}>
-            <Text
-              className={"text-xl font-semibold"}
-            >{`${t("sendTodo.user.type.supervisor")}:`}</Text>
-            <SelectedUsers
-              selectedUsers={selectedSupervisors}
-              setSelectedUsers={setSelectedSupervisors}
-            />
-          </View>
-
           {/* Steps title */}
           <SendTodoStepsTitle sendTodoSteps={sendTodoSteps} />
-
           {/* STEPS */}
           {sendTodoSteps === SEND_TODO_STEPS.SEARCH ? (
             <SendTodoStepsSearch
@@ -92,11 +78,22 @@ export default function SendTodo() {
               setAreUsersSelectionDone={setAreUsersSelectionDone}
             />
           ) : sendTodoSteps === SEND_TODO_STEPS.SELECT ? (
-            <SendTodoForm />
+            <SendTodoForm
+              todoListTitle={todoListTitle}
+              setTodoListTitle={setTodoListTitle}
+              todoTasks={todoTasks}
+              setTodoTasks={setTodoTasks}
+            />
           ) : null}
 
           {/* Button CTA */}
-          <SendTodoStepsCtaButton selectedUsers={selectedUsers} sendTodoSteps={sendTodoSteps} />
+          <SendTodoStepsCtaButton
+            todoListTitle={todoListTitle}
+            todoTasks={todoTasks}
+            selectedUsers={selectedUsers}
+            sendTodoSteps={sendTodoSteps}
+            setSendTodoSteps={setSendTodoSteps}
+          />
         </View>
       </KeyboardAvoidingView>
     </ScreenWrapper>

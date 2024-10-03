@@ -2,8 +2,10 @@ import { KeyboardAvoidingView, Platform, ScrollView, View } from "react-native";
 import { Dispatch, SetStateAction, useRef } from "react";
 import { useTranslation } from "react-i18next";
 
+import { Text } from "@/components/ui/text";
 import { IUserFS } from "@/types";
 import Icon from "@/assets/icons";
+import SelectedUsers from "@/components/User/select/SelectedUsers";
 
 import Input from "../../../Input";
 import SearchUserLists from "../../../User/search/SearchUserLists";
@@ -25,6 +27,7 @@ export default function SendTodoStepsSearch({
   searchText,
   setSearchText,
   selectedUsers,
+  selectedSupervisors,
   setSelectedUsers,
   setSelectedSupervisors,
   setAreUsersSelectionDone,
@@ -46,6 +49,23 @@ export default function SendTodoStepsSearch({
     >
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
         <View style={{ flex: 1 }}>
+          {/* Selected User */}
+          <View className={"flex flex-col gap-2"}>
+            <Text className={"text-xl font-semibold"}>{`${t("sendTodo.user.type.user")}:`}</Text>
+            <SelectedUsers selectedUsers={selectedUsers} setSelectedUsers={setSelectedUsers} />
+          </View>
+
+          {/* Selected Supervisors */}
+          <View className={"flex flex-col gap-2"}>
+            <Text
+              className={"text-xl font-semibold"}
+            >{`${t("sendTodo.user.type.supervisor")}:`}</Text>
+            <SelectedUsers
+              selectedUsers={selectedSupervisors}
+              setSelectedUsers={setSelectedSupervisors}
+            />
+          </View>
+
           {/* User name search input */}
           <Input
             inputRef={inputRef}

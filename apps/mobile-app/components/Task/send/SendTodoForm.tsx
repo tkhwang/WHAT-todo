@@ -1,12 +1,10 @@
 import { FlatList, Pressable, View } from "react-native";
-import { useCallback, useMemo, useRef, useState } from "react";
+import { Dispatch, SetStateAction, useCallback, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { IAddTask } from "@whatTodo/models";
 
 import { Text } from "@/components/ui/text";
 import { Input } from "@/components/ui/input";
-import { appTheme } from "@/constants/uiConsts";
-import Button from "@/components/Button/Button";
 import Icon from "@/assets/icons";
 
 import AddTaskForm from "../add/AddTaskForm";
@@ -14,40 +12,51 @@ import TaskTypeIcon from "../TaskTypeIcon";
 
 const ItemSeparator = () => <View style={{ height: 8 }} />;
 
-export default function SendTodoForm() {
+interface Props {
+  todoListTitle: string;
+  setTodoListTitle: (title: string) => void;
+  todoTasks: IAddTask[];
+  setTodoTasks: Dispatch<SetStateAction<IAddTask[]>>;
+}
+
+export default function SendTodoForm({
+  todoListTitle,
+  setTodoListTitle,
+  todoTasks,
+  setTodoTasks,
+}: Props) {
   const { t } = useTranslation();
 
   const listRef = useRef<FlatList<IAddTask>>(null);
 
-  const [todoListTitle, setTodoListTitle] = useState("");
-  const [todoTasks, setTodoTasks] = useState<IAddTask[]>([]);
+  const handleClickRemove = useCallback(
+    (task: IAddTask) => {
+      setTodoTasks((prv: IAddTask[]) => {
+        return prv.filter((t) => t.id !== task.id);
+      });
+    },
+    [setTodoTasks],
+  );
 
-  const isReadyToSend = useMemo(() => {
-    return todoListTitle.length > 0 && todoTasks.length > 0;
-  }, [todoListTitle.length, todoTasks.length]);
-
-  const handleClickRemove = (task: IAddTask) => {
-    setTodoTasks((prv: IAddTask[]) => {
-      return prv.filter((t) => t.id !== task.id);
-    });
-  };
-
-  const renderItem = useCallback(({ item, index }: { item: IAddTask; index: number }) => {
-    return (
-      <View className={"flex-row gap-4 items-center"}>
-        {/* Task w/ TaskTypeIcon */}
-        <View className={"flex flex-row flex-1 gap-2  justify-center items-center"}>
-          <TaskTypeIcon taskType={item.taskType} />
-          <View className={"flex-1 ml-2"}>
-            <Text className={"text-xl font-medium flex-wrap"}>{item.task}</Text>
+  const renderItem = useCallback(
+    ({ item, index }: { item: IAddTask; index: number }) => {
+      return (
+        <View className={"flex-row gap-4 items-center"}>
+          {/* Task w/ TaskTypeIcon */}
+          <View className={"flex flex-row flex-1 gap-2  justify-center items-center"}>
+            <TaskTypeIcon taskType={item.taskType} />
+            <View className={"flex-1 ml-2"}>
+              <Text className={"text-xl font-medium flex-wrap"}>{item.task}</Text>
+            </View>
+            <Pressable className={"ml-auto px-6"} onPress={() => handleClickRemove(item)}>
+              <Icon name={"cancelCircle"} size={26} strokeWidth={1.6} />
+            </Pressable>
           </View>
-          <Pressable className={"ml-auto px-6"} onPress={() => handleClickRemove(item)}>
-            <Icon name={"cancelCircle"} size={26} strokeWidth={1.6} />
-          </Pressable>
         </View>
-      </View>
-    );
-  }, []);
+      );
+    },
+    [handleClickRemove],
+  );
 
   return (
     <View className={"flex flex-col flex-1 w-full items-center gap-8"}>
@@ -65,7 +74,7 @@ export default function SendTodoForm() {
       </View>
 
       {todoTasks.length > 0 && (
-        <View className={"flex w-full bg-gray-200 rounded-3xl p-4 max-h-44 min-h-16"}>
+        <View className={"flex w-full bg-gray-200 rounded-3xl p-4 max-h-60 min-h-16"}>
           <FlatList
             ref={listRef}
             data={todoTasks}
@@ -76,17 +85,6 @@ export default function SendTodoForm() {
       )}
 
       <AddTaskForm setTodoTasks={setTodoTasks} listRef={listRef} />
-
-      <View className={"flex w-full mt-auto"}>
-        <Button
-          title={t("sendTodo.cta.send-todo")}
-          color={appTheme.colors.primary}
-          buttonStyle={{
-            backgroundColor: isReadyToSend ? appTheme.colors.primary : appTheme.colors.gray,
-          }}
-          disabled={!isReadyToSend}
-        />
-      </View>
     </View>
   );
 }

@@ -1,22 +1,39 @@
 import { View } from "react-native";
 import { useTranslation } from "react-i18next";
-import { SEND_TODO_STEPS } from "@whatTodo/models";
+import { IAddTask, SEND_TODO_STEPS } from "@whatTodo/models";
+import { Dispatch, SetStateAction } from "react";
 
 import Button from "@/components/Button/Button";
 import { appTheme } from "@/constants/uiConsts";
 import { IUserFS } from "@/types";
 
 interface Props {
+  todoListTitle: string;
+  todoTasks: IAddTask[];
   selectedUsers: IUserFS[];
   sendTodoSteps: string;
+  setSendTodoSteps: Dispatch<SetStateAction<string>>;
 }
 
-export default function SendTodoStepsCtaButton({ selectedUsers, sendTodoSteps }: Props) {
+export default function SendTodoStepsCtaButton({
+  todoListTitle,
+  todoTasks,
+  selectedUsers,
+  sendTodoSteps,
+  setSendTodoSteps,
+}: Props) {
   const { t } = useTranslation();
 
-  const generateText = (sendTodoSteps: string) => {
-    if (sendTodoSteps === SEND_TODO_STEPS.SEARCH) return "NEXT";
-    return "";
+  const handlePressPrevious = (sendTodoSteps: string) => {
+    if (sendTodoSteps === SEND_TODO_STEPS.SELECT) {
+      setSendTodoSteps(SEND_TODO_STEPS.SEARCH);
+    }
+  };
+
+  const handlePressNext = (sendTodoSteps: string) => {
+    if (sendTodoSteps === SEND_TODO_STEPS.SEARCH) {
+      setSendTodoSteps(SEND_TODO_STEPS.SELECT);
+    }
   };
 
   return (
@@ -25,22 +42,30 @@ export default function SendTodoStepsCtaButton({ selectedUsers, sendTodoSteps }:
         <Button
           title={"<"}
           color={appTheme.colors.primary}
-          disabled={selectedUsers.length === 0}
           buttonStyle={{
             backgroundColor:
-              selectedUsers.length > 0 ? appTheme.colors.primary : appTheme.colors.gray,
+              sendTodoSteps === SEND_TODO_STEPS.SEARCH
+                ? appTheme.colors.gray
+                : appTheme.colors.primary,
           }}
+          disabled={sendTodoSteps === SEND_TODO_STEPS.SEARCH}
+          onPress={() => handlePressPrevious(sendTodoSteps)}
         />
       </View>
       <View className={"flex flex-1"}>
         <Button
-          title={">"}
+          title={sendTodoSteps === SEND_TODO_STEPS.SELECT ? t("sendTodo.cta.send-todo") : ">"}
           color={appTheme.colors.primary}
-          disabled={selectedUsers.length === 0}
           buttonStyle={{
             backgroundColor:
-              selectedUsers.length > 0 ? appTheme.colors.primary : appTheme.colors.gray,
+              (sendTodoSteps === SEND_TODO_STEPS.SEARCH && selectedUsers.length > 0) ||
+              (sendTodoSteps === SEND_TODO_STEPS.SELECT &&
+                todoListTitle.length > 0 &&
+                todoTasks.length > 0)
+                ? appTheme.colors.primary
+                : appTheme.colors.gray,
           }}
+          onPress={() => handlePressNext(sendTodoSteps)}
         />
       </View>
     </View>
