@@ -36,6 +36,9 @@ export default function SendTodo() {
     setSelectedSupervisors([]);
     setAreUsersSelectionDone(false);
     setUserType("user");
+    setTodoListTitle("");
+    setTodoTasks([]);
+    setSendTodoSteps(SEND_TODO_STEPS.SEARCH);
   }, []);
 
   const onBackPress = () => cleanupSelection();
