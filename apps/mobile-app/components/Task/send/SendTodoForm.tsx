@@ -1,4 +1,11 @@
-import { FlatList, Pressable, View } from "react-native";
+import {
+  FlatList,
+  KeyboardAvoidingView,
+  Platform,
+  Pressable,
+  ScrollView,
+  View,
+} from "react-native";
 import { Dispatch, SetStateAction, useCallback, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { IAddTask } from "@whatTodo/models";
@@ -59,32 +66,41 @@ export default function SendTodoForm({
   );
 
   return (
-    <View className={"flex flex-col flex-1 w-full items-center gap-8"}>
-      {/* List Title */}
-      <View className={"flex w-full flex-row items-center gap-4"}>
-        <Text className={"w-16 text-xl font-normal text-gray-500"}>{t("sendTodo.list.title")}</Text>
-        <Input
-          className={"flex-1"}
-          placeholder={t("sendTodo.list.title.placeholder")}
-          value={todoListTitle}
-          onChangeText={setTodoListTitle}
-          aria-labelledby={"inputLabel"}
-          aria-errormessage={"inputError"}
-        />
-      </View>
+    <KeyboardAvoidingView
+      className={"flex-1 w-full"}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+    >
+      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+        <View className={"flex flex-col flex-1 w-full items-center gap-8"}>
+          {/* List Title */}
+          <View className={"flex w-full flex-row items-center gap-4"}>
+            <Text className={"w-16 text-xl font-normal text-gray-500"}>
+              {t("sendTodo.list.title")}
+            </Text>
+            <Input
+              className={"flex-1"}
+              placeholder={t("sendTodo.list.title.placeholder")}
+              value={todoListTitle}
+              onChangeText={setTodoListTitle}
+              aria-labelledby={"inputLabel"}
+              aria-errormessage={"inputError"}
+            />
+          </View>
 
-      {todoTasks.length > 0 && (
-        <View className={"flex w-full bg-gray-200 rounded-3xl p-4 max-h-60 min-h-16"}>
-          <FlatList
-            ref={listRef}
-            data={todoTasks}
-            renderItem={renderItem}
-            ItemSeparatorComponent={ItemSeparator}
-          />
+          {todoTasks.length > 0 && (
+            <View className={"flex w-full bg-gray-200 rounded-3xl p-4 max-h-60 min-h-16"}>
+              <FlatList
+                ref={listRef}
+                data={todoTasks}
+                renderItem={renderItem}
+                ItemSeparatorComponent={ItemSeparator}
+              />
+            </View>
+          )}
+
+          <AddTaskForm setTodoTasks={setTodoTasks} listRef={listRef} />
         </View>
-      )}
-
-      <AddTaskForm setTodoTasks={setTodoTasks} listRef={listRef} />
-    </View>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 }
