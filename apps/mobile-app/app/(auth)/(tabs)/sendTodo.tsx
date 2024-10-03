@@ -18,6 +18,7 @@ import SendTodoStepsSearch from "@/components/Task/send/steps/SendTodoStepsSearc
 import Button from "@/components/Button/Button";
 import { appTheme } from "@/constants/uiConsts";
 import SendTodoStepsTitle from "@/components/Task/send/steps/SendTodoStepsTitle";
+import SendTodoStepsCtaButton from "@/components/Task/send/steps/SendTodoStepsCtaButton";
 
 export default function SendTodo() {
   const { t } = useTranslation();
@@ -78,6 +79,7 @@ export default function SendTodo() {
             />
           </View>
 
+          {/* Steps title */}
           <SendTodoStepsTitle sendTodoSteps={sendTodoSteps} />
 
           {/* STEPS */}
@@ -103,18 +105,7 @@ export default function SendTodo() {
           ) : null}
 
           {/* Button CTA */}
-          <View className={"py-4"}>
-            <Button
-              title={t("sendTodo.cta.completeUsers-and-compose-todos")}
-              color={appTheme.colors.primary}
-              disabled={selectedUsers.length === 0}
-              buttonStyle={{
-                backgroundColor:
-                  selectedUsers.length > 0 ? appTheme.colors.primary : appTheme.colors.gray,
-              }}
-              // onPress={handlePressToCompleteToUsers}
-            />
-          </View>
+          <SendTodoStepsCtaButton selectedUsers={selectedUsers} sendTodoSteps={sendTodoSteps} />
         </View>
       </KeyboardAvoidingView>
     </ScreenWrapper>
