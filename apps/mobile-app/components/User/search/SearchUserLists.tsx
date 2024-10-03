@@ -1,16 +1,19 @@
 import { View } from "react-native";
 import { Dispatch, SetStateAction } from "react";
+import { useDebounce } from "@uidotdev/usehooks";
 
 import { IUserFS } from "@/types";
+import { useSearchUsers } from "@/hooks/queries/useSearchUsers";
+import { SEARCH_USER_INPUT_DEBOUNCE_TIME } from "@/constants/appConsts";
 
 import SearchUser from "./SearchUser";
+import SearchUserSkeletonLists from "./SearchUserSkeletonLists";
 
 interface Props {
   searchText?: string;
   setSearchText: Dispatch<SetStateAction<string>>;
 
   userType: "user" | "supervisor";
-  searchedUsers?: IUserFS[];
   setSelectedUsers: Dispatch<SetStateAction<IUserFS[]>>;
   setSelectedSupervisors: Dispatch<SetStateAction<IUserFS[]>>;
 }
@@ -19,14 +22,19 @@ export default function SearchUserLists({
   searchText,
   setSearchText,
   userType,
-  searchedUsers,
   setSelectedUsers,
   setSelectedSupervisors,
 }: Props) {
+  const debouncedSearchText = useDebounce(searchText, SEARCH_USER_INPUT_DEBOUNCE_TIME);
+  const { data: searchedUsers, isLoading } = useSearchUsers(debouncedSearchText);
+
   return (
     <View className={"flex flex-col gap-2"}>
-      {searchText
-        ? (searchedUsers ?? []).map((user: IUserFS, index: number) => (
+      {searchText ? (
+        isLoading ? (
+          <SearchUserSkeletonLists />
+        ) : (
+          (searchedUsers ?? []).map((user: IUserFS, index: number) => (
             <SearchUser
               key={`${user.id}`}
               index={index}
@@ -37,7 +45,8 @@ export default function SearchUserLists({
               setSelectedSupervisors={setSelectedSupervisors}
             />
           ))
-        : null}
+        )
+      ) : null}
     </View>
   );
 }

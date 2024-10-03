@@ -2,19 +2,18 @@ import { KeyboardAvoidingView, Platform, ScrollView, View } from "react-native";
 import { Dispatch, SetStateAction, useRef } from "react";
 import { useTranslation } from "react-i18next";
 
+import { Text } from "@/components/ui/text";
 import { IUserFS } from "@/types";
 import Icon from "@/assets/icons";
-import { appTheme } from "@/constants/uiConsts";
+import SelectedUsers from "@/components/User/select/SelectedUsers";
 
-import Input from "../Input";
-import SearchUserLists from "./search/SearchUserLists";
-import Button from "../Button/Button";
-import UserTypeSwitch from "./UserTypeSwitch";
+import Input from "../../../Input";
+import SearchUserLists from "../../../User/search/SearchUserLists";
+import UserTypeSwitch from "../../../User/UserTypeSwitch";
 
 interface Props {
   searchText: string;
   setSearchText: Dispatch<SetStateAction<string>>;
-  searchedUsers?: IUserFS[];
   userType: "user" | "supervisor";
   setUserType: (userType: "user" | "supervisor") => void;
   selectedUsers: IUserFS[];
@@ -24,11 +23,11 @@ interface Props {
   setAreUsersSelectionDone: Dispatch<SetStateAction<boolean>>;
 }
 
-export default function SearchAndSelectUsers({
+export default function SendTodoStepsSearch({
   searchText,
   setSearchText,
-  searchedUsers,
   selectedUsers,
+  selectedSupervisors,
   setSelectedUsers,
   setSelectedSupervisors,
   setAreUsersSelectionDone,
@@ -50,16 +49,35 @@ export default function SearchAndSelectUsers({
     >
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
         <View style={{ flex: 1 }}>
+          {/* Selected User */}
+          <View className={"flex flex-col gap-2"}>
+            <Text className={"text-xl font-semibold"}>{`${t("sendTodo.user.type.user")}:`}</Text>
+            <SelectedUsers selectedUsers={selectedUsers} setSelectedUsers={setSelectedUsers} />
+          </View>
+
+          {/* Selected Supervisors */}
+          <View className={"flex flex-col gap-2"}>
+            <Text
+              className={"text-xl font-semibold"}
+            >{`${t("sendTodo.user.type.supervisor")}:`}</Text>
+            <SelectedUsers
+              selectedUsers={selectedSupervisors}
+              setSelectedUsers={setSelectedSupervisors}
+            />
+          </View>
+
           {/* User name search input */}
-          <Input
-            inputRef={inputRef}
-            icon={<Icon name={"user"} size={26} strokeWidth={1.6} />}
-            placeholder={t("title.expert.sendTodo.searchText.placeholder")}
-            onChangeText={(value) => setSearchText(value)}
-            autoCapitalize={"none"}
-            value={searchText}
-            fontSize={18}
-          />
+          <View className={"py-4"}>
+            <Input
+              inputRef={inputRef}
+              icon={<Icon name={"user"} size={26} strokeWidth={1.6} />}
+              placeholder={t("title.expert.sendTodo.searchText.placeholder")}
+              onChangeText={(value) => setSearchText(value)}
+              autoCapitalize={"none"}
+              value={searchText}
+              fontSize={18}
+            />
+          </View>
 
           {/* UserType select switch */}
           <View className={"flex flex-row items-center w-full justify-center"}>
@@ -71,26 +89,11 @@ export default function SearchAndSelectUsers({
             searchText={searchText}
             setSearchText={setSearchText}
             userType={userType}
-            searchedUsers={searchedUsers}
             setSelectedUsers={setSelectedUsers}
             setSelectedSupervisors={setSelectedSupervisors}
           />
         </View>
       </ScrollView>
-
-      {/* Button CTA */}
-      <View className={"py-4"}>
-        <Button
-          title={t("sendTodo.cta.completeUsers-and-compose-todos")}
-          color={appTheme.colors.primary}
-          disabled={selectedUsers.length === 0}
-          buttonStyle={{
-            backgroundColor:
-              selectedUsers.length === 0 ? appTheme.colors.gray : appTheme.colors.primary,
-          }}
-          onPress={handlePressToCompleteToUsers}
-        />
-      </View>
     </KeyboardAvoidingView>
   );
 }

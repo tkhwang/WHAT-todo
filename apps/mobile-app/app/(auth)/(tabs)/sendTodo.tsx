@@ -2,31 +2,33 @@
 import { KeyboardAvoidingView, Platform, View } from "react-native";
 import { useTranslation } from "react-i18next";
 import { useCallback, useState } from "react";
-import { useDebounce } from "@uidotdev/usehooks";
 import { useFocusEffect } from "expo-router";
+import { IAddTask, SEND_TODO_STEPS } from "@whatTodo/models";
 
-import { Text } from "@/components/ui/text";
 import ScreenWrapper from "@/components/MainLayout/ScreenWrapper";
 import Header from "@/components/MainLayout/Header";
-import { useSearchUsers } from "@/hooks/queries/useSearchUsers";
-import { SEARCH_USER_INPUT_DEBOUNCE_TIME } from "@/constants/appConsts";
 import { IUserFS } from "@/types";
-import SelectedUsers from "@/components/User/select/SelectedUsers";
-import SearchAndSelectUsers from "@/components/User/SearchAndSelectUsers";
-import SendTodoForm from "@/components/Task/add/SendTodoForm";
+import SendTodoForm from "@/components/Task/send/SendTodoForm";
+import SendTodoStepsSearch from "@/components/Task/send/steps/SendTodoStepsSearch";
+import SendTodoStepsTitle from "@/components/Task/send/steps/SendTodoStepsTitle";
+import SendTodoStepsCtaButton from "@/components/Task/send/steps/SendTodoStepsCtaButton";
 
 export default function SendTodo() {
   const { t } = useTranslation();
 
+  // Steps
+  const [sendTodoSteps, setSendTodoSteps] = useState(SEND_TODO_STEPS.SEARCH);
+  const [areUsersSelectionDone, setAreUsersSelectionDone] = useState(false);
+
+  // Search
   const [searchText, setSearchText] = useState("");
   const [userType, setUserType] = useState<"user" | "supervisor">("user");
   const [selectedUsers, setSelectedUsers] = useState<IUserFS[]>([]);
   const [selectedSupervisors, setSelectedSupervisors] = useState<IUserFS[]>([]);
 
-  const [areUsersSelectionDone, setAreUsersSelectionDone] = useState(false);
-
-  const debouncedSearchText = useDebounce(searchText, SEARCH_USER_INPUT_DEBOUNCE_TIME);
-  const { data: searchedUsers } = useSearchUsers(debouncedSearchText);
+  // Select
+  const [todoListTitle, setTodoListTitle] = useState("");
+  const [todoTasks, setTodoTasks] = useState<IAddTask[]>([]);
 
   const cleanupSelection = useCallback(() => {
     setSearchText("");
@@ -56,30 +58,13 @@ export default function SendTodo() {
           <Header title={t("title.expert.sendTodo")} showBackButton onBackPress={onBackPress} />
           {/* Title: Search User */}
 
-          {/* Selected User */}
-          <View className={"flex flex-col gap-2"}>
-            <Text className={"text-xl font-semibold"}>{`${t("sendTodo.user.type.user")}:`}</Text>
-            <SelectedUsers selectedUsers={selectedUsers} setSelectedUsers={setSelectedUsers} />
-          </View>
-
-          {/* Selected Supervisors */}
-          <View className={"flex flex-col gap-2"}>
-            <Text
-              className={"text-xl font-semibold"}
-            >{`${t("sendTodo.user.type.supervisor")}:`}</Text>
-            <SelectedUsers
-              selectedUsers={selectedSupervisors}
-              setSelectedUsers={setSelectedSupervisors}
-            />
-          </View>
-
-          {areUsersSelectionDone ? (
-            <SendTodoForm />
-          ) : (
-            <SearchAndSelectUsers
+          {/* Steps title */}
+          <SendTodoStepsTitle sendTodoSteps={sendTodoSteps} />
+          {/* STEPS */}
+          {sendTodoSteps === SEND_TODO_STEPS.SEARCH ? (
+            <SendTodoStepsSearch
               searchText={searchText}
               setSearchText={setSearchText}
-              searchedUsers={searchedUsers}
               // user type
               userType={userType}
               setUserType={setUserType}
@@ -92,7 +77,23 @@ export default function SendTodo() {
               // user selection one flag
               setAreUsersSelectionDone={setAreUsersSelectionDone}
             />
-          )}
+          ) : sendTodoSteps === SEND_TODO_STEPS.SELECT ? (
+            <SendTodoForm
+              todoListTitle={todoListTitle}
+              setTodoListTitle={setTodoListTitle}
+              todoTasks={todoTasks}
+              setTodoTasks={setTodoTasks}
+            />
+          ) : null}
+
+          {/* Button CTA */}
+          <SendTodoStepsCtaButton
+            todoListTitle={todoListTitle}
+            todoTasks={todoTasks}
+            selectedUsers={selectedUsers}
+            sendTodoSteps={sendTodoSteps}
+            setSendTodoSteps={setSendTodoSteps}
+          />
         </View>
       </KeyboardAvoidingView>
     </ScreenWrapper>
