@@ -57,9 +57,18 @@ export default function SendTodo() {
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={{ flex: 1 }}
       >
-        <View className={"flex flex-1 flex-col p-4 gap-4"}>
+        <View className={"flex flex-1 flex-col h-full p-4 gap-4"}>
           <Header title={t("title.expert.sendTodo")} showBackButton onBackPress={onBackPress} />
           {/* Title: Search User */}
+
+          {/* Button CTA */}
+          <SendTodoStepsCtaButton
+            todoListTitle={todoListTitle}
+            todoTasks={todoTasks}
+            selectedUsers={selectedUsers}
+            sendTodoSteps={sendTodoSteps}
+            setSendTodoSteps={setSendTodoSteps}
+          />
 
           {/* Steps title */}
           <SendTodoStepsTitle sendTodoSteps={sendTodoSteps} />
@@ -88,15 +97,6 @@ export default function SendTodo() {
               setTodoTasks={setTodoTasks}
             />
           ) : null}
-
-          {/* Button CTA */}
-          <SendTodoStepsCtaButton
-            todoListTitle={todoListTitle}
-            todoTasks={todoTasks}
-            selectedUsers={selectedUsers}
-            sendTodoSteps={sendTodoSteps}
-            setSendTodoSteps={setSendTodoSteps}
-          />
         </View>
       </KeyboardAvoidingView>
     </ScreenWrapper>
