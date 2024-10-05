@@ -12,10 +12,19 @@ export class FirestoreListRepository {
     this.#listCollection = this.#db.collection(COLLECTIONS.LISTS);
   }
 
-  async addList(userId: string) {
+  async addList({
+    title,
+    userIds,
+    supervisorIds,
+  }: {
+    title: string;
+    userIds: string[];
+    supervisorIds: string[];
+  }) {
     const newList = {
-      title: 'My Todo',
-      userIds: [userId],
+      title,
+      userIds,
+      supervisorIds,
       createdAt: firestore.FieldValue.serverTimestamp(),
       updatedAt: firestore.FieldValue.serverTimestamp(),
     };

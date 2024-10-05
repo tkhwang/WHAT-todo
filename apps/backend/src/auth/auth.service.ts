@@ -1,5 +1,5 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { AuthProviders } from '@whatTodo/models';
+import { AuthProviders, DEFAULT_LIST_TITLE } from '@whatTodo/models';
 import * as FirebaseAdmin from 'firebase-admin';
 import { FirestoreListRepository } from 'src/firebase/firestore-list.repository';
 import { FirestoreUserRepository } from 'src/firebase/firestore-user.repository';
@@ -44,12 +44,18 @@ export class AuthService {
       provider,
     });
 
-    const list = await this.firestoreListRepository.addList(user.id);
+    const list = await this.firestoreListRepository.addList({
+      title: DEFAULT_LIST_TITLE,
+      userIds: [user.id],
+      supervisorIds: [],
+    });
 
-    const userList = await this.firestoreUserRepository.addUserList(
-      id,
-      list.id,
-    );
+    const userList = await this.firestoreUserRepository.addUserList({
+      title: DEFAULT_LIST_TITLE,
+      listId: list.id,
+      userId: id,
+      supervisorIds: [],
+    });
 
     return user;
   }
