@@ -116,8 +116,10 @@ export class FirestoreUserRepository {
     todoId: string,
     addTaskDto: AddTaskRequest,
   ) {
+    const { userIds, ...addTaskDtoWithoutUserIds } = addTaskDto;
+
     const newTodo = {
-      ...addTaskDto,
+      ...addTaskDtoWithoutUserIds,
       todoId,
       userId,
       createdAt: firestore.FieldValue.serverTimestamp(),

@@ -21,7 +21,6 @@ export class FirestoreTaskRepository {
     const newTask = {
       ...addTaskDto,
       isDone: false,
-      userIds: [userId],
       createdAt: firestore.FieldValue.serverTimestamp(),
       updatedAt: firestore.FieldValue.serverTimestamp(),
     };
