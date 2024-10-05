@@ -48,14 +48,18 @@ export default function SendTodoForm({
   const renderItem = useCallback(
     ({ item, index }: { item: IAddTask; index: number }) => {
       return (
-        <View className={"flex-row gap-4 items-center bg-gray-200 px-2 py-1 rounded-2xl"}>
-          {/* Task w/ TaskTypeIcon */}
+        <View className={"flex-row gap-4 items-center bg-gray-200 rounded-2xl px-4 py-3"}>
           <View className={"flex flex-row flex-1 gap-2  justify-center items-center"}>
+            {/* Icon: TaskType */}
             <TaskTypeIcon taskType={item.taskType} />
+
+            {/* Task */}
             <View className={"flex-1 ml-2"}>
               <Text className={"text-xl font-medium flex-wrap"}>{item.task}</Text>
             </View>
-            <Pressable className={"ml-auto px-6"} onPress={() => handleClickRemove(item)}>
+
+            {/* Right: remove icon */}
+            <Pressable className={"ml-auto"} onPress={() => handleClickRemove(item)}>
               <Icon name={"cancelCircle"} size={26} strokeWidth={1.6} />
             </Pressable>
           </View>
