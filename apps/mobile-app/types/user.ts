@@ -5,3 +5,9 @@ export interface IUserFS extends IUserCommon {
   createdAt: Timestamp;
   updatedAt: Timestamp;
 }
+
+export interface IUserTaskFS extends IUserCommon {
+  isDone: boolean;
+  createdAt: Timestamp;
+  updatedAt: Timestamp;
+}
