@@ -13,6 +13,7 @@ import { useLists } from "@/hooks/queries/useLists";
 import { appTheme } from "@/constants/uiConsts";
 import { useToggleUserTaskIsDone } from "@/hooks/mutations/useToggleUserTaskIsDone";
 import { useDeleteTask } from "@/hooks/mutations/useDeleteTask";
+import { useUserTasks } from "@/hooks/queries/useUserTasks";
 
 import TaskListItem from "../Task/TaskListItem";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../ui/collapsible";
@@ -37,13 +38,25 @@ export function TodoList({ listId }: Props) {
   const { data: tasks } = useTasks(listId);
   console.log("🚀 ~ TodoList ~ tasks.length:", tasks?.length);
 
+  const { data: userTasks } = useUserTasks(listId);
+
   const activeTasks = useMemo(() => {
-    return (tasks ?? []).filter((task) => !task.isDone).sort((a, b) => b.updatedAt - a.updatedAt);
-  }, [tasks]);
+    return (tasks ?? [])
+      .filter((task) => {
+        const userTask = userTasks?.find((userTask) => userTask.id === task.id);
+        return userTask?.isDone === false;
+      })
+      .sort((a, b) => b.updatedAt - a.updatedAt);
+  }, [tasks, userTasks]);
 
   const completedTasks = useMemo(() => {
-    return (tasks ?? []).filter((task) => task.isDone).sort((a, b) => b.updatedAt - a.updatedAt);
-  }, [tasks]);
+    return (tasks ?? [])
+      .filter((task) => {
+        const userTask = userTasks?.find((userTask) => userTask.id === task.id);
+        return userTask?.isDone === true;
+      })
+      .sort((a, b) => b.updatedAt - a.updatedAt);
+  }, [tasks, userTasks]);
 
   useEffect(() => {
     setCurrentListId(listId);
@@ -68,28 +81,34 @@ export function TodoList({ listId }: Props) {
     deleteTaskMutate({ taskId: item.id });
   };
 
-  const renderHiddenItem = ({ item }: { item: ITask }) => (
-    <View
-      className={
-        "relative flex flex-1 flex-row justify-between items-center pl-4 rounded-xl bg-gray-300"
-      }
-    >
-      <TouchableOpacity
-        style={[styles.backRightBtn, styles.backRightBtnLeft]}
-        onPress={() => handleClickComplete(item)}
+  const renderHiddenItem = ({ item }: { item: ITask }) => {
+    const userTask = userTasks?.find((userTask) => userTask.id === item.id);
+
+    return (
+      <View
+        className={
+          "relative flex flex-1 flex-row justify-between items-center pl-4 rounded-xl bg-gray-300"
+        }
       >
-        <Text className={"text-white text-sm"}>
-          {item.isDone ? t("task.list.swipe.left.uncomplete") : t("task.list.swipe.left.complete")}
-        </Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={[styles.backRightBtn, styles.backRightBtnRight]}
-        onPress={() => handleClickDelete(item)}
-      >
-        <Text className={"text-white text-sm"}>{t("task.list.swipe.right")}</Text>
-      </TouchableOpacity>
-    </View>
-  );
+        <TouchableOpacity
+          style={[styles.backRightBtn, styles.backRightBtnLeft]}
+          onPress={() => handleClickComplete(item)}
+        >
+          <Text className={"text-white text-sm"}>
+            {userTask?.isDone
+              ? t("task.list.swipe.left.uncomplete")
+              : t("task.list.swipe.left.complete")}
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.backRightBtn, styles.backRightBtnRight]}
+          onPress={() => handleClickDelete(item)}
+        >
+          <Text className={"text-white text-sm"}>{t("task.list.swipe.right")}</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  };
 
   if (isLoading) return null;
   if (!list) return null;

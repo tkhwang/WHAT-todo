@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { COLLECTIONS, ITask, ToggleTaskIsDoneRequest } from "@whatTodo/models";
+import { COLLECTIONS, IUserTask, ToggleTaskIsDoneRequest } from "@whatTodo/models";
 import firestore from "@react-native-firebase/firestore";
 import { useAtomValue } from "jotai";
 
@@ -11,34 +11,38 @@ export function useToggleUserTaskIsDone() {
 
   return useMutation({
     mutationFn: async ({ taskId }: ToggleTaskIsDoneRequest) => {
-      const taskRef = firestore().collection(COLLECTIONS.TASKS).doc(taskId);
+      const userTaskRef = firestore()
+        .collection(COLLECTIONS.USERS)
+        .doc(myUserId)
+        .collection(COLLECTIONS.TASKS)
+        .doc(taskId);
 
-      const taskSnapshot = await taskRef.get();
+      const taskSnapshot = await userTaskRef.get();
       if (!taskSnapshot.exists) throw new Error("Task not found");
 
       const taskData = taskSnapshot.data();
 
-      await taskRef.set({
+      await userTaskRef.set({
         ...taskData,
         isDone: !taskData?.isDone,
         updatedAt: firestore.FieldValue.serverTimestamp(),
       });
     },
     onMutate: async ({ taskId }) => {
-      const key = [COLLECTIONS.TASKS];
+      const key = [COLLECTIONS.USERS, myUserId, COLLECTIONS.TASKS];
 
-      await queryClient.cancelQueries({ queryKey: [COLLECTIONS.TASKS] });
+      await queryClient.cancelQueries({ queryKey: key });
       const previousTask = queryClient.getQueryData(key);
 
-      queryClient.setQueryData(key, (prv: ITask[]) => {
+      queryClient.setQueryData(key, (prv: IUserTask[]) => {
         if (!prv) return [];
 
-        return prv.map((task) => {
-          if (task.id !== taskId) return task;
+        return prv.map((userTask: IUserTask) => {
+          if (userTask.id !== taskId) return userTask;
 
           return {
-            ...task,
-            isDone: !task.isDone,
+            ...userTask,
+            isDone: !userTask.isDone,
           };
         });
       });
@@ -46,7 +50,7 @@ export function useToggleUserTaskIsDone() {
       return { previousTask };
     },
     onError: (_, { taskId }, context) => {
-      const key = [COLLECTIONS.TASKS];
+      const key = [COLLECTIONS.USERS, myUserId, COLLECTIONS.TASKS];
       queryClient.setQueryData(key, context?.previousTask);
     },
   });
