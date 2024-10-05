@@ -122,6 +122,7 @@ export class FirestoreUserRepository {
       ...addTaskDtoWithoutUserIds,
       todoId,
       userId,
+      isDone: false,
       createdAt: firestore.FieldValue.serverTimestamp(),
       updatedAt: firestore.FieldValue.serverTimestamp(),
     };

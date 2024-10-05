@@ -21,7 +21,6 @@ export class FirestoreTaskRepository {
   async addTask(userId: string, addTaskDto: AddTaskRequest) {
     const newTask = {
       ...addTaskDto,
-      isDone: false,
       createdAt: firestore.FieldValue.serverTimestamp(),
       updatedAt: firestore.FieldValue.serverTimestamp(),
     };
@@ -69,7 +68,6 @@ export class FirestoreTaskRepository {
     if (!taskDoc.userIds.includes(userId)) throw new UnauthorizedException();
 
     await this.#taskCollection.doc(taskId).update({
-      isDone: !taskDoc.isDone,
       updatedAt: firestore.FieldValue.serverTimestamp(),
     });
   }
