@@ -7,7 +7,7 @@ import { Text } from "@/components/ui/text";
 import { Checkbox } from "@/components/ui/checkbox";
 import { cn } from "@/lib/utils";
 import { useColorScheme } from "@/lib/useColorScheme";
-import { useToggleTaskIsDone } from "@/hooks/mutations/useToggleTaskIsDone";
+import { useToggleUserTaskIsDone } from "@/hooks/mutations/useToggleUserTaskIsDone";
 import Icon from "@/assets/icons";
 import { getDateWithDayOfWeek } from "@/utils";
 import { TASK_OPTIMISTIC_ADD_KEY } from "@/constants/appConsts";
@@ -24,7 +24,7 @@ export default function TaskListItem({ listId, task }: Props) {
 
   const { isDarkColorScheme } = useColorScheme();
   const [checked, setChecked] = useState(false);
-  const { mutate: toggleTaskIsDoneMutate } = useToggleTaskIsDone();
+  const { mutate: toggleTaskIsDoneMutate } = useToggleUserTaskIsDone();
 
   useEffect(() => {
     setChecked(task.isDone);

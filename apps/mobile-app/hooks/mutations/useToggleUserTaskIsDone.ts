@@ -1,9 +1,14 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { COLLECTIONS, ITask, ToggleTaskIsDoneRequest } from "@whatTodo/models";
 import firestore from "@react-native-firebase/firestore";
+import { useAtomValue } from "jotai";
 
-export function useToggleTaskIsDone() {
+import { myUserIdAtom } from "@/states/me";
+
+export function useToggleUserTaskIsDone() {
   const queryClient = useQueryClient();
+  const myUserId = useAtomValue(myUserIdAtom);
+
   return useMutation({
     mutationFn: async ({ taskId }: ToggleTaskIsDoneRequest) => {
       const taskRef = firestore().collection(COLLECTIONS.TASKS).doc(taskId);

@@ -11,7 +11,7 @@ import Icon from "@/assets/icons";
 import { useTasks } from "@/hooks/queries/useTasks";
 import { useLists } from "@/hooks/queries/useLists";
 import { appTheme } from "@/constants/uiConsts";
-import { useToggleTaskIsDone } from "@/hooks/mutations/useToggleTaskIsDone";
+import { useToggleUserTaskIsDone } from "@/hooks/mutations/useToggleUserTaskIsDone";
 import { useDeleteTask } from "@/hooks/mutations/useDeleteTask";
 
 import TaskListItem from "../Task/TaskListItem";
@@ -27,7 +27,7 @@ export function TodoList({ listId }: Props) {
   const { t } = useTranslation();
   const setCurrentListId = useSetAtom(currentListIdAtom);
 
-  const { mutate: toggleTaskIsDoneMutate } = useToggleTaskIsDone();
+  const { mutate: toggleTaskIsDoneMutate } = useToggleUserTaskIsDone();
   const { mutate: deleteTaskMutate } = useDeleteTask();
 
   const { data: list, isLoading } = useLists<IList | undefined>((lists: IList[]) =>
