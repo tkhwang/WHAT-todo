@@ -21,6 +21,11 @@ import { useDeleteTask } from "@/hooks/mutations/useDeleteTask";
 import { appTheme } from "@/constants/uiConsts";
 import { useLists } from "@/hooks/queries/useLists";
 import { useTasks } from "@/hooks/queries/useTasks";
+import { useSelectTaskByTaskId } from "@/hooks/queries/select/useSelectTaskByTaskId";
+import { useSelectListByListId } from "@/hooks/queries/select/useSelectListByListId";
+import { useSelectUserTaskByTaskId } from "@/hooks/queries/select/useSelectUserTaskByTaskId";
+import { useUserTasks } from "@/hooks/queries/useUserTasks";
+import { useToggleUserTaskIsDone } from "@/hooks/mutations/useToggleUserTaskIsDone";
 
 import { Checkbox } from "../ui/checkbox";
 import AddDueDateBottomSheet from "./add/AddDueDateBottomSheet";
@@ -38,13 +43,14 @@ export default function TaskDetail({ listId, taskId }: Props) {
   const router = useRouter();
   const { t } = useTranslation();
 
-  const { data: list } = useLists<IList | undefined>((lists: IList[]) =>
-    lists.find((list) => list.id === listId),
-  );
+  const { selectListByListId } = useSelectListByListId(listId);
+  const { data: list } = useLists<IList | undefined>(selectListByListId);
 
-  const { data: task } = useTasks<ITask | undefined>(listId, (tasks) =>
-    tasks.find((task) => task.id === taskId),
-  );
+  const { selectTaskByTaskId } = useSelectTaskByTaskId(taskId);
+  const { data: task } = useTasks<ITask | undefined>(listId, selectTaskByTaskId);
+
+  const { selectUserTaskByTaskId } = useSelectUserTaskByTaskId(taskId);
+  const { data: userTask } = useUserTasks(listId, selectUserTaskByTaskId);
 
   const inputRef = useRef<TextInput>(null);
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
@@ -56,24 +62,27 @@ export default function TaskDetail({ listId, taskId }: Props) {
   const [note, setNote] = useState("");
   const [taskType, setTaskType] = useState<TaskType>("todo");
 
+  const { mutate: updateTaskMutate } = useUpdateTask();
+  const { mutate: toggleTaskIsDoneMutate } = useToggleUserTaskIsDone();
+  const { mutate: deleteTaskMutate, isPending } = useDeleteTask(() => router.back());
+
   const toggleIsDone = useCallback(() => {
     setIsDone((prv) => !prv);
-  }, []);
-
-  const toggleTaskType = useCallback(() => {
-    setTaskType((prv) => (prv === "todo" ? "not-todo" : "todo"));
-  }, []);
-
-  const { mutate: updateTaskMutate } = useUpdateTask();
-  const { mutate: deleteTaskMutate, isPending } = useDeleteTask(() => router.back());
+    toggleTaskIsDoneMutate({ taskId });
+  }, [taskId, toggleTaskIsDoneMutate]);
 
   useEffect(() => {
     if (task) {
-      setIsDone(task.isDone);
       setNote(task.note ?? "");
       setTaskType(task.taskType);
     }
   }, [task]);
+
+  useEffect(() => {
+    if (userTask) {
+      setIsDone(userTask.isDone);
+    }
+  }, [userTask]);
 
   const handleBackPress = () => {
     const updateTaskRequestDto = {

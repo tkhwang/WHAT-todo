@@ -116,10 +116,13 @@ export class FirestoreUserRepository {
     todoId: string,
     addTaskDto: AddTaskRequest,
   ) {
+    const { userIds, ...addTaskDtoWithoutUserIds } = addTaskDto;
+
     const newTodo = {
-      ...addTaskDto,
+      ...addTaskDtoWithoutUserIds,
       todoId,
       userId,
+      isDone: false,
       createdAt: firestore.FieldValue.serverTimestamp(),
       updatedAt: firestore.FieldValue.serverTimestamp(),
     };
@@ -137,10 +140,22 @@ export class FirestoreUserRepository {
     };
   }
 
-  async addUserList(userId: string, listId: string) {
+  async addUserList({
+    title,
+    listId,
+    userId,
+    supervisorIds,
+  }: {
+    title: string;
+    listId: string;
+    userId: string;
+    supervisorIds: string[];
+  }) {
     const newList = {
+      title,
       listId,
       userId,
+      supervisorIds,
       createdAt: firestore.FieldValue.serverTimestamp(),
       updatedAt: firestore.FieldValue.serverTimestamp(),
     };

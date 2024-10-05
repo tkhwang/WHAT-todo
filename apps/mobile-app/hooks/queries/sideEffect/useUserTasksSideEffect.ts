@@ -5,13 +5,13 @@ import firestore from "@react-native-firebase/firestore";
 
 import { useFirestore } from "@/hooks/useFirestore";
 import { myUserIdAtom } from "@/states/me";
-import { ITaskFS } from "@/types";
+import { IUserTaskFS } from "@/types";
 import { FirestoreSnapshotListener } from "@/firestore/FirestoreSnapshotListner";
 
 export function useUserTasksSideEffect(listId: string) {
   const myUserId = useAtomValue(myUserIdAtom);
 
-  const { convert, getDocs, setDocs } = useFirestore<ITaskFS, ITask>();
+  const { convert, getDocs, setDocs } = useFirestore<IUserTaskFS, ITask>();
 
   useEffect(
     function setupUserTodosEffect() {
@@ -31,18 +31,18 @@ export function useUserTasksSideEffect(listId: string) {
           const prvUserTasks = getDocs(key);
           if (!prvUserTasks) {
             const userTasks = snpashot.docs.map((doc) => {
-              const userTodoDoc = doc.data() as ITaskFS;
+              const userTodoDoc = doc.data() as IUserTaskFS;
               return convert(userTodoDoc, doc.id);
             });
             setDocs(key, userTasks);
           } else {
             snpashot.docChanges().forEach((change) => {
               if (change.type === "added") {
-                const userTaskDoc = change.doc.data() as ITaskFS;
+                const userTaskDoc = change.doc.data() as IUserTaskFS;
                 const userTasks = [convert(userTaskDoc, change.doc.id), ...prvUserTasks];
                 setDocs(key, userTasks);
               } else if (change.type === "modified") {
-                const userTasksDoc = change.doc.data() as ITaskFS;
+                const userTasksDoc = change.doc.data() as IUserTaskFS;
                 const userTasks = prvUserTasks.map((userTodo) => {
                   if (userTodo.id === change.doc.id) return convert(userTasksDoc, change.doc.id);
                   return userTodo;

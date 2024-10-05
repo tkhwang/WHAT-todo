@@ -65,6 +65,7 @@ export default function SendTodoStepsCtaButton({
                 ? appTheme.colors.primary
                 : appTheme.colors.gray,
           }}
+          disabled={sendTodoSteps === SEND_TODO_STEPS.SEARCH && selectedUsers.length === 0}
           onPress={() => handlePressNext(sendTodoSteps)}
         />
       </View>

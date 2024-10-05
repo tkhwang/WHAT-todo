@@ -48,7 +48,7 @@ export default function SendTodoForm({
   const renderItem = useCallback(
     ({ item, index }: { item: IAddTask; index: number }) => {
       return (
-        <View className={"flex-row gap-4 items-center"}>
+        <View className={"flex-row gap-4 items-center bg-gray-200 px-2 py-1 rounded-2xl"}>
           {/* Task w/ TaskTypeIcon */}
           <View className={"flex flex-row flex-1 gap-2  justify-center items-center"}>
             <TaskTypeIcon taskType={item.taskType} />
@@ -70,37 +70,37 @@ export default function SendTodoForm({
       className={"flex-1 w-full"}
       behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
-      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-        <View className={"flex flex-col flex-1 w-full items-center gap-8"}>
-          {/* List Title */}
-          <View className={"flex w-full flex-row items-center gap-4"}>
-            <Text className={"w-16 text-xl font-normal text-gray-500"}>
-              {t("sendTodo.list.title")}
-            </Text>
-            <Input
-              className={"flex-1"}
-              placeholder={t("sendTodo.list.title.placeholder")}
-              value={todoListTitle}
-              onChangeText={setTodoListTitle}
-              aria-labelledby={"inputLabel"}
-              aria-errormessage={"inputError"}
-            />
-          </View>
-
-          {todoTasks.length > 0 && (
-            <View className={"flex w-full bg-gray-200 rounded-3xl p-4 max-h-60 min-h-16"}>
-              <FlatList
-                ref={listRef}
-                data={todoTasks}
-                renderItem={renderItem}
-                ItemSeparatorComponent={ItemSeparator}
-              />
-            </View>
-          )}
-
-          <AddTaskForm setTodoTasks={setTodoTasks} listRef={listRef} />
+      <View className={"flex flex-col flex-1 w-full items-center gap-8"}>
+        {/* List Title */}
+        <View className={"flex w-full flex-row items-center gap-4"}>
+          <Text className={"w-16 text-xl font-normal text-gray-500"}>
+            {t("sendTodo.list.title")}
+          </Text>
+          <Input
+            className={"flex-1"}
+            placeholder={t("sendTodo.list.title.placeholder")}
+            value={todoListTitle}
+            onChangeText={setTodoListTitle}
+            aria-labelledby={"inputLabel"}
+            aria-errormessage={"inputError"}
+          />
         </View>
-      </ScrollView>
+
+        {/* Task List */}
+        <View className={"flex w-full rounded-3xl"}>
+          <FlatList
+            ref={listRef}
+            data={todoTasks}
+            renderItem={renderItem}
+            ItemSeparatorComponent={ItemSeparator}
+            ListFooterComponent={
+              <View className={"pb-20 mt-6"}>
+                <AddTaskForm setTodoTasks={setTodoTasks} listRef={listRef} />
+              </View>
+            }
+          />
+        </View>
+      </View>
     </KeyboardAvoidingView>
   );
 }

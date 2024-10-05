@@ -1,3 +1,5 @@
+export const DEFAULT_LIST_TITLE = "My Todo"
+
 export interface IListCommon {
   id: string
   title: string

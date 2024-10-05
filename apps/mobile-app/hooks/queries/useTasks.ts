@@ -20,8 +20,8 @@ export function useTasks<TSelected = ITask[]>(
 
   return useQuery<ITask[], Error, TSelected>({
     ...getTasksQueryOptions(),
-    select,
     enabled: !!taskIds && taskIds.length > 0,
     staleTime: Infinity,
+    select,
   });
 }

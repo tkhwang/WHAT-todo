@@ -1,9 +1,11 @@
 import { TaskType } from "../task"
 
 export interface AddTaskRequest {
-  task: string
   listId: string
+  task: string
   taskType: TaskType
+  userIds: string[]
+  supervisorIds: string[]
 }
 
 export interface AddTaskResponse {
@@ -12,5 +14,6 @@ export interface AddTaskResponse {
   listId: string
   task: string
   taskType: TaskType
-  userId: string
+  userIds: string[]
+  superevisorIds: string[]
 }

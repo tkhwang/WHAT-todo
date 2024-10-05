@@ -13,20 +13,10 @@ export function useUpdateTask() {
       const cachedTask = allCachedTasks?.find((task) => task.id === taskId);
       if (!cachedTask) throw new Error(`Task (${taskId}) not found`);
 
-      const {
-        isDone: prvIsDone,
-        dueDate: prvDueDate,
-        note: prvNote,
-        taskType: prvTaskType,
-      } = cachedTask;
-      const { isDone, dueDate, note, taskType } = updateTaskRequestDto;
+      const { dueDate: prvDueDate, note: prvNote, taskType: prvTaskType } = cachedTask;
+      const { dueDate, note, taskType } = updateTaskRequestDto;
 
-      if (
-        isDone === prvIsDone &&
-        dueDate === prvDueDate &&
-        note === prvNote &&
-        prvTaskType === taskType
-      ) {
+      if (dueDate === prvDueDate && note === prvNote && prvTaskType === taskType) {
         console.log(`[+][useUpdateTask] nothing changed and skipped update`);
         return cachedTask;
       }
@@ -37,7 +27,6 @@ export function useUpdateTask() {
 
       const updatedTask = {
         ...updateTaskRequestDto,
-        isDone: updateTaskRequestDto.isDone,
         ...(updateTaskRequestDto.dueDate && { dueDate: updateTaskRequestDto.dueDate }),
         ...(updateTaskRequestDto.note && { note: updateTaskRequestDto.note }),
         updatedAt: firestore.FieldValue.serverTimestamp(),

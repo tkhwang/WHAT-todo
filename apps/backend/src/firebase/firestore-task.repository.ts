@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Inject,
   Injectable,
   NotFoundException,
@@ -20,8 +21,6 @@ export class FirestoreTaskRepository {
   async addTask(userId: string, addTaskDto: AddTaskRequest) {
     const newTask = {
       ...addTaskDto,
-      isDone: false,
-      userIds: [userId],
       createdAt: firestore.FieldValue.serverTimestamp(),
       updatedAt: firestore.FieldValue.serverTimestamp(),
     };
@@ -33,7 +32,8 @@ export class FirestoreTaskRepository {
     const taskDoc = await this.#taskCollection.doc(taskId).get();
 
     if (!taskDoc.exists) throw new NotFoundException('Task not found');
-    if (taskDoc.data().userId !== userId) throw new UnauthorizedException();
+    if (!taskDoc.data().userIds.includes(userId))
+      throw new UnauthorizedException();
 
     return {
       id: taskDoc.id,
@@ -41,10 +41,23 @@ export class FirestoreTaskRepository {
     } as ITask;
   }
 
-  async deleteTaskById(userId: string, taskId: string) {
-    const task = await this.findTaskById(userId, taskId);
-    if (task) {
+  async deleteTaskById(requestingUserId: string, taskId: string) {
+    const task = await this.findTaskById(requestingUserId, taskId);
+
+    if (!task) throw new BadRequestException(`taskId (${taskId} not found)`);
+
+    const { userIds } = task;
+    const userIdsFilteredMyId = userIds.filter(
+      (userId) => userId !== requestingUserId,
+    );
+
+    if (userIdsFilteredMyId.length === 0) {
       await this.#taskCollection.doc(taskId).delete();
+    } else {
+      await this.#taskCollection.doc(taskId).update({
+        userIds: userIdsFilteredMyId,
+        updatedAt: firestore.FieldValue.serverTimestamp(),
+      });
     }
   }
 
@@ -52,10 +65,9 @@ export class FirestoreTaskRepository {
     const taskDoc = await this.findTaskById(userId, taskId);
 
     if (!taskDoc) throw new NotFoundException(`[-] Task (${taskId}) not found`);
-    if (taskDoc.userId !== userId) throw new UnauthorizedException();
+    if (!taskDoc.userIds.includes(userId)) throw new UnauthorizedException();
 
     await this.#taskCollection.doc(taskId).update({
-      isDone: !taskDoc.isDone,
       updatedAt: firestore.FieldValue.serverTimestamp(),
     });
   }
