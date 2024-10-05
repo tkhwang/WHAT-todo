@@ -8,6 +8,7 @@ import Icon from "@/assets/icons";
 import Input from "@/components/Input";
 import { useAddTask } from "@/hooks/mutations/useAddTask";
 import { currentListIdAtom } from "@/states/list";
+import { myUserIdAtom } from "@/states/me";
 
 import TaskTypeRadioSelect from "../TaskTypeRadioSelect";
 
@@ -18,6 +19,7 @@ interface Props {
 export default function AddTaskInput({ inputRef }: Props) {
   const { t } = useTranslation();
 
+  const myUserId = useAtomValue(myUserIdAtom);
   const currentListId = useAtomValue(currentListIdAtom);
 
   const [showButttons, setShowButttons] = useState(false);
@@ -46,13 +48,15 @@ export default function AddTaskInput({ inputRef }: Props) {
       task,
       listId: currentListId,
       taskType,
+      userIds: [myUserId],
+      supervisorIds: [],
     };
 
     addTaskMutate(newTaskDto);
     setShowButttons(false);
 
     setTask("");
-  }, [addTaskMutate, currentListId, task, taskType]);
+  }, [addTaskMutate, currentListId, myUserId, task, taskType]);
 
   const handleFocus = () => {
     setShowButttons(true);
