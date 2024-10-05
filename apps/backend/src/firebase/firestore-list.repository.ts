@@ -14,8 +14,8 @@ export class FirestoreListRepository {
 
   async addList(userId: string) {
     const newList = {
-      userId,
       title: 'My Todo',
+      userIds: [userId],
       createdAt: firestore.FieldValue.serverTimestamp(),
       updatedAt: firestore.FieldValue.serverTimestamp(),
     };
