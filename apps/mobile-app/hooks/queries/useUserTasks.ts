@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { ITask } from "@whatTodo/models";
+import { IUserTask } from "@whatTodo/models";
 import { useAtomValue } from "jotai";
 
 import { myUserIdAtom } from "@/states/me";
@@ -12,7 +12,7 @@ export function useUserTasks(listId: string) {
 
   useUserTasksSideEffect(listId);
 
-  return useQuery<ITask[]>({
+  return useQuery<IUserTask[]>({
     ...getUserTasksQueryOptions(myUserId, listId),
     enabled: !!myUserId,
     staleTime: Infinity,
