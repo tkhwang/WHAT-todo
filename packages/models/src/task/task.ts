@@ -6,7 +6,6 @@ export interface ITaskCommon {
   listId: string
   userIds: string[]
   supervisorIds: string[]
-  isDone: boolean
   taskType: TaskType
   dueDate?: Date
   note?: string
