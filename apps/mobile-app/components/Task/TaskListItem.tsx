@@ -44,7 +44,7 @@ export default function TaskListItem({ listId, task }: Props) {
     >
       <View className={"flex-row gap-4 items-center w-full"}>
         {/* todo description */}
-        <View className={"relative flex-col gap-2 justify-center w-full pr-28"}>
+        <View className={"relative flex-col gap-2 justify-center w-full pr-16"}>
           {/* Task w/ TaskTypeIcon */}
           <View className={"flex flex-row gap-2  justify-start items-center"}>
             <TaskTypeIcon taskType={task.taskType} />
@@ -67,7 +67,6 @@ export default function TaskListItem({ listId, task }: Props) {
               {task.note && (
                 <View className={"flex-row gap-1 items-center"}>
                   <Icon name={"noteEdit"} size={18} strokeWidth={1.5} />
-                  <Text className={"text-base font-normal text-gray-500"}>{"Note"}</Text>
                 </View>
               )}
             </View>
