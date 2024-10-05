@@ -87,18 +87,21 @@ export default function SendTodoForm({
         </View>
 
         {/* Task List */}
-        <View className={"flex w-full rounded-3xl"}>
+        <View className={"flex-1 w-full rounded-3xl"}>
           <FlatList
             ref={listRef}
             data={todoTasks}
             renderItem={renderItem}
             ItemSeparatorComponent={ItemSeparator}
-            ListFooterComponent={
-              <View className={"pb-20 mt-6"}>
-                <AddTaskForm setTodoTasks={setTodoTasks} listRef={listRef} />
-              </View>
-            }
+            contentContainerStyle={{
+              flexGrow: 1,
+              justifyContent: "flex-start",
+            }}
           />
+        </View>
+
+        <View className={"mt-auto pb-0 w-full"}>
+          <AddTaskForm setTodoTasks={setTodoTasks} listRef={listRef} />
         </View>
       </View>
     </KeyboardAvoidingView>
