@@ -4,7 +4,7 @@ import { useGlobalSearchParams, useRouter } from "expo-router";
 import { useTranslation } from "react-i18next";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { APP_ERRORS, AuthSignupRequest, AuthVerifyIdRequest } from "@whatTodo/models";
-import { useAtom } from "jotai";
+import { useAtom, useSetAtom } from "jotai";
 
 import { Text } from "@/components/ui/text";
 import ScreenWrapper from "@/components/MainLayout/ScreenWrapper";
@@ -19,6 +19,7 @@ import { useAuthVerifyId } from "@/hooks/mutations/useAuthVerifyId";
 import BackButton from "@/components/Button/BackButton";
 import Button from "@/components/Button/Button";
 import { authSignUpPlatformAtom } from "@/states/auth";
+import { myUserIdAtom } from "@/states/me";
 
 export default function PublicSignupScreen() {
   const router = useRouter();
@@ -33,6 +34,8 @@ export default function PublicSignupScreen() {
   const [isIdLoading, setIsIdLoading] = useState(false);
   const [isNameLoading, setIsNameLoading] = useState(false);
   const [authSignUpPlatform, setAuthSignUpPlatform] = useAtom(authSignUpPlatformAtom);
+
+  const setMyUserIdAtom = useSetAtom(myUserIdAtom);
 
   const [{ state: authNameReducerState, name, nameError }, dispatchAuthName] = useAuthNameReducer();
   const [{ state: authVerifyIdReducerState, id, idError }, dispatchAuthVerifyId] =
@@ -111,12 +114,22 @@ export default function PublicSignupScreen() {
     try {
       setIsNameLoading(true);
       await authSignupMutationAsync(authSignupRequest);
+      setMyUserIdAtom(uid);
     } catch (error: unknown) {
       setIsNameLoading(false);
     } finally {
       setAuthSignUpPlatform(null);
     }
-  }, [authSignUpPlatform, authSignupMutationAsync, email, id, name, setAuthSignUpPlatform, uid]);
+  }, [
+    authSignUpPlatform,
+    authSignupMutationAsync,
+    email,
+    id,
+    name,
+    setAuthSignUpPlatform,
+    setMyUserIdAtom,
+    uid,
+  ]);
 
   return (
     <ScreenWrapper>
