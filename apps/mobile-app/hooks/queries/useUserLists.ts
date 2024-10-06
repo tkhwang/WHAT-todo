@@ -1,16 +1,16 @@
 import { useQuery } from "@tanstack/react-query";
 import { useAtomValue } from "jotai";
-import { IList } from "@whatTodo/models";
+import { IList, UserType } from "@whatTodo/models";
 
 import { myUserIdAtom } from "@/states/me";
 
 import { getUserListsQueryOptions } from "./queryOptions/getUserListsQueryOptions";
 import { useUserListsSideEffects } from "./sideEffect/useUserListsSideEffect";
 
-export function useUserLists() {
+export function useUserLists(userType: UserType = "user") {
   const myUserId = useAtomValue(myUserIdAtom);
 
-  useUserListsSideEffects();
+  useUserListsSideEffects(userType);
 
   return useQuery<IList[]>({
     ...getUserListsQueryOptions(myUserId),

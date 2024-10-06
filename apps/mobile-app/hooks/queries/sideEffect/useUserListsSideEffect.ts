@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { COLLECTIONS, IList } from "@whatTodo/models";
+import { COLLECTIONS, IList, UserType } from "@whatTodo/models";
 import { useAtomValue } from "jotai";
 import firestore from "@react-native-firebase/firestore";
 
@@ -9,7 +9,7 @@ import { FirestoreSnapshotListener } from "@/firestore/FirestoreSnapshotListner"
 
 import { useFirestore } from "../../useFirestore";
 
-export function useUserListsSideEffects() {
+export function useUserListsSideEffects(userType: UserType = "user") {
   const myUserId = useAtomValue(myUserIdAtom);
 
   const { convert, getDocs, setDocs } = useFirestore<IListFS, IList>();
@@ -25,6 +25,7 @@ export function useUserListsSideEffects() {
         .collection(COLLECTIONS.USERS)
         .doc(myUserId)
         .collection(COLLECTIONS.LISTS)
+        .where("userType", "==", userType)
         .onSnapshot((snapshot) => {
           if (!snapshot) return;
 
