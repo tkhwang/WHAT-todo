@@ -13,11 +13,11 @@ export class TasksService {
   async addTask(userId: string, addTaskDto: AddTaskRequest) {
     try {
       const addTask = await this.firestoreTaskRepository.addTask(addTaskDto);
-      return await this.firestoreUserRepository.addUserTodo(
+      return await this.firestoreUserRepository.addUserTodo({
         userId,
-        addTask.id,
+        todoId: addTask.id,
         addTaskDto,
-      );
+      });
     } catch (error) {
       throw new Error(error);
     }

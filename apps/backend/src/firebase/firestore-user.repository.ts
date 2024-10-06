@@ -111,11 +111,15 @@ export class FirestoreUserRepository {
     return Object.values(uniqueResults);
   }
 
-  async addUserTodo(
-    userId: string,
-    todoId: string,
-    addTaskDto: AddTaskRequest,
-  ) {
+  async addUserTodo({
+    userId,
+    todoId,
+    addTaskDto,
+  }: {
+    userId: string;
+    todoId: string;
+    addTaskDto: AddTaskRequest;
+  }) {
     const { userIds, ...addTaskDtoWithoutUserIds } = addTaskDto;
 
     const newTodo = {
