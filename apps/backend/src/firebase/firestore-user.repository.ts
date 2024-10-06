@@ -143,19 +143,22 @@ export class FirestoreUserRepository {
   async addUserList({
     title,
     listId,
+    expertId,
+    supervisorId,
     userId,
-    supervisorIds,
   }: {
     title: string;
     listId: string;
-    userId: string;
-    supervisorIds: string[];
+    expertId?: string;
+    supervisorId?: string;
+    userId?: string;
   }) {
     const newList = {
       title,
       listId,
-      userId,
-      supervisorIds,
+      ...(expertId && { expertId }),
+      ...(supervisorId && { supervisorId }),
+      ...(userId && { userId }),
       createdAt: firestore.FieldValue.serverTimestamp(),
       updatedAt: firestore.FieldValue.serverTimestamp(),
     };
