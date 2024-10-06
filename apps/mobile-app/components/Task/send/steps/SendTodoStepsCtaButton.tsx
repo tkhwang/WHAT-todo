@@ -1,8 +1,9 @@
 import { View } from "react-native";
 import { useTranslation } from "react-i18next";
 import { IAddTask, SEND_TODO_STEPS, SendTodoRequest } from "@whatTodo/models";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useCallback } from "react";
 import { useAtomValue } from "jotai";
+import { useRouter } from "expo-router";
 
 import Button from "@/components/Button/Button";
 import { appTheme } from "@/constants/uiConsts";
@@ -30,10 +31,15 @@ export default function SendTodoStepsCtaButton({
 }: Props) {
   const { t } = useTranslation();
   const { isDarkColorScheme } = useColorScheme();
+  const router = useRouter();
 
   const myUserId = useAtomValue(myUserIdAtom);
 
-  const { mutate: sendTodoMutate } = useSendTodo();
+  const onSuccess = useCallback(() => {
+    router.navigate("/(auth)/(tabs)/expert");
+  }, [router]);
+
+  const { mutate: sendTodoMutate } = useSendTodo(onSuccess);
 
   const handlePressPrevious = (sendTodoSteps: string) => {
     if (sendTodoSteps === SEND_TODO_STEPS.SELECT) {

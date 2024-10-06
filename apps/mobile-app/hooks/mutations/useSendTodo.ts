@@ -4,7 +4,7 @@ import { SendTodoRequest, SendTodoResponse } from "@whatTodo/models";
 
 import { httpClient } from "@/utils";
 
-export function useSendTodo() {
+export function useSendTodo(onSuccess: () => void) {
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -14,6 +14,9 @@ export function useSendTodo() {
         requestDto,
       );
       return response.data;
+    },
+    onSuccess: () => {
+      if (onSuccess) onSuccess();
     },
   });
 }
