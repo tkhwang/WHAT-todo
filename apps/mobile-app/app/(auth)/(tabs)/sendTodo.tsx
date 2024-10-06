@@ -66,6 +66,7 @@ export default function SendTodo() {
             todoListTitle={todoListTitle}
             todoTasks={todoTasks}
             selectedUsers={selectedUsers}
+            selectedSupervisors={selectedSupervisors}
             sendTodoSteps={sendTodoSteps}
             setSendTodoSteps={setSendTodoSteps}
           />

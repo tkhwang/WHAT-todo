@@ -1,28 +1,37 @@
 import { View } from "react-native";
 import { useTranslation } from "react-i18next";
-import { IAddTask, SEND_TODO_STEPS } from "@whatTodo/models";
+import { IAddTask, SEND_TODO_STEPS, SendTodoRequest } from "@whatTodo/models";
 import { Dispatch, SetStateAction } from "react";
+import { useAtomValue } from "jotai";
 
 import Button from "@/components/Button/Button";
 import { appTheme } from "@/constants/uiConsts";
 import { IUserFS } from "@/types";
+import { useSendTodo } from "@/hooks/mutations/useSendTodo";
+import { myUserIdAtom } from "@/states/me";
 
 interface Props {
+  sendTodoSteps: string;
+  setSendTodoSteps: Dispatch<SetStateAction<string>>;
   todoListTitle: string;
   todoTasks: IAddTask[];
   selectedUsers: IUserFS[];
-  sendTodoSteps: string;
-  setSendTodoSteps: Dispatch<SetStateAction<string>>;
+  selectedSupervisors: IUserFS[];
 }
 
 export default function SendTodoStepsCtaButton({
+  sendTodoSteps,
+  setSendTodoSteps,
   todoListTitle,
   todoTasks,
   selectedUsers,
-  sendTodoSteps,
-  setSendTodoSteps,
+  selectedSupervisors,
 }: Props) {
   const { t } = useTranslation();
+
+  const myUserId = useAtomValue(myUserIdAtom);
+
+  const { mutate: sendTodoMutate } = useSendTodo();
 
   const handlePressPrevious = (sendTodoSteps: string) => {
     if (sendTodoSteps === SEND_TODO_STEPS.SELECT) {
@@ -33,6 +42,16 @@ export default function SendTodoStepsCtaButton({
   const handlePressNext = (sendTodoSteps: string) => {
     if (sendTodoSteps === SEND_TODO_STEPS.SEARCH) {
       setSendTodoSteps(SEND_TODO_STEPS.SELECT);
+    } else {
+      const sendTodoDto: SendTodoRequest = {
+        todoListTitle,
+        todoTasks: todoTasks.map(({ id, ...todoTask }) => ({ ...todoTask })),
+        expertId: myUserId,
+        userIds: selectedUsers.map((selectedUser) => selectedUser.id),
+        supervisorIds: selectedSupervisors.map((selectedSupervisor) => selectedSupervisor.id),
+      };
+      console.log("🚀 ~ handlePressNext ~ sendTodoDto:", JSON.stringify(sendTodoDto, null, 2));
+      sendTodoMutate(sendTodoDto);
     }
   };
 
