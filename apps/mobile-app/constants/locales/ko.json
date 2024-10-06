@@ -36,6 +36,7 @@
   "sendTodo.user.type.supervisor": "관리자",
   "sendTodo.cta.completeUsers-and-compose-todos": "유저 선택 완료",
   "sendTodo.cta.send-todo": "투두 보내기",
+  "sendTodo.search.placeholder": "이름, 아이디 혹은 이메일로 검색할 텍스트를 입력하세요.",
   "todo.add.task": "새로운 태스크 추가",
   "todo.add.title": "새로운 투두 추가",
   "todo.add.placehold": "투두 이름",
@@ -58,5 +59,5 @@
   "task.list.swipe.left.uncomplete": "미완료",
   "task.list.swipe.right": "삭제",
   "title.expert.sendTodo": "투두 보내기",
-  "title.expert.sendTodo.searchText.placeholder": "유저의 이름, ID 텍스트를 입력"
+  "title.expert.sendTodo.searchText.placeholder": "검색할 텍스트를 입력"
 }
