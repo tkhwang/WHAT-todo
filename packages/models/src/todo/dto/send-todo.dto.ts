@@ -1,7 +1,7 @@
 import { IAddTask, IAddTaskCommon } from "../../task"
 
 export interface SendTodoRequest {
-  todoListTitle: string
+  title: string
   todoTasks: IAddTaskCommon[]
   expertId: string
   userIds: string[]

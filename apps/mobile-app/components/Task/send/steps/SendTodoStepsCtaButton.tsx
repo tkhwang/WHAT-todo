@@ -44,7 +44,7 @@ export default function SendTodoStepsCtaButton({
       setSendTodoSteps(SEND_TODO_STEPS.SELECT);
     } else {
       const sendTodoDto: SendTodoRequest = {
-        todoListTitle,
+        title: todoListTitle,
         todoTasks: todoTasks.map(({ id, ...todoTask }) => ({ ...todoTask })),
         expertId: myUserId,
         userIds: selectedUsers.map((selectedUser) => selectedUser.id),
