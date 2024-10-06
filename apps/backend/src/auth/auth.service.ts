@@ -54,7 +54,6 @@ export class AuthService {
       title: DEFAULT_LIST_TITLE,
       listId: list.id,
       userId: id,
-      supervisorIds: [],
     });
 
     return user;
