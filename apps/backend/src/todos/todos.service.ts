@@ -47,6 +47,7 @@ export class TodosService {
       userId: expertId,
       title,
       listId: listRef.id,
+      userType: 'expert',
       roleExpertId: expertId,
     });
 
@@ -56,6 +57,7 @@ export class TodosService {
         userId: supervisorId,
         title,
         listId: listRef.id,
+        userType: 'supervisor',
         roleSupervisorId: supervisorId,
       });
     });
@@ -67,6 +69,7 @@ export class TodosService {
         userId,
         title,
         listId: listRef.id,
+        userType: 'user',
         roleUserId: userId,
       });
     });
@@ -98,6 +101,7 @@ export class TodosService {
       const userTaskPromiseAsExpert = this.firebaseUserRepository.addUserTodo({
         userId: expertId,
         ...commonTask,
+        userType: 'expert',
         roleExpertId: expertId,
       });
       // add userTask as supervisor
@@ -106,6 +110,7 @@ export class TodosService {
           return this.firebaseUserRepository.addUserTodo({
             userId: supervisorId,
             ...commonTask,
+            userType: 'supervisor',
             roleSupervisorId: supervisorId,
           });
         },
@@ -115,6 +120,7 @@ export class TodosService {
         return this.firebaseUserRepository.addUserTodo({
           userId,
           ...commonTask,
+          userType: 'user',
           roleUserId: userId,
         });
       });

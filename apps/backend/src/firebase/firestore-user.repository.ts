@@ -4,6 +4,7 @@ import {
   AuthProviders,
   COLLECTIONS,
   TaskType,
+  UserType,
 } from '@whatTodo/models';
 import { app, firestore } from 'firebase-admin';
 
@@ -117,6 +118,7 @@ export class FirestoreUserRepository {
     listId,
     task,
     taskType,
+    userType,
     // role
     roleExpertId,
     roleSupervisorId,
@@ -127,6 +129,7 @@ export class FirestoreUserRepository {
     listId: string;
     task: string;
     taskType: TaskType;
+    userType: UserType;
     // role
     roleExpertId?: string;
     roleSupervisorId?: string;
@@ -137,6 +140,7 @@ export class FirestoreUserRepository {
       listId,
       task,
       taskType,
+      userType,
       isDone: false,
       ...(roleExpertId ? { expertId: roleExpertId } : {}),
       ...(roleSupervisorId ? { supervisorId: roleSupervisorId } : {}),
@@ -162,6 +166,7 @@ export class FirestoreUserRepository {
     userId,
     title,
     listId,
+    userType,
     roleExpertId,
     roleSupervisorId,
     roleUserId,
@@ -169,6 +174,7 @@ export class FirestoreUserRepository {
     userId: string;
     title: string;
     listId: string;
+    userType: UserType;
     roleExpertId?: string;
     roleSupervisorId?: string;
     roleUserId?: string;
@@ -176,6 +182,7 @@ export class FirestoreUserRepository {
     const newList = {
       title,
       listId,
+      userType,
       ...(roleExpertId && { expertId: roleExpertId }),
       ...(roleSupervisorId && { supervisorId: roleSupervisorId }),
       ...(roleUserId && { userId: roleUserId }),

@@ -22,6 +22,7 @@ export class TasksService {
         listId,
         task,
         taskType,
+        userType: 'user',
         roleUserId: userId,
       });
     } catch (error) {
