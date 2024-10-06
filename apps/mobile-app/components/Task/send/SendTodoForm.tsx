@@ -13,6 +13,8 @@ import { IAddTask } from "@whatTodo/models";
 import { Text } from "@/components/ui/text";
 import { Input } from "@/components/ui/input";
 import Icon from "@/assets/icons";
+import { cn } from "@/lib/utils";
+import { useColorScheme } from "@/lib/useColorScheme";
 
 import AddTaskForm from "../add/AddTaskForm";
 import TaskTypeIcon from "../TaskTypeIcon";
@@ -32,6 +34,7 @@ export default function SendTodoForm({
   todoTasks,
   setTodoTasks,
 }: Props) {
+  const { isDarkColorScheme } = useColorScheme();
   const { t } = useTranslation();
 
   const listRef = useRef<FlatList<IAddTask>>(null);
@@ -48,7 +51,12 @@ export default function SendTodoForm({
   const renderItem = useCallback(
     ({ item, index }: { item: IAddTask; index: number }) => {
       return (
-        <View className={"flex-row gap-4 items-center bg-gray-200 rounded-2xl px-4 py-3"}>
+        <View
+          className={cn(
+            "flex-row gap-4 items-center rounded-2xl px-4 py-3",
+            isDarkColorScheme ? "bg-gray-800" : "bg-gray-200",
+          )}
+        >
           <View className={"flex flex-row flex-1 gap-2  justify-center items-center"}>
             {/* Icon: TaskType */}
             <TaskTypeIcon taskType={item.taskType} />

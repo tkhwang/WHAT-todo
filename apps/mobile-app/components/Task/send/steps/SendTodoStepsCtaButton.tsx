@@ -9,6 +9,7 @@ import { appTheme } from "@/constants/uiConsts";
 import { IUserFS } from "@/types";
 import { useSendTodo } from "@/hooks/mutations/useSendTodo";
 import { myUserIdAtom } from "@/states/me";
+import { useColorScheme } from "@/lib/useColorScheme";
 
 interface Props {
   sendTodoSteps: string;
@@ -28,6 +29,7 @@ export default function SendTodoStepsCtaButton({
   selectedSupervisors,
 }: Props) {
   const { t } = useTranslation();
+  const { isDarkColorScheme } = useColorScheme();
 
   const myUserId = useAtomValue(myUserIdAtom);
 
@@ -64,7 +66,9 @@ export default function SendTodoStepsCtaButton({
           buttonStyle={{
             backgroundColor:
               sendTodoSteps === SEND_TODO_STEPS.SEARCH
-                ? appTheme.colors.gray
+                ? isDarkColorScheme
+                  ? appTheme.colors.darkSecondary
+                  : appTheme.colors.gray
                 : appTheme.colors.primary,
           }}
           disabled={sendTodoSteps === SEND_TODO_STEPS.SEARCH}
@@ -82,7 +86,9 @@ export default function SendTodoStepsCtaButton({
                 todoListTitle.length > 0 &&
                 todoTasks.length > 0)
                 ? appTheme.colors.primary
-                : appTheme.colors.gray,
+                : isDarkColorScheme
+                  ? appTheme.colors.darkSecondary
+                  : appTheme.colors.gray,
           }}
           disabled={sendTodoSteps === SEND_TODO_STEPS.SEARCH && selectedUsers.length === 0}
           onPress={() => handlePressNext(sendTodoSteps)}

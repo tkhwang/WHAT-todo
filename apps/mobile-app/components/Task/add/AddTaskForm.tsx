@@ -7,6 +7,8 @@ import { Text } from "@/components/ui/text";
 import { Input } from "@/components/ui/input";
 import { appTheme } from "@/constants/uiConsts";
 import Button from "@/components/Button/Button";
+import { useColorScheme } from "@/lib/useColorScheme";
+import { cn } from "@/lib/utils";
 
 import TaskTypeRadioSelect from "../TaskTypeRadioSelect";
 
@@ -16,6 +18,8 @@ interface Props {
 }
 
 export default function AddTaskForm({ setTodoTasks, listRef }: Props) {
+  const { isDarkColorScheme } = useColorScheme();
+
   const { t } = useTranslation();
 
   const [task, setTask] = useState("");
@@ -67,7 +71,12 @@ export default function AddTaskForm({ setTodoTasks, listRef }: Props) {
           title={t("sendTodo.cta.add-to-task")}
           color={appTheme.colors.primary}
           buttonStyle={{
-            backgroundColor: task.length === 0 ? appTheme.colors.gray : appTheme.colors.secondary,
+            backgroundColor:
+              task.length === 0
+                ? isDarkColorScheme
+                  ? appTheme.colors.darkSecondary
+                  : appTheme.colors.gray
+                : appTheme.colors.secondary,
           }}
           disabled={task.length === 0}
         />
