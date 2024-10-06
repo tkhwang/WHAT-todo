@@ -44,18 +44,25 @@ export default function TaskListItem({ listId, task }: Props) {
     >
       <View className={"flex-row gap-4 items-center w-full"}>
         {/* todo description */}
-        <View className={"relative flex-col gap-2 justify-center w-full pr-16"}>
+        <View className={"flex-1 flex-row gap-2 justify-between items-center"}>
           {/* Task w/ TaskTypeIcon */}
-          <View className={"flex flex-row gap-2  justify-start items-center"}>
+          <View className={"flex-1 flex-row gap-2  justify-start items-center"}>
             <TaskTypeIcon taskType={task.taskType} />
-            <Text className={cn("text-xl font-medium", userTask?.isDone ? "line-through" : "")}>
+            <Text
+              className={cn(
+                "text-xl font-medium flex-shrink",
+                userTask?.isDone ? "line-through" : "",
+              )}
+              numberOfLines={1}
+              ellipsizeMode={"tail"}
+            >
               {task.task}
             </Text>
           </View>
 
           {/* Note */}
           {(task.dueDate || task.note) && (
-            <View className={"absolute flex-row gap-2 right-0"}>
+            <View className={"flex-row gap-2 "}>
               {task.dueDate && (
                 <View className={"flex-row gap-1 items-center"}>
                   <Icon name={"calendar"} size={18} strokeWidth={1.5} />

@@ -4,8 +4,9 @@ export interface AddTaskRequest {
   listId: string
   task: string
   taskType: TaskType
-  userIds: string[]
+  expertId?: string
   supervisorIds: string[]
+  userIds: string[]
 }
 
 export interface AddTaskResponse {

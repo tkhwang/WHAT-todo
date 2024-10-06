@@ -18,10 +18,13 @@ export interface ITask extends ITaskCommon {
   updatedAt: Date
 }
 
-export interface IAddTask {
-  id: number
+export interface IAddTaskCommon {
   task: string
   taskType: TaskType
+}
+
+export interface IAddTask extends IAddTaskCommon {
+  id: number
 }
 
 export const SEND_TODO_STEPS = {

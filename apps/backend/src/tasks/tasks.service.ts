@@ -11,16 +11,20 @@ export class TasksService {
   ) {}
 
   async addTask(userId: string, addTaskDto: AddTaskRequest) {
+    const { listId, task, taskType, expertId, supervisorIds, userIds } =
+      addTaskDto;
+
     try {
-      const addTask = await this.firestoreTaskRepository.addTask(
+      const addTask = await this.firestoreTaskRepository.addTask(addTaskDto);
+      return await this.firestoreUserRepository.addUserTodo({
         userId,
-        addTaskDto,
-      );
-      return await this.firestoreUserRepository.addUserTodo(
-        userId,
-        addTask.id,
-        addTaskDto,
-      );
+        todoId: addTask.id,
+        listId,
+        task,
+        taskType,
+        userType: 'user',
+        roleUserId: userId,
+      });
     } catch (error) {
       throw new Error(error);
     }

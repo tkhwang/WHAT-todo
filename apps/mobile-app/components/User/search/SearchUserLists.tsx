@@ -1,7 +1,9 @@
 import { View } from "react-native";
 import { Dispatch, SetStateAction } from "react";
 import { useDebounce } from "@uidotdev/usehooks";
+import { useTranslation } from "react-i18next";
 
+import { Text } from "@/components/ui/text";
 import { IUserFS } from "@/types";
 import { useSearchUsers } from "@/hooks/queries/useSearchUsers";
 import { SEARCH_USER_INPUT_DEBOUNCE_TIME } from "@/constants/appConsts";
@@ -25,11 +27,13 @@ export default function SearchUserLists({
   setSelectedUsers,
   setSelectedSupervisors,
 }: Props) {
+  const { t } = useTranslation();
+
   const debouncedSearchText = useDebounce(searchText, SEARCH_USER_INPUT_DEBOUNCE_TIME);
   const { data: searchedUsers, isLoading } = useSearchUsers(debouncedSearchText);
 
   return (
-    <View className={"flex flex-col gap-2"}>
+    <View className={"flex flex-col gap-2 flex-1"}>
       {searchText ? (
         isLoading ? (
           <SearchUserSkeletonLists />
@@ -46,7 +50,11 @@ export default function SearchUserLists({
             />
           ))
         )
-      ) : null}
+      ) : (
+        <View className={"items-center justify-center flex-1"}>
+          <Text className={"text-center"}>{t("sendTodo.search.placeholder")}</Text>
+        </View>
+      )}
     </View>
   );
 }

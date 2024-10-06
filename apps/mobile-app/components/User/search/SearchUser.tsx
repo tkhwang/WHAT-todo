@@ -1,9 +1,14 @@
 import { Pressable, View } from "react-native";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useMemo } from "react";
+import { useAtomValue } from "jotai";
+import { useTranslation } from "react-i18next";
 
 import { IUserFS } from "@/types";
 import { Text } from "@/components/ui/text";
 import Icon from "@/assets/icons";
+import { myUserIdAtom } from "@/states/me";
+import { cn } from "@/lib/utils";
+import { useColorScheme } from "@/lib/useColorScheme";
 
 interface Props {
   index: number;
@@ -22,6 +27,13 @@ export default function SearchUser({
   setSelectedUsers,
   setSelectedSupervisors,
 }: Props) {
+  const { t } = useTranslation();
+  const { isDarkColorScheme } = useColorScheme();
+
+  const myUserId = useAtomValue(myUserIdAtom);
+
+  const isItMe = useMemo(() => searchedUser.id === myUserId, [myUserId, searchedUser.id]);
+
   const handlePress = () => {
     if (userType === "user") {
       setSelectedUsers((prv) => {
@@ -42,12 +54,19 @@ export default function SearchUser({
   };
 
   return (
-    <Pressable onPress={handlePress}>
+    <Pressable
+      className={cn(
+        "rounded-2xl p-2",
+        isItMe ? (isDarkColorScheme ? "bg-gray-800" : "bg-gray-200") : "",
+      )}
+      onPress={handlePress}
+      disabled={isItMe}
+    >
       <View key={index} className={"flex py-2"}>
         <View className={"flex flex-row gap-2"}>
           <Icon name={"user"} size={20} strokeWidth={1.6} />
           <Text key={`searched-user-name-${index}-${searchedUser.id}`} className={"font-semibold"}>
-            {searchedUser.name}
+            {`${searchedUser.name} ${isItMe ? t("sendTodo.search.me") : ""}`}
           </Text>
         </View>
         <View className={"flex flex-row gap-2"}>

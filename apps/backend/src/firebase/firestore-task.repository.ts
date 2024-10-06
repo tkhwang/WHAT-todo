@@ -18,7 +18,7 @@ export class FirestoreTaskRepository {
     this.#taskCollection = this.#db.collection(COLLECTIONS.TASKS);
   }
 
-  async addTask(userId: string, addTaskDto: AddTaskRequest) {
+  async addTask(addTaskDto: AddTaskRequest) {
     const newTask = {
       ...addTaskDto,
       createdAt: firestore.FieldValue.serverTimestamp(),

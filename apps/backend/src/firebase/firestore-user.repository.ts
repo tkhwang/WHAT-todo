@@ -1,9 +1,10 @@
 import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import {
-  AddTaskRequest,
   APP_ERRORS,
   AuthProviders,
   COLLECTIONS,
+  TaskType,
+  UserType,
 } from '@whatTodo/models';
 import { app, firestore } from 'firebase-admin';
 
@@ -111,18 +112,39 @@ export class FirestoreUserRepository {
     return Object.values(uniqueResults);
   }
 
-  async addUserTodo(
-    userId: string,
-    todoId: string,
-    addTaskDto: AddTaskRequest,
-  ) {
-    const { userIds, ...addTaskDtoWithoutUserIds } = addTaskDto;
-
+  async addUserTodo({
+    userId,
+    todoId,
+    listId,
+    task,
+    taskType,
+    userType,
+    // role
+    roleExpertId,
+    roleSupervisorId,
+    roleUserId,
+  }: {
+    userId: string;
+    todoId: string;
+    listId: string;
+    task: string;
+    taskType: TaskType;
+    userType: UserType;
+    // role
+    roleExpertId?: string;
+    roleSupervisorId?: string;
+    roleUserId?: string;
+  }) {
     const newTodo = {
-      ...addTaskDtoWithoutUserIds,
       todoId,
-      userId,
+      listId,
+      task,
+      taskType,
+      userType,
       isDone: false,
+      ...(roleExpertId ? { expertId: roleExpertId } : {}),
+      ...(roleSupervisorId ? { supervisorId: roleSupervisorId } : {}),
+      ...(roleUserId ? { userId: roleUserId } : {}),
       createdAt: firestore.FieldValue.serverTimestamp(),
       updatedAt: firestore.FieldValue.serverTimestamp(),
     };
@@ -141,21 +163,29 @@ export class FirestoreUserRepository {
   }
 
   async addUserList({
+    userId,
     title,
     listId,
-    userId,
-    supervisorIds,
+    userType,
+    roleExpertId,
+    roleSupervisorId,
+    roleUserId,
   }: {
+    userId: string;
     title: string;
     listId: string;
-    userId: string;
-    supervisorIds: string[];
+    userType: UserType;
+    roleExpertId?: string;
+    roleSupervisorId?: string;
+    roleUserId?: string;
   }) {
     const newList = {
       title,
       listId,
-      userId,
-      supervisorIds,
+      userType,
+      ...(roleExpertId && { expertId: roleExpertId }),
+      ...(roleSupervisorId && { supervisorId: roleSupervisorId }),
+      ...(roleUserId && { userId: roleUserId }),
       createdAt: firestore.FieldValue.serverTimestamp(),
       updatedAt: firestore.FieldValue.serverTimestamp(),
     };

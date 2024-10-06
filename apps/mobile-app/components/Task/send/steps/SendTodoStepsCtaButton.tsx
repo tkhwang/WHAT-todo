@@ -1,28 +1,45 @@
 import { View } from "react-native";
 import { useTranslation } from "react-i18next";
-import { IAddTask, SEND_TODO_STEPS } from "@whatTodo/models";
-import { Dispatch, SetStateAction } from "react";
+import { IAddTask, SEND_TODO_STEPS, SendTodoRequest } from "@whatTodo/models";
+import { Dispatch, SetStateAction, useCallback } from "react";
+import { useAtomValue } from "jotai";
+import { useRouter } from "expo-router";
 
 import Button from "@/components/Button/Button";
 import { appTheme } from "@/constants/uiConsts";
 import { IUserFS } from "@/types";
+import { useSendTodo } from "@/hooks/mutations/useSendTodo";
+import { myUserIdAtom } from "@/states/me";
+import { useColorScheme } from "@/lib/useColorScheme";
 
 interface Props {
+  sendTodoSteps: string;
+  setSendTodoSteps: Dispatch<SetStateAction<string>>;
   todoListTitle: string;
   todoTasks: IAddTask[];
   selectedUsers: IUserFS[];
-  sendTodoSteps: string;
-  setSendTodoSteps: Dispatch<SetStateAction<string>>;
+  selectedSupervisors: IUserFS[];
 }
 
 export default function SendTodoStepsCtaButton({
+  sendTodoSteps,
+  setSendTodoSteps,
   todoListTitle,
   todoTasks,
   selectedUsers,
-  sendTodoSteps,
-  setSendTodoSteps,
+  selectedSupervisors,
 }: Props) {
   const { t } = useTranslation();
+  const { isDarkColorScheme } = useColorScheme();
+  const router = useRouter();
+
+  const myUserId = useAtomValue(myUserIdAtom);
+
+  const onSuccess = useCallback(() => {
+    router.navigate("/(auth)/(tabs)/expert");
+  }, [router]);
+
+  const { mutate: sendTodoMutate } = useSendTodo(onSuccess);
 
   const handlePressPrevious = (sendTodoSteps: string) => {
     if (sendTodoSteps === SEND_TODO_STEPS.SELECT) {
@@ -33,6 +50,15 @@ export default function SendTodoStepsCtaButton({
   const handlePressNext = (sendTodoSteps: string) => {
     if (sendTodoSteps === SEND_TODO_STEPS.SEARCH) {
       setSendTodoSteps(SEND_TODO_STEPS.SELECT);
+    } else {
+      const sendTodoDto: SendTodoRequest = {
+        title: todoListTitle,
+        todoTasks: todoTasks.map(({ id, ...todoTask }) => ({ ...todoTask })),
+        expertId: myUserId,
+        userIds: selectedUsers.map((selectedUser) => selectedUser.id),
+        supervisorIds: selectedSupervisors.map((selectedSupervisor) => selectedSupervisor.id),
+      };
+      sendTodoMutate(sendTodoDto);
     }
   };
 
@@ -45,7 +71,9 @@ export default function SendTodoStepsCtaButton({
           buttonStyle={{
             backgroundColor:
               sendTodoSteps === SEND_TODO_STEPS.SEARCH
-                ? appTheme.colors.gray
+                ? isDarkColorScheme
+                  ? appTheme.colors.darkSecondary
+                  : appTheme.colors.gray
                 : appTheme.colors.primary,
           }}
           disabled={sendTodoSteps === SEND_TODO_STEPS.SEARCH}
@@ -63,7 +91,9 @@ export default function SendTodoStepsCtaButton({
                 todoListTitle.length > 0 &&
                 todoTasks.length > 0)
                 ? appTheme.colors.primary
-                : appTheme.colors.gray,
+                : isDarkColorScheme
+                  ? appTheme.colors.darkSecondary
+                  : appTheme.colors.gray,
           }}
           disabled={sendTodoSteps === SEND_TODO_STEPS.SEARCH && selectedUsers.length === 0}
           onPress={() => handlePressNext(sendTodoSteps)}
