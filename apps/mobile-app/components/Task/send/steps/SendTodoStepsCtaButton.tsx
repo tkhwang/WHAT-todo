@@ -58,7 +58,6 @@ export default function SendTodoStepsCtaButton({
         userIds: selectedUsers.map((selectedUser) => selectedUser.id),
         supervisorIds: selectedSupervisors.map((selectedSupervisor) => selectedSupervisor.id),
       };
-      console.log("🚀 ~ handlePressNext ~ sendTodoDto:", JSON.stringify(sendTodoDto, null, 2));
       sendTodoMutate(sendTodoDto);
     }
   };
