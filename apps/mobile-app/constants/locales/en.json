@@ -34,6 +34,7 @@
   "sendTodo.cta.add-to-task": "Add a Task",
   "sendTodo.cta.send-todo": "Send Todo",
   "sendTodo.list.title": "Title",
+  "sendTodo.search.me": "(me)",
   "sendTodo.search.placeholder": "Enter text to search by name, ID, or email.",
   "sendTodo.task.title": "Task",
   "sendTodo.list.title.placeholder": "Write todo title...",
