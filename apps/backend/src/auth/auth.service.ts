@@ -46,8 +46,8 @@ export class AuthService {
 
     const list = await this.firestoreListRepository.addList({
       title: DEFAULT_LIST_TITLE,
-      userIds: [user.id],
       supervisorIds: [],
+      userIds: [user.id],
     });
 
     const userList = await this.firestoreUserRepository.addUserList({

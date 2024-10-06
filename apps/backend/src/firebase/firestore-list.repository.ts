@@ -14,15 +14,18 @@ export class FirestoreListRepository {
 
   async addList({
     title,
-    userIds,
+    expertId,
     supervisorIds,
+    userIds,
   }: {
     title: string;
-    userIds: string[];
+    expertId?: string;
     supervisorIds: string[];
+    userIds: string[];
   }) {
     const newList = {
       title,
+      ...(expertId && { expertId }),
       userIds,
       supervisorIds,
       createdAt: firestore.FieldValue.serverTimestamp(),

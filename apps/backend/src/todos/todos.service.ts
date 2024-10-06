@@ -12,5 +12,20 @@ export class TodosService {
     private readonly firestoreTaskRepository: FirestoreTaskRepository,
   ) {}
 
-  async sendTodo(userId: string, sendTodo: SendTodoRequest) {}
+  async sendTodo(userId: string, sendTodoDto: SendTodoRequest) {
+    const { expertId, userIds, supervisorIds, todoListTitle, todoTasks } =
+      sendTodoDto;
+
+    // create top list
+    const listId = await this.firestoreListRepository.addList({
+      title: todoListTitle,
+      expertId: userId,
+      supervisorIds,
+      userIds,
+    });
+
+    // create user list of expert
+    // create user list of supervisor
+    // create user list of user
+  }
 }
