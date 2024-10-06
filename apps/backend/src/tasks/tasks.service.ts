@@ -12,10 +12,7 @@ export class TasksService {
 
   async addTask(userId: string, addTaskDto: AddTaskRequest) {
     try {
-      const addTask = await this.firestoreTaskRepository.addTask(
-        userId,
-        addTaskDto,
-      );
+      const addTask = await this.firestoreTaskRepository.addTask(addTaskDto);
       return await this.firestoreUserRepository.addUserTodo(
         userId,
         addTask.id,
