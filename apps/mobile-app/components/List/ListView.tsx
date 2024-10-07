@@ -30,14 +30,17 @@ export function ListView({ userType, listId }: Props) {
   const { t } = useTranslation();
   const setCurrentListId = useSetAtom(currentListIdAtom);
 
+  const { data: tasks } = useTasks(listId);
+  console.log(
+    `[*][ListView] tasks of listId (${listId})`,
+    tasks?.map((task) => task.task),
+  );
+
   const { mutate: toggleTaskIsDoneMutate } = useToggleUserTaskIsDone();
   const { mutate: deleteTaskMutate } = useDeleteTask();
 
   const { selectListByListId } = useSelectListByListId(listId);
   const { data: list, isLoading } = useLists<IList | undefined>(userType, selectListByListId);
-
-  const { data: tasks } = useTasks(listId);
-  console.log("🚀 ~ TodoList ~ tasks.length:", tasks?.length);
 
   const { data: userTasks } = useUserTasks(listId);
 

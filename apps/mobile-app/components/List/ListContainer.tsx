@@ -18,6 +18,9 @@ interface Props {
 
 export default function ListContainer({ userType }: Props) {
   const { data: lists } = useLists(userType);
+  console.log(
+    `[*][ListContainer] lists of userType ${userType}: ${lists?.map((list) => list.title)}`,
+  );
 
   const renderItem = useCallback(
     ({ item, index }: { item: IList; index: number }) => {
