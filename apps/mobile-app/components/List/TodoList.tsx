@@ -14,6 +14,7 @@ import { appTheme } from "@/constants/uiConsts";
 import { useToggleUserTaskIsDone } from "@/hooks/mutations/useToggleUserTaskIsDone";
 import { useDeleteTask } from "@/hooks/mutations/useDeleteTask";
 import { useUserTasks } from "@/hooks/queries/useUserTasks";
+import { useSelectListByListId } from "@/hooks/queries/select/useSelectListByListId";
 
 import TaskListItem from "../Task/TaskListItem";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../ui/collapsible";
@@ -31,9 +32,8 @@ export function TodoList({ listId }: Props) {
   const { mutate: toggleTaskIsDoneMutate } = useToggleUserTaskIsDone();
   const { mutate: deleteTaskMutate } = useDeleteTask();
 
-  const { data: list, isLoading } = useLists<IList | undefined>((lists: IList[]) =>
-    lists.find((list) => list.id === listId),
-  );
+  const { selectListByListId } = useSelectListByListId(listId);
+  const { data: list, isLoading } = useLists<IList | undefined>(selectListByListId);
 
   const { data: tasks } = useTasks(listId);
   console.log("🚀 ~ TodoList ~ tasks.length:", tasks?.length);
