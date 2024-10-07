@@ -102,7 +102,9 @@ export class TodosService {
         userId: expertId,
         ...commonTask,
         userType: 'expert',
-        roleExpertId: expertId,
+        expertId,
+        supervisorIds,
+        userIds,
       });
       // add userTask as supervisor
       const userTaskPromiseBySupervisor = supervisorIds.map(
@@ -111,7 +113,9 @@ export class TodosService {
             userId: supervisorId,
             ...commonTask,
             userType: 'supervisor',
-            roleSupervisorId: supervisorId,
+            expertId,
+            supervisorIds,
+            userIds,
           });
         },
       );
@@ -121,7 +125,9 @@ export class TodosService {
           userId,
           ...commonTask,
           userType: 'user',
-          roleUserId: userId,
+          expertId,
+          supervisorIds,
+          userIds,
         });
       });
 

@@ -23,7 +23,9 @@ export class TasksService {
         task,
         taskType,
         userType: 'user',
-        roleUserId: userId,
+        expertId,
+        supervisorIds,
+        userIds,
       });
     } catch (error) {
       throw new Error(error);

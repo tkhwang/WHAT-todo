@@ -165,10 +165,9 @@ export class FirestoreUserRepository {
     task,
     taskType,
     userType,
-    // role
-    roleExpertId,
-    roleSupervisorId,
-    roleUserId,
+    expertId,
+    supervisorIds,
+    userIds,
   }: {
     userId: string;
     todoId: string;
@@ -176,10 +175,9 @@ export class FirestoreUserRepository {
     task: string;
     taskType: TaskType;
     userType: UserType;
-    // role
-    roleExpertId?: string;
-    roleSupervisorId?: string;
-    roleUserId?: string;
+    expertId?: string;
+    supervisorIds: string[];
+    userIds: string[];
   }) {
     const newTodo = {
       todoId,
@@ -188,9 +186,9 @@ export class FirestoreUserRepository {
       taskType,
       userType,
       isDone: false,
-      ...(roleExpertId ? { expertId: roleExpertId } : {}),
-      ...(roleSupervisorId ? { supervisorId: roleSupervisorId } : {}),
-      ...(roleUserId ? { userId: roleUserId } : {}),
+      ...(expertId ? { expertId } : {}),
+      supervisorIds,
+      userIds,
       createdAt: firestore.FieldValue.serverTimestamp(),
       updatedAt: firestore.FieldValue.serverTimestamp(),
     };
