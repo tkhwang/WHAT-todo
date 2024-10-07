@@ -18,6 +18,9 @@ export class FirestoreUserRepository {
     this.#userCollection = this.#db.collection(COLLECTIONS.USERS);
   }
 
+  /*
+   *  User
+   */
   async createUser({
     id,
     email,
@@ -112,6 +115,49 @@ export class FirestoreUserRepository {
     return Object.values(uniqueResults);
   }
 
+  /*
+   *   list
+   */
+  async addUserList({
+    userId,
+    title,
+    listId,
+    userType,
+    roleExpertId,
+    roleSupervisorId,
+    roleUserId,
+  }: {
+    userId: string;
+    title: string;
+    listId: string;
+    userType: UserType;
+    roleExpertId?: string;
+    roleSupervisorId?: string;
+    roleUserId?: string;
+  }) {
+    const newList = {
+      title,
+      listId,
+      userType,
+      ...(roleExpertId && { expertId: roleExpertId }),
+      ...(roleSupervisorId && { supervisorId: roleSupervisorId }),
+      ...(roleUserId && { userId: roleUserId }),
+      createdAt: firestore.FieldValue.serverTimestamp(),
+      updatedAt: firestore.FieldValue.serverTimestamp(),
+    };
+
+    const list = await this.#userCollection
+      .doc(userId)
+      .collection(COLLECTIONS.LISTS)
+      .doc(listId)
+      .set(newList);
+
+    return list;
+  }
+
+  /*
+   *  Task
+   */
   async addUserTask({
     userId,
     todoId,
@@ -160,43 +206,6 @@ export class FirestoreUserRepository {
       ...newTodo,
       id: userTodoId,
     };
-  }
-
-  async addUserList({
-    userId,
-    title,
-    listId,
-    userType,
-    roleExpertId,
-    roleSupervisorId,
-    roleUserId,
-  }: {
-    userId: string;
-    title: string;
-    listId: string;
-    userType: UserType;
-    roleExpertId?: string;
-    roleSupervisorId?: string;
-    roleUserId?: string;
-  }) {
-    const newList = {
-      title,
-      listId,
-      userType,
-      ...(roleExpertId && { expertId: roleExpertId }),
-      ...(roleSupervisorId && { supervisorId: roleSupervisorId }),
-      ...(roleUserId && { userId: roleUserId }),
-      createdAt: firestore.FieldValue.serverTimestamp(),
-      updatedAt: firestore.FieldValue.serverTimestamp(),
-    };
-
-    const list = await this.#userCollection
-      .doc(userId)
-      .collection(COLLECTIONS.LISTS)
-      .doc(listId)
-      .set(newList);
-
-    return list;
   }
 
   async findUserTaskById(userId: string, taskId: string) {
