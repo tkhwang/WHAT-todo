@@ -98,7 +98,7 @@ export class TodosService {
       };
 
       // add userTask as expert
-      const userTaskPromiseAsExpert = this.firebaseUserRepository.addUserTodo({
+      const userTaskPromiseAsExpert = this.firebaseUserRepository.addUserTask({
         userId: expertId,
         ...commonTask,
         userType: 'expert',
@@ -107,7 +107,7 @@ export class TodosService {
       // add userTask as supervisor
       const userTaskPromiseBySupervisor = supervisorIds.map(
         async (supervisorId) => {
-          return this.firebaseUserRepository.addUserTodo({
+          return this.firebaseUserRepository.addUserTask({
             userId: supervisorId,
             ...commonTask,
             userType: 'supervisor',
@@ -117,7 +117,7 @@ export class TodosService {
       );
       // add userTask as user
       const userTaskPromiseByUser = userIds.map(async (userId) => {
-        return this.firebaseUserRepository.addUserTodo({
+        return this.firebaseUserRepository.addUserTask({
           userId,
           ...commonTask,
           userType: 'user',

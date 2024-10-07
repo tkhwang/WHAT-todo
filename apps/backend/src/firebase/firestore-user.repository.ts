@@ -112,7 +112,7 @@ export class FirestoreUserRepository {
     return Object.values(uniqueResults);
   }
 
-  async addUserTodo({
+  async addUserTask({
     userId,
     todoId,
     listId,

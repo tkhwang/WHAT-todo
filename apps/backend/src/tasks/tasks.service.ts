@@ -16,7 +16,7 @@ export class TasksService {
 
     try {
       const addTask = await this.firestoreTaskRepository.addTask(addTaskDto);
-      return await this.firestoreUserRepository.addUserTodo({
+      return await this.firestoreUserRepository.addUserTask({
         userId,
         todoId: addTask.id,
         listId,
