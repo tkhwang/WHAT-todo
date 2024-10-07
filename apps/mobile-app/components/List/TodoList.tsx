@@ -115,7 +115,7 @@ export function TodoList({ userType, listId }: Props) {
   if (!list) return null;
 
   return (
-    <View className={"flex flex-1"}>
+    <View className={"flex flex-1 rounded-3xl pb-4"}>
       {/* List Title */}
       <View className={"flex-row gap-4 items-center py-4"}>
         <Icon name={"leftToRightListBullet"} size={26} strokeWidth={2} />
