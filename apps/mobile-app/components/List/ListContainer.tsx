@@ -6,7 +6,7 @@ import isoWeek from "dayjs/plugin/isoWeek";
 
 import { useLists } from "@/hooks/queries/useLists";
 
-import { TodoList } from "./TodoList";
+import { ListView } from "./ListView";
 
 const ItemSeparator = () => <View style={{ height: 4 }} />;
 
@@ -21,7 +21,7 @@ export default function ListContainer({ userType }: Props) {
 
   const renderItem = useCallback(
     ({ item, index }: { item: IList; index: number }) => {
-      return <TodoList userType={userType} listId={item.id} key={`todolist-${index}`} />;
+      return <ListView userType={userType} listId={item.id} key={`todolist-${index}`} />;
     },
     [userType],
   );

@@ -26,7 +26,7 @@ interface Props {
 
 const ItemSeparator = () => <View style={{ height: 12 }} />;
 
-export function TodoList({ userType, listId }: Props) {
+export function ListView({ userType, listId }: Props) {
   const { t } = useTranslation();
   const setCurrentListId = useSetAtom(currentListIdAtom);
 
