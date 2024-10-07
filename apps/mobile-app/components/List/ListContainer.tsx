@@ -6,13 +6,13 @@ import isoWeek from "dayjs/plugin/isoWeek";
 
 import { useLists } from "@/hooks/queries/useLists";
 
-import { TodoList } from "./List/TodoList";
+import { TodoList } from "./TodoList";
 
 const ItemSeparator = () => <View style={{ height: 4 }} />;
 
 dayjs.extend(isoWeek);
 
-export default function Today() {
+export default function ListContainer() {
   const { data: lists } = useLists();
   console.log("🚀 ~ Today ~ lists:", lists);
 
