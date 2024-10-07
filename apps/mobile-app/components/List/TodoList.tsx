@@ -1,7 +1,7 @@
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { useSetAtom } from "jotai";
 import React, { useCallback, useEffect, useMemo } from "react";
-import { IList, ITask } from "@whatTodo/models";
+import { IList, ITask, UserType } from "@whatTodo/models";
 import { useTranslation } from "react-i18next";
 import { SwipeListView } from "react-native-swipe-list-view";
 
@@ -20,12 +20,13 @@ import TaskListItem from "../Task/TaskListItem";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../ui/collapsible";
 
 interface Props {
+  userType: UserType;
   listId: string;
 }
 
 const ItemSeparator = () => <View style={{ height: 12 }} />;
 
-export function TodoList({ listId }: Props) {
+export function TodoList({ userType, listId }: Props) {
   const { t } = useTranslation();
   const setCurrentListId = useSetAtom(currentListIdAtom);
 
@@ -33,7 +34,7 @@ export function TodoList({ listId }: Props) {
   const { mutate: deleteTaskMutate } = useDeleteTask();
 
   const { selectListByListId } = useSelectListByListId(listId);
-  const { data: list, isLoading } = useLists<IList | undefined>(selectListByListId);
+  const { data: list, isLoading } = useLists<IList | undefined>(userType, selectListByListId);
 
   const { data: tasks } = useTasks(listId);
   console.log("🚀 ~ TodoList ~ tasks.length:", tasks?.length);

@@ -1,16 +1,16 @@
 import { useEffect, useMemo } from "react";
 import firestore from "@react-native-firebase/firestore";
-import { COLLECTIONS } from "@whatTodo/models";
+import { COLLECTIONS, UserType } from "@whatTodo/models";
 
 import { useFirestore } from "@/hooks/useFirestore";
 import { IListFS } from "@/types";
 
 import { useUserLists } from "../useUserLists";
 
-export function useListsSideEffect() {
+export function useListsSideEffect(userType: UserType) {
   const { convert, setDoc, setDocs } = useFirestore();
 
-  const { data: userLists } = useUserLists();
+  const { data: userLists } = useUserLists(userType);
 
   const listIds = useMemo(() => {
     return (userLists ?? []).map((userList) => userList.id);
@@ -20,7 +20,7 @@ export function useListsSideEffect() {
     function useListsEffect() {
       if (!listIds.length) return undefined;
 
-      const key = [COLLECTIONS.LISTS];
+      const key = [COLLECTIONS.LISTS, userType];
       const unusbscribe = firestore()
         .collection(COLLECTIONS.LISTS)
         .where(firestore.FieldPath.documentId(), "in", listIds)
@@ -38,6 +38,6 @@ export function useListsSideEffect() {
         unusbscribe();
       };
     },
-    [convert, listIds, setDoc, setDocs],
+    [convert, listIds, setDoc, setDocs, userType],
   );
 }

@@ -1,6 +1,6 @@
 import { FlatList, View } from "react-native";
 import { useCallback } from "react";
-import { IList } from "@whatTodo/models";
+import { IList, UserType } from "@whatTodo/models";
 import dayjs from "dayjs";
 import isoWeek from "dayjs/plugin/isoWeek";
 
@@ -12,13 +12,19 @@ const ItemSeparator = () => <View style={{ height: 4 }} />;
 
 dayjs.extend(isoWeek);
 
-export default function ListContainer() {
-  const { data: lists } = useLists();
-  console.log("🚀 ~ Today ~ lists:", lists);
+interface Props {
+  userType: UserType;
+}
 
-  const renderItem = useCallback(({ item, index }: { item: IList; index: number }) => {
-    return <TodoList listId={item.id} key={`todolist-${index}`} />;
-  }, []);
+export default function ListContainer({ userType }: Props) {
+  const { data: lists } = useLists(userType);
+
+  const renderItem = useCallback(
+    ({ item, index }: { item: IList; index: number }) => {
+      return <TodoList userType={userType} listId={item.id} key={`todolist-${index}`} />;
+    },
+    [userType],
+  );
 
   return (
     <View className={"flex-1 p-4 gap-4"}>

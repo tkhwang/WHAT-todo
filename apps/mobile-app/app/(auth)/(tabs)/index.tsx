@@ -21,7 +21,7 @@ export default function HomeScreen() {
         behavior={Platform.OS === "ios" ? "padding" : "height"}
       >
         <View className={"flex-1 w-screen justify-end"}>
-          <ListContainer />
+          <ListContainer userType={"user"} />
           <AddTaskInput inputRef={inputRef} />
         </View>
       </KeyboardAvoidingView>

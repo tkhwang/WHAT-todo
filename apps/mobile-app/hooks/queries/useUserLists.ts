@@ -7,13 +7,13 @@ import { myUserIdAtom } from "@/states/me";
 import { getUserListsQueryOptions } from "./queryOptions/getUserListsQueryOptions";
 import { useUserListsSideEffects } from "./sideEffect/useUserListsSideEffect";
 
-export function useUserLists(userType: UserType = "user") {
+export function useUserLists(userType: UserType) {
   const myUserId = useAtomValue(myUserIdAtom);
 
   useUserListsSideEffects(userType);
 
   return useQuery<IList[]>({
-    ...getUserListsQueryOptions(myUserId),
+    ...getUserListsQueryOptions(myUserId, userType),
     enabled: !!myUserId,
     staleTime: Infinity,
   });
