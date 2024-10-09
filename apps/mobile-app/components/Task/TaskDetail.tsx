@@ -10,7 +10,7 @@ import {
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
-import { DeleteTaskRequest, IList, ITask, TaskType } from "@whatTodo/models";
+import { DeleteTaskRequest, IList, ITask, TaskType, UserType } from "@whatTodo/models";
 import { useRouter } from "expo-router";
 
 import { Text } from "@/components/ui/text";
@@ -35,16 +35,17 @@ import Loading from "../Loading";
 import TaskTypeRadioSelect from "./TaskTypeRadioSelect";
 
 interface Props {
+  userType: UserType;
   listId: string;
   taskId: string;
 }
 
-export default function TaskDetail({ listId, taskId }: Props) {
+export default function TaskDetail({ userType, listId, taskId }: Props) {
   const router = useRouter();
   const { t } = useTranslation();
 
   const { selectListByListId } = useSelectListByListId(listId);
-  const { data: list } = useLists<IList | undefined>(selectListByListId);
+  const { data: list } = useLists<IList | undefined>(userType, selectListByListId);
 
   const { selectTaskByTaskId } = useSelectTaskByTaskId(taskId);
   const { data: task } = useTasks<ITask | undefined>(listId, selectTaskByTaskId);
