@@ -11,7 +11,7 @@ export default function TabThreeScreen() {
     <ScreenWrapper>
       <MainHeader />
 
-      <View className={"flex-1 w-screen justify-end"}>
+      <View className={"flex-1 w-screen justify-start"}>
         <ListContainer userType={"supervisor"} />
       </View>
     </ScreenWrapper>

@@ -30,7 +30,7 @@ export default function TabFourScreen() {
     <ScreenWrapper>
       <MainHeader />
 
-      <View className={"flex-1 w-screen justify-end"}>
+      <View className={"flex-1 w-screen justify-start"}>
         <ListContainer userType={"expert"} />
       </View>
 
