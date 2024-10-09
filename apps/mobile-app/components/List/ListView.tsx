@@ -30,7 +30,7 @@ export function ListView({ userType, listId }: Props) {
   const { t } = useTranslation();
   const setCurrentListId = useSetAtom(currentListIdAtom);
 
-  const { data: tasks } = useTasks(listId);
+  const { data: tasks } = useTasks(userType, listId);
   console.log(
     `[+][ListView] tasks: ${JSON.stringify(
       tasks?.map((task) => ({ id: task.id, task: task.task })),
@@ -43,7 +43,7 @@ export function ListView({ userType, listId }: Props) {
   const { selectListByListId } = useSelectListByListId(listId);
   const { data: list, isLoading } = useLists<IList | undefined>(userType, selectListByListId);
 
-  const { data: userTasks } = useUserTasks(listId);
+  const { data: userTasks } = useUserTasks(userType, listId);
   console.log(
     `[+][ListView] userTasks: ${JSON.stringify(
       userTasks?.map((userTask) => ({ id: userTask.id, task: userTask.task })),
@@ -83,7 +83,7 @@ export function ListView({ userType, listId }: Props) {
 
   const renderItem = useCallback(
     ({ item }: { item: ITask }) => {
-      return <TaskListItem listId={listId} task={item} />;
+      return <TaskListItem userType={userType} listId={listId} task={item} />;
     },
     [listId],
   );

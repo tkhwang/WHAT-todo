@@ -48,10 +48,10 @@ export default function TaskDetail({ userType, listId, taskId }: Props) {
   const { data: list } = useLists<IList | undefined>(userType, selectListByListId);
 
   const { selectTaskByTaskId } = useSelectTaskByTaskId(taskId);
-  const { data: task } = useTasks<ITask | undefined>(listId, selectTaskByTaskId);
+  const { data: task } = useTasks<ITask | undefined>(userType, listId, selectTaskByTaskId);
 
   const { selectUserTaskByTaskId } = useSelectUserTaskByTaskId(taskId);
-  const { data: userTask } = useUserTasks(listId, selectUserTaskByTaskId);
+  const { data: userTask } = useUserTasks(userType, listId, selectUserTaskByTaskId);
 
   const inputRef = useRef<TextInput>(null);
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);

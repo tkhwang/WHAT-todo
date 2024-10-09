@@ -1,4 +1,4 @@
-import { ITask } from "@whatTodo/models";
+import { ITask, UserType } from "@whatTodo/models";
 import { Pressable, View } from "react-native";
 import { useRouter } from "expo-router";
 
@@ -14,17 +14,18 @@ import { useSelectUserTaskByTaskId } from "@/hooks/queries/select/useSelectUserT
 import TaskTypeIcon from "./TaskTypeIcon";
 
 interface Props {
+  userType: UserType;
   listId: string;
   task: ITask;
 }
 
-export default function TaskListItem({ listId, task }: Props) {
+export default function TaskListItem({ userType, listId, task }: Props) {
   const router = useRouter();
 
   const { isDarkColorScheme } = useColorScheme();
 
   const { selectUserTaskByTaskId } = useSelectUserTaskByTaskId(task.id);
-  const { data: userTask } = useUserTasks(listId, selectUserTaskByTaskId);
+  const { data: userTask } = useUserTasks(userType, listId, selectUserTaskByTaskId);
 
   const handlePress = () => {
     router.push(`/(auth)/(tabs)/todos/${listId}/${task.id}`);

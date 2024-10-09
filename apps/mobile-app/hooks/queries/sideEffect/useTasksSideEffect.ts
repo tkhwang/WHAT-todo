@@ -1,4 +1,4 @@
-import { COLLECTIONS, ITask } from "@whatTodo/models";
+import { COLLECTIONS, ITask, UserType } from "@whatTodo/models";
 import { useEffect, useMemo } from "react";
 import firestore from "@react-native-firebase/firestore";
 import { useAtomValue } from "jotai";
@@ -9,12 +9,12 @@ import { myUserIdAtom } from "@/states/me";
 
 import { useUserTasks } from "../useUserTasks";
 
-export function useTasksSideEffect(listId: string) {
+export function useTasksSideEffect(userType: UserType, listId: string) {
   const myUserId = useAtomValue(myUserIdAtom);
 
   const { convert, setDocs } = useFirestore<ITaskFS, ITask>();
 
-  const { data: userTasks } = useUserTasks(listId);
+  const { data: userTasks } = useUserTasks(userType, listId);
 
   const taskIds = useMemo(() => {
     return (userTasks ?? []).map((userTodo) => userTodo.id);
