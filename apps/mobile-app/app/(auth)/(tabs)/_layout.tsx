@@ -29,10 +29,10 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name={"upcoming"}
+        name={"supervisor"}
         options={{
-          title: t("app.screen.upcoming"),
-          tabBarIcon: ({ color, focused }) => <TabBarIcon name={"calendar"} color={color} />,
+          title: t("app.screen.supervisor"),
+          tabBarIcon: ({ color, focused }) => <TabBarIcon name={"policeCap"} color={color} />,
         }}
       />
       <Tabs.Screen
