@@ -30,18 +30,8 @@ export function ListView({ userType, listId }: Props) {
   const { t } = useTranslation();
   const setCurrentListId = useSetAtom(currentListIdAtom);
 
-  const { data: tasks } = useTasks(userType, listId);
-  console.log(
-    `[+][ListView] tasks: ${JSON.stringify(
-      tasks?.map((task) => ({ id: task.id, task: task.task })),
-    )}`,
-  );
-
   const { mutate: toggleTaskIsDoneMutate } = useToggleUserTaskIsDone();
   const { mutate: deleteTaskMutate } = useDeleteTask();
-
-  const { selectListByListId } = useSelectListByListId(listId);
-  const { data: list, isLoading } = useLists<IList | undefined>(userType, selectListByListId);
 
   const { data: userTasks } = useUserTasks(userType, listId);
   console.log(
@@ -49,6 +39,16 @@ export function ListView({ userType, listId }: Props) {
       userTasks?.map((userTask) => ({ id: userTask.id, task: userTask.task })),
     )}`,
   );
+
+  const { data: tasks } = useTasks(userType, listId);
+  console.log(
+    `[+][ListView] tasks: ${JSON.stringify(
+      tasks?.map((task) => ({ id: task.id, task: task.task })),
+    )}`,
+  );
+
+  const { selectListByListId } = useSelectListByListId(listId);
+  const { data: list, isLoading } = useLists<IList | undefined>(userType, selectListByListId);
 
   const activeTasks = useMemo(() => {
     return (tasks ?? [])
