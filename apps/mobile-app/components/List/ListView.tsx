@@ -31,6 +31,7 @@ export function ListView({ userType, listId }: Props) {
   const setCurrentListId = useSetAtom(currentListIdAtom);
 
   const { data: tasks } = useTasks(listId);
+  console.log(`[+][ListView] tasks: ${tasks?.map((task) => task.task)}`);
 
   const { mutate: toggleTaskIsDoneMutate } = useToggleUserTaskIsDone();
   const { mutate: deleteTaskMutate } = useDeleteTask();
@@ -39,6 +40,7 @@ export function ListView({ userType, listId }: Props) {
   const { data: list, isLoading } = useLists<IList | undefined>(userType, selectListByListId);
 
   const { data: userTasks } = useUserTasks(listId);
+  console.log(`[+][ListView] userTasks: ${userTasks?.map((userTask) => userTask.task)}`);
 
   const activeTasks = useMemo(() => {
     return (tasks ?? [])
@@ -48,6 +50,7 @@ export function ListView({ userType, listId }: Props) {
       })
       .sort((a, b) => b.updatedAt - a.updatedAt);
   }, [tasks, userTasks]);
+  console.log(`[+][ListView] activeTasks: ${activeTasks?.map((activeTask) => activeTask.task)}`);
 
   const completedTasks = useMemo(() => {
     return (tasks ?? [])
