@@ -11,6 +11,11 @@ export function useTasks<TSelected = ITask[]>(
   select?: (tasks: ITask[]) => TSelected,
 ) {
   const { data: userTasks } = useUserTasks(listId);
+  console.log(
+    `[+][useTasks] userTasks: ${JSON.stringify(
+      userTasks?.map((userTask) => ({ id: userTask.id, task: userTask.task })),
+    )}`,
+  );
 
   const taskIds = useMemo(() => {
     return (userTasks ?? []).map((userTodo) => userTodo.id);
