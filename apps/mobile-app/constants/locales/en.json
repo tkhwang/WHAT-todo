@@ -1,7 +1,7 @@
 {
   "app.name": "WHAT-todo",
   "app.punchline": "Todo from expert with supervisor",
-  "app.screen.upcoming": "Upcoming",
+  "app.screen.supervisor": "Supervisor",
   "app.screen.expert": "Expert",
   "app.screen.profile": "Profile",
   "auth.action.checkId": "Check",
