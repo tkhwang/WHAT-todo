@@ -31,10 +31,6 @@ export function ListView({ userType, listId }: Props) {
   const setCurrentListId = useSetAtom(currentListIdAtom);
 
   const { data: tasks } = useTasks(listId);
-  console.log(
-    `[*][ListView] tasks of listId (${listId})`,
-    tasks?.map((task) => task.task),
-  );
 
   const { mutate: toggleTaskIsDoneMutate } = useToggleUserTaskIsDone();
   const { mutate: deleteTaskMutate } = useDeleteTask();
@@ -118,7 +114,7 @@ export function ListView({ userType, listId }: Props) {
   if (!list) return null;
 
   return (
-    <View className={"flex flex-1 rounded-3xl pb-4"}>
+    <View className={"flex rounded-3xl pb-4"}>
       {/* List Title */}
       <View className={"flex-row gap-4 items-center py-4"}>
         <Icon name={"leftToRightListBullet"} size={26} strokeWidth={2} />
@@ -126,21 +122,19 @@ export function ListView({ userType, listId }: Props) {
       </View>
 
       {/* tasks list */}
-      <View style={{ flexShrink: 1 }}>
-        <SwipeListView
-          data={activeTasks}
-          renderItem={renderItem}
-          keyExtractor={(item) => `tasks-list-todo-${item.id}`}
-          ItemSeparatorComponent={ItemSeparator}
-          contentContainerStyle={{ paddingVertical: 4 }}
-          renderHiddenItem={renderHiddenItem}
-          leftOpenValue={75}
-          rightOpenValue={-75}
-          previewRowKey={"0"}
-          previewOpenValue={-40}
-          previewOpenDelay={3000}
-        />
-      </View>
+      <SwipeListView
+        data={activeTasks}
+        renderItem={renderItem}
+        keyExtractor={(item) => `tasks-list-todo-${item.id}`}
+        ItemSeparatorComponent={ItemSeparator}
+        contentContainerStyle={{ paddingVertical: 4 }}
+        renderHiddenItem={renderHiddenItem}
+        leftOpenValue={75}
+        rightOpenValue={-75}
+        previewRowKey={"0"}
+        previewOpenValue={-40}
+        previewOpenDelay={3000}
+      />
 
       {/* Completed */}
       {completedTasks && completedTasks.length > 0 && (
