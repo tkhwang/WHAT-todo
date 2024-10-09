@@ -30,15 +30,13 @@ export default function ListContainer({ userType }: Props) {
   );
 
   return (
-    <View className={"flex-1 p-4 gap-4"}>
-      <View style={{ flexShrink: 1 }}>
-        <FlatList
-          data={lists}
-          renderItem={renderItem}
-          keyExtractor={(item) => item.id}
-          ItemSeparatorComponent={ItemSeparator}
-        />
-      </View>
+    <View className={"flex-1 p-4 flex-shrink"}>
+      <FlatList
+        data={lists}
+        renderItem={renderItem}
+        keyExtractor={(item) => item.id}
+        ItemSeparatorComponent={ItemSeparator}
+      />
     </View>
   );
 }
