@@ -1,13 +1,17 @@
 import { COLLECTIONS, ITask } from "@whatTodo/models";
 import { useEffect, useMemo } from "react";
 import firestore from "@react-native-firebase/firestore";
+import { useAtomValue } from "jotai";
 
 import { useFirestore } from "@/hooks/useFirestore";
 import { ITaskFS } from "@/types";
+import { myUserIdAtom } from "@/states/me";
 
 import { useUserTasks } from "../useUserTasks";
 
 export function useTasksSideEffect(listId: string) {
+  const myUserId = useAtomValue(myUserIdAtom);
+
   const { convert, setDocs } = useFirestore<ITaskFS, ITask>();
 
   const { data: userTasks } = useUserTasks(listId);
@@ -18,12 +22,13 @@ export function useTasksSideEffect(listId: string) {
 
   useEffect(
     function setupTasksEffect() {
-      if (!taskIds.length) return undefined;
+      if (!taskIds || (taskIds && taskIds.length === 0)) return undefined;
 
       const key = [COLLECTIONS.TASKS];
       const unsubscribe = firestore()
         .collection(COLLECTIONS.TASKS)
-        .where(firestore.FieldPath.documentId(), "in", taskIds)
+        // ! TODO: should reduce search document by using further whether condition
+        .where("userIds", "array-contains", myUserId)
         .onSnapshot((snapshot) => {
           if (!snapshot) return;
 
@@ -39,6 +44,6 @@ export function useTasksSideEffect(listId: string) {
         unsubscribe();
       };
     },
-    [convert, setDocs, taskIds],
+    [convert, myUserId, setDocs, taskIds],
   );
 }

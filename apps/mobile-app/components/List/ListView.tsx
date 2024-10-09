@@ -1,7 +1,7 @@
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { useSetAtom } from "jotai";
 import React, { useCallback, useEffect, useMemo } from "react";
-import { IList, ITask } from "@whatTodo/models";
+import { IList, ITask, UserType } from "@whatTodo/models";
 import { useTranslation } from "react-i18next";
 import { SwipeListView } from "react-native-swipe-list-view";
 
@@ -14,29 +14,29 @@ import { appTheme } from "@/constants/uiConsts";
 import { useToggleUserTaskIsDone } from "@/hooks/mutations/useToggleUserTaskIsDone";
 import { useDeleteTask } from "@/hooks/mutations/useDeleteTask";
 import { useUserTasks } from "@/hooks/queries/useUserTasks";
+import { useSelectListByListId } from "@/hooks/queries/select/useSelectListByListId";
 
 import TaskListItem from "../Task/TaskListItem";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../ui/collapsible";
 
 interface Props {
+  userType: UserType;
   listId: string;
 }
 
 const ItemSeparator = () => <View style={{ height: 12 }} />;
 
-export function TodoList({ listId }: Props) {
+export function ListView({ userType, listId }: Props) {
   const { t } = useTranslation();
   const setCurrentListId = useSetAtom(currentListIdAtom);
+
+  const { data: tasks } = useTasks(listId);
 
   const { mutate: toggleTaskIsDoneMutate } = useToggleUserTaskIsDone();
   const { mutate: deleteTaskMutate } = useDeleteTask();
 
-  const { data: list, isLoading } = useLists<IList | undefined>((lists: IList[]) =>
-    lists.find((list) => list.id === listId),
-  );
-
-  const { data: tasks } = useTasks(listId);
-  console.log("🚀 ~ TodoList ~ tasks.length:", tasks?.length);
+  const { selectListByListId } = useSelectListByListId(listId);
+  const { data: list, isLoading } = useLists<IList | undefined>(userType, selectListByListId);
 
   const { data: userTasks } = useUserTasks(listId);
 
@@ -114,7 +114,7 @@ export function TodoList({ listId }: Props) {
   if (!list) return null;
 
   return (
-    <View className={"flex flex-1"}>
+    <View className={"flex rounded-3xl pb-4"}>
       {/* List Title */}
       <View className={"flex-row gap-4 items-center py-4"}>
         <Icon name={"leftToRightListBullet"} size={26} strokeWidth={2} />
@@ -122,21 +122,19 @@ export function TodoList({ listId }: Props) {
       </View>
 
       {/* tasks list */}
-      <View style={{ flexShrink: 1 }}>
-        <SwipeListView
-          data={activeTasks}
-          renderItem={renderItem}
-          keyExtractor={(item) => `tasks-list-todo-${item.id}`}
-          ItemSeparatorComponent={ItemSeparator}
-          contentContainerStyle={{ paddingVertical: 4 }}
-          renderHiddenItem={renderHiddenItem}
-          leftOpenValue={75}
-          rightOpenValue={-75}
-          previewRowKey={"0"}
-          previewOpenValue={-40}
-          previewOpenDelay={3000}
-        />
-      </View>
+      <SwipeListView
+        data={activeTasks}
+        renderItem={renderItem}
+        keyExtractor={(item) => `tasks-list-todo-${item.id}`}
+        ItemSeparatorComponent={ItemSeparator}
+        contentContainerStyle={{ paddingVertical: 4 }}
+        renderHiddenItem={renderHiddenItem}
+        leftOpenValue={75}
+        rightOpenValue={-75}
+        previewRowKey={"0"}
+        previewOpenValue={-40}
+        previewOpenDelay={3000}
+      />
 
       {/* Completed */}
       {completedTasks && completedTasks.length > 0 && (

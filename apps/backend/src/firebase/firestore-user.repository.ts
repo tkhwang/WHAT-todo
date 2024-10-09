@@ -18,6 +18,9 @@ export class FirestoreUserRepository {
     this.#userCollection = this.#db.collection(COLLECTIONS.USERS);
   }
 
+  /*
+   *  User
+   */
   async createUser({
     id,
     email,
@@ -112,56 +115,9 @@ export class FirestoreUserRepository {
     return Object.values(uniqueResults);
   }
 
-  async addUserTodo({
-    userId,
-    todoId,
-    listId,
-    task,
-    taskType,
-    userType,
-    // role
-    roleExpertId,
-    roleSupervisorId,
-    roleUserId,
-  }: {
-    userId: string;
-    todoId: string;
-    listId: string;
-    task: string;
-    taskType: TaskType;
-    userType: UserType;
-    // role
-    roleExpertId?: string;
-    roleSupervisorId?: string;
-    roleUserId?: string;
-  }) {
-    const newTodo = {
-      todoId,
-      listId,
-      task,
-      taskType,
-      userType,
-      isDone: false,
-      ...(roleExpertId ? { expertId: roleExpertId } : {}),
-      ...(roleSupervisorId ? { supervisorId: roleSupervisorId } : {}),
-      ...(roleUserId ? { userId: roleUserId } : {}),
-      createdAt: firestore.FieldValue.serverTimestamp(),
-      updatedAt: firestore.FieldValue.serverTimestamp(),
-    };
-
-    const userTodoRef = this.#userCollection
-      .doc(userId)
-      .collection(COLLECTIONS.TASKS)
-      .doc(todoId);
-    await userTodoRef.set(newTodo);
-    const userTodoId = userTodoRef.id;
-
-    return {
-      ...newTodo,
-      id: userTodoId,
-    };
-  }
-
+  /*
+   *   list
+   */
   async addUserList({
     userId,
     title,
@@ -197,6 +153,57 @@ export class FirestoreUserRepository {
       .set(newList);
 
     return list;
+  }
+
+  /*
+   *  Task
+   */
+  async addUserTask({
+    userId,
+    todoId,
+    listId,
+    task,
+    taskType,
+    userType,
+    expertId,
+    supervisorIds,
+    userIds,
+  }: {
+    userId: string;
+    todoId: string;
+    listId: string;
+    task: string;
+    taskType: TaskType;
+    userType: UserType;
+    expertId?: string;
+    supervisorIds: string[];
+    userIds: string[];
+  }) {
+    const newTodo = {
+      todoId,
+      listId,
+      task,
+      taskType,
+      userType,
+      isDone: false,
+      ...(expertId ? { expertId } : {}),
+      supervisorIds,
+      userIds,
+      createdAt: firestore.FieldValue.serverTimestamp(),
+      updatedAt: firestore.FieldValue.serverTimestamp(),
+    };
+
+    const userTodoRef = this.#userCollection
+      .doc(userId)
+      .collection(COLLECTIONS.TASKS)
+      .doc(todoId);
+    await userTodoRef.set(newTodo);
+    const userTodoId = userTodoRef.id;
+
+    return {
+      ...newTodo,
+      id: userTodoId,
+    };
   }
 
   async findUserTaskById(userId: string, taskId: string) {

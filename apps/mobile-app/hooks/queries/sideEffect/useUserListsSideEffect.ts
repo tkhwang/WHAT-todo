@@ -9,14 +9,14 @@ import { FirestoreSnapshotListener } from "@/firestore/FirestoreSnapshotListner"
 
 import { useFirestore } from "../../useFirestore";
 
-export function useUserListsSideEffects(userType: UserType = "user") {
+export function useUserListsSideEffects(userType: UserType) {
   const myUserId = useAtomValue(myUserIdAtom);
 
   const { convert, getDocs, setDocs } = useFirestore<IListFS, IList>();
 
   useEffect(
     function setupUserListsEffect() {
-      const key = [COLLECTIONS.USERS, myUserId, COLLECTIONS.LISTS];
+      const key = [COLLECTIONS.USERS, myUserId, COLLECTIONS.LISTS, userType];
       const stringKey = key.join("/");
 
       if (FirestoreSnapshotListener.has(stringKey)) return;
@@ -59,6 +59,6 @@ export function useUserListsSideEffects(userType: UserType = "user") {
 
       FirestoreSnapshotListener.set(stringKey, unsubscribe);
     },
-    [convert, getDocs, myUserId, setDocs],
+    [convert, getDocs, myUserId, setDocs, userType],
   );
 }

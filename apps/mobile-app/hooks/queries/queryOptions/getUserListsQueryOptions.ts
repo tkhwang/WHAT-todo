@@ -1,8 +1,8 @@
-import { COLLECTIONS, IList } from "@whatTodo/models";
+import { COLLECTIONS, IList, UserType } from "@whatTodo/models";
 
-export function getUserListsQueryOptions(myUserId: string) {
+export function getUserListsQueryOptions(myUserId: string, userType: UserType) {
   return {
-    queryKey: [COLLECTIONS.USERS, myUserId, COLLECTIONS.LISTS],
+    queryKey: [COLLECTIONS.USERS, myUserId, COLLECTIONS.LISTS, userType],
     queryFn: (): Promise<IList[]> => new Promise((): void => {}),
   };
 }

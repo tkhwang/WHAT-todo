@@ -3,8 +3,8 @@ import { KeyboardAvoidingView, Platform, TextInput, View } from "react-native";
 
 import ScreenWrapper from "@/components/MainLayout/ScreenWrapper";
 import MainHeader from "@/components/MainLayout/MainHeader";
-import Today from "@/components/Today";
 import AddTaskInput from "@/components/Task/add/AddTaskInput";
+import ListContainer from "@/components/List/ListContainer";
 
 export default function HomeScreen() {
   const inputRef = useRef<TextInput>(null);
@@ -21,7 +21,7 @@ export default function HomeScreen() {
         behavior={Platform.OS === "ios" ? "padding" : "height"}
       >
         <View className={"flex-1 w-screen justify-end"}>
-          <Today />
+          <ListContainer userType={"user"} />
           <AddTaskInput inputRef={inputRef} />
         </View>
       </KeyboardAvoidingView>
