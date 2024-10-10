@@ -7,7 +7,7 @@ import { useAtomValue } from "jotai";
 import Icon from "@/assets/icons";
 import Input from "@/components/Input";
 import { useAddTask } from "@/hooks/mutations/useAddTask";
-import { currentListIdAtom } from "@/states/list";
+import { userDefaultListIdAtom } from "@/states/list";
 import { myUserIdAtom } from "@/states/me";
 
 import TaskTypeRadioSelect from "../TaskTypeRadioSelect";
@@ -20,7 +20,7 @@ export default function AddTaskInput({ inputRef }: Props) {
   const { t } = useTranslation();
 
   const myUserId = useAtomValue(myUserIdAtom);
-  const currentListId = useAtomValue(currentListIdAtom);
+  const userDefaultListId = useAtomValue(userDefaultListIdAtom);
 
   const [showButttons, setShowButttons] = useState(false);
 
@@ -42,11 +42,11 @@ export default function AddTaskInput({ inputRef }: Props) {
 
   const handleSubmitTask = useCallback(() => {
     if (!task) return;
-    if (!currentListId) return;
+    if (!userDefaultListId) return;
 
     const newTaskDto: AddTaskRequest = {
       task,
-      listId: currentListId,
+      listId: userDefaultListId,
       taskType,
       userIds: [myUserId],
       supervisorIds: [],
@@ -56,7 +56,7 @@ export default function AddTaskInput({ inputRef }: Props) {
     setShowButttons(false);
 
     setTask("");
-  }, [addTaskMutate, currentListId, myUserId, task, taskType]);
+  }, [addTaskMutate, myUserId, task, taskType, userDefaultListId]);
 
   const handleFocus = () => {
     setShowButttons(true);
