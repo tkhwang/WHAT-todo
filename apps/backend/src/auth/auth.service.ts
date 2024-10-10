@@ -56,6 +56,7 @@ export class AuthService {
       listId: list.id,
       userType: 'user',
       roleUserId: id,
+      listType: 'defaultUserList',
     });
 
     return user;

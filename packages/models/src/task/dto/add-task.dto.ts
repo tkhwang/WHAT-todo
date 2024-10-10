@@ -1,3 +1,4 @@
+import { ListType } from "../../list"
 import { TaskType } from "../task"
 
 export interface AddTaskRequest {
@@ -7,6 +8,7 @@ export interface AddTaskRequest {
   expertId?: string
   supervisorIds: string[]
   userIds: string[]
+  listType?: ListType
 }
 
 export interface AddTaskResponse {
@@ -17,4 +19,5 @@ export interface AddTaskResponse {
   taskType: TaskType
   userIds: string[]
   superevisorIds: string[]
+  listType?: ListType
 }

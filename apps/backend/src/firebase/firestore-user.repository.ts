@@ -3,6 +3,7 @@ import {
   APP_ERRORS,
   AuthProviders,
   COLLECTIONS,
+  ListType,
   TaskType,
   UserType,
 } from '@whatTodo/models';
@@ -126,6 +127,7 @@ export class FirestoreUserRepository {
     roleExpertId,
     roleSupervisorId,
     roleUserId,
+    listType,
   }: {
     userId: string;
     title: string;
@@ -134,6 +136,7 @@ export class FirestoreUserRepository {
     roleExpertId?: string;
     roleSupervisorId?: string;
     roleUserId?: string;
+    listType?: ListType;
   }) {
     const newList = {
       title,
@@ -142,6 +145,7 @@ export class FirestoreUserRepository {
       ...(roleExpertId && { expertId: roleExpertId }),
       ...(roleSupervisorId && { supervisorId: roleSupervisorId }),
       ...(roleUserId && { userId: roleUserId }),
+      ...(listType && { listType }),
       createdAt: firestore.FieldValue.serverTimestamp(),
       updatedAt: firestore.FieldValue.serverTimestamp(),
     };
