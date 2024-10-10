@@ -50,7 +50,7 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name={"todos/[listId]/[taskId]/index"}
+        name={"todos/[listId]/[taskId]/[userType]/index"}
         options={{
           tabBarButton: () => null, // This hides the screen from the tab bar
         }}

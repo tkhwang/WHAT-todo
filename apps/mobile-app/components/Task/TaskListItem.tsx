@@ -28,7 +28,7 @@ export default function TaskListItem({ userType, listId, task }: Props) {
   const { data: userTask } = useUserTasks(userType, listId, selectUserTaskByTaskId);
 
   const handlePress = () => {
-    router.push(`/(auth)/(tabs)/todos/${listId}/${task.id}`);
+    router.push(`/(auth)/(tabs)/todos/${listId}/${task.id}/${userType}`);
   };
 
   return (
