@@ -1,12 +1,10 @@
 import { StyleSheet, TouchableOpacity, View } from "react-native";
-import { useSetAtom } from "jotai";
-import React, { useCallback, useEffect, useMemo } from "react";
+import React, { useCallback, useMemo } from "react";
 import { IList, ITask, UserType } from "@whatTodo/models";
 import { useTranslation } from "react-i18next";
 import { SwipeListView } from "react-native-swipe-list-view";
 
 import { Text } from "@/components/ui/text";
-import { currentListIdAtom } from "@/states/list";
 import Icon from "@/assets/icons";
 import { useTasks } from "@/hooks/queries/useTasks";
 import { useLists } from "@/hooks/queries/useLists";
@@ -28,7 +26,6 @@ const ItemSeparator = () => <View style={{ height: 12 }} />;
 
 export function ListView({ userType, listId }: Props) {
   const { t } = useTranslation();
-  const setCurrentListId = useSetAtom(currentListIdAtom);
 
   const { mutate: toggleTaskIsDoneMutate } = useToggleUserTaskIsDone();
   const { mutate: deleteTaskMutate } = useDeleteTask();
@@ -73,19 +70,11 @@ export function ListView({ userType, listId }: Props) {
       .sort((a, b) => b.updatedAt - a.updatedAt);
   }, [tasks, userTasks]);
 
-  useEffect(() => {
-    setCurrentListId(listId);
-
-    return () => {
-      setCurrentListId(null);
-    };
-  }, [listId, setCurrentListId]);
-
   const renderItem = useCallback(
     ({ item }: { item: ITask }) => {
       return <TaskListItem userType={userType} listId={listId} task={item} />;
     },
-    [listId],
+    [listId, userType],
   );
 
   const handleClickComplete = (item: ITask) => {
