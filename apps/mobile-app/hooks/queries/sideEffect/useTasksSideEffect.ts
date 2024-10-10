@@ -24,7 +24,7 @@ export function useTasksSideEffect(userType: UserType, listId: string) {
     function setupTasksEffect() {
       if (!taskIds || (taskIds && taskIds.length === 0)) return undefined;
 
-      const key = [COLLECTIONS.TASKS];
+      const key = [COLLECTIONS.TASKS, listId];
       const unsubscribe = firestore()
         .collection(COLLECTIONS.TASKS)
         .where(firestore.FieldPath.documentId(), "in", taskIds)
@@ -57,6 +57,6 @@ export function useTasksSideEffect(userType: UserType, listId: string) {
         unsubscribe();
       };
     },
-    [convert, myUserId, setDocs, taskIds],
+    [convert, myUserId, setDocs, taskIds, userType],
   );
 }

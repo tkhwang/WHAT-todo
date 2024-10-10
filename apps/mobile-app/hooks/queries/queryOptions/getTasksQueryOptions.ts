@@ -1,8 +1,8 @@
 import { COLLECTIONS, ITask } from "@whatTodo/models";
 
-export function getTasksQueryOptions() {
+export function getTasksQueryOptions(listId: string) {
   return {
-    queryKey: [COLLECTIONS.TASKS],
+    queryKey: [COLLECTIONS.TASKS, listId],
     queryFn: (): Promise<ITask[]> => new Promise((): void => {}),
   };
 }
