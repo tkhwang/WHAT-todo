@@ -30,15 +30,25 @@ export function ListView({ userType, listId }: Props) {
   const { t } = useTranslation();
   const setCurrentListId = useSetAtom(currentListIdAtom);
 
-  const { data: tasks } = useTasks(listId);
-
   const { mutate: toggleTaskIsDoneMutate } = useToggleUserTaskIsDone();
   const { mutate: deleteTaskMutate } = useDeleteTask();
 
+  const { data: userTasks } = useUserTasks(userType, listId);
+  console.log(
+    `[+][ListView] userTasks: ${JSON.stringify(
+      userTasks?.map((userTask) => ({ id: userTask.id, task: userTask.task })),
+    )}`,
+  );
+
+  const { data: tasks } = useTasks(userType, listId);
+  console.log(
+    `[+][ListView] tasks: ${JSON.stringify(
+      tasks?.map((task) => ({ id: task.id, task: task.task })),
+    )}`,
+  );
+
   const { selectListByListId } = useSelectListByListId(listId);
   const { data: list, isLoading } = useLists<IList | undefined>(userType, selectListByListId);
-
-  const { data: userTasks } = useUserTasks(listId);
 
   const activeTasks = useMemo(() => {
     return (tasks ?? [])
@@ -48,6 +58,11 @@ export function ListView({ userType, listId }: Props) {
       })
       .sort((a, b) => b.updatedAt - a.updatedAt);
   }, [tasks, userTasks]);
+  console.log(
+    `[+][ListView] activeTasks: ${JSON.stringify(
+      activeTasks?.map((activeTask) => ({ id: activeTask.id, task: activeTask.task })),
+    )}`,
+  );
 
   const completedTasks = useMemo(() => {
     return (tasks ?? [])
@@ -68,7 +83,7 @@ export function ListView({ userType, listId }: Props) {
 
   const renderItem = useCallback(
     ({ item }: { item: ITask }) => {
-      return <TaskListItem listId={listId} task={item} />;
+      return <TaskListItem userType={userType} listId={listId} task={item} />;
     },
     [listId],
   );

@@ -8,7 +8,7 @@ export default function TodoScreen() {
 
   return (
     <ScreenWrapper>
-      <TaskDetail listId={listId} taskId={taskId} />
+      <TaskDetail userType={"user"} listId={listId} taskId={taskId} />
     </ScreenWrapper>
   );
 }
