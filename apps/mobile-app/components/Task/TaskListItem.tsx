@@ -21,7 +21,6 @@ interface Props {
 
 export default function TaskListItem({ userType, listId, task }: Props) {
   const router = useRouter();
-
   const { isDarkColorScheme } = useColorScheme();
 
   const { selectUserTaskByTaskId } = useSelectUserTaskByTaskId(task.id);
