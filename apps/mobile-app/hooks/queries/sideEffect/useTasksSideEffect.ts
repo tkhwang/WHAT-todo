@@ -57,6 +57,6 @@ export function useTasksSideEffect(userType: UserType, listId: string) {
         unsubscribe();
       };
     },
-    [convert, myUserId, setDocs, taskIds, userType],
+    [convert, listId, myUserId, setDocs, taskIds, userType],
   );
 }
