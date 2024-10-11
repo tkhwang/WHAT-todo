@@ -4,6 +4,7 @@ export interface ITaskCommon {
   id: string
   task: string
   listId: string
+  expertId?: string
   userIds: string[]
   supervisorIds: string[]
   taskType: TaskType
