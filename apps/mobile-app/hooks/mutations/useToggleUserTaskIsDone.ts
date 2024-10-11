@@ -5,7 +5,7 @@ import { useAtomValue } from "jotai";
 
 import { myUserIdAtom } from "@/states/me";
 
-export function useToggleUserTaskIsDone() {
+export function useToggleUserTaskIsDone(listId: string) {
   const queryClient = useQueryClient();
   const myUserId = useAtomValue(myUserIdAtom);
 
@@ -29,10 +29,10 @@ export function useToggleUserTaskIsDone() {
       });
     },
     onMutate: async ({ taskId }) => {
-      const key = [COLLECTIONS.USERS, myUserId, COLLECTIONS.TASKS];
+      const key = [COLLECTIONS.USERS, myUserId, COLLECTIONS.TASKS, listId];
 
       await queryClient.cancelQueries({ queryKey: key });
-      const previousTask = queryClient.getQueryData(key);
+      const previousTasks = queryClient.getQueryData(key);
 
       queryClient.setQueryData(key, (prv: IUserTask[]) => {
         if (!prv) return [];
@@ -47,11 +47,11 @@ export function useToggleUserTaskIsDone() {
         });
       });
 
-      return { previousTask };
+      return { previousTasks };
     },
     onError: (_, { taskId }, context) => {
-      const key = [COLLECTIONS.USERS, myUserId, COLLECTIONS.TASKS];
-      queryClient.setQueryData(key, context?.previousTask);
+      const key = [COLLECTIONS.USERS, myUserId, COLLECTIONS.TASKS, listId];
+      queryClient.setQueryData(key, context?.previousTasks);
     },
   });
 }
