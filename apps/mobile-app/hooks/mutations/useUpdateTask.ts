@@ -7,9 +7,10 @@ export function useUpdateTask() {
 
   return useMutation({
     mutationFn: async (updateTaskRequestDto: UpdateTaskRequest) => {
+      const { listId } = updateTaskRequestDto;
       const { id: taskId } = updateTaskRequestDto;
 
-      const allCachedTasks = queryClient.getQueryData<ITask[]>([COLLECTIONS.TASKS]);
+      const allCachedTasks = queryClient.getQueryData<ITask[]>([COLLECTIONS.TASKS, listId]);
       const cachedTask = allCachedTasks?.find((task) => task.id === taskId);
       if (!cachedTask) throw new Error(`Task (${taskId}) not found`);
 
