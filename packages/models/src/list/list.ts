@@ -8,6 +8,7 @@ export interface IListCommon {
   id: string
   title: string
   userId: string
+  expertId?: string
   userType: UserType
   listType?: ListType
 }
