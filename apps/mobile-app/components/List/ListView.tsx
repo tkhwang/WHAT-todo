@@ -27,7 +27,7 @@ const ItemSeparator = () => <View style={{ height: 12 }} />;
 export function ListView({ userType, listId }: Props) {
   const { t } = useTranslation();
 
-  const { mutate: toggleTaskIsDoneMutate } = useToggleUserTaskIsDone();
+  const { mutate: toggleTaskIsDoneMutate } = useToggleUserTaskIsDone(listId);
   const { mutate: deleteTaskMutate } = useDeleteTask();
 
   const { data: userTasks } = useUserTasks(userType, listId);

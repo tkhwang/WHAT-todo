@@ -24,11 +24,24 @@ export function useTasksSideEffect(userType: UserType, listId: string) {
     function setupTasksEffect() {
       if (!taskIds || (taskIds && taskIds.length === 0)) return undefined;
 
-      const key = [COLLECTIONS.TASKS];
+      const key = [COLLECTIONS.TASKS, listId];
       const unsubscribe = firestore()
         .collection(COLLECTIONS.TASKS)
-        // ! TODO: should reduce search document by using further whether condition
-        .where("userIds", "array-contains", myUserId)
+        .where(firestore.FieldPath.documentId(), "in", taskIds)
+        /*
+         *    userIds       'array-contains' myUserId
+         *    supervisorIds 'array-contains' myUserId
+         *    expertId      '=='             myUserId
+         */
+        .where(
+          userType === "user"
+            ? "userIds"
+            : userType === "supervisor"
+              ? "supervisorIds"
+              : "expertId",
+          userType === "expert" ? "==" : "array-contains",
+          myUserId,
+        )
         .onSnapshot((snapshot) => {
           if (!snapshot) return;
 
@@ -44,6 +57,6 @@ export function useTasksSideEffect(userType: UserType, listId: string) {
         unsubscribe();
       };
     },
-    [convert, myUserId, setDocs, taskIds],
+    [convert, listId, myUserId, setDocs, taskIds, userType],
   );
 }

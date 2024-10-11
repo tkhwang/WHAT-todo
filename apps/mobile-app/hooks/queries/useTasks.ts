@@ -25,7 +25,7 @@ export function useTasks<TSelected = ITask[]>(
   useTasksSideEffect(userType, listId);
 
   return useQuery<ITask[], Error, TSelected>({
-    ...getTasksQueryOptions(),
+    ...getTasksQueryOptions(listId),
     enabled: !!taskIds && taskIds.length > 0,
     staleTime: Infinity,
     select,

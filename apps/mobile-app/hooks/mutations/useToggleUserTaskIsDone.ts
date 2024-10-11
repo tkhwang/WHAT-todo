@@ -5,7 +5,7 @@ import { useAtomValue } from "jotai";
 
 import { myUserIdAtom } from "@/states/me";
 
-export function useToggleUserTaskIsDone() {
+export function useToggleUserTaskIsDone(listId: string) {
   const queryClient = useQueryClient();
   const myUserId = useAtomValue(myUserIdAtom);
 
@@ -28,30 +28,31 @@ export function useToggleUserTaskIsDone() {
         updatedAt: firestore.FieldValue.serverTimestamp(),
       });
     },
-    onMutate: async ({ taskId }) => {
-      const key = [COLLECTIONS.USERS, myUserId, COLLECTIONS.TASKS];
+    // TODO: check optimistic update
+    // onMutate: async ({ taskId }) => {
+    //   const key = [COLLECTIONS.USERS, myUserId, COLLECTIONS.TASKS, listId];
 
-      await queryClient.cancelQueries({ queryKey: key });
-      const previousTask = queryClient.getQueryData(key);
+    //   await queryClient.cancelQueries({ queryKey: key });
+    //   const previousTasks = queryClient.getQueryData(key);
 
-      queryClient.setQueryData(key, (prv: IUserTask[]) => {
-        if (!prv) return [];
+    //   queryClient.setQueryData(key, (prv: IUserTask[]) => {
+    //     if (!prv) return [];
 
-        return prv.map((userTask: IUserTask) => {
-          if (userTask.id !== taskId) return userTask;
+    //     return prv.map((userTask: IUserTask) => {
+    //       if (userTask.id !== taskId) return userTask;
 
-          return {
-            ...userTask,
-            isDone: !userTask.isDone,
-          };
-        });
-      });
+    //       return {
+    //         ...userTask,
+    //         isDone: !userTask.isDone,
+    //       };
+    //     });
+    //   });
 
-      return { previousTask };
-    },
-    onError: (_, { taskId }, context) => {
-      const key = [COLLECTIONS.USERS, myUserId, COLLECTIONS.TASKS];
-      queryClient.setQueryData(key, context?.previousTask);
-    },
+    //   return { previousTasks };
+    // },
+    // onError: (_, { taskId }, context) => {
+    //   const key = [COLLECTIONS.USERS, myUserId, COLLECTIONS.TASKS, listId];
+    //   queryClient.setQueryData(key, context?.previousTasks);
+    // },
   });
 }

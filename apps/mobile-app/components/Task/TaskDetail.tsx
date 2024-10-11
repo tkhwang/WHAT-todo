@@ -64,7 +64,7 @@ export default function TaskDetail({ userType, listId, taskId }: Props) {
   const [taskType, setTaskType] = useState<TaskType>("todo");
 
   const { mutate: updateTaskMutate } = useUpdateTask();
-  const { mutate: toggleTaskIsDoneMutate } = useToggleUserTaskIsDone();
+  const { mutate: toggleTaskIsDoneMutate } = useToggleUserTaskIsDone(listId);
   const { mutate: deleteTaskMutate, isPending } = useDeleteTask(() => router.back());
 
   const toggleIsDone = useCallback(() => {
