@@ -13,6 +13,8 @@ import { useToggleUserTaskIsDone } from "@/hooks/mutations/useToggleUserTaskIsDo
 import { useDeleteTask } from "@/hooks/mutations/useDeleteTask";
 import { useUserTasks } from "@/hooks/queries/useUserTasks";
 import { useSelectListByListId } from "@/hooks/queries/select/useSelectListByListId";
+import { cn } from "@/lib/utils";
+import { useColorScheme } from "@/lib/useColorScheme";
 
 import TaskListItem from "../Task/TaskListItem";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../ui/collapsible";
@@ -22,10 +24,11 @@ interface Props {
   listId: string;
 }
 
-const ItemSeparator = () => <View style={{ height: 12 }} />;
+const ItemSeparator = () => <View style={{ height: 8 }} />;
 
 export function ListView({ userType, listId }: Props) {
   const { t } = useTranslation();
+  const { isDarkColorScheme } = useColorScheme();
 
   const { mutate: toggleTaskIsDoneMutate } = useToggleUserTaskIsDone(listId);
   const { mutate: deleteTaskMutate } = useDeleteTask();
@@ -90,9 +93,10 @@ export function ListView({ userType, listId }: Props) {
 
     return (
       <View
-        className={
-          "relative flex flex-1 flex-row justify-between items-center pl-4 rounded-xl bg-gray-300"
-        }
+        className={cn(
+          "relative flex flex-1 flex-row justify-between items-center pl-4 rounded-xl",
+          isDarkColorScheme ? "bg-black" : "bg-white",
+        )}
       >
         <TouchableOpacity
           style={[styles.backRightBtn, styles.backRightBtnLeft]}
