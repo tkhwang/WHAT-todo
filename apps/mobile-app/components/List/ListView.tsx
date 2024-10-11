@@ -22,7 +22,7 @@ interface Props {
   listId: string;
 }
 
-const ItemSeparator = () => <View style={{ height: 12 }} />;
+const ItemSeparator = () => <View style={{ height: 8 }} />;
 
 export function ListView({ userType, listId }: Props) {
   const { t } = useTranslation();

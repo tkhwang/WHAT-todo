@@ -34,10 +34,12 @@ export default function TaskListItem({ userType, listId, task }: Props) {
   return (
     <Pressable
       className={cn(
-        "flex-col justify-center py-1 p-4 rounded-xl border shadow-sm",
-        isDarkColorScheme
-          ? "border-gray-600 bg-gray-900 shadow-slate-500"
-          : "border-gray-400 bg-gray-100 shadow-slate-400",
+        // "flex-col justify-center py-1 p-4 rounded-xl border shadow-sm",
+        // isDarkColorScheme
+        // ? "border-gray-600 bg-gray-900 shadow-slate-500"
+        // : "border-gray-400 bg-gray-100 shadow-slate-400",
+        "flex-col justify-center px-4 py-3 rounded-xl ",
+        isDarkColorScheme ? "bg-black" : "bg-white",
         userTask?.isDone ? "border-dashed" : "",
         task.id.startsWith(TASK_OPTIMISTIC_ADD_KEY) && "opacity-80",
       )}
