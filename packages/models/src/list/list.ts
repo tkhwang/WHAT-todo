@@ -7,6 +7,7 @@ export type ListType = "defaultUserList"
 export interface IListCommon {
   id: string
   title: string
+  userIds: string[]
   userId: string
   expertId?: string
   userType: UserType
