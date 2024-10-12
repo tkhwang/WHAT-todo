@@ -3,6 +3,7 @@ import React, { useCallback, useMemo } from "react";
 import { IList, ITask, UserType } from "@whatTodo/models";
 import { useTranslation } from "react-i18next";
 import { SwipeListView } from "react-native-swipe-list-view";
+import { useAtomValue } from "jotai";
 
 import { Text } from "@/components/ui/text";
 import Icon from "@/assets/icons";
@@ -15,6 +16,8 @@ import { useUserTasks } from "@/hooks/queries/useUserTasks";
 import { useSelectListByListId } from "@/hooks/queries/select/useSelectListByListId";
 import { cn } from "@/lib/utils";
 import { useColorScheme } from "@/lib/useColorScheme";
+import { useUser } from "@/hooks/queries/useUser";
+import { myUserIdAtom } from "@/states/me";
 
 import TaskListItem from "../Task/TaskListItem";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../ui/collapsible";
@@ -29,6 +32,8 @@ const ItemSeparator = () => <View style={{ height: 8 }} />;
 export function ListView({ userType, listId }: Props) {
   const { t } = useTranslation();
   const { isDarkColorScheme } = useColorScheme();
+
+  const myUserId = useAtomValue(myUserIdAtom);
 
   const { mutate: toggleTaskIsDoneMutate } = useToggleUserTaskIsDone(listId);
   const { mutate: deleteTaskMutate } = useDeleteTask();
@@ -49,6 +54,11 @@ export function ListView({ userType, listId }: Props) {
 
   const { selectListByListId } = useSelectListByListId(listId);
   const { data: list, isLoading } = useLists<IList | undefined>(userType, selectListByListId);
+
+  const isFromExpert = !!list?.expertId;
+  const isExpertMe = isFromExpert && list.expertId === myUserId;
+
+  const { data: userExpert } = useUser(list?.expertId);
 
   const activeTasks = useMemo(() => {
     return (tasks ?? [])
@@ -122,11 +132,18 @@ export function ListView({ userType, listId }: Props) {
   if (!list) return null;
 
   return (
-    <View className={"flex rounded-3xl pb-4"}>
+    <View className={"flex rounded-3xl mb-4"}>
       {/* List Title */}
-      <View className={"flex-row gap-4 items-center py-4"}>
-        <Icon name={"leftToRightListBullet"} size={26} strokeWidth={2} />
-        <Text className={"text-2xl font-semibold"}>{list?.title}</Text>
+      <View className={"flex flex-col gap-2 bg-gray-200 rounded-2xl p-2"}>
+        <View className={"flex flex-row gap-4 items-center"}>
+          <Icon name={isFromExpert ? "policeCap" : "user"} size={26} strokeWidth={2} />
+          <Text className={"text-2xl font-semibold"}>{list?.title}</Text>
+        </View>
+        {isFromExpert && (
+          <Text
+            className={"text-gray-500"}
+          >{`${t("sendTodo.user.type.expert")}: ${isExpertMe ? t("sendTodo.search.me") : userExpert?.name}, ${t("sendTodo.user.type.user")}: ${list.userIds.length}`}</Text>
+        )}
       </View>
 
       {/* tasks list */}
