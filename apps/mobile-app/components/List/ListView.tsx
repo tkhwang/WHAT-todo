@@ -85,9 +85,14 @@ export function ListView({ userType, listId }: Props) {
 
   const renderItem = useCallback(
     ({ item }: { item: ITask }) => {
-      return <TaskListItem userType={userType} listId={listId} task={item} />;
+      return (
+        // TODO: no need to additinal <View />. just add to hide background
+        <View className={cn("w-full", isDarkColorScheme ? "bg-black" : "bg-white")}>
+          <TaskListItem userType={userType} listId={listId} task={item} />
+        </View>
+      );
     },
-    [listId, userType],
+    [isDarkColorScheme, listId, userType],
   );
 
   const handleClickComplete = (item: ITask) => {
