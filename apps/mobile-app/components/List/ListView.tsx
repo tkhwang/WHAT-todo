@@ -139,7 +139,12 @@ export function ListView({ userType, listId }: Props) {
   return (
     <View className={"flex rounded-3xl mb-4"}>
       {/* List Title */}
-      <View className={"flex flex-col gap-2 bg-gray-200 rounded-2xl p-2"}>
+      <View
+        className={cn(
+          "flex flex-col gap-2 rounded-2xl p-2",
+          isDarkColorScheme ? "bg-gray-800" : "bg-slate-200",
+        )}
+      >
         <View className={"flex flex-row gap-4 items-center"}>
           <Icon name={isFromExpert ? "policeCap" : "user"} size={26} strokeWidth={2} />
           <Text className={"text-2xl font-semibold"}>{list?.title}</Text>
