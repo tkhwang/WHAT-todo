@@ -176,9 +176,14 @@ export function ListView({ userType, listId }: Props) {
         <View className={"flex-row gap-4 items-center py-4 w-full"}>
           <Collapsible className={"w-full"}>
             <CollapsibleTrigger className={"py-4"}>
-              <View className={"flex-row gap-4 items-center"}>
-                <Icon name={"checkList"} size={26} strokeWidth={2} />
-                <Text className={"text-xl font-normal"}>{t("todo.list.isDone")}</Text>
+              <View
+                className={cn(
+                  "flex-row gap-4 items-center pl-4 rounded-full p-2",
+                  isDarkColorScheme ? "bg-gray-900" : "bg-slate-100",
+                )}
+              >
+                <Icon name={"taskDone"} size={26} strokeWidth={2} />
+                <Text className={"text-lg font-semibold"}>{t("todo.list.isDone")}</Text>
               </View>
             </CollapsibleTrigger>
             <CollapsibleContent>
