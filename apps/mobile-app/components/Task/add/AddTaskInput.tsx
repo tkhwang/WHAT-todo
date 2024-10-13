@@ -31,7 +31,7 @@ export default function AddTaskInput({ inputRef }: Props) {
     setTaskType((prv) => (prv === "todo" ? "not-todo" : "todo"));
   }, []);
 
-  const { mutate: addTaskMutate } = useAddTask();
+  const { mutate: addTaskMutate } = useAddTask(userDefaultListId ?? "");
 
   const onChangeTask = useCallback(
     (task: string) => {
