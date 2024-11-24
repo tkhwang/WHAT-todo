@@ -2,7 +2,7 @@ import Image from "next/image"
 
 export default function Home() {
   return (
-    <main className="flex flex-col items-center justify-center min-h-screen p-24 gap-10">
+    <main className="flex flex-col items-center justify-center min-h-screen gap-10 p-24">
       <h1 className="text-4xl font-bold">WHAT-todo-dev</h1>
       Todo from experts with supervisors
       <Image
