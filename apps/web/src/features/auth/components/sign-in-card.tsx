@@ -1,9 +1,12 @@
-import { DottedSeparator } from "@/components/dotted-seperator"
+"use client"
+
+import { FcGoogle } from "react-icons/fc"
+import { FaGithub } from "react-icons/fa"
+
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
-import { FcGoogle } from "react-icons/fc"
-import { FaGithub } from "react-icons/fa"
+import { DottedSeparator } from "@/components/dotted-seperator"
 
 export function SignInCard() {
   return (
@@ -15,7 +18,6 @@ export function SignInCard() {
         <DottedSeparator />
       </div>
       <CardContent className="p-7">
-        {/* <CardContent className="gap-7"> */}
         <form className="space-y-4">
           <Input
             required
@@ -35,7 +37,7 @@ export function SignInCard() {
             min={8}
             max={256}
           />
-          <Button disabled={false} size={"lg"} className="w-full">
+          <Button disabled={false} size="lg" className="w-full">
             Login
           </Button>
         </form>
@@ -46,8 +48,8 @@ export function SignInCard() {
       <CardContent className="flex flex-col p-7 gap-y-4">
         <Button
           disabled={false}
-          variant={"secondary"}
-          size={"lg"}
+          variant="secondary"
+          size="lg"
           className="w-full"
         >
           <FcGoogle className="mr-2 size-5" />
@@ -55,8 +57,8 @@ export function SignInCard() {
         </Button>
         <Button
           disabled={false}
-          variant={"secondary"}
-          size={"lg"}
+          variant="secondary"
+          size="lg"
           className="w-full"
         >
           <FaGithub className="mr-2 size-5" />
