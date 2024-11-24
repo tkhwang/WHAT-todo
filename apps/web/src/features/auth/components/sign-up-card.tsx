@@ -23,7 +23,7 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form"
-import { DottedSeparator } from "@/components/dotted-seperator"
+import { DottedSeparator } from "@/components/dotted-separator"
 
 const formSchema = z.object({
   name: z.string().min(1, "Minimum 1 characters"),
