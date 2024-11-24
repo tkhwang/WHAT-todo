@@ -32,7 +32,7 @@ const formSchema = z.object({
 })
 
 export const SignUpCard = () => {
-  const form = useForm<z.infer<typeof registerSchema>>({
+  const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
@@ -41,7 +41,7 @@ export const SignUpCard = () => {
     },
   })
 
-  const onSubmit = (values: z.infer<typeof registerSchema>) => {
+  const onSubmit = (values: z.infer<typeof formSchema>) => {
     console.log(values)
   }
 
