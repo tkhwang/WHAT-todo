@@ -1,3 +1,4 @@
+// import { Button } from "@/components/ui/button"
 import { Button } from "@/components/ui/button"
 import Image from "next/image"
 
@@ -7,7 +8,7 @@ interface AuthLayoutProps {
 
 function SingInLayout({ children }: AuthLayoutProps) {
   return (
-    <main className="bg-neutral-100 main-h-screen">
+    <main className="min-h-screen bg-neutral-100">
       <div className="p-4 mx-auto max-w-screen-2xl">
         <nav className="flex items-center justify-between">
           <Image src="/logo.svg" alt="logo" width={152} height={56} />
