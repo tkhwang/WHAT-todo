@@ -1,22 +1,22 @@
 import { cn } from "@/lib/utils"
 
-interface DottedSeperatorProps {
+interface DottedSeparatorProps {
   className?: string
   color?: string
   height?: string
   dotSize?: string
   gapSize?: string
-  direction?: "vertical" | "horizontal"
+  direction?: "horizontal" | "vertical"
 }
 
-export function DottedSeperator({
+export function DottedSeparator({
   className,
   color = "#d4d4d8",
   height = "2px",
   dotSize = "2px",
   gapSize = "6px",
   direction = "horizontal",
-}: DottedSeperatorProps) {
+}: DottedSeparatorProps) {
   const isHorizontal = direction === "horizontal"
 
   return (
@@ -36,7 +36,7 @@ export function DottedSeperator({
           backgroundImage: `radial-gradient(circle, ${color} 25%, transparent 25%)`,
           backgroundSize: isHorizontal
             ? `${parseInt(dotSize) + parseInt(gapSize)}px ${height}`
-            : `${height}  ${parseInt(dotSize) + parseInt(gapSize)}px`,
+            : `${height} ${parseInt(dotSize) + parseInt(gapSize)}px`,
           backgroundRepeat: isHorizontal ? "repeat-x" : "repeat-y",
           backgroundPosition: "center",
         }}

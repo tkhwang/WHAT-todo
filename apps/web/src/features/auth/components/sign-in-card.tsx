@@ -1,4 +1,4 @@
-import { DottedSeperator } from "@/components/dotted-seperator"
+import { DottedSeparator } from "@/components/dotted-seperator"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -12,7 +12,7 @@ export function SignInCard() {
         <CardTitle className="text-2xl">Welcome back!</CardTitle>
       </CardHeader>
       <div className="px-7">
-        <DottedSeperator />
+        <DottedSeparator />
       </div>
       <CardContent className="p-7">
         {/* <CardContent className="gap-7"> */}
@@ -41,7 +41,7 @@ export function SignInCard() {
         </form>
       </CardContent>
       <div className="px-7">
-        <DottedSeperator />
+        <DottedSeparator />
       </div>
       <CardContent className="flex flex-col p-7 gap-y-4">
         <Button
