@@ -9,14 +9,14 @@ interface DottedSeparatorProps {
   direction?: "horizontal" | "vertical"
 }
 
-export function DottedSeparator({
+export const DottedSeparator = ({
   className,
   color = "#d4d4d8",
   height = "2px",
   dotSize = "2px",
   gapSize = "6px",
   direction = "horizontal",
-}: DottedSeparatorProps) {
+}: DottedSeparatorProps) => {
   const isHorizontal = direction === "horizontal"
 
   return (

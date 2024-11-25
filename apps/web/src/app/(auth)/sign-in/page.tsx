@@ -1,8 +1,6 @@
-"use client"
-
 import { SignInCard } from "@/features/auth/components/sign-in-card"
 
-function SignInPage() {
+const SignInPage = async () => {
   return <SignInCard />
 }
 
