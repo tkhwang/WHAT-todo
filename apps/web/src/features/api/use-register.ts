@@ -10,7 +10,7 @@ type RequestType = InferRequestType<(typeof client.api.auth.register)["$post"]>
 
 export const useRegister = () => {
   const mutation = useMutation<ResponseType, Error, RequestType>({
-    mutationFn: async (json) => {
+    mutationFn: async ({ json }) => {
       const response = await client.api.auth.register["$post"]({ json })
 
       if (!response.ok) {

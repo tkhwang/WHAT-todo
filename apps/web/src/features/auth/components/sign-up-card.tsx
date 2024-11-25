@@ -40,7 +40,7 @@ export const SignUpCard = () => {
   })
 
   const onSubmit = (values: z.infer<typeof registerSchema>) => {
-    mutate(values)
+    mutate({ json: values })
   }
 
   return (
