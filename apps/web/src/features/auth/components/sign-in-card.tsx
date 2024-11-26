@@ -1,28 +1,22 @@
-"use client"
+"use client";
 
-import { z } from "zod"
-import Link from "next/link"
-import { FcGoogle } from "react-icons/fc"
-import { FaGithub } from "react-icons/fa"
-import { useForm } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod"
+import { z } from "zod";
+import Link from "next/link";
+import { FcGoogle } from "react-icons/fc";
+import { FaGithub } from "react-icons/fa";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 
-import { DottedSeparator } from "@/components/dotted-separator"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormMessage,
-} from "@/components/ui/form"
-import { loginSchema } from "@/features/schemas"
-import { useLogin } from "@/features/api/use-login"
+import { DottedSeparator } from "@/components/dotted-separator";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
+import { loginSchema } from "@/features/schemas";
+import { useLogin } from "@/features/api/use-login";
 
 export function SignInCard() {
-  const { mutate } = useLogin()
+  const { mutate } = useLogin();
 
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
@@ -30,11 +24,11 @@ export function SignInCard() {
       email: "",
       password: "",
     },
-  })
+  });
 
   const onSubmit = (values: z.infer<typeof loginSchema>) => {
-    mutate(values)
-  }
+    mutate({ json: values });
+  };
 
   return (
     <Card className="w-full h-full md:w-[487px] border-none shadow-none">
@@ -53,11 +47,7 @@ export function SignInCard() {
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Input
-                      {...field}
-                      type="email"
-                      placeholder="Enter email address"
-                    />
+                    <Input {...field} type="email" placeholder="Enter email address" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -69,11 +59,7 @@ export function SignInCard() {
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Input
-                      {...field}
-                      type="password"
-                      placeholder="Enter password"
-                    />
+                    <Input {...field} type="password" placeholder="Enter password" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -89,21 +75,11 @@ export function SignInCard() {
         <DottedSeparator />
       </div>
       <CardContent className="flex flex-col p-7 gap-y-4">
-        <Button
-          disabled={false}
-          variant="secondary"
-          size="lg"
-          className="w-full"
-        >
+        <Button disabled={false} variant="secondary" size="lg" className="w-full">
           <FcGoogle className="mr-2 size-5" />
           Login with Google
         </Button>
-        <Button
-          disabled={false}
-          variant="secondary"
-          size="lg"
-          className="w-full"
-        >
+        <Button disabled={false} variant="secondary" size="lg" className="w-full">
           <FaGithub className="mr-2 size-5" />
           Login with Github
         </Button>
@@ -120,5 +96,5 @@ export function SignInCard() {
         </p>
       </CardContent>
     </Card>
-  )
+  );
 }
