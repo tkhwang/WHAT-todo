@@ -1,34 +1,22 @@
-"use client"
+"use client";
 
-import { z } from "zod"
-import Link from "next/link"
-import { FcGoogle } from "react-icons/fc"
-import { FaGithub } from "react-icons/fa"
-import { useForm } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod"
+import { z } from "zod";
+import Link from "next/link";
+import { FcGoogle } from "react-icons/fc";
+import { FaGithub } from "react-icons/fa";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 
-import { Button } from "@/components/ui/button"
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormMessage,
-} from "@/components/ui/form"
-import { DottedSeparator } from "@/components/dotted-separator"
-import { registerSchema } from "@/features/schemas"
-import { useRegister } from "@/features/api/use-register"
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
+import { DottedSeparator } from "@/components/dotted-separator";
+import { registerSchema } from "@/features/schemas";
+import { useRegister } from "@/features/api/use-register";
 
 export const SignUpCard = () => {
-  const { mutate } = useRegister()
+  const { mutate, isPending } = useRegister();
 
   const form = useForm<z.infer<typeof registerSchema>>({
     resolver: zodResolver(registerSchema),
@@ -37,11 +25,11 @@ export const SignUpCard = () => {
       email: "",
       password: "",
     },
-  })
+  });
 
   const onSubmit = (values: z.infer<typeof registerSchema>) => {
-    mutate({ json: values })
-  }
+    mutate({ json: values });
+  };
 
   return (
     <Card className="w-full h-full md:w-[487px] border-none shadow-none">
@@ -70,11 +58,7 @@ export const SignUpCard = () => {
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Input
-                      {...field}
-                      type="text"
-                      placeholder="Enter your name"
-                    />
+                    <Input {...field} type="text" placeholder="Enter your name" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -86,11 +70,7 @@ export const SignUpCard = () => {
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Input
-                      {...field}
-                      type="email"
-                      placeholder="Enter email address"
-                    />
+                    <Input {...field} type="email" placeholder="Enter email address" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -102,17 +82,13 @@ export const SignUpCard = () => {
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Input
-                      {...field}
-                      type="password"
-                      placeholder="Enter your password"
-                    />
+                    <Input {...field} type="password" placeholder="Enter your password" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            <Button disabled={false} size="lg" className="w-full">
+            <Button disabled={isPending} size="lg" className="w-full">
               Register
             </Button>
           </form>
@@ -124,7 +100,7 @@ export const SignUpCard = () => {
       <CardContent className="flex flex-col p-7 gap-y-4">
         <Button
           onClick={() => {}}
-          disabled={false}
+          disabled={isPending}
           variant="secondary"
           size="lg"
           className="w-full"
@@ -134,7 +110,7 @@ export const SignUpCard = () => {
         </Button>
         <Button
           onClick={() => {}}
-          disabled={false}
+          disabled={isPending}
           variant="secondary"
           size="lg"
           className="w-full"
@@ -155,5 +131,5 @@ export const SignUpCard = () => {
         </p>
       </CardContent>
     </Card>
-  )
-}
+  );
+};
