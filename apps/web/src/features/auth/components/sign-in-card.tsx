@@ -16,7 +16,7 @@ import { loginSchema } from "@/features/schemas";
 import { useLogin } from "@/features/api/use-login";
 
 export function SignInCard() {
-  const { mutate } = useLogin();
+  const { mutate, isPending } = useLogin();
 
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
@@ -47,7 +47,12 @@ export function SignInCard() {
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Input {...field} type="email" placeholder="Enter email address" />
+                    <Input
+                      {...field}
+                      disabled={isPending}
+                      type="email"
+                      placeholder="Enter email address"
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -59,13 +64,18 @@ export function SignInCard() {
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Input {...field} type="password" placeholder="Enter password" />
+                    <Input
+                      {...field}
+                      disabled={isPending}
+                      type="password"
+                      placeholder="Enter password"
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            <Button disabled={false} size="lg" className="w-full">
+            <Button disabled={isPending} size="lg" className="w-full">
               Login
             </Button>
           </form>
@@ -75,11 +85,11 @@ export function SignInCard() {
         <DottedSeparator />
       </div>
       <CardContent className="flex flex-col p-7 gap-y-4">
-        <Button disabled={false} variant="secondary" size="lg" className="w-full">
+        <Button disabled={isPending} variant="secondary" size="lg" className="w-full">
           <FcGoogle className="mr-2 size-5" />
           Login with Google
         </Button>
-        <Button disabled={false} variant="secondary" size="lg" className="w-full">
+        <Button disabled={isPending} variant="secondary" size="lg" className="w-full">
           <FaGithub className="mr-2 size-5" />
           Login with Github
         </Button>
