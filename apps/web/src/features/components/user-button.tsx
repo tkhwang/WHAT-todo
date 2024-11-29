@@ -10,8 +10,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { DottedSeparator } from "@/components/dotted-separator";
 
-import { useLogout } from "../api/use-logout";
-import { useCurrent } from "../api/use-current";
+import { useLogout } from "../auth/api/use-logout";
+import { useCurrent } from "../auth/api/use-current";
 
 export const UserButton = () => {
   const { mutate: logout } = useLogout();
