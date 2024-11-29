@@ -7,7 +7,7 @@ const SignInPage = async () => {
   const user = await getCurrent();
 
   // ! execute redirect on client side
-  if (typeof window === "undefined" && user) redirect("/");
+  if (typeof window !== "undefined" && user) redirect("/");
 
   return <SignInCard />;
 };
