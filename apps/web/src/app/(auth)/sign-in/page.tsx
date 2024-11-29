@@ -1,16 +1,13 @@
-import { getCurrent } from "@/features/auth/actions";
-import { SignInCard } from "@/features/auth/components/sign-in-card";
-import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
-const SignInPage = async () => {
-  const headersList = await headers();
-  const isRSC = headersList.get("RSC");
+import { getCurrent } from "@/features/auth/actions";
+import { SignInCard } from "@/features/auth/components/sign-in-card";
 
-  if (!isRSC) {
-    const user = await getCurrent();
-    if (user) redirect("/");
-  }
+const SignInPage = async () => {
+  const user = await getCurrent();
+
+  // ! execute redirect on client side
+  if (typeof window === "undefined" && user) redirect("/");
 
   return <SignInCard />;
 };
