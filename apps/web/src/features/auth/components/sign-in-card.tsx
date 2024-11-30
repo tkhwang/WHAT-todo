@@ -12,8 +12,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
-import { loginSchema } from "@/features/schemas";
 import { useLogin } from "@/features/auth/api/use-login";
+import { loginSchema } from "../schemas";
 
 export function SignInCard() {
   const { mutate, isPending } = useLogin();

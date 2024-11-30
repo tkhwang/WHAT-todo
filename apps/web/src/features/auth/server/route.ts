@@ -3,7 +3,7 @@ import { zValidator } from "@hono/zod-validator";
 import { ID } from "node-appwrite";
 import { deleteCookie, setCookie } from "hono/cookie";
 
-import { loginSchema, registerSchema } from "../../schemas";
+import { loginSchema, registerSchema } from "../schemas";
 import { createAdminClient } from "@/lib/appwrite";
 import { AUTH_COOKIE } from "../constants";
 import { sessionMiddleware } from "@/lib/session-middleware";

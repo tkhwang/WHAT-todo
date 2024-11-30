@@ -12,8 +12,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { DottedSeparator } from "@/components/dotted-separator";
-import { registerSchema } from "@/features/schemas";
 import { useRegister } from "@/features/auth/api/use-register";
+import { registerSchema } from "../schemas";
 
 export const SignUpCard = () => {
   const { mutate, isPending } = useRegister();
