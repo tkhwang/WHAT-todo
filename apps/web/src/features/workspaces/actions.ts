@@ -4,7 +4,7 @@ import { AUTH_COOKIE } from "../auth/constants";
 import { MEMBERS_ID, WORKSPACES_ID } from "@/config";
 import { DATABASE_ID } from "@/config";
 
-export async function getWorkSpaces() {
+export async function getWorkspaces() {
   try {
     const client = new Client()
       .setEndpoint(process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT!)
