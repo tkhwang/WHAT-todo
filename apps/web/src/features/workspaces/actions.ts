@@ -12,7 +12,9 @@ export async function getWorkspaces() {
 
     const session = (await cookies()).get(AUTH_COOKIE);
 
-    if (!session) return null;
+    if (!session) {
+      throw new Error("Unauthorized");
+    }
 
     client.setSession(session.value);
     const databases = new Databases(client);
