@@ -5,11 +5,15 @@ import { sessionMiddleware } from "@/lib/session-middleware";
 import { ID } from "node-appwrite";
 import { DATABASE_ID, IMAGE_BUCKET_ID, WORKSPACES_ID } from "@/config";
 
-const app = new Hono().post(
-  "/",
-  zValidator("form", createWorkspaceSchema),
-  sessionMiddleware,
-  async (c) => {
+const app = new Hono()
+  .get("/", sessionMiddleware, async (c) => {
+    const databases = c.get("databases");
+
+    const workspaces = await databases.listDocuments(DATABASE_ID, WORKSPACES_ID);
+
+    return c.json({ data: workspaces });
+  })
+  .post("/", zValidator("form", createWorkspaceSchema), sessionMiddleware, async (c) => {
     const databases = c.get("databases");
     const storage = c.get("storage");
     const user = c.get("user");
@@ -33,7 +37,6 @@ const app = new Hono().post(
     });
 
     return c.json({ data: workspace });
-  },
-);
+  });
 
 export default app;
